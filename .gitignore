@@ -1,0 +1,8 @@
+.DS_Store
+/coverage/
+/Gemfile.lock
+/gemfiles/*.lock
+/pkg/
+/.bundle/
+.byebug_history
+*.gem
