@@ -1,7 +1,6 @@
 require 'minitest/autorun'
 require 'tremendous'
 
-
 class TremendousTest < Minitest::Test
   def test_config
     access_token = 'abcdefg'

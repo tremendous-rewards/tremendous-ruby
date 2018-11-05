@@ -1,6 +1,5 @@
 module Tremendous
   class Gift
-
     attr_accessor :id, :order_id, :amount, :catalog, :message, :style_id, :status, :recipient, :sender, :events, :redemption_methods, :raw
 
     def initialize(attributes)
@@ -19,7 +18,7 @@ module Tremendous
       self.redemption_methods = attributes[:redemption_methods]
     end
 
-    def self.list(filters={})
+    def self.list(filters = {})
       response = Tremendous::Request.get(
         'gifts',
         query: filters.merge(Tremendous.default_options),

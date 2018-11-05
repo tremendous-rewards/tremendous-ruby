@@ -1,6 +1,5 @@
 module Tremendous
   class Organization
-
     attr_accessor :id, :name, :website, :phone, :created_at, :config
 
     def initialize(attributes)

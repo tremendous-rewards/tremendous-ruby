@@ -1,6 +1,5 @@
 module Tremendous
   class OrganizationMember
-
     attr_accessor :id, :name, :email, :role, :invite_url
 
     def initialize(attributes)

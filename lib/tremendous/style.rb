@@ -1,6 +1,5 @@
 module Tremendous
   class Style
-
     attr_accessor :id, :card
 
     def initialize(attributes)
@@ -13,11 +12,11 @@ module Tremendous
       card && card[:url]
     end
 
-    def self.list(filters={})
+    def self.list(filters = {})
       options = filters.merge(Tremendous.default_options)
       response = Tremendous::Request.get 'styles',
-                                     query: options,
-                                     format: 'json'
+                                         query: options,
+                                         format: 'json'
 
       response[:styles].map do |style_attributes|
         Tremendous::Style.new(style_attributes)

@@ -13,6 +13,6 @@ module Tremendous
 
   # Access token
   def self.default_options
-    {access_token: @@config[:access_token]}
+    { access_token: @@config[:access_token] }
   end
 end

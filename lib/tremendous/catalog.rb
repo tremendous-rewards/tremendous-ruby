@@ -1,6 +1,5 @@
 module Tremendous
   class Catalog
-
     attr_accessor :id, :name, :data, :raw
 
     def initialize(attributes)
@@ -10,7 +9,7 @@ module Tremendous
       self.raw = attributes
     end
 
-    def self.list(filters={})
+    def self.list(filters = {})
       Tremendous::Request.get(
         'catalog',
         query: filters.merge(Tremendous.default_options),

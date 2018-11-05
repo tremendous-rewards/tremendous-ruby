@@ -5,9 +5,9 @@ require 'tremendous'
 class StyleTest < Minitest::Test
   def test_initialization
     data = {
-      "id": "ABCD23424",
+      "id": 'ABCD23424',
       "card": {
-        "url": "https://tremendous.imgix.net/[asset_path]/thank_you_tree.jpg"
+        "url": 'https://tremendous.imgix.net/[asset_path]/thank_you_tree.jpg'
       }
     }.with_indifferent_access
     style = Tremendous::Style.new(data)
@@ -27,20 +27,20 @@ class StyleTest < Minitest::Test
       response = {
         "styles": [
           {
-            "id": "ABCD23424",
+            "id": 'ABCD23424',
             "card": {
-              "url": "https://tremendous.imgix.net/[asset_path]/thank_you_tree.jpg"
+              "url": 'https://tremendous.imgix.net/[asset_path]/thank_you_tree.jpg'
             }
           }
         ]
       }
 
-      stub_request(:get, 'https://www.tremendous.com/api/v1/styles').
-        with(query: Tremendous.default_options).
-        to_return(
+      stub_request(:get, 'https://www.tremendous.com/api/v1/styles')
+        .with(query: Tremendous.default_options)
+        .to_return(
           status: 200,
           body: response.to_json,
-          headers: {"Content-Type"=> "application/json"}
+          headers: { 'Content-Type' => 'application/json' }
         )
       styles = Tremendous::Style.list
       assert_equal styles.count, 1

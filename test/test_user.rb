@@ -5,8 +5,8 @@ require 'tremendous'
 class UserTest < Minitest::Test
   def test_initialization
     data = {
-      "email": "james@sales.com",
-      "name": "James Fields"
+      "email": 'james@sales.com',
+      "name": 'James Fields'
     }.with_indifferent_access
 
     user = Tremendous::User.new(data)

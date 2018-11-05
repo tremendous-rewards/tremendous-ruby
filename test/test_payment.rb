@@ -8,7 +8,7 @@ class PaymentTest < Minitest::Test
       "amount": 30,
       "fees": 2,
       "total": 32,
-      "funding_source_id": "LARFAF2423"
+      "funding_source_id": 'LARFAF2423'
     }.with_indifferent_access
 
     payment = Tremendous::Payment.new(data)

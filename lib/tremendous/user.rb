@@ -1,6 +1,5 @@
 module Tremendous
   class User
-
     attr_accessor :name, :email
 
     def initialize(attributes)
@@ -8,6 +7,5 @@ module Tremendous
       self.name = attributes[:name]
       self.email = attributes[:email]
     end
-
   end
 end

@@ -1,6 +1,5 @@
 module Tremendous
   class Order
-
     attr_accessor :id, :external_id, :gifts, :payment, :sender
 
     def initialize(attributes)
@@ -15,7 +14,7 @@ module Tremendous
       self.sender = Tremendous::User.new(attributes[:sender])
     end
 
-    def self.create!(funding_source_id, gifts, external_id=nil, organization_id=nil)
+    def self.create!(funding_source_id, gifts, external_id = nil, organization_id = nil)
       data_to_post = {
         funding_source_id: funding_source_id,
         external_id: external_id,
@@ -30,7 +29,7 @@ module Tremendous
       Tremendous::Order.new(response[:order])
     end
 
-    def self.list(filters={})
+    def self.list(filters = {})
       Tremendous::Request.get(
         'orders',
         query: filters.merge(Tremendous.default_options),
