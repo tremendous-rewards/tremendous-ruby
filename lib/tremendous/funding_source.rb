@@ -1,12 +1,13 @@
 module Tremendous
   class FundingSource
 
-    attr_accessor :id, :method, :meta
+    attr_accessor :id, :method, :meta, :available_cents
 
     def initialize(attributes)
       attributes = attributes.with_indifferent_access
       self.id = attributes[:id]
       self.method = attributes[:method]
+      self.available_cents = attributes[:meta]['available_cents']
       self.meta = attributes[:meta]
     end
 
