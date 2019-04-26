@@ -1,4 +1,4 @@
-# GiftRocket Gift Card Ruby API
+# Tremendous Rewards and Incentives Ruby Client
 
 - [Documentation](https://www.tremendous.com/docs)
 - [Product information](https://www.tremendous.com)
