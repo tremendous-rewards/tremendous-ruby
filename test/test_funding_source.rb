@@ -3,21 +3,6 @@ require 'webmock/minitest'
 require 'tremendous'
 
 class FundingSourceTest < Minitest::Test
-  def test_initialization
-    data = {
-      "id": "K908LJARLJ",
-      "method": "credit_card",
-      "meta": {
-        "accountholder_name": "James Sale",
-        "network": "visa",
-        "last4": "1234"
-      }
-    }
-    funding_source = Tremendous::FundingSource.new(data)
-    assert_equal data[:id], funding_source.id
-    assert_equal data[:method], funding_source.method
-    assert_equal data[:meta].length, funding_source.meta.length
-  end
 
   describe 'requires config' do
     before do
@@ -58,7 +43,7 @@ class FundingSourceTest < Minitest::Test
           headers: {"Content-Type"=> "application/json"}
         )
       funding_sources = Tremendous::FundingSource.list
-      assert_equal funding_sources.count, 2
+      assert_equal funding_sources.length, 2
     end
   end
 end

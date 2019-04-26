@@ -1,8 +1,8 @@
-# Tremendous Gift Card Ruby API
+# GiftRocket Gift Card Ruby API
 
 - [Documentation](https://www.tremendous.com/docs)
-- [Product information](https://www.tremendous.com/rewards)
-- [Get an API Key](https://www.tremendous.com/rewards/auth/signup)
+- [Product information](https://www.tremendous.com)
+- [Get an API Key](https://account.tremendous.com/rewards/auth/login)
 
 Installation
 ------------
@@ -24,46 +24,50 @@ require 'tremendous'
 
 # Configure with your sandbox / production token.
 Tremendous.configure do |config|
-  config[:access_token] = '[SANDBOX_API_KEY]'
+  config[:access_token] = '[YOUR_API_KEY]'
   config[:base_api_uri] = 'https://testflight.tremendous.com/api/v1/'
 end
-
-funding_source_id = Tremendous::FundingSource.list.first.id
-catalog = Tremendous::Catalog.list
-orders = Tremendous::Order.list # blank at first.
-gifts = Tremendous::Gift.list # blank at first.
 
 #
 # Generate an order.
 #
 
+# Campaigns are created within the dashboard by team admins.
+# They define the catalog and presentation of your reward.
+# API requests can always override these settings
+# within the specific gift object by specifying the catalog, message, etc.
+campaigns = Tremendous::Campaign.list
+campaign_id = campaigns.first[:id]
+
 # The funding source you select is how you are charged for the order.
-funding_source_id = Tremendous::FundingSource.list.first.id
+funding_sources = Tremendous::FundingSource.list
+funding_source_id = funding_sources.first[:id]
 
 # Optionally pass a unique external_id for each order create call
 # to guarantee that your order is idempotent and not executed multiple times.
-external_id = "ID_FROM_YOU_SYSTEM"
+external_id = "[OPTIONAL_EXTERNAL_ID]"
 
 # An array data representing the gifts you'd like to send.
+order_data = {
+  external_id: external_id,
+  funding_source_id: funding_source_id,
+  campaign_id: campaign_id,
+  gifts: [
+    {
+      "amount": 30,
+      "recipient": {
+        "email": "sam@yourdomain.com",
+        "name": "Sam Stevens"
+      }
+    }
+  ]
+}
 
-gifts = [
-  {
-    "amount": 30,
-    "recipient": {
-      "name": "John Smith",
-      "email": "john@smith.com",
-      "delivery_method": "EMAIL"
-    },
-  }
-]
-
-order = Tremendous::Order.create!(funding_source_id, gifts)
-
-# Submit the order to tremendous.
-order = Tremendous::Order.create!(funding_source_id, gifts, external_id)
+# Submit the order to GiftRocket.
+order = Tremendous::Order.create!(order_data)
 
 # Retrieve the order and gift.
-Tremendous::Gift.retrieve(order.gifts.first.id)
+Tremendous::Gift.retrieve(order[:gifts].first[:id])
 ```
 
 Contributing

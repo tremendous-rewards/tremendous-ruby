@@ -1,18 +1,6 @@
 module Tremendous
   class Organization
 
-    attr_accessor :id, :name, :website, :phone, :created_at, :config
-
-    def initialize(attributes)
-      attributes = attributes.with_indifferent_access
-      self.id = attributes[:id]
-      self.name = attributes[:name]
-      self.website = attributes[:website]
-      self.phone = attributes[:phone]
-      self.config = attributes[:config]
-      self.created_at = attributes[:created_at]
-    end
-
     def self.create!(data)
       response = Tremendous::Request.post(
         'organizations',
@@ -20,7 +8,7 @@ module Tremendous
         headers: { 'Content-Type' => 'application/json' }
       )
 
-      Tremendous::Organization.new(response[:organization])
+      response[:organization]
     end
 
     def self.list
@@ -28,9 +16,7 @@ module Tremendous
         'organizations',
         query: Tremendous.default_options,
         format: 'json'
-      )[:organizations].map do |org|
-        Tremendous::Organization.new(org)
-      end
+      )[:organizations]
     end
   end
 end
