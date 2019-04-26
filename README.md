@@ -63,7 +63,7 @@ order_data = {
   ]
 }
 
-# Submit the order to GiftRocket.
+# Submit the order.
 order = Tremendous::Order.create!(order_data)
 
 # Retrieve the order and gift.
