@@ -8,9 +8,9 @@ Gem::Specification.new do |spec|
   spec.summary       = 'Tremendous API SDK'
   spec.licenses      = ['MIT']
   spec.homepage      = 'https://github.com/GiftRocket/tremendous-ruby'
-  spec.summary       = 'GiftRocket Ruby API SDK'
+  spec.summary       = 'Tremendous Ruby API SDK'
   spec.authors       = ['Tremendous Developers']
-  spec.email         = ['dev@tremendous.com']
+  spec.email         = ['developers@tremendous.com']
   spec.files         = Dir['lib/**/*.rb']
 
   spec.add_runtime_dependency 'activesupport', '>= 3.2', '<= 5.1.1'
