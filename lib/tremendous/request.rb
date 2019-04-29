@@ -20,7 +20,14 @@ module Tremendous
       if response.success?
         response_json = JSON.parse(response.body).with_indifferent_access
       else
-        raise Tremendous::Error.new(response)
+        case response.code
+        when 400
+          raise Tremendous::BadDataError.new(response)
+        when 402
+          raise Tremendous::PaymentError.new(response)
+        else
+          raise Tremendous::Error.new(response)
+        end
       end
     end
   end

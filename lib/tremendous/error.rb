@@ -12,4 +12,10 @@ module Tremendous
       "Code: #{@response.code}; Data: #{errors}"
     end
   end
+
+  class BadDataError < Error
+  end
+
+  class PaymentError < Error
+  end
 end
