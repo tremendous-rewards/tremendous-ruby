@@ -1,22 +1,26 @@
 module Tremendous
   class Organization
-
     def self.create!(data)
-      response = Tremendous::Request.post(
+      Tremendous::Request.post(
         'organizations',
-        body: data.merge(Tremendous.default_options).to_json,
+        body: data.to_json,
         headers: { 'Content-Type' => 'application/json' }
-      )
-
-      response[:organization]
+      )[:organization]
     end
 
-    def self.list
+    def self.list(filters={})
       Tremendous::Request.get(
         'organizations',
-        query: Tremendous.default_options,
-        format: 'json'
+        query: filters
       )[:organizations]
+    end
+
+    def self.create_access_token!(id, data={})
+      Tremendous::Request.post(
+        "organizations/#{id}/access_token",
+        body: data.to_json,
+        headers: { 'Content-Type' => 'application/json' }
+      )[:access_token]
     end
   end
 end

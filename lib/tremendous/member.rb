@@ -1,24 +1,24 @@
 module Tremendous
-  class Order
+  class Member
 
-    def self.create!(data={})
+    def self.create!(data)
       Tremendous::Request.post(
-        'orders',
+        "members",
         body: data.to_json,
         headers: { 'Content-Type' => 'application/json' }
-      )[:order]
+      )[:member]
     end
 
     def self.list(filters={})
       Tremendous::Request.get(
-        'orders',
+        "members",
         query: filters,
         format: 'json'
-      )[:orders]
+      )[:members]
     end
 
-    def self.retrieve(id)
-      Tremendous::Request.get("orders/#{id}")[:order]
+    def self.show(id)
+      Tremendous::Request.get("members/#{id}")[:member]
     end
   end
 end

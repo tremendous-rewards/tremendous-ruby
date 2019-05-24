@@ -24,8 +24,8 @@ require 'tremendous'
 
 # Configure with your sandbox / production token.
 Tremendous.configure do |config|
-  config[:access_token] = '[YOUR_API_KEY]'
-  config[:base_api_uri] = 'https://testflight.tremendous.com/api/v1/'
+  config[:access_token] = '[YOUR_ACCESS_TOKEN]'
+  config[:base_api_uri] = 'https://testflight.tremendous.com/api/v2/'
 end
 
 #
@@ -43,6 +43,10 @@ campaign_id = campaigns.first[:id]
 funding_sources = Tremendous::FundingSource.list
 funding_source_id = funding_sources.first[:id]
 
+
+# Products define the set of reward options made available to your recipients
+products = Tremendous::Product.list.map { |p| p[:id ] }
+
 # Optionally pass a unique external_id for each order create call
 # to guarantee that your order is idempotent and not executed multiple times.
 external_id = "[OPTIONAL_EXTERNAL_ID]"
@@ -50,24 +54,31 @@ external_id = "[OPTIONAL_EXTERNAL_ID]"
 # An array data representing the gifts you'd like to send.
 order_data = {
   external_id: external_id,
-  funding_source_id: funding_source_id,
-  campaign_id: campaign_id,
-  gifts: [
-    {
-      "amount": 30,
-      "recipient": {
-        "email": "sam@yourdomain.com",
-        "name": "Sam Stevens"
-      }
+  payment: {
+    funding_source_id: funding_source_id,
+  },
+  reward: {
+    value: {
+      denomination: 20,
+      currency_code: "USD"
+    },
+    products: products,
+    campaign_id: campaign_id,
+    delivery: {
+      method: "EMAIL",
+    },
+    recipient: {
+      email: "sam@yourdomain.com",
+      name: "Sam Stevens"
     }
-  ]
+  }
 }
 
 # Submit the order.
 order = Tremendous::Order.create!(order_data)
 
 # Retrieve the order and gift.
-Tremendous::Gift.retrieve(order[:gifts].first[:id])
+Tremendous::Reward.show(order[:rewards].first[:id])
 ```
 
 Contributing

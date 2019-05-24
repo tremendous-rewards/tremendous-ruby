@@ -18,4 +18,7 @@ module Tremendous
 
   class PaymentError < Error
   end
+
+  class AccessError < Error
+  end
 end

@@ -1,11 +1,15 @@
 module Tremendous
-  class Campaign
+  class Product
     def self.list(filters={})
       Tremendous::Request.get(
-        'campaigns',
+        'products',
         query: filters,
         format: 'json'
-      )[:campaigns]
+      )[:products]
+    end
+
+    def self.show(id)
+      Tremendous::Request.get("products/#{id}")[:product]
     end
   end
 end

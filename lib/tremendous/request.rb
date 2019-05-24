@@ -1,17 +1,29 @@
 module Tremendous
   class Request
-    def self.get(path, *opts)
-      handle_response(HTTParty.get(url(path), *opts))
+    def self.get(path, data={}, *opts)
+      handle_response(_execute(:get, url(path), data, *opts))
     end
-    def self.post(path, *opts)
-      handle_response(HTTParty.post(url(path), *opts))
+
+    def self.post(path, data={}, *opts)
+      handle_response(_execute(:post, url(path), data, *opts))
     end
-    def self.put(path, *opts)
-      handle_response(HTTParty.put(url(path), *opts))
+
+    def self.put(path, data={}, *opts)
+      handle_response(_execute(:put, url(path), data, *opts))
     end
-    def self.delete(path, *opts)
-      handle_response(HTTParty.delete(url(path), *opts))
+
+    def self.delete(path, data={}, *opts)
+      handle_response(_execute(:delete, url(path), data, *opts))
     end
+
+    def self._execute(method, url, data={}, *opts)
+      data[:headers] = {
+        'authorization' => "Bearer #{Tremendous.default_options[:access_token]}"
+      }.merge(data.class == Hash ? data[:headers] || {} : {})
+
+      HTTParty.send(method, url, data, *opts)
+    end
+
     def self.url(path, params={})
       url = URI.join(Tremendous.config[:base_api_uri], path)
     end
@@ -23,6 +35,8 @@ module Tremendous
         case response.code
         when 400
           raise Tremendous::BadDataError.new(response)
+        when 401
+          raise Tremendous::AccessError.new(response)
         when 402
           raise Tremendous::PaymentError.new(response)
         else
