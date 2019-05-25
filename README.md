@@ -1,8 +1,8 @@
 # Tremendous Rewards and Incentives Ruby Client
 
-- [Documentation](https://www.tremendous.com/docs)
+- [Documentation](https://www.tremendous.com/docs/v2)
 - [Product information](https://www.tremendous.com)
-- [Get an API Key](https://account.tremendous.com/rewards/auth/login)
+- [Get an API Key](https://testflight.tremendous.com/login)
 
 Installation
 ------------
@@ -35,7 +35,7 @@ end
 # Campaigns are created within the dashboard by team admins.
 # They define the catalog and presentation of your reward.
 # API requests can always override these settings
-# within the specific gift object by specifying the catalog, message, etc.
+# within the specific reward object by specifying the catalog, message, etc.
 campaigns = Tremendous::Campaign.list
 campaign_id = campaigns.first[:id]
 
@@ -51,7 +51,7 @@ products = Tremendous::Product.list.map { |p| p[:id ] }
 # to guarantee that your order is idempotent and not executed multiple times.
 external_id = "[OPTIONAL_EXTERNAL_ID]"
 
-# An array data representing the gifts you'd like to send.
+# An array data representing the rewards you'd like to send.
 order_data = {
   external_id: external_id,
   payment: {
@@ -77,7 +77,7 @@ order_data = {
 # Submit the order.
 order = Tremendous::Order.create!(order_data)
 
-# Retrieve the order and gift.
+# Retrieve the reward
 Tremendous::Reward.show(order[:rewards].first[:id])
 ```
 
