@@ -17,7 +17,7 @@ module Tremendous
       )[:orders]
     end
 
-    def self.retrieve(id)
+    def self.show(id)
       Tremendous::Request.get("orders/#{id}")[:order]
     end
   end
