@@ -1,23 +1,44 @@
-module Tremendous
-  class Webhook
-    def self.create!(url, data={})
-      Tremendous::Request.post(
+module Webhook
+
+  def self.included(base)
+    base.send :include, InstanceMethods
+  end
+
+  module InstanceMethods
+    def webhooks
+      WebhookResource.new(access_token, uri)
+    end
+  end
+
+  class WebhookResource
+    include Request
+
+    def create!(url, data={})
+      post(
         'webhooks',
         body: {url: url}.merge(data).to_json,
         headers: { 'Content-Type' => 'application/json' }
       )[:webhook]
     end
 
-    def self.events(id)
-      Tremendous::Request.get("webhooks/#{id}/events")[:events]
+    def list
+      get("webhooks")[:webhooks]
     end
 
-    def self.retrieve(id)
-      response = Tremendous::Request.get("webhooks/#{id}")[:webhook]
+    def show(id)
+      get("webhooks/#{id}")[:webhook]
     end
 
-    def self.simulate!(id, event, data={})
-      Tremendous::Request.post(
+    def delete!(id)
+      delete("webhooks/#{id}")[:webhook]
+    end
+
+    def events(id)
+      get("webhooks/#{id}/events")[:events]
+    end
+
+    def simulate!(id, event, data={})
+      post(
         "webhooks/#{id}/simulate",
         body: {event: event}.merge(data).to_json,
         headers: { 'Content-Type' => 'application/json' }

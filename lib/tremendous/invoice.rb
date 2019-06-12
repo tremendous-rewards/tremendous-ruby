@@ -1,8 +1,20 @@
-module Tremendous
-  class Invoice
+module Invoice
 
-    def self.create!(data={})
-      Tremendous::Request.post(
+  def self.included(base)
+    base.send :include, InstanceMethods
+  end
+
+  module InstanceMethods
+    def invoices
+      InvoiceResource.new(access_token, uri)
+    end
+  end
+
+  class InvoiceResource
+    include Request
+
+    def create!(data={})
+      post(
         'invoices',
         {
           body: data.to_json,
@@ -11,26 +23,21 @@ module Tremendous
       )[:invoice]
     end
 
-    def self.list(filters={})
-      Tremendous::Request.get(
+    def list(filters={})
+      get(
         'invoices',
-          query: filters,
-          format: 'json'
+        query: filters,
+        format: 'json'
       )[:invoices]
     end
 
-    def self.show(id)
-      Tremendous::Request.get(
-        "invoices/#{id}",
-          format: 'json'
-      )[:invoice]
+    def show(id)
+      get("invoices/#{id}")[:invoice]
     end
 
-    def self.delete(id)
-      Tremendous::Request.delete(
-        "invoices/#{id}",
-        format: 'json'
-      )[:invoice]
+    def delete!(id)
+      delete("invoices/#{id}")[:invoice]
     end
+
   end
 end

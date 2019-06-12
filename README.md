@@ -23,10 +23,11 @@ Usage
 require 'tremendous'
 
 # Configure with your sandbox / production token.
-Tremendous.configure do |config|
-  config[:access_token] = '[YOUR_ACCESS_TOKEN]'
-  config[:base_api_uri] = 'https://testflight.tremendous.com/api/v2/'
-end
+client = Tremendous::Rest.new(
+  "[SANDBOX_ACCESS_TOKEN]",
+  "https://testflight.tremendous.com/api/v2/"
+)
+
 
 #
 # Generate an order.
@@ -40,12 +41,9 @@ campaigns = Tremendous::Campaign.list
 campaign_id = campaigns.first[:id]
 
 # The funding source you select is how you are charged for the order.
-funding_sources = Tremendous::FundingSource.list
-funding_source_id = funding_sources.first[:id]
+# In this example, we use the prefunded balance funding source
+funding_source_id = client.funding_sources.list.find { |f| f[:method] == "balance" }[:id]
 
-
-# Products define the set of reward options made available to your recipients
-products = Tremendous::Product.list.map { |p| p[:id ] }
 
 # Optionally pass a unique external_id for each order create call
 # to guarantee that your order is idempotent and not executed multiple times.
@@ -53,7 +51,7 @@ external_id = "[OPTIONAL_EXTERNAL_ID]"
 
 # An array data representing the rewards you'd like to send.
 order_data = {
-  external_id: external_id,
+  exteral_id: external_id,
   payment: {
     funding_source_id: funding_source_id,
   },
@@ -62,23 +60,22 @@ order_data = {
       denomination: 20,
       currency_code: "USD"
     },
-    products: products,
     campaign_id: campaign_id,
     delivery: {
       method: "EMAIL",
     },
     recipient: {
-      email: "sam@yourdomain.com",
-      name: "Sam Stevens"
+      email: "sarah@tremendous.com",
+      name: "Sarah Smith"
     }
   }
 }
 
 # Submit the order.
-order = Tremendous::Order.create!(order_data)
+order = client.orders.create!(order_data)
 
 # Retrieve the reward
-Tremendous::Reward.show(order[:rewards].first[:id])
+client.rewards.show(order[:rewards].first[:id])
 ```
 
 Contributing
