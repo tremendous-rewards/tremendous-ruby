@@ -24,7 +24,7 @@ require 'tremendous'
 
 # Configure with your sandbox / production token.
 client = Tremendous::Rest.new(
-  "[SANDBOX_ACCESS_TOKEN]",
+  "[YOUR SANDBOX ACCESS TOKEN]",
   "https://testflight.tremendous.com/api/v2/"
 )
 
@@ -37,7 +37,7 @@ client = Tremendous::Rest.new(
 # They define the catalog and presentation of your reward.
 # API requests can always override these settings
 # within the specific reward object by specifying the catalog, message, etc.
-campaigns = Tremendous::Campaign.list
+campaigns = client.campaigns.list
 campaign_id = campaigns.first[:id]
 
 # The funding source you select is how you are charged for the order.
