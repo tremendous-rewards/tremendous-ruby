@@ -1,16 +1,14 @@
 module Tremendous
-
   class Rest
-
-    include Campaign
-    include FundingSource
-    include Invoice
-    include Member
-    include Order
-    include Organization
-    include Product
-    include Reward
-    include Webhook
+    include Tremendous::Campaign
+    include Tremendous::FundingSource
+    include Tremendous::Invoice
+    include Tremendous::Member
+    include Tremendous::Order
+    include Tremendous::Organization
+    include Tremendous::Product
+    include Tremendous::Reward
+    include Tremendous::Webhook
 
     attr_accessor :access_token, :uri
 

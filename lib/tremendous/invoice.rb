@@ -1,43 +1,45 @@
-module Invoice
+module Tremendous
+  module Invoice
 
-  def self.included(base)
-    base.send :include, InstanceMethods
-  end
-
-  module InstanceMethods
-    def invoices
-      InvoiceResource.new(access_token, uri)
-    end
-  end
-
-  class InvoiceResource
-    include Request
-
-    def create!(data={})
-      post(
-        'invoices',
-        {
-          body: data.to_json,
-          headers: { 'Content-Type' => 'application/json' }
-        }
-      )[:invoice]
+    def self.included(base)
+      base.send :include, InstanceMethods
     end
 
-    def list(filters={})
-      get(
-        'invoices',
-        query: filters,
-        format: 'json'
-      )[:invoices]
+    module InstanceMethods
+      def invoices
+        InvoiceResource.new(access_token, uri)
+      end
     end
 
-    def show(id)
-      get("invoices/#{id}")[:invoice]
-    end
+    class InvoiceResource
+      include Request
 
-    def delete!(id)
-      delete("invoices/#{id}")[:invoice]
-    end
+      def create!(data={})
+        post(
+          'invoices',
+          {
+            body: data.to_json,
+            headers: { 'Content-Type' => 'application/json' }
+          }
+        )[:invoice]
+      end
 
+      def list(filters={})
+        get(
+          'invoices',
+          query: filters,
+          format: 'json'
+        )[:invoices]
+      end
+
+      def show(id)
+        get("invoices/#{id}")[:invoice]
+      end
+
+      def delete!(id)
+        delete("invoices/#{id}")[:invoice]
+      end
+
+    end
   end
 end
