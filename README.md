@@ -1,6 +1,6 @@
 # Tremendous Rewards and Incentives Ruby Client
 
-- [Documentation](https://www.tremendous.com/docs/v2)
+- [Documentation](https://www.tremendous.com/docs)
 - [Product information](https://www.tremendous.com)
 - [Get an API Key](https://testflight.tremendous.com/login)
 
