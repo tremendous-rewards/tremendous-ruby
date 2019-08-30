@@ -30,7 +30,7 @@ module Tremendous
         )[:orders]
       end
 
-      def self.show(id)
+      def show(id)
         get("orders/#{id}")[:order]
       end
     end
