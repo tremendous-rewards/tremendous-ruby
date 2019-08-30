@@ -6,10 +6,12 @@ module Tremendous
       super
     end
 
+    def server_response
+      @server_response ||= @response.parsed_response.with_indifferent_access
+    end
+
     def message
-      response_json = JSON.parse(@response.body).with_indifferent_access
-      errors = response_json[:errors]
-      "Code: #{@response.code}; Data: #{errors}"
+      "Code: #{@response.code}; Data: #{server_response[:errors]}"
     end
   end
 
