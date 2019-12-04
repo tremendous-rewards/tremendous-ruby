@@ -2,7 +2,7 @@ module Tremendous
   module Campaign
 
     def self.included(base)
-      base.send :include, InstanceMethods
+      base.include InstanceMethods
     end
 
     module InstanceMethods
@@ -18,7 +18,6 @@ module Tremendous
         get(
           'campaigns',
           query: filters,
-          format: 'json'
         )[:campaigns]
       end
 

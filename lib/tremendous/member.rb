@@ -2,7 +2,7 @@ module Tremendous
   module Member
 
     def self.included(base)
-      base.send :include, InstanceMethods
+      base.include InstanceMethods
     end
 
     module InstanceMethods
@@ -26,7 +26,6 @@ module Tremendous
         get(
           "members",
           query: filters,
-          format: 'json'
         )[:members]
       end
 

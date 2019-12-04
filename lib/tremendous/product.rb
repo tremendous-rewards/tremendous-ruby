@@ -1,7 +1,7 @@
 module Tremendous
   module Product
     def self.included(base)
-      base.send :include, InstanceMethods
+      base.include InstanceMethods
     end
 
     module InstanceMethods
@@ -17,7 +17,6 @@ module Tremendous
         get(
           'products',
           query: filters,
-          format: 'json'
         )[:products]
       end
 

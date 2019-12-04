@@ -7,7 +7,7 @@
 Installation
 ------------
 
-`$ gem install 'tremendous_ruby'`
+`$ gem install tremendous_ruby`
 
 or, add to your Gemfile
 
@@ -28,7 +28,6 @@ client = Tremendous::Rest.new(
   "https://testflight.tremendous.com/api/v2/"
 )
 
-
 #
 # Generate an order.
 #
@@ -43,7 +42,6 @@ campaign_id = campaigns.first[:id]
 # The funding source you select is how you are charged for the order.
 # In this example, we use the prefunded balance funding source
 funding_source_id = client.funding_sources.list.find { |f| f[:method] == "balance" }[:id]
-
 
 # Optionally pass a unique external_id for each order create call
 # to guarantee that your order is idempotent and not executed multiple times.
@@ -74,11 +72,12 @@ order_data = {
 # Submit the order.
 order = client.orders.create!(order_data)
 
-# Retrieve the reward
+# Retrieve the reward.
 client.rewards.show(order[:rewards].first[:id])
 ```
 
 Contributing
 ------------
+
 The gem is maintained by Tremendous engineers, but all are welcome to contribute.
 Feel free to open an issue, submit a PR, or post a question.

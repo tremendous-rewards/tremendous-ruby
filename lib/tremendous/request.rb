@@ -6,13 +6,7 @@ module Tremendous
       @uri = uri
     end
 
-    def access_token
-      @access_token
-    end
-
-    def uri
-      @uri
-    end
+    attr_reader :access_token, :uri
 
     def get(path, data={}, *opts)
       handle_response(_execute(:get, url(path), data, *opts))
@@ -31,6 +25,7 @@ module Tremendous
     end
 
     def _execute(method, url, data={}, *opts)
+      data[:format] = :json
       data[:headers] = {
         'authorization' => "Bearer #{@access_token}"
       }.merge(data.class == Hash ? data[:headers] || {} : {})
