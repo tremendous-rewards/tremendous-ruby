@@ -54,7 +54,7 @@ campaign_id = client.campaigns.list.find { |f| f[:name] == "Birthdays" }[:id]
 # to guarantee that your order is idempotent and not executed multiple times.
 external_id = "[OPTIONAL_EXTERNAL_ID]"
 
-# An Hash representing the rewards you'd like to send.
+# A Hash representing the rewards you'd like to send.
 order_data = {
   external_id: external_id,
   payment: {
