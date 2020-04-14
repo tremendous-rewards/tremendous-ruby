@@ -16,6 +16,8 @@ source 'https://rubygems.org'
 gem 'tremendous_ruby'
 ```
 
+If you are running Rails 5.2.4.x or above, feel free to point your Gemfile at this repository's `master` branch, at the most recent codebase isn't published on rubygems at this time. 
+
 Usage
 -----
 
@@ -28,6 +30,7 @@ client = Tremendous::Rest.new(
   "https://testflight.tremendous.com/api/v2/"
 )
 
+# For production, change the URL to: `https://www.tremendous.com/api/v2/` instead.
 
 #
 # Generate an order.
@@ -44,31 +47,33 @@ campaign_id = campaigns.first[:id]
 # In this example, we use the prefunded balance funding source
 funding_source_id = client.funding_sources.list.find { |f| f[:method] == "balance" }[:id]
 
+# In this other example, we find the campaign named "Birthdays"
+campaign_id = client.campaigns.list.find { |f| f[:name] == "Birthdays" }[:id]
 
 # Optionally pass a unique external_id for each order create call
 # to guarantee that your order is idempotent and not executed multiple times.
 external_id = "[OPTIONAL_EXTERNAL_ID]"
 
-# An array data representing the rewards you'd like to send.
+# An Hash representing the rewards you'd like to send.
 order_data = {
-  exteral_id: external_id,
+  external_id: external_id,
   payment: {
-    funding_source_id: funding_source_id,
+    funding_source_id: funding_source_id
   },
   reward: {
     value: {
-      denomination: 20,
-      currency_code: "USD"
+      denomination: amount,
+      currency_code: 'USD'
     },
     campaign_id: campaign_id,
     delivery: {
-      method: "EMAIL",
+      method: 'EMAIL'
     },
     recipient: {
       email: "sarah@tremendous.com",
       name: "Sarah Smith"
     }
-  }
+  },
 }
 
 # Submit the order.
