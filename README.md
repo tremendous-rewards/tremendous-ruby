@@ -16,7 +16,7 @@ source 'https://rubygems.org'
 gem 'tremendous_ruby'
 ```
 
-If you are running Rails 5.2.4.x or above, feel free to point your Gemfile at this repository's `master` branch, at the most recent codebase isn't published on rubygems at this time. 
+If you are running Rails 5.2.4.x or above, feel free to point your Gemfile at this repository's `master` branch, since the most recent codebase isn't published on rubygems at this time. 
 
 Usage
 -----
