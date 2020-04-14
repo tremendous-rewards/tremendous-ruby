@@ -62,7 +62,7 @@ order_data = {
   },
   reward: {
     value: {
-      denomination: amount,
+      denomination: 20,
       currency_code: 'USD'
     },
     campaign_id: campaign_id,
