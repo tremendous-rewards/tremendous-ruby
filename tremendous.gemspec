@@ -16,7 +16,7 @@ Gem::Specification.new do |spec|
   }
 
   spec.add_runtime_dependency 'activesupport', '>= 3.2', '< 6.2'
-  spec.add_runtime_dependency 'httparty', '>= 0.14.0'
+  spec.add_runtime_dependency 'httparty', '>= 0.18.0'
   spec.add_runtime_dependency 'jwt', '>= 1.5.0'
 
   spec.add_development_dependency 'rake'
