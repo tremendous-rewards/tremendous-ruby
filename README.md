@@ -22,11 +22,15 @@ Usage
 ```ruby
 require 'tremendous'
 
-# Configure with your sandbox / production token.
-client = Tremendous::Rest.new(
-  "[YOUR SANDBOX ACCESS TOKEN]",
-  "https://testflight.tremendous.com/api/v2/"
-)
+# Access token
+# (apply for a production token at https://www.tremendous.com/api-access-request)
+access_token = "[YOUR SANDBOX ACCESS TOKEN]"
+
+# URL
+# (production: use "https://www.tremendous.com/api/v2/")
+url = "https://testflight.tremendous.com/api/v2/"
+
+client = Tremendous::Rest.new(access_token, url)
 
 #
 # Generate an order.
@@ -47,24 +51,24 @@ funding_source_id = client.funding_sources.list.find { |f| f[:method] == "balanc
 # to guarantee that your order is idempotent and not executed multiple times.
 external_id = "[OPTIONAL_EXTERNAL_ID]"
 
-# An array data representing the rewards you'd like to send.
+# An hash representing the rewards you'd like to send.
 order_data = {
-  exteral_id: external_id,
+  external_id: external_id,
   payment: {
     funding_source_id: funding_source_id,
   },
   reward: {
     value: {
       denomination: 20,
-      currency_code: "USD"
+      currency_code: 'USD'
     },
     campaign_id: campaign_id,
     delivery: {
-      method: "EMAIL",
+      method: 'EMAIL',
     },
     recipient: {
-      email: "sarah@tremendous.com",
-      name: "Sarah Smith"
+      email: 'sarah@tremendous.com',
+      name: 'Sarah Smith'
     }
   }
 }
