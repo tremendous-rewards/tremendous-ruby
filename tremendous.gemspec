@@ -5,7 +5,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'tremendous_ruby'
   spec.version       = Tremendous::VERSION
   spec.licenses      = ['MIT']
-  spec.homepage      = 'https://github.com/GiftRocket/tremendous-ruby'
+  spec.homepage      = 'https://github.com/tremendous-rewards/tremendous-ruby'
   spec.summary       = 'Tremendous Ruby API SDK'
   spec.authors       = ['Tremendous Developers']
   spec.email         = ['developers@tremendous.com']
