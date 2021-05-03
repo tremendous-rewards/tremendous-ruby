@@ -2,7 +2,7 @@ module Tremendous
   module Invoice
 
     def self.included(base)
-      base.send :include, InstanceMethods
+      base.include InstanceMethods
     end
 
     module InstanceMethods
@@ -28,7 +28,6 @@ module Tremendous
         get(
           'invoices',
           query: filters,
-          format: 'json'
         )[:invoices]
       end
 

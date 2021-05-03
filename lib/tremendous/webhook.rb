@@ -2,7 +2,7 @@ module Tremendous
   module Webhook
 
     def self.included(base)
-      base.send :include, InstanceMethods
+      base.include InstanceMethods
     end
 
     module InstanceMethods

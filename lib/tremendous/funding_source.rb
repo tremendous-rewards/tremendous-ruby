@@ -1,9 +1,8 @@
 module Tremendous
   module FundingSource
-    include Request
 
     def self.included(base)
-      base.send :include, InstanceMethods
+      base.include InstanceMethods
     end
 
     module InstanceMethods
@@ -19,7 +18,6 @@ module Tremendous
         get(
           'funding_sources',
           query: filters,
-          format: 'json'
         )[:funding_sources]
       end
 
