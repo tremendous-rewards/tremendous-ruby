@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'httparty', '>= 0.18.0'
   spec.add_runtime_dependency 'jwt', '>= 1.5.0'
 
-  spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'rake', '>= 12.3.3'
   spec.add_development_dependency 'rspec', '>= 3.5.0'
   spec.add_development_dependency 'webmock', '>= 3'
 end
