@@ -24,6 +24,10 @@ module Tremendous
       def show(id)
         get("rewards/#{id}")[:reward]
       end
+      
+      def resend(id)
+        post("rewards/#{id}/resend")
+      end
     end
   end
 end
