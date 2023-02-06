@@ -1,3 +1,3 @@
-### 4.3.1 - 2022-07-13
+### 4.3.2 - 2023-02-06
 
-* Relaxes dependency constraints on ActiveSupport version (removes upper cap of version)
+* Added resend API endpoint for rewards
