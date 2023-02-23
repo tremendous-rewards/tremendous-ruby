@@ -7,7 +7,13 @@ module Tremendous
     end
 
     def server_response
-      @server_response ||= @response.parsed_response.with_indifferent_access
+      @server_response ||= parsed_response
+    end
+
+    def parsed_response
+      @response.parsed_response.with_indifferent_access
+    rescue StandardError
+      { errors: ['Internal Server Error'] }
     end
 
     def message
