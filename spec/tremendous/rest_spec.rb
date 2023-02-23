@@ -13,6 +13,14 @@ describe Tremendous::Rest do
     end
   end
 
+  shared_examples 'handles non-json formatted error response' do
+    let(:response) { {status: 500, body: '<html><head></head><body></body></html>'} }
+
+    specify do
+      expect(&subject).to raise_error(Tremendous::Error, 'Code: 500; Data: ["Internal Server Error"]')
+    end
+  end
+
   describe '#orders' do
     let(:order_data) do
       {
@@ -21,6 +29,10 @@ describe Tremendous::Rest do
         'payment' => {'subtotal' => 10, 'total' => 10, 'fees' => 0},
         'rewards' => [{'id' => 'DDABSUKSFSTY'}]
       }
+    end
+
+    let(:html_response) do
+      '<html><head></head><body></body></html>'
     end
 
     describe '#list' do
@@ -38,6 +50,7 @@ describe Tremendous::Rest do
       end
 
       it_behaves_like 'handles error'
+      it_behaves_like 'handles non-json formatted error response'
     end
 
     describe '#create!' do
@@ -55,6 +68,7 @@ describe Tremendous::Rest do
       end
 
       it_behaves_like 'handles error'
+      it_behaves_like 'handles non-json formatted error response'
     end
   end
 end

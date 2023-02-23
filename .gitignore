@@ -7,3 +7,4 @@
 .byebug_history
 *.gem
 .ruby-version
+/vendor
