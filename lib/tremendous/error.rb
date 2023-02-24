@@ -85,6 +85,10 @@ module Tremendous
     def message
       "Code: #{@response.code}; Data: #{server_response[:errors]}"
     end
+
+    def to_s
+      message
+    end
   end
 
   class BadDataError < Error
