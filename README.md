@@ -27,7 +27,7 @@ require 'tremendous'
 access_token = "[YOUR SANDBOX ACCESS TOKEN]"
 
 # URL
-# (production: use "https://www.tremendous.com/api/v2/")
+# (production: use "https://api.tremendous.com/api/v2/")
 url = "https://testflight.tremendous.com/api/v2/"
 
 client = Tremendous::Rest.new(access_token, url)

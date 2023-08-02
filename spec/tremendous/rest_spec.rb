@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Tremendous::Rest do
   let(:client) { described_class.new(access_token, endpoint) }
   let(:access_token) { 'your-access-token' }
-  let(:endpoint) { 'https://www.tremendous.com/api/v2/' }
+  let(:endpoint) { 'https://api.tremendous.com/api/v2/' }
 
   shared_examples 'handles error' do
     let(:response) { {status: 500, body: {errors: ['Internal Server Error']}.to_json} }
