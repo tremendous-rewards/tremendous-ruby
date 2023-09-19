@@ -24,6 +24,10 @@ module Tremendous
       def show(id)
         get("rewards/#{id}")[:reward]
       end
+
+      def generate_link(id)
+        post("rewards/#{id}/generate_link")[:reward]
+      end
     end
   end
 end
