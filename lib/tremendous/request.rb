@@ -27,7 +27,9 @@ module Tremendous
     def _execute(method, url, data={}, *opts)
       data[:format] = :json
       data[:headers] = {
-        'authorization' => "Bearer #{@access_token}"
+        'authorization' => "Bearer #{@access_token}",
+        'user-agent' => "Tremendous Ruby v#{Tremendous::VERSION}",
+        'content-type' => "application/json"
       }.merge(data.class == Hash ? data[:headers] || {} : {})
 
       HTTParty.send(method, url, data, *opts)
