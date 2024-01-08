@@ -5,6 +5,14 @@ describe Tremendous::Rest do
   let(:access_token) { 'your-access-token' }
   let(:endpoint) { 'https://api.tremendous.com/api/v2/' }
 
+  let(:headers) do
+    {
+      authorization: "Bearer #{access_token}",
+      content_type: "application/json",
+      user_agent:  "Tremendous Ruby v#{Tremendous::VERSION}",
+    }
+  end
+
   shared_examples 'handles error' do
     let(:response) { {status: 500, body: {errors: ['Internal Server Error']}.to_json} }
 
@@ -39,9 +47,7 @@ describe Tremendous::Rest do
       subject {->{ client.orders.list }}
 
       before do
-        stub_request(:get, "#{endpoint}orders").
-          with(headers: {authorization: "Bearer #{access_token}"}).
-          to_return(response)
+        stub_request(:get, "#{endpoint}orders").with(headers:).to_return(response)
       end
       let(:response) { {status: 200, body: {orders: [order_data]}.to_json} }
 
@@ -57,9 +63,7 @@ describe Tremendous::Rest do
       subject {->{ client.orders.create!(order_data) }}
 
       before do
-        stub_request(:post, "#{endpoint}orders").
-          with(headers: {authorization: "Bearer #{access_token}", content_type: 'application/json'}).
-          to_return(response)
+        stub_request(:post, "#{endpoint}orders").with(headers:).to_return(response)
       end
       let(:response) { {status: 200, body: {order: order_data}.to_json} }
 
