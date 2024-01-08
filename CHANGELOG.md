@@ -1,4 +1,4 @@
-### 4.3.5 (unreleased)
+### 4.3.5 2024-01-08
 
 * Sets user-agent on each request
 
