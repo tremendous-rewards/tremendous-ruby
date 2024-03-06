@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+test -f "$1" && spec="$1" || spec=$(./bin/download-spec)
+
+current=$(cat ./*.ts | md5sum | awk '{print $1}')
+
+./bin/generate "$spec"
+
+changed=$(cat ./*.ts | md5sum | awk '{print $1}')
+
+if [[ "$current" == "$changed" ]]; then
+  echo "Generated code hasn't changed"
+  test -n "$CI" && echo "changed=false" >> "$GITHUB_OUTPUT"
+else
+  echo "Changes found"
+  test -n "$CI" && echo "changed=true" >> "$GITHUB_OUTPUT"
+fi

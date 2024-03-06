@@ -1,0 +1,9 @@
+#!/bin/bash
+
+set -e
+
+path="./tmp/spec.yml"
+
+rm -rf $path && \
+  curl -o $path https://cdn.tremendous.com/openapi/spec.yml && \
+  echo $path

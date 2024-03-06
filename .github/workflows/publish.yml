@@ -1,0 +1,20 @@
+name: Publish package to Rubygems
+on:
+  release:
+    types: [published]
+
+permissions:
+  id-token: write
+
+jobs:
+  publish:
+    if: github.repository == 'tremendous-rewards/tremendous-ruby'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.3
+          bundler-cache: true
+      - uses: rubygems/release-gem@v1

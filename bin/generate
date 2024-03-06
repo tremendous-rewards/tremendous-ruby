@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+test -f "$1" && spec="$1" || spec=$(./bin/download-spec)
+
+docker run --rm \
+  -v ./:/output \
+  -v $(realpath $spec):/spec.yml \
+  -v ~/tmp:/input \
+  openapitools/openapi-generator-cli generate \
+  -i /spec.yml \
+  -g ruby \
+  -o /output \
+  -p library=faraday,gemName=tremendous
+  # -t /output/templates/ruby \
+
+rm -rf git_push.sh .gitlab-ci.yml .travis.yml docs
