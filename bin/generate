@@ -4,15 +4,19 @@ set -e
 
 test -f "$1" && spec="$1" || spec=$(./bin/download-spec)
 
+# update the yml file in place, swaping all operation's `tags` to "Tremendous",
+# so a single TremendousApi class is generated
+yq -i '.paths.*.*.tags = ["Tremendous"]' "$spec"
+
 docker run --rm \
   -v ./:/output \
   -v $(realpath $spec):/spec.yml \
   -v ~/tmp:/input \
-  openapitools/openapi-generator-cli generate \
+  openapitools/openapi-generator-cli:v7.3.0 generate \
   -i /spec.yml \
   -g ruby \
   -o /output \
-  -p library=faraday,gemName=tremendous
-  # -t /output/templates/ruby \
+  -p library=faraday,gemName=tremendous \
+  -t /output/templates/ruby \
 
-rm -rf git_push.sh .gitlab-ci.yml .travis.yml docs
+rm -rf git_push.sh .gitlab-ci.yml .travis.yml docs spec/api spec/models

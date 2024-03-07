@@ -4,8 +4,12 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    reviewers:
+      - "tremendous-rewards/platform"
 
   - package-ecosystem: "bundler"
     directory: "/"
     schedule:
       interval: "weekly"
+    reviewers:
+      - "tremendous-rewards/platform"
