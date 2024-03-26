@@ -10,9 +10,9 @@ RSpec.describe "Funding Sources endpoints" do
     expect(funding_sources.size).to be > 0
 
     funding_sources.each do |funding_source|
-      expect(funding_sources).to respond_to(:id)
-      expect(funding_sources).to respond_to(:method)
-      expect(funding_sources).to respond_to(:meta)
+      expect(funding_source).to respond_to(:id)
+      expect(funding_source).to respond_to(:method)
+      expect(funding_source).to respond_to(:meta)
     end
   end
 end
