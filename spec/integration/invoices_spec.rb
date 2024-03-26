@@ -10,10 +10,10 @@ RSpec.describe "Invoices endpoints" do
     expect(invoices.size).to be > 0
 
     invoices.each do |invoice|
-      expect(invoices).to respond_to(:id)
-      expect(invoices).to respond_to(:po_number)
-      expect(invoices).to respond_to(:amount)
-      expect(invoices).to respond_to(:created_at)
+      expect(invoice).to respond_to(:id)
+      expect(invoice).to respond_to(:po_number)
+      expect(invoice).to respond_to(:amount)
+      expect(invoice).to respond_to(:created_at)
     end
   end
 end
