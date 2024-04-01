@@ -19,7 +19,6 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "faraday-multipart"
 
   spec.files         = Dir["lib/**/*.rb"]
-  spec.files         = Dir["spec/**/*.rb"]
   spec.executables   = []
   spec.require_paths = ["lib"]
 end
