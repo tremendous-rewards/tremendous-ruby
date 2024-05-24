@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - id: install-yq
-        run: sudo apt-get install -y yq
+        run: wget https://github.com/mikefarah/yq/releases/v4.44.1/download/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
       - id: check-update
         run: ./bin/check-updates
 
