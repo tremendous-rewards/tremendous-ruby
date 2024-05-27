@@ -17,6 +17,8 @@ jobs:
       - id: create-issue
         if: ${{ steps.check-update.outputs.changed == 'true' }}
         uses: JasonEtco/create-an-issue@1b14a70e4d8dc185e5cc76d3bec9eab20257b2c5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           update_existing: false
           filename: .github/needs-update-template.md
