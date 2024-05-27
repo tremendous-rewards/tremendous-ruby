@@ -1,5 +1,6 @@
 name: Check if the Open API has changed
 on:
+  workflow_dispatch:
   schedule:
     - cron:  '0 */6 * * *'
 
@@ -11,9 +12,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - id: check-update
-        uses: mikefarah/yq@557dcb87b8efe786f89a12c09e9046b4753ab72e
-        with:
-          cmd: ./bin/check-updates
+        run: ./bin/check-updates
 
       - id: create-issue
         if: ${{ steps.check-update.outputs.changed == 'true' }}
