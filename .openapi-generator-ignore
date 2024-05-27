@@ -30,6 +30,7 @@ README.md
 .rspec
 .rubocop.yml
 docs/*.md
+spec/spec_helper.rb
 spec/api/*.rb
 spec/models/*.rb
 .gitlab-ci.yml
