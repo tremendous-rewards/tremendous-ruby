@@ -18,5 +18,3 @@ docker run --rm \
   -o /output \
   -p library=faraday,gemName=tremendous \
   -t /output/templates/ruby \
-
-rm -rf git_push.sh .gitlab-ci.yml .travis.yml docs spec/api spec/models

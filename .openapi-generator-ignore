@@ -29,3 +29,9 @@ tremendous.gemspec
 README.md
 .rspec
 .rubocop.yml
+docs/*.md
+spec/api/*.rb
+spec/models/*.rb
+.gitlab-ci.yml
+.travis.yml
+git_push.sh
