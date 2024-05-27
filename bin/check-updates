@@ -4,11 +4,11 @@ set -e
 
 test -f "$1" && spec="$1" || spec=$(./bin/download-spec)
 
-current=$(cat ./*.ts | md5sum | awk '{print $1}')
+current=$(cat lib/**/*.rb | md5sum | awk '{print $1}')
 
 ./bin/generate "$spec"
 
-changed=$(cat ./*.ts | md5sum | awk '{print $1}')
+changed=$(cat lib/**/*.rb | md5sum | awk '{print $1}')
 
 if [[ "$current" == "$changed" ]]; then
   echo "Generated code hasn't changed"
