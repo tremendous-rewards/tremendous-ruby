@@ -9,10 +9,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - id: install-yq
-        run: wget https://github.com/mikefarah/yq/releases/v4.44.1/download/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
+
       - id: check-update
-        run: ./bin/check-updates
+        uses: mikefarah/yq@557dcb87b8efe786f89a12c09e9046b4753ab72e
+        with:
+          cmd: ./bin/check-updates
 
       - id: create-issue
         if: ${{ steps.check-update.outputs.changed == 'true' }}
