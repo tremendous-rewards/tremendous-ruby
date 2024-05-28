@@ -34,6 +34,9 @@ module Tremendous
     # Copy over the users from the current organization to the new organization. Defaults to `false`.
     attr_accessor :users
 
+    # Copy over the fraud prevention settings and rules from the current organization to the new organization. Defaults to `false`.
+    attr_accessor :fraud_prevention
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -42,7 +45,8 @@ module Tremendous
         :'order_approvals' => :'order_approvals',
         :'payment_methods' => :'payment_methods',
         :'security_settings' => :'security_settings',
-        :'users' => :'users'
+        :'users' => :'users',
+        :'fraud_prevention' => :'fraud_prevention'
       }
     end
 
@@ -59,7 +63,8 @@ module Tremendous
         :'order_approvals' => :'Boolean',
         :'payment_methods' => :'Boolean',
         :'security_settings' => :'Boolean',
-        :'users' => :'Boolean'
+        :'users' => :'Boolean',
+        :'fraud_prevention' => :'Boolean'
       }
     end
 
@@ -119,6 +124,12 @@ module Tremendous
       else
         self.users = false
       end
+
+      if attributes.key?(:'fraud_prevention')
+        self.fraud_prevention = attributes[:'fraud_prevention']
+      else
+        self.fraud_prevention = false
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -146,7 +157,8 @@ module Tremendous
           order_approvals == o.order_approvals &&
           payment_methods == o.payment_methods &&
           security_settings == o.security_settings &&
-          users == o.users
+          users == o.users &&
+          fraud_prevention == o.fraud_prevention
     end
 
     # @see the `==` method
@@ -158,7 +170,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [campaigns, custom_fields, order_approvals, payment_methods, security_settings, users].hash
+      [campaigns, custom_fields, order_approvals, payment_methods, security_settings, users, fraud_prevention].hash
     end
 
     # Builds the object from hash

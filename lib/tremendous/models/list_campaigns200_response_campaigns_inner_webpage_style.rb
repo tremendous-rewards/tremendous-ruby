@@ -14,14 +14,35 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class ListProducts200ResponseProductsInnerCountriesInner
-    # ISO 3166 country code
-    attr_accessor :abbr
+  # Definition of the webpage style
+  class ListCampaigns200ResponseCampaignsInnerWebpageStyle
+    # Headline for the reward page
+    attr_accessor :headline
+
+    # Message for the reward page
+    attr_accessor :message
+
+    # URL of a publicly-accessible image (png, jpeg, jpg, gif, or svg). This image will be copied to our storage location.
+    attr_accessor :logo_image_url
+
+    # Image height in pixels
+    attr_accessor :logo_image_height_px
+
+    # Logo backgrond color code (hex, rgb, or rgba)
+    attr_accessor :logo_background_color
+
+    # Backgrond color code (hex, rgb, or rgba)
+    attr_accessor :background_color
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'abbr' => :'abbr'
+        :'headline' => :'headline',
+        :'message' => :'message',
+        :'logo_image_url' => :'logo_image_url',
+        :'logo_image_height_px' => :'logo_image_height_px',
+        :'logo_background_color' => :'logo_background_color',
+        :'background_color' => :'background_color'
       }
     end
 
@@ -33,13 +54,22 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'abbr' => :'String'
+        :'headline' => :'String',
+        :'message' => :'String',
+        :'logo_image_url' => :'String',
+        :'logo_image_height_px' => :'Integer',
+        :'logo_background_color' => :'String',
+        :'background_color' => :'String'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'logo_image_url',
+        :'logo_image_height_px',
+        :'logo_background_color',
+        :'background_color'
       ])
     end
 
@@ -47,21 +77,39 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListProducts200ResponseProductsInnerCountriesInner` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListCampaigns200ResponseCampaignsInnerWebpageStyle` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListProducts200ResponseProductsInnerCountriesInner`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListCampaigns200ResponseCampaignsInnerWebpageStyle`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'abbr')
-        self.abbr = attributes[:'abbr']
-      else
-        self.abbr = nil
+      if attributes.key?(:'headline')
+        self.headline = attributes[:'headline']
+      end
+
+      if attributes.key?(:'message')
+        self.message = attributes[:'message']
+      end
+
+      if attributes.key?(:'logo_image_url')
+        self.logo_image_url = attributes[:'logo_image_url']
+      end
+
+      if attributes.key?(:'logo_image_height_px')
+        self.logo_image_height_px = attributes[:'logo_image_height_px']
+      end
+
+      if attributes.key?(:'logo_background_color')
+        self.logo_background_color = attributes[:'logo_background_color']
+      end
+
+      if attributes.key?(:'background_color')
+        self.background_color = attributes[:'background_color']
       end
     end
 
@@ -70,10 +118,6 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @abbr.nil?
-        invalid_properties.push('invalid value for "abbr", abbr cannot be nil.')
-      end
-
       invalid_properties
     end
 
@@ -81,7 +125,6 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @abbr.nil?
       true
     end
 
@@ -90,7 +133,12 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          abbr == o.abbr
+          headline == o.headline &&
+          message == o.message &&
+          logo_image_url == o.logo_image_url &&
+          logo_image_height_px == o.logo_image_height_px &&
+          logo_background_color == o.logo_background_color &&
+          background_color == o.background_color
     end
 
     # @see the `==` method
@@ -102,7 +150,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [abbr].hash
+      [headline, message, logo_image_url, logo_image_height_px, logo_background_color, background_color].hash
     end
 
     # Builds the object from hash

@@ -18,9 +18,6 @@ module Tremendous
     # Email address of the member
     attr_accessor :email
 
-    # Full name of the member
-    attr_accessor :name
-
     # Role of the member within the organization.  <table>   <thead>     <tr>       <th>Role</th>       <th>Description</th>     </tr>   </thead>     <tr>       <td><code>MEMBER</code></td>       <td>Limited permissions. Can view their own reward and order histories only.</td>     </tr>     <tr>       <td><code>ADMIN</code></td>       <td>Update organization settings, invite other members to the organization, and view all member order and reward histories within their organization.</td>     </tr>   <tbody> </table> 
     attr_accessor :role
 
@@ -50,7 +47,6 @@ module Tremendous
     def self.attribute_map
       {
         :'email' => :'email',
-        :'name' => :'name',
         :'role' => :'role'
       }
     end
@@ -64,7 +60,6 @@ module Tremendous
     def self.openapi_types
       {
         :'email' => :'String',
-        :'name' => :'String',
         :'role' => :'String'
       }
     end
@@ -96,12 +91,6 @@ module Tremendous
         self.email = nil
       end
 
-      if attributes.key?(:'name')
-        self.name = attributes[:'name']
-      else
-        self.name = nil
-      end
-
       if attributes.key?(:'role')
         self.role = attributes[:'role']
       else
@@ -118,10 +107,6 @@ module Tremendous
         invalid_properties.push('invalid value for "email", email cannot be nil.')
       end
 
-      if @name.nil?
-        invalid_properties.push('invalid value for "name", name cannot be nil.')
-      end
-
       if @role.nil?
         invalid_properties.push('invalid value for "role", role cannot be nil.')
       end
@@ -134,7 +119,6 @@ module Tremendous
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @email.nil?
-      return false if @name.nil?
       return false if @role.nil?
       role_validator = EnumAttributeValidator.new('String', ["MEMBER", "ADMIN"])
       return false unless role_validator.valid?(@role)
@@ -157,7 +141,6 @@ module Tremendous
       return true if self.equal?(o)
       self.class == o.class &&
           email == o.email &&
-          name == o.name &&
           role == o.role
     end
 
@@ -170,7 +153,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [email, name, role].hash
+      [email, role].hash
     end
 
     # Builds the object from hash

@@ -24,7 +24,10 @@ module Tremendous
     # Full name of the member
     attr_accessor :name
 
-    # Role of the member within the organization.  <table>   <thead>     <tr>       <th>Role</th>       <th>Description</th>     </tr>   </thead>     <tr>       <td><code>MEMBER</code></td>       <td>Limited permissions. Can view their own reward and order histories only.</td>     </tr>     <tr>       <td><code>ADMIN</code></td>       <td>Update organization settings, invite other members to the organization, and view all member order and reward histories within their organization.</td>     </tr>     <tr>       <td><code>DELETED</code></td>       <td>No longer a member of this organization.</td>     </tr>   <tbody>   </tbody> </table> 
+    # Is this member currently active in the organization. If `false`, the member will not be able to access the organization. 
+    attr_accessor :active
+
+    # Role of the member within the organization.  <table>   <thead>     <tr>       <th>Role</th>       <th>Description</th>     </tr>   </thead>     <tr>       <td><code>MEMBER</code></td>       <td>Limited permissions. Can view their own reward and order histories only.</td>     </tr>     <tr>       <td><code>ADMIN</code></td>       <td>Update organization settings, invite other members to the organization, and view all member order and reward histories within their organization.</td>     </tr>   <tbody>   </tbody> </table> 
     attr_accessor :role
 
     # Current status of the member's account.  When creating a member it starts out in the status `INVITED`. As soon as that member open the invitation link and registers an account, the status switches to `REGISTERED`. 
@@ -64,6 +67,7 @@ module Tremendous
         :'id' => :'id',
         :'email' => :'email',
         :'name' => :'name',
+        :'active' => :'active',
         :'role' => :'role',
         :'status' => :'status',
         :'created_at' => :'created_at',
@@ -82,6 +86,7 @@ module Tremendous
         :'id' => :'String',
         :'email' => :'String',
         :'name' => :'String',
+        :'active' => :'Boolean',
         :'role' => :'String',
         :'status' => :'String',
         :'created_at' => :'Time',
@@ -128,6 +133,10 @@ module Tremendous
         self.name = attributes[:'name']
       else
         self.name = nil
+      end
+
+      if attributes.key?(:'active')
+        self.active = attributes[:'active']
       end
 
       if attributes.key?(:'role')
@@ -188,7 +197,7 @@ module Tremendous
       return false if @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
       return false if @email.nil?
       return false if @role.nil?
-      role_validator = EnumAttributeValidator.new('String', ["MEMBER", "ADMIN", "DELETED"])
+      role_validator = EnumAttributeValidator.new('String', ["MEMBER", "ADMIN"])
       return false unless role_validator.valid?(@role)
       return false if @status.nil?
       status_validator = EnumAttributeValidator.new('String', ["REGISTERED", "INVITED"])
@@ -214,7 +223,7 @@ module Tremendous
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] role Object to be assigned
     def role=(role)
-      validator = EnumAttributeValidator.new('String', ["MEMBER", "ADMIN", "DELETED"])
+      validator = EnumAttributeValidator.new('String', ["MEMBER", "ADMIN"])
       unless validator.valid?(role)
         fail ArgumentError, "invalid value for \"role\", must be one of #{validator.allowable_values}."
       end
@@ -239,6 +248,7 @@ module Tremendous
           id == o.id &&
           email == o.email &&
           name == o.name &&
+          active == o.active &&
           role == o.role &&
           status == o.status &&
           created_at == o.created_at &&
@@ -254,7 +264,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, email, name, role, status, created_at, last_login_at].hash
+      [id, email, name, active, role, status, created_at, last_login_at].hash
     end
 
     # Builds the object from hash

@@ -14,7 +14,7 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # With a campaign you can define the look & feel of how rewards are sent out. It also lets you set the available products (different gift cards, charity, etc.) recipients can choose from.  > Note: Campaigns must be created from the Tremendous dashboard. > > • [Production Dashboard](https://app.tremendous.com) > • [Sandbox Dashboard](https://app.testflight.tremendous.com/) 
+  # With a campaign you can define the look & feel of how rewards are sent out. It also lets you set the available products (different gift cards, charity, etc.) recipients can choose from. 
   class ListCampaigns200ResponseCampaignsInner
     attr_accessor :id
 
@@ -27,13 +27,19 @@ module Tremendous
     # List of IDs of products (different gift cards, charity, etc.) that are available in this campaign. 
     attr_accessor :products
 
+    attr_accessor :webpage_style
+
+    attr_accessor :email_style
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'id' => :'id',
         :'name' => :'name',
         :'description' => :'description',
-        :'products' => :'products'
+        :'products' => :'products',
+        :'webpage_style' => :'webpage_style',
+        :'email_style' => :'email_style'
       }
     end
 
@@ -48,7 +54,9 @@ module Tremendous
         :'id' => :'String',
         :'name' => :'String',
         :'description' => :'String',
-        :'products' => :'Array<String>'
+        :'products' => :'Array<String>',
+        :'webpage_style' => :'ListCampaigns200ResponseCampaignsInnerWebpageStyle',
+        :'email_style' => :'ListCampaigns200ResponseCampaignsInnerEmailStyle'
       }
     end
 
@@ -76,8 +84,6 @@ module Tremendous
 
       if attributes.key?(:'id')
         self.id = attributes[:'id']
-      else
-        self.id = nil
       end
 
       if attributes.key?(:'name')
@@ -99,6 +105,14 @@ module Tremendous
       else
         self.products = nil
       end
+
+      if attributes.key?(:'webpage_style')
+        self.webpage_style = attributes[:'webpage_style']
+      end
+
+      if attributes.key?(:'email_style')
+        self.email_style = attributes[:'email_style']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -106,12 +120,8 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @id.nil?
-        invalid_properties.push('invalid value for "id", id cannot be nil.')
-      end
-
       pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if @id !~ pattern
+      if !@id.nil? && @id !~ pattern
         invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
       end
 
@@ -130,8 +140,7 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @id.nil?
-      return false if @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
+      return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
       return false if @name.nil?
       return false if @products.nil?
       true
@@ -160,7 +169,9 @@ module Tremendous
           id == o.id &&
           name == o.name &&
           description == o.description &&
-          products == o.products
+          products == o.products &&
+          webpage_style == o.webpage_style &&
+          email_style == o.email_style
     end
 
     # @see the `==` method
@@ -172,7 +183,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, description, products].hash
+      [id, name, description, products, webpage_style, email_style].hash
     end
 
     # Builds the object from hash

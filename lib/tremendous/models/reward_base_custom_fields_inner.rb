@@ -22,11 +22,15 @@ module Tremendous
     # Value of the custom field
     attr_accessor :value
 
+    # Label of the custom field
+    attr_accessor :label
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'id' => :'id',
-        :'value' => :'value'
+        :'value' => :'value',
+        :'label' => :'label'
       }
     end
 
@@ -39,14 +43,15 @@ module Tremendous
     def self.openapi_types
       {
         :'id' => :'String',
-        :'value' => :'String'
+        :'value' => :'String',
+        :'label' => :'String'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'value'
+        :'value',
       ])
     end
 
@@ -71,6 +76,10 @@ module Tremendous
 
       if attributes.key?(:'value')
         self.value = attributes[:'value']
+      end
+
+      if attributes.key?(:'label')
+        self.label = attributes[:'label']
       end
     end
 
@@ -116,7 +125,8 @@ module Tremendous
       return true if self.equal?(o)
       self.class == o.class &&
           id == o.id &&
-          value == o.value
+          value == o.value &&
+          label == o.label
     end
 
     # @see the `==` method
@@ -128,7 +138,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, value].hash
+      [id, value, label].hash
     end
 
     # Builds the object from hash

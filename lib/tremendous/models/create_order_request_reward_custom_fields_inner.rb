@@ -14,40 +14,19 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class ListProducts200ResponseProductsInnerImagesInner
-    # URL to this image
-    attr_accessor :src
+  # Reward custom data for searching, tracking or copy (see [Adding custom fields to orders](https://developers.tremendous.com/reference/using-custom-fields-to-add-custom-data-to-rewards).)
+  class CreateOrderRequestRewardCustomFieldsInner
+    # Tremendous ID of the custom field
+    attr_accessor :id
 
-    # Type of image
-    attr_accessor :type
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
+    # Value of the custom field
+    attr_accessor :value
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'src' => :'src',
-        :'type' => :'type'
+        :'id' => :'id',
+        :'value' => :'value'
       }
     end
 
@@ -59,14 +38,15 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'src' => :'String',
-        :'type' => :'String'
+        :'id' => :'String',
+        :'value' => :'String'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'value'
       ])
     end
 
@@ -74,27 +54,23 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListProducts200ResponseProductsInnerImagesInner` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateOrderRequestRewardCustomFieldsInner` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListProducts200ResponseProductsInnerImagesInner`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateOrderRequestRewardCustomFieldsInner`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'src')
-        self.src = attributes[:'src']
-      else
-        self.src = nil
+      if attributes.key?(:'id')
+        self.id = attributes[:'id']
       end
 
-      if attributes.key?(:'type')
-        self.type = attributes[:'type']
-      else
-        self.type = nil
+      if attributes.key?(:'value')
+        self.value = attributes[:'value']
       end
     end
 
@@ -103,12 +79,9 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @src.nil?
-        invalid_properties.push('invalid value for "src", src cannot be nil.')
-      end
-
-      if @type.nil?
-        invalid_properties.push('invalid value for "type", type cannot be nil.')
+      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
+      if !@id.nil? && @id !~ pattern
+        invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
       end
 
       invalid_properties
@@ -118,21 +91,23 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @src.nil?
-      return false if @type.nil?
-      type_validator = EnumAttributeValidator.new('String', ["card", "logo"])
-      return false unless type_validator.valid?(@type)
+      return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
       true
     end
 
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] type Object to be assigned
-    def type=(type)
-      validator = EnumAttributeValidator.new('String', ["card", "logo"])
-      unless validator.valid?(type)
-        fail ArgumentError, "invalid value for \"type\", must be one of #{validator.allowable_values}."
+    # Custom attribute writer method with validation
+    # @param [Object] id Value to be assigned
+    def id=(id)
+      if id.nil?
+        fail ArgumentError, 'id cannot be nil'
       end
-      @type = type
+
+      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
+      if id !~ pattern
+        fail ArgumentError, "invalid value for \"id\", must conform to the pattern #{pattern}."
+      end
+
+      @id = id
     end
 
     # Checks equality by comparing each attribute.
@@ -140,8 +115,8 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          src == o.src &&
-          type == o.type
+          id == o.id &&
+          value == o.value
     end
 
     # @see the `==` method
@@ -153,7 +128,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [src, type].hash
+      [id, value].hash
     end
 
     # Builds the object from hash

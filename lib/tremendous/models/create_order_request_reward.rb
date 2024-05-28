@@ -63,7 +63,7 @@ module Tremendous
         :'value' => :'ListRewards200ResponseRewardsInnerValue',
         :'recipient' => :'ListRewards200ResponseRewardsInnerRecipient',
         :'deliver_at' => :'Date',
-        :'custom_fields' => :'Array<ListRewards200ResponseRewardsInnerCustomFieldsInner>',
+        :'custom_fields' => :'Array<CreateOrderRequestRewardCustomFieldsInner>',
         :'language' => :'String',
         :'delivery' => :'CreateOrderRequestRewardDelivery'
       }
