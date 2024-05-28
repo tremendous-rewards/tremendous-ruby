@@ -90,8 +90,8 @@ module Tremendous
         :'status' => :'String',
         :'orders' => :'Array<String>',
         :'rewards' => :'Array<String>',
-        :'created_at' => :'Date',
-        :'paid_at' => :'Date'
+        :'created_at' => :'Time',
+        :'paid_at' => :'Time'
       }
     end
 

@@ -14,13 +14,29 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class GetProduct200Response
-    attr_accessor :product
+  # With a campaign you can define the look & feel of how rewards are sent out. It also lets you set the available products (different gift cards, charity, etc.) recipients can choose from. 
+  class CreateCampaignRequest
+    # Name of the campaign
+    attr_accessor :name
+
+    # Description of the campaign
+    attr_accessor :description
+
+    # List of IDs of products (different gift cards, charity, etc.) that are available in this campaign. 
+    attr_accessor :products
+
+    attr_accessor :webpage_style
+
+    attr_accessor :email_style
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'product' => :'product'
+        :'name' => :'name',
+        :'description' => :'description',
+        :'products' => :'products',
+        :'webpage_style' => :'webpage_style',
+        :'email_style' => :'email_style'
       }
     end
 
@@ -32,13 +48,18 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'product' => :'ListProducts200ResponseProductsInner'
+        :'name' => :'String',
+        :'description' => :'String',
+        :'products' => :'Array<String>',
+        :'webpage_style' => :'ListCampaigns200ResponseCampaignsInnerWebpageStyle',
+        :'email_style' => :'ListCampaigns200ResponseCampaignsInnerEmailStyle'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'description',
       ])
     end
 
@@ -46,21 +67,43 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::GetProduct200Response` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateCampaignRequest` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::GetProduct200Response`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateCampaignRequest`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'product')
-        self.product = attributes[:'product']
+      if attributes.key?(:'name')
+        self.name = attributes[:'name']
       else
-        self.product = nil
+        self.name = nil
+      end
+
+      if attributes.key?(:'description')
+        self.description = attributes[:'description']
+      else
+        self.description = nil
+      end
+
+      if attributes.key?(:'products')
+        if (value = attributes[:'products']).is_a?(Array)
+          self.products = value
+        end
+      else
+        self.products = nil
+      end
+
+      if attributes.key?(:'webpage_style')
+        self.webpage_style = attributes[:'webpage_style']
+      end
+
+      if attributes.key?(:'email_style')
+        self.email_style = attributes[:'email_style']
       end
     end
 
@@ -69,8 +112,12 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @product.nil?
-        invalid_properties.push('invalid value for "product", product cannot be nil.')
+      if @name.nil?
+        invalid_properties.push('invalid value for "name", name cannot be nil.')
+      end
+
+      if @products.nil?
+        invalid_properties.push('invalid value for "products", products cannot be nil.')
       end
 
       invalid_properties
@@ -80,7 +127,8 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @product.nil?
+      return false if @name.nil?
+      return false if @products.nil?
       true
     end
 
@@ -89,7 +137,11 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          product == o.product
+          name == o.name &&
+          description == o.description &&
+          products == o.products &&
+          webpage_style == o.webpage_style &&
+          email_style == o.email_style
     end
 
     # @see the `==` method
@@ -101,7 +153,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [product].hash
+      [name, description, products, webpage_style, email_style].hash
     end
 
     # Builds the object from hash
