@@ -5,6 +5,7 @@ lib/tremendous/api_error.rb
 lib/tremendous/configuration.rb
 lib/tremendous/models/balance_transaction.rb
 lib/tremendous/models/campaign.rb
+lib/tremendous/models/campaign_base.rb
 lib/tremendous/models/create_api_key200_response.rb
 lib/tremendous/models/create_campaign201_response.rb
 lib/tremendous/models/create_campaign_request.rb
@@ -61,6 +62,7 @@ lib/tremendous/models/list_campaigns200_response_campaigns_inner_email_style.rb
 lib/tremendous/models/list_campaigns200_response_campaigns_inner_webpage_style.rb
 lib/tremendous/models/list_fields200_response.rb
 lib/tremendous/models/list_fields200_response_fields_inner.rb
+lib/tremendous/models/list_forex_response.rb
 lib/tremendous/models/list_funding_sources200_response.rb
 lib/tremendous/models/list_funding_sources200_response_funding_sources_inner.rb
 lib/tremendous/models/list_funding_sources200_response_funding_sources_inner_meta.rb
@@ -124,5 +126,7 @@ lib/tremendous/models/reward_with_link_delivery.rb
 lib/tremendous/models/reward_without_link.rb
 lib/tremendous/models/reward_without_link_delivery.rb
 lib/tremendous/models/simulate_webhook_request.rb
+lib/tremendous/models/update_campaign.rb
+lib/tremendous/models/update_campaign_request.rb
 lib/tremendous/models/webhook.rb
 lib/tremendous/models/webhook_post.rb

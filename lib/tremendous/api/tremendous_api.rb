@@ -1656,6 +1656,66 @@ module Tremendous
       return data, status_code, headers
     end
 
+    # List exchange rates
+    # Retrieve a list of exchange rates 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :base Base currency code, default is USD.
+    # @return [ListForexResponse]
+    def list_forex(opts = {})
+      data, _status_code, _headers = list_forex_with_http_info(opts)
+      data
+    end
+
+    # List exchange rates
+    # Retrieve a list of exchange rates 
+    # @param [Hash] opts the optional parameters
+    # @option opts [String] :base Base currency code, default is USD.
+    # @return [Array<(ListForexResponse, Integer, Hash)>] ListForexResponse data, response status code and response headers
+    def list_forex_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.list_forex ...'
+      end
+      # resource path
+      local_var_path = '/forex'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'base'] = opts[:'base'] if !opts[:'base'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'ListForexResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.list_forex",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#list_forex\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # List funding sources
     # Retrieve a list of all funding sources available for ordering through the API in your organization's account. 
     # @param [Hash] opts the optional parameters
@@ -2430,20 +2490,20 @@ module Tremendous
 
     # Update campaign
     # @param id [String] ID of the campaign that should be updated
-    # @param create_campaign_request [CreateCampaignRequest] Campaign details
+    # @param update_campaign_request [UpdateCampaignRequest] Campaign details
     # @param [Hash] opts the optional parameters
     # @return [CreateCampaign201Response]
-    def update_campaign(id, create_campaign_request, opts = {})
-      data, _status_code, _headers = update_campaign_with_http_info(id, create_campaign_request, opts)
+    def update_campaign(id, update_campaign_request, opts = {})
+      data, _status_code, _headers = update_campaign_with_http_info(id, update_campaign_request, opts)
       data
     end
 
     # Update campaign
     # @param id [String] ID of the campaign that should be updated
-    # @param create_campaign_request [CreateCampaignRequest] Campaign details
+    # @param update_campaign_request [UpdateCampaignRequest] Campaign details
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreateCampaign201Response, Integer, Hash)>] CreateCampaign201Response data, response status code and response headers
-    def update_campaign_with_http_info(id, create_campaign_request, opts = {})
+    def update_campaign_with_http_info(id, update_campaign_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.update_campaign ...'
       end
@@ -2456,9 +2516,9 @@ module Tremendous
         fail ArgumentError, "invalid value for 'id' when calling TremendousApi.update_campaign, must conform to the pattern #{pattern}."
       end
 
-      # verify the required parameter 'create_campaign_request' is set
-      if @api_client.config.client_side_validation && create_campaign_request.nil?
-        fail ArgumentError, "Missing the required parameter 'create_campaign_request' when calling TremendousApi.update_campaign"
+      # verify the required parameter 'update_campaign_request' is set
+      if @api_client.config.client_side_validation && update_campaign_request.nil?
+        fail ArgumentError, "Missing the required parameter 'update_campaign_request' when calling TremendousApi.update_campaign"
       end
       # resource path
       local_var_path = '/campaigns/{id}'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
@@ -2480,7 +2540,7 @@ module Tremendous
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(create_campaign_request)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(update_campaign_request)
 
       # return_type
       return_type = opts[:debug_return_type] || 'CreateCampaign201Response'
