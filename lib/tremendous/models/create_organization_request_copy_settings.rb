@@ -31,8 +31,11 @@ module Tremendous
     # Copy over the security settings from the current organization to the new organization. Defaults to `true`.
     attr_accessor :security_settings
 
-    # Copy over the users from the current organization to the new organization. Defaults to `false`.
+    # Copy over the users and custom roles from the current organization to the new organization. Defaults to `false`.
     attr_accessor :users
+
+    # Copy over the custom roles from the current organization to the new organization. Custom roles are always copied if `users` is `true`. Defaults to `false`.
+    attr_accessor :custom_roles
 
     # Copy over the fraud prevention settings and rules from the current organization to the new organization. Defaults to `false`.
     attr_accessor :fraud_prevention
@@ -46,6 +49,7 @@ module Tremendous
         :'payment_methods' => :'payment_methods',
         :'security_settings' => :'security_settings',
         :'users' => :'users',
+        :'custom_roles' => :'custom_roles',
         :'fraud_prevention' => :'fraud_prevention'
       }
     end
@@ -64,6 +68,7 @@ module Tremendous
         :'payment_methods' => :'Boolean',
         :'security_settings' => :'Boolean',
         :'users' => :'Boolean',
+        :'custom_roles' => :'Boolean',
         :'fraud_prevention' => :'Boolean'
       }
     end
@@ -125,6 +130,12 @@ module Tremendous
         self.users = false
       end
 
+      if attributes.key?(:'custom_roles')
+        self.custom_roles = attributes[:'custom_roles']
+      else
+        self.custom_roles = false
+      end
+
       if attributes.key?(:'fraud_prevention')
         self.fraud_prevention = attributes[:'fraud_prevention']
       else
@@ -158,6 +169,7 @@ module Tremendous
           payment_methods == o.payment_methods &&
           security_settings == o.security_settings &&
           users == o.users &&
+          custom_roles == o.custom_roles &&
           fraud_prevention == o.fraud_prevention
     end
 
@@ -170,7 +182,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [campaigns, custom_fields, order_approvals, payment_methods, security_settings, users, fraud_prevention].hash
+      [campaigns, custom_fields, order_approvals, payment_methods, security_settings, users, custom_roles, fraud_prevention].hash
     end
 
     # Builds the object from hash
