@@ -14,18 +14,14 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class CreateMember
-    # Email address of the member
-    attr_accessor :email
-
-    # The role ID of the member within the organization. 
-    attr_accessor :role
+  class TestPublicKeyRequest
+    # A JWT token encoded with RS256, signed using the RSA private key corresponding to your public key.
+    attr_accessor :jwt
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'email' => :'email',
-        :'role' => :'role'
+        :'jwt' => :'jwt'
       }
     end
 
@@ -37,8 +33,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'email' => :'String',
-        :'role' => :'String'
+        :'jwt' => :'String'
       }
     end
 
@@ -52,27 +47,21 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateMember` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::TestPublicKeyRequest` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateMember`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::TestPublicKeyRequest`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'email')
-        self.email = attributes[:'email']
+      if attributes.key?(:'jwt')
+        self.jwt = attributes[:'jwt']
       else
-        self.email = nil
-      end
-
-      if attributes.key?(:'role')
-        self.role = attributes[:'role']
-      else
-        self.role = nil
+        self.jwt = nil
       end
     end
 
@@ -81,12 +70,8 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @email.nil?
-        invalid_properties.push('invalid value for "email", email cannot be nil.')
-      end
-
-      if @role.nil?
-        invalid_properties.push('invalid value for "role", role cannot be nil.')
+      if @jwt.nil?
+        invalid_properties.push('invalid value for "jwt", jwt cannot be nil.')
       end
 
       invalid_properties
@@ -96,8 +81,7 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @email.nil?
-      return false if @role.nil?
+      return false if @jwt.nil?
       true
     end
 
@@ -106,8 +90,7 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          email == o.email &&
-          role == o.role
+          jwt == o.jwt
     end
 
     # @see the `==` method
@@ -119,7 +102,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [email, role].hash
+      [jwt].hash
     end
 
     # Builds the object from hash

@@ -279,7 +279,7 @@ module Tremendous
     end
 
     # Create member
-    # Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly. These actions include adding funding sources to the organization, creating Campaigns, and more.  ### Permissions  Members can have one of two roles that determine their permissions within the organization:  1. `MEMBER`: Limited permissions. Can view their own reward and order histories only. 2. `ADMIN`: Update organization settings, invite other members to the organization, and view all member order and reward histories within their organization.  To create members of a sub-organizations [create an API key for that organization](/reference/post_organizations-id-create-api-key) first, then use the new API key in the create member request.  ### Inviting new members  After creating a member, an automatic invite is sent to the email address. If the user is not registered yet, that person will then need to sign up for a Tremendous account.  > ❗️ Automatic invitations are not available in the sandbox > > You must manually use the returned `invite_url` field in the payload instead. 
+    # Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly. These actions include adding funding sources to the organization, creating Campaigns, and more.  ### Permissions  Members can have a role that determine their permissions within the organization. Check the Roles API for the available roles.  To create members of a sub-organizations [create an API key for that organization](/reference/post_organizations-id-create-api-key) first, then use the new API key in the create member request.  ### Inviting new members  After creating a member, an automatic invite is sent to the email address. If the user is not registered yet, that person will then need to sign up for a Tremendous account.  > ❗️ Automatic invitations are not available in the sandbox > > You must manually use the returned `invite_url` field in the payload instead. 
     # @param create_member_request [CreateMemberRequest] Member details
     # @param [Hash] opts the optional parameters
     # @return [CreateMember200Response]
@@ -289,7 +289,7 @@ module Tremendous
     end
 
     # Create member
-    # Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly. These actions include adding funding sources to the organization, creating Campaigns, and more.  ### Permissions  Members can have one of two roles that determine their permissions within the organization:  1. &#x60;MEMBER&#x60;: Limited permissions. Can view their own reward and order histories only. 2. &#x60;ADMIN&#x60;: Update organization settings, invite other members to the organization, and view all member order and reward histories within their organization.  To create members of a sub-organizations [create an API key for that organization](/reference/post_organizations-id-create-api-key) first, then use the new API key in the create member request.  ### Inviting new members  After creating a member, an automatic invite is sent to the email address. If the user is not registered yet, that person will then need to sign up for a Tremendous account.  &gt; ❗️ Automatic invitations are not available in the sandbox &gt; &gt; You must manually use the returned &#x60;invite_url&#x60; field in the payload instead. 
+    # Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly. These actions include adding funding sources to the organization, creating Campaigns, and more.  ### Permissions  Members can have a role that determine their permissions within the organization. Check the Roles API for the available roles.  To create members of a sub-organizations [create an API key for that organization](/reference/post_organizations-id-create-api-key) first, then use the new API key in the create member request.  ### Inviting new members  After creating a member, an automatic invite is sent to the email address. If the user is not registered yet, that person will then need to sign up for a Tremendous account.  &gt; ❗️ Automatic invitations are not available in the sandbox &gt; &gt; You must manually use the returned &#x60;invite_url&#x60; field in the payload instead. 
     # @param create_member_request [CreateMemberRequest] Member details
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreateMember200Response, Integer, Hash)>] CreateMember200Response data, response status code and response headers
@@ -482,6 +482,74 @@ module Tremendous
       return data, status_code, headers
     end
 
+    # Create public key
+    # Creating a public key is the way for your organization to share it with Tremendous.  > 🔒 Generating asymmetric keys >  > **We recommend using [OpenSSL](https://www.openssl.org/).** >  > 1. Generate a private key and a public key in PEM: > `openssl genrsa -out tremendous_key.pem 4096` >  > 2. Extract the public key in PEM format: > `openssl rsa -in tremendous_key.pem -outform PEM -pubout -out tremendous_key.pem.pub` >  > 3. And, before making your request, encode it as a `base64` string: > `base64 -i tremendous_key.pem.pub`  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">public_key</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Base64 encoded (public) PEM file</p> </td></tr>   </tbody> </table>  </div>  
+    # @param create_public_key_request [CreatePublicKeyRequest] Public key details
+    # @param [Hash] opts the optional parameters
+    # @return [CreatePublicKey200Response]
+    def create_public_key(create_public_key_request, opts = {})
+      data, _status_code, _headers = create_public_key_with_http_info(create_public_key_request, opts)
+      data
+    end
+
+    # Create public key
+    # Creating a public key is the way for your organization to share it with Tremendous.  &gt; 🔒 Generating asymmetric keys &gt;  &gt; **We recommend using [OpenSSL](https://www.openssl.org/).** &gt;  &gt; 1. Generate a private key and a public key in PEM: &gt; &#x60;openssl genrsa -out tremendous_key.pem 4096&#x60; &gt;  &gt; 2. Extract the public key in PEM format: &gt; &#x60;openssl rsa -in tremendous_key.pem -outform PEM -pubout -out tremendous_key.pem.pub&#x60; &gt;  &gt; 3. And, before making your request, encode it as a &#x60;base64&#x60; string: &gt; &#x60;base64 -i tremendous_key.pem.pub&#x60;  &lt;div class&#x3D;\&quot;object-schema-request-schema\&quot;&gt;   &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;public_key&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Base64 encoded (public) PEM file&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/div&gt;  
+    # @param create_public_key_request [CreatePublicKeyRequest] Public key details
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(CreatePublicKey200Response, Integer, Hash)>] CreatePublicKey200Response data, response status code and response headers
+    def create_public_key_with_http_info(create_public_key_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.create_public_key ...'
+      end
+      # verify the required parameter 'create_public_key_request' is set
+      if @api_client.config.client_side_validation && create_public_key_request.nil?
+        fail ArgumentError, "Missing the required parameter 'create_public_key_request' when calling TremendousApi.create_public_key"
+      end
+      # resource path
+      local_var_path = '/public_keys'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(create_public_key_request)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CreatePublicKey200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.create_public_key",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#create_public_key\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Create webhook
     # Tremendous uses webhooks as a notification system for various events that happen in your account.  > 📘 Learn more about Webhooks > > Our guide explains everything you need to know about the Tremendous webhooks: > [Read it here](/docs/webhooks-1)  Every organization can define a single webhook endpoint where we send requests to, whenever an event happens.  This endpoint allows you to setup that endpoint. The URL of the endpoint can be changed by making a request to this endpoint again with the new URL.  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">url</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">uri</span></td><td><p>URL the webhook will make requests to</p> </td></tr>   </tbody> </table>  </div>  
     # @param create_webhook_request [CreateWebhookRequest] Webhook details
@@ -552,7 +620,7 @@ module Tremendous
 
     # Delete invoice
     # Removes an invoice. This has no further consequences but is a rather cosmetic operation. 
-    # @param id [String] ID of the invoice that should be retrieved
+    # @param id [String] ID of the invoice that should be removed
     # @param [Hash] opts the optional parameters
     # @return [CreateInvoice200Response]
     def delete_invoices(id, opts = {})
@@ -562,7 +630,7 @@ module Tremendous
 
     # Delete invoice
     # Removes an invoice. This has no further consequences but is a rather cosmetic operation. 
-    # @param id [String] ID of the invoice that should be retrieved
+    # @param id [String] ID of the invoice that should be removed
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreateInvoice200Response, Integer, Hash)>] CreateInvoice200Response data, response status code and response headers
     def delete_invoices_with_http_info(id, opts = {})
@@ -609,6 +677,142 @@ module Tremendous
       data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: TremendousApi#delete_invoices\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Delete public key
+    # Deactivates a public key. Any further attempt to verify a request signature with this key will fail. 
+    # @param id [String] ID of the public key that should be deactivated
+    # @param [Hash] opts the optional parameters
+    # @return [nil]
+    def delete_public_key(id, opts = {})
+      delete_public_key_with_http_info(id, opts)
+      nil
+    end
+
+    # Delete public key
+    # Deactivates a public key. Any further attempt to verify a request signature with this key will fail. 
+    # @param id [String] ID of the public key that should be deactivated
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    def delete_public_key_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.delete_public_key ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling TremendousApi.delete_public_key"
+      end
+      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
+      if @api_client.config.client_side_validation && id !~ pattern
+        fail ArgumentError, "invalid value for 'id' when calling TremendousApi.delete_public_key, must conform to the pattern #{pattern}."
+      end
+
+      # resource path
+      local_var_path = '/public_keys/{id}'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type]
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.delete_public_key",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#delete_public_key\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Delete webhook
+    # > 📘 Learn more about Webhooks > > Our guide explains everything you need to know about the Tremendous webhooks: > [Read it here](/docs/webhooks-1) 
+    # @param id [String] ID of the webhook to delete
+    # @param [Hash] opts the optional parameters
+    # @return [nil]
+    def delete_webhook(id, opts = {})
+      delete_webhook_with_http_info(id, opts)
+      nil
+    end
+
+    # Delete webhook
+    # &gt; 📘 Learn more about Webhooks &gt; &gt; Our guide explains everything you need to know about the Tremendous webhooks: &gt; [Read it here](/docs/webhooks-1) 
+    # @param id [String] ID of the webhook to delete
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    def delete_webhook_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.delete_webhook ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling TremendousApi.delete_webhook"
+      end
+      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
+      if @api_client.config.client_side_validation && id !~ pattern
+        fail ArgumentError, "invalid value for 'id' when calling TremendousApi.delete_webhook, must conform to the pattern #{pattern}."
+      end
+
+      # resource path
+      local_var_path = '/webhooks/{id}'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type]
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.delete_webhook",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#delete_webhook\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -1333,6 +1537,74 @@ module Tremendous
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: TremendousApi#get_product\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Retrieve public key
+    # Retrieve an active public key, identified by the given `id` in the URL. 
+    # @param id [String] ID of the public key that should be retrieved
+    # @param [Hash] opts the optional parameters
+    # @return [CreatePublicKey200Response]
+    def get_public_key(id, opts = {})
+      data, _status_code, _headers = get_public_key_with_http_info(id, opts)
+      data
+    end
+
+    # Retrieve public key
+    # Retrieve an active public key, identified by the given &#x60;id&#x60; in the URL. 
+    # @param id [String] ID of the public key that should be retrieved
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(CreatePublicKey200Response, Integer, Hash)>] CreatePublicKey200Response data, response status code and response headers
+    def get_public_key_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.get_public_key ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling TremendousApi.get_public_key"
+      end
+      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
+      if @api_client.config.client_side_validation && id !~ pattern
+        fail ArgumentError, "invalid value for 'id' when calling TremendousApi.get_public_key, must conform to the pattern #{pattern}."
+      end
+
+      # resource path
+      local_var_path = '/public_keys/{id}'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CreatePublicKey200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.get_public_key",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#get_public_key\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -2088,6 +2360,63 @@ module Tremendous
       return data, status_code, headers
     end
 
+    # List public keys
+    # Fetch a list of active public keys on your account.  > 🚧 Inactive public keys are omitted > > The response does not include inactive public keys. 
+    # @param [Hash] opts the optional parameters
+    # @return [PublicKeysResponse]
+    def list_public_keys(opts = {})
+      data, _status_code, _headers = list_public_keys_with_http_info(opts)
+      data
+    end
+
+    # List public keys
+    # Fetch a list of active public keys on your account.  &gt; 🚧 Inactive public keys are omitted &gt; &gt; The response does not include inactive public keys. 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(PublicKeysResponse, Integer, Hash)>] PublicKeysResponse data, response status code and response headers
+    def list_public_keys_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.list_public_keys ...'
+      end
+      # resource path
+      local_var_path = '/public_keys'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'PublicKeysResponse'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.list_public_keys",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#list_public_keys\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # List rewards
     # Retrieve a list of all created rewards 
     # @param [Hash] opts the optional parameters
@@ -2144,6 +2473,63 @@ module Tremendous
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: TremendousApi#list_rewards\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # List roles
+    # List all available roles in the organization.
+    # @param [Hash] opts the optional parameters
+    # @return [ListRoles200Response]
+    def list_roles(opts = {})
+      data, _status_code, _headers = list_roles_with_http_info(opts)
+      data
+    end
+
+    # List roles
+    # List all available roles in the organization.
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(ListRoles200Response, Integer, Hash)>] ListRoles200Response data, response status code and response headers
+    def list_roles_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.list_roles ...'
+      end
+      # resource path
+      local_var_path = '/roles'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'ListRoles200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.list_roles",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#list_roles\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -2484,6 +2870,85 @@ module Tremendous
       data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: TremendousApi#simulate_webhook\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Test public key
+    # Making a request to this endpoint with a JWT signed with your private key will return a 200 response if the public key is active and the signature  is valid.  > 💡 Testing your integration >  > **You can use [JWT.io](https://jwt.io/) to generate a signed token:** >  > > 1. Select “RS256” in their algorithm dropdown; > 3. Define a JSON payload such as `{ \"foo\": \"bar\" }`; > 4. Fill the “Verify signature” fields with your public and private keys and copy the “Encoded” token. 
+    # @param id [String] ID of the public key to test
+    # @param test_public_key_request [TestPublicKeyRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [nil]
+    def test_public_key(id, test_public_key_request, opts = {})
+      test_public_key_with_http_info(id, test_public_key_request, opts)
+      nil
+    end
+
+    # Test public key
+    # Making a request to this endpoint with a JWT signed with your private key will return a 200 response if the public key is active and the signature  is valid.  &gt; 💡 Testing your integration &gt;  &gt; **You can use [JWT.io](https://jwt.io/) to generate a signed token:** &gt;  &gt; &gt; 1. Select “RS256” in their algorithm dropdown; &gt; 3. Define a JSON payload such as &#x60;{ \&quot;foo\&quot;: \&quot;bar\&quot; }&#x60;; &gt; 4. Fill the “Verify signature” fields with your public and private keys and copy the “Encoded” token. 
+    # @param id [String] ID of the public key to test
+    # @param test_public_key_request [TestPublicKeyRequest] 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
+    def test_public_key_with_http_info(id, test_public_key_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.test_public_key ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling TremendousApi.test_public_key"
+      end
+      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
+      if @api_client.config.client_side_validation && id !~ pattern
+        fail ArgumentError, "invalid value for 'id' when calling TremendousApi.test_public_key, must conform to the pattern #{pattern}."
+      end
+
+      # verify the required parameter 'test_public_key_request' is set
+      if @api_client.config.client_side_validation && test_public_key_request.nil?
+        fail ArgumentError, "Missing the required parameter 'test_public_key_request' when calling TremendousApi.test_public_key"
+      end
+      # resource path
+      local_var_path = '/public_keys/{id}/decode_jwt'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(test_public_key_request)
+
+      # return_type
+      return_type = opts[:debug_return_type]
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.test_public_key",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#test_public_key\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end

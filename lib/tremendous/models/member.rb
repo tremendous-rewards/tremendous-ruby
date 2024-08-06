@@ -27,7 +27,7 @@ module Tremendous
     # Is this member currently active in the organization. If `false`, the member will not be able to access the organization. 
     attr_accessor :active
 
-    # Role of the member within the organization.  <table>   <thead>     <tr>       <th>Role</th>       <th>Description</th>     </tr>   </thead>     <tr>       <td><code>MEMBER</code></td>       <td>Limited permissions. Can view their own reward and order histories only.</td>     </tr>     <tr>       <td><code>ADMIN</code></td>       <td>Update organization settings, invite other members to the organization, and view all member order and reward histories within their organization.</td>     </tr>   <tbody>   </tbody> </table> 
+    # The role ID associated with the member within the organization. 
     attr_accessor :role
 
     # Current status of the member's account.  When creating a member it starts out in the status `INVITED`. As soon as that member open the invitation link and registers an account, the status switches to `REGISTERED`. 
@@ -98,6 +98,7 @@ module Tremendous
     def self.openapi_nullable
       Set.new([
         :'name',
+        :'role',
         :'last_login_at'
       ])
     end
@@ -141,8 +142,6 @@ module Tremendous
 
       if attributes.key?(:'role')
         self.role = attributes[:'role']
-      else
-        self.role = nil
       end
 
       if attributes.key?(:'status')
@@ -178,10 +177,6 @@ module Tremendous
         invalid_properties.push('invalid value for "email", email cannot be nil.')
       end
 
-      if @role.nil?
-        invalid_properties.push('invalid value for "role", role cannot be nil.')
-      end
-
       if @status.nil?
         invalid_properties.push('invalid value for "status", status cannot be nil.')
       end
@@ -196,9 +191,6 @@ module Tremendous
       return false if @id.nil?
       return false if @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
       return false if @email.nil?
-      return false if @role.nil?
-      role_validator = EnumAttributeValidator.new('String', ["MEMBER", "ADMIN"])
-      return false unless role_validator.valid?(@role)
       return false if @status.nil?
       status_validator = EnumAttributeValidator.new('String', ["REGISTERED", "INVITED"])
       return false unless status_validator.valid?(@status)
@@ -218,16 +210,6 @@ module Tremendous
       end
 
       @id = id
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] role Object to be assigned
-    def role=(role)
-      validator = EnumAttributeValidator.new('String', ["MEMBER", "ADMIN"])
-      unless validator.valid?(role)
-        fail ArgumentError, "invalid value for \"role\", must be one of #{validator.allowable_values}."
-      end
-      @role = role
     end
 
     # Custom attribute writer method checking allowed values (enum).

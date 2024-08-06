@@ -14,18 +14,20 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class CreateMember
-    # Email address of the member
-    attr_accessor :email
+  # Each organization member is assigned a role that defines the permissions they have within the organization. 
+  class ListRoles200ResponseRolesInner
+    attr_accessor :id
 
-    # The role ID of the member within the organization. 
-    attr_accessor :role
+    attr_accessor :title
+
+    attr_accessor :description
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'email' => :'email',
-        :'role' => :'role'
+        :'id' => :'id',
+        :'title' => :'title',
+        :'description' => :'description'
       }
     end
 
@@ -37,8 +39,9 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'email' => :'String',
-        :'role' => :'String'
+        :'id' => :'String',
+        :'title' => :'String',
+        :'description' => :'String'
       }
     end
 
@@ -52,27 +55,33 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateMember` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListRoles200ResponseRolesInner` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateMember`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListRoles200ResponseRolesInner`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'email')
-        self.email = attributes[:'email']
+      if attributes.key?(:'id')
+        self.id = attributes[:'id']
       else
-        self.email = nil
+        self.id = nil
       end
 
-      if attributes.key?(:'role')
-        self.role = attributes[:'role']
+      if attributes.key?(:'title')
+        self.title = attributes[:'title']
       else
-        self.role = nil
+        self.title = nil
+      end
+
+      if attributes.key?(:'description')
+        self.description = attributes[:'description']
+      else
+        self.description = nil
       end
     end
 
@@ -81,12 +90,21 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @email.nil?
-        invalid_properties.push('invalid value for "email", email cannot be nil.')
+      if @id.nil?
+        invalid_properties.push('invalid value for "id", id cannot be nil.')
       end
 
-      if @role.nil?
-        invalid_properties.push('invalid value for "role", role cannot be nil.')
+      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
+      if @id !~ pattern
+        invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
+      end
+
+      if @title.nil?
+        invalid_properties.push('invalid value for "title", title cannot be nil.')
+      end
+
+      if @description.nil?
+        invalid_properties.push('invalid value for "description", description cannot be nil.')
       end
 
       invalid_properties
@@ -96,9 +114,26 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @email.nil?
-      return false if @role.nil?
+      return false if @id.nil?
+      return false if @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
+      return false if @title.nil?
+      return false if @description.nil?
       true
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] id Value to be assigned
+    def id=(id)
+      if id.nil?
+        fail ArgumentError, 'id cannot be nil'
+      end
+
+      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
+      if id !~ pattern
+        fail ArgumentError, "invalid value for \"id\", must conform to the pattern #{pattern}."
+      end
+
+      @id = id
     end
 
     # Checks equality by comparing each attribute.
@@ -106,8 +141,9 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          email == o.email &&
-          role == o.role
+          id == o.id &&
+          title == o.title &&
+          description == o.description
     end
 
     # @see the `==` method
@@ -119,7 +155,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [email, role].hash
+      [id, title, description].hash
     end
 
     # Builds the object from hash

@@ -18,30 +18,8 @@ module Tremendous
     # Email address of the member
     attr_accessor :email
 
-    # Role of the member within the organization.  <table>   <thead>     <tr>       <th>Role</th>       <th>Description</th>     </tr>   </thead>     <tr>       <td><code>MEMBER</code></td>       <td>Limited permissions. Can view their own reward and order histories only.</td>     </tr>     <tr>       <td><code>ADMIN</code></td>       <td>Update organization settings, invite other members to the organization, and view all member order and reward histories within their organization.</td>     </tr>   <tbody> </table> 
+    # The role ID of the member within the organization. 
     attr_accessor :role
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -120,19 +98,7 @@ module Tremendous
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @email.nil?
       return false if @role.nil?
-      role_validator = EnumAttributeValidator.new('String', ["MEMBER", "ADMIN"])
-      return false unless role_validator.valid?(@role)
       true
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] role Object to be assigned
-    def role=(role)
-      validator = EnumAttributeValidator.new('String', ["MEMBER", "ADMIN"])
-      unless validator.valid?(role)
-        fail ArgumentError, "invalid value for \"role\", must be one of #{validator.allowable_values}."
-      end
-      @role = role
     end
 
     # Checks equality by comparing each attribute.
