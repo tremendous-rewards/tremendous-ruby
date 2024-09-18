@@ -259,7 +259,7 @@ module Tremendous
           description: "Sandbox environment",
         },
         {
-          url: "https://www.tremendous.com/api/v2",
+          url: "https://api.tremendous.com/api/v2",
           description: "Production environment",
         }
       ]
