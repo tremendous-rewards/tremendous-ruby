@@ -14,63 +14,39 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # An order wraps around the fulfilment of one or more rewards.
-  class CreateOrder200ResponseOrder
-    # Tremendous ID of the order
-    attr_accessor :id
-
-    # Reference for this order, supplied by the customer.  When set, `external_id` makes order idempotent. All requests that use the same `external_id` after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a `201` response code. These responses **fail** to create any further orders.  It also allows for retrieving by `external_id` instead of `id` only. 
-    attr_accessor :external_id
-
+  # A single reward, sent to a recipient. A reward is always part of an order.  Either `products` or `campaign_id` must be specified. 
+  class SingleRewardOrder1Reward
     # ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. 
     attr_accessor :campaign_id
 
-    # Date the order has been created
-    attr_accessor :created_at
+    # List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.  Providing a `products` array will override the products made available by the campaign specified using the `campaign_id` property unless the `products` array is empty. It will _not_ override other campaign attributes, like the message and customization of the look and feel. 
+    attr_accessor :products
 
-    # Execution status of a given order  <table>   <thead>     <tr>       <th>         Status       </th>       <th>         Description       </th>     </tr>   </thead>   <tbody>     <tr>       <td>         <code>           CANCELED         </code>       </td>       <td>         The order and all of its rewards were canceled.       </td>     </tr>     <tr>       <td>         <code>           CART         </code>       </td>       <td>         The order has been created, but hasn't yet been processed.       </td>     </tr>     <tr>       <td>         <code>           EXECUTED         </code>       </td>       <td>         The order has been executed. Payment has been handled and rewards are being delivered (if applicable).       </td>     </tr>     <tr>       <td>         <code>           FAILED         </code>       </td>       <td>         The order could not be processed due to an error. E.g. due to insufficient funds in the account.       </td>     </tr>     <tr>       <td>         <code>           PENDING APPROVAL         </code>       </td>       <td>         The order has been created but needs approval to be executed.       </td>     </tr>     <tr>       <td>         <code>           PENDING INTERNAL PAYMENT APPROVAL         </code>       </td>       <td>         The order has been created but it is under review and requires approval from our team.       </td>     </tr>    </tbody> </table> 
-    attr_accessor :status
+    attr_accessor :value
 
-    attr_accessor :payment
+    attr_accessor :recipient
 
-    # The ID for the invoice associated with this order
-    attr_accessor :invoice_id
+    # Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.
+    attr_accessor :deliver_at
 
-    attr_accessor :rewards
+    attr_accessor :custom_fields
 
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
+    # Set this to translate the redemption experience for this reward. Pass a 2-letter [ISO-639-1 code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) for the desired language. Defaults to `en`. 
+    attr_accessor :language
 
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
+    attr_accessor :delivery
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'id' => :'id',
-        :'external_id' => :'external_id',
         :'campaign_id' => :'campaign_id',
-        :'created_at' => :'created_at',
-        :'status' => :'status',
-        :'payment' => :'payment',
-        :'invoice_id' => :'invoice_id',
-        :'rewards' => :'rewards'
+        :'products' => :'products',
+        :'value' => :'value',
+        :'recipient' => :'recipient',
+        :'deliver_at' => :'deliver_at',
+        :'custom_fields' => :'custom_fields',
+        :'language' => :'language',
+        :'delivery' => :'delivery'
       }
     end
 
@@ -82,21 +58,20 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'id' => :'String',
-        :'external_id' => :'String',
         :'campaign_id' => :'String',
-        :'created_at' => :'Time',
-        :'status' => :'String',
-        :'payment' => :'ListOrders200ResponseOrdersInnerPayment',
-        :'invoice_id' => :'String',
-        :'rewards' => :'Array<CreateOrder200ResponseOrderRewardsInner>'
+        :'products' => :'Array<String>',
+        :'value' => :'ListRewards200ResponseRewardsInnerValue',
+        :'recipient' => :'ListRewards200ResponseRewardsInnerRecipient',
+        :'deliver_at' => :'Date',
+        :'custom_fields' => :'Array<SingleRewardOrder1RewardCustomFieldsInner>',
+        :'language' => :'String',
+        :'delivery' => :'SingleRewardOrder1RewardDelivery'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'external_id',
         :'campaign_id',
       ])
     end
@@ -105,55 +80,51 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateOrder200ResponseOrder` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::SingleRewardOrder1Reward` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateOrder200ResponseOrder`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::SingleRewardOrder1Reward`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
-
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
-      else
-        self.id = nil
-      end
-
-      if attributes.key?(:'external_id')
-        self.external_id = attributes[:'external_id']
-      end
 
       if attributes.key?(:'campaign_id')
         self.campaign_id = attributes[:'campaign_id']
       end
 
-      if attributes.key?(:'created_at')
-        self.created_at = attributes[:'created_at']
-      else
-        self.created_at = nil
-      end
-
-      if attributes.key?(:'status')
-        self.status = attributes[:'status']
-      else
-        self.status = nil
-      end
-
-      if attributes.key?(:'payment')
-        self.payment = attributes[:'payment']
-      end
-
-      if attributes.key?(:'invoice_id')
-        self.invoice_id = attributes[:'invoice_id']
-      end
-
-      if attributes.key?(:'rewards')
-        if (value = attributes[:'rewards']).is_a?(Array)
-          self.rewards = value
+      if attributes.key?(:'products')
+        if (value = attributes[:'products']).is_a?(Array)
+          self.products = value
         end
+      end
+
+      if attributes.key?(:'value')
+        self.value = attributes[:'value']
+      end
+
+      if attributes.key?(:'recipient')
+        self.recipient = attributes[:'recipient']
+      end
+
+      if attributes.key?(:'deliver_at')
+        self.deliver_at = attributes[:'deliver_at']
+      end
+
+      if attributes.key?(:'custom_fields')
+        if (value = attributes[:'custom_fields']).is_a?(Array)
+          self.custom_fields = value
+        end
+      end
+
+      if attributes.key?(:'language')
+        self.language = attributes[:'language']
+      end
+
+      if attributes.key?(:'delivery')
+        self.delivery = attributes[:'delivery']
       end
     end
 
@@ -162,30 +133,13 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @id.nil?
-        invalid_properties.push('invalid value for "id", id cannot be nil.')
-      end
-
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if @id !~ pattern
-        invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
-      end
-
       pattern = Regexp.new(/[A-Z0-9]{4,20}/)
       if !@campaign_id.nil? && @campaign_id !~ pattern
         invalid_properties.push("invalid value for \"campaign_id\", must conform to the pattern #{pattern}.")
       end
 
-      if @created_at.nil?
-        invalid_properties.push('invalid value for "created_at", created_at cannot be nil.')
-      end
-
-      if @status.nil?
-        invalid_properties.push('invalid value for "status", status cannot be nil.')
-      end
-
-      if !@rewards.nil? && @rewards.length < 1
-        invalid_properties.push('invalid value for "rewards", number of items must be greater than or equal to 1.')
+      if !@products.nil? && @products.length < 1
+        invalid_properties.push('invalid value for "products", number of items must be greater than or equal to 1.')
       end
 
       invalid_properties
@@ -195,30 +149,9 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @id.nil?
-      return false if @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
       return false if !@campaign_id.nil? && @campaign_id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      return false if @created_at.nil?
-      return false if @status.nil?
-      status_validator = EnumAttributeValidator.new('String', ["CANCELED", "CART", "EXECUTED", "FAILED", "PENDING APPROVAL", "PENDING INTERNAL PAYMENT APPROVAL"])
-      return false unless status_validator.valid?(@status)
-      return false if !@rewards.nil? && @rewards.length < 1
+      return false if !@products.nil? && @products.length < 1
       true
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] id Value to be assigned
-    def id=(id)
-      if id.nil?
-        fail ArgumentError, 'id cannot be nil'
-      end
-
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if id !~ pattern
-        fail ArgumentError, "invalid value for \"id\", must conform to the pattern #{pattern}."
-      end
-
-      @id = id
     end
 
     # Custom attribute writer method with validation
@@ -232,28 +165,18 @@ module Tremendous
       @campaign_id = campaign_id
     end
 
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] status Object to be assigned
-    def status=(status)
-      validator = EnumAttributeValidator.new('String', ["CANCELED", "CART", "EXECUTED", "FAILED", "PENDING APPROVAL", "PENDING INTERNAL PAYMENT APPROVAL"])
-      unless validator.valid?(status)
-        fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
-      end
-      @status = status
-    end
-
     # Custom attribute writer method with validation
-    # @param [Object] rewards Value to be assigned
-    def rewards=(rewards)
-      if rewards.nil?
-        fail ArgumentError, 'rewards cannot be nil'
+    # @param [Object] products Value to be assigned
+    def products=(products)
+      if products.nil?
+        fail ArgumentError, 'products cannot be nil'
       end
 
-      if rewards.length < 1
-        fail ArgumentError, 'invalid value for "rewards", number of items must be greater than or equal to 1.'
+      if products.length < 1
+        fail ArgumentError, 'invalid value for "products", number of items must be greater than or equal to 1.'
       end
 
-      @rewards = rewards
+      @products = products
     end
 
     # Checks equality by comparing each attribute.
@@ -261,14 +184,14 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          id == o.id &&
-          external_id == o.external_id &&
           campaign_id == o.campaign_id &&
-          created_at == o.created_at &&
-          status == o.status &&
-          payment == o.payment &&
-          invoice_id == o.invoice_id &&
-          rewards == o.rewards
+          products == o.products &&
+          value == o.value &&
+          recipient == o.recipient &&
+          deliver_at == o.deliver_at &&
+          custom_fields == o.custom_fields &&
+          language == o.language &&
+          delivery == o.delivery
     end
 
     # @see the `==` method
@@ -280,7 +203,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, external_id, campaign_id, created_at, status, payment, invoice_id, rewards].hash
+      [campaign_id, products, value, recipient, deliver_at, custom_fields, language, delivery].hash
     end
 
     # Builds the object from hash

@@ -14,37 +14,21 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # Details on how the reward is delivered to the recipient. 
-  class CreateOrderRequestRewardDelivery
-    # How to deliver the reward to the recipient.  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> 
-    attr_accessor :method
+  # An order that contains a single reward. The reward is sent to a single recipient. 
+  class SingleRewardOrder
+    # Reference for this order, supplied by the customer.  When set, `external_id` makes order idempotent. All requests that use the same `external_id` after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a `201` response code. These responses **fail** to create any further orders.  It also allows for retrieving by `external_id` instead of `id` only. 
+    attr_accessor :external_id
 
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
+    attr_accessor :payment
 
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
+    attr_accessor :reward
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'method' => :'method'
+        :'external_id' => :'external_id',
+        :'payment' => :'payment',
+        :'reward' => :'reward'
       }
     end
 
@@ -56,13 +40,16 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'method' => :'String'
+        :'external_id' => :'String',
+        :'payment' => :'SingleRewardOrder1Payment',
+        :'reward' => :'SingleRewardOrderReward'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'external_id',
       ])
     end
 
@@ -70,19 +57,29 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateOrderRequestRewardDelivery` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::SingleRewardOrder` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateOrderRequestRewardDelivery`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::SingleRewardOrder`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'method')
-        self.method = attributes[:'method']
+      if attributes.key?(:'external_id')
+        self.external_id = attributes[:'external_id']
+      end
+
+      if attributes.key?(:'payment')
+        self.payment = attributes[:'payment']
+      end
+
+      if attributes.key?(:'reward')
+        self.reward = attributes[:'reward']
+      else
+        self.reward = nil
       end
     end
 
@@ -91,6 +88,10 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if @reward.nil?
+        invalid_properties.push('invalid value for "reward", reward cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -98,19 +99,8 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      method_validator = EnumAttributeValidator.new('String', ["EMAIL", "LINK", "PHONE"])
-      return false unless method_validator.valid?(@method)
+      return false if @reward.nil?
       true
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] method Object to be assigned
-    def method=(method)
-      validator = EnumAttributeValidator.new('String', ["EMAIL", "LINK", "PHONE"])
-      unless validator.valid?(method)
-        fail ArgumentError, "invalid value for \"method\", must be one of #{validator.allowable_values}."
-      end
-      @method = method
     end
 
     # Checks equality by comparing each attribute.
@@ -118,7 +108,9 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          method == o.method
+          external_id == o.external_id &&
+          payment == o.payment &&
+          reward == o.reward
     end
 
     # @see the `==` method
@@ -130,7 +122,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [method].hash
+      [external_id, payment, reward].hash
     end
 
     # Builds the object from hash

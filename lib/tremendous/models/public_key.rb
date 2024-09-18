@@ -14,7 +14,7 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # To authenticate your requests using asymmetric key pairs (e.g., for signing  embed requests), you need to share your public key with us. The public key  resource allows you to manage your active public keys and track their last  usage. 
+  # To authenticate your requests using asymmetric key pairs (e.g., for signing embed requests), you need to share your public key with us. The public key resource allows you to manage your active public keys and track their last usage. 
   class PublicKey
     attr_accessor :id
 

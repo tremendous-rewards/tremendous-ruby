@@ -94,7 +94,7 @@ module Tremendous
       if attributes.key?(:'currency_code')
         self.currency_code = attributes[:'currency_code']
       else
-        self.currency_code = nil
+        self.currency_code = 'USD'
       end
     end
 
@@ -107,10 +107,6 @@ module Tremendous
         invalid_properties.push('invalid value for "denomination", denomination cannot be nil.')
       end
 
-      if @currency_code.nil?
-        invalid_properties.push('invalid value for "currency_code", currency_code cannot be nil.')
-      end
-
       invalid_properties
     end
 
@@ -119,7 +115,6 @@ module Tremendous
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @denomination.nil?
-      return false if @currency_code.nil?
       currency_code_validator = EnumAttributeValidator.new('String', ["USD", "CAD", "EUR", "AED", "AFN", "ALL", "AMD", "ARS", "AUD", "AZN", "BAM", "BDT", "BGN", "BHD", "BIF", "BND", "BOB", "BRL", "BWP", "BYR", "BZD", "CDF", "CHF", "CLP", "CNY", "COP", "CRC", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EEK", "EGP", "ERN", "ETB", "GBP", "GEL", "GHS", "GNF", "GTQ", "HKD", "HNL", "HRK", "HUF", "IDR", "ILS", "INR", "IQD", "IRR", "ISK", "JMD", "JOD", "JPY", "KES", "KHR", "KRW", "KWD", "KZT", "LBP", "LKR", "LTL", "LVL", "MAD", "MDL", "MGA", "MKD", "MMK", "MOP", "MUR", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SDG", "SEK", "SGD", "SOS", "SYP", "THB", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "UYU", "UZS", "VEF", "VND", "XAF", "XOF", "YER", "ZAR", "ZMK"])
       return false unless currency_code_validator.valid?(@currency_code)
       true

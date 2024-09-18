@@ -14,39 +14,41 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # A single reward, sent to a recipient. A reward is always part of an order.  Either `products` or `campaign_id` must be specified. 
-  class CreateOrder200ResponseOrderRewardsInner
-    # Tremendous ID of the reward
-    attr_accessor :id
+  # If a recipient, device, or IP redeems more than this number of rewards, flag for review.
+  class ReviewRedeemedRewardsCount
+    # The number of redeemed rewards to use as a threshold.
+    attr_accessor :amount
 
-    # Tremendous ID of the order this reward is part of.
-    attr_accessor :order_id
+    # The period, in days, to consider for the count. Use `all_time` to consider any redeemed rewards.
+    attr_accessor :period
 
-    # Date the reward was created
-    attr_accessor :created_at
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
 
-    attr_accessor :value
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
 
-    attr_accessor :recipient
-
-    # Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.
-    attr_accessor :deliver_at
-
-    attr_accessor :custom_fields
-
-    attr_accessor :delivery
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'id' => :'id',
-        :'order_id' => :'order_id',
-        :'created_at' => :'created_at',
-        :'value' => :'value',
-        :'recipient' => :'recipient',
-        :'deliver_at' => :'deliver_at',
-        :'custom_fields' => :'custom_fields',
-        :'delivery' => :'delivery'
+        :'amount' => :'amount',
+        :'period' => :'period'
       }
     end
 
@@ -58,14 +60,8 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'id' => :'String',
-        :'order_id' => :'String',
-        :'created_at' => :'Time',
-        :'value' => :'ListRewards200ResponseRewardsInnerValue',
-        :'recipient' => :'ListRewards200ResponseRewardsInnerRecipient',
-        :'deliver_at' => :'Date',
-        :'custom_fields' => :'Array<ListRewards200ResponseRewardsInnerCustomFieldsInner>',
-        :'delivery' => :'CreateOrder200ResponseOrderRewardsInnerDelivery'
+        :'amount' => :'Integer',
+        :'period' => :'String'
       }
     end
 
@@ -79,49 +75,27 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateOrder200ResponseOrderRewardsInner` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ReviewRedeemedRewardsCount` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateOrder200ResponseOrderRewardsInner`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ReviewRedeemedRewardsCount`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
+      if attributes.key?(:'amount')
+        self.amount = attributes[:'amount']
+      else
+        self.amount = nil
       end
 
-      if attributes.key?(:'order_id')
-        self.order_id = attributes[:'order_id']
-      end
-
-      if attributes.key?(:'created_at')
-        self.created_at = attributes[:'created_at']
-      end
-
-      if attributes.key?(:'value')
-        self.value = attributes[:'value']
-      end
-
-      if attributes.key?(:'recipient')
-        self.recipient = attributes[:'recipient']
-      end
-
-      if attributes.key?(:'deliver_at')
-        self.deliver_at = attributes[:'deliver_at']
-      end
-
-      if attributes.key?(:'custom_fields')
-        if (value = attributes[:'custom_fields']).is_a?(Array)
-          self.custom_fields = value
-        end
-      end
-
-      if attributes.key?(:'delivery')
-        self.delivery = attributes[:'delivery']
+      if attributes.key?(:'period')
+        self.period = attributes[:'period']
+      else
+        self.period = nil
       end
     end
 
@@ -130,19 +104,16 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !@id.nil? && @id !~ pattern
-        invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
+      if @amount.nil?
+        invalid_properties.push('invalid value for "amount", amount cannot be nil.')
       end
 
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !@order_id.nil? && @order_id !~ pattern
-        invalid_properties.push("invalid value for \"order_id\", must conform to the pattern #{pattern}.")
+      if @amount < 1
+        invalid_properties.push('invalid value for "amount", must be greater than or equal to 1.')
       end
 
-      pattern = Regexp.new(/YYYY-MM-DD/)
-      if !@deliver_at.nil? && @deliver_at !~ pattern
-        invalid_properties.push("invalid value for \"deliver_at\", must conform to the pattern #{pattern}.")
+      if @period.nil?
+        invalid_properties.push('invalid value for "period", period cannot be nil.')
       end
 
       invalid_properties
@@ -152,55 +123,36 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      return false if !@order_id.nil? && @order_id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      return false if !@deliver_at.nil? && @deliver_at !~ Regexp.new(/YYYY-MM-DD/)
+      return false if @amount.nil?
+      return false if @amount < 1
+      return false if @period.nil?
+      period_validator = EnumAttributeValidator.new('String', ["7", "30", "90", "120", "365", "all_time"])
+      return false unless period_validator.valid?(@period)
       true
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] id Value to be assigned
-    def id=(id)
-      if id.nil?
-        fail ArgumentError, 'id cannot be nil'
+    # @param [Object] amount Value to be assigned
+    def amount=(amount)
+      if amount.nil?
+        fail ArgumentError, 'amount cannot be nil'
       end
 
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if id !~ pattern
-        fail ArgumentError, "invalid value for \"id\", must conform to the pattern #{pattern}."
+      if amount < 1
+        fail ArgumentError, 'invalid value for "amount", must be greater than or equal to 1.'
       end
 
-      @id = id
+      @amount = amount
     end
 
-    # Custom attribute writer method with validation
-    # @param [Object] order_id Value to be assigned
-    def order_id=(order_id)
-      if order_id.nil?
-        fail ArgumentError, 'order_id cannot be nil'
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] period Object to be assigned
+    def period=(period)
+      validator = EnumAttributeValidator.new('String', ["7", "30", "90", "120", "365", "all_time"])
+      unless validator.valid?(period)
+        fail ArgumentError, "invalid value for \"period\", must be one of #{validator.allowable_values}."
       end
-
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if order_id !~ pattern
-        fail ArgumentError, "invalid value for \"order_id\", must conform to the pattern #{pattern}."
-      end
-
-      @order_id = order_id
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] deliver_at Value to be assigned
-    def deliver_at=(deliver_at)
-      if deliver_at.nil?
-        fail ArgumentError, 'deliver_at cannot be nil'
-      end
-
-      pattern = Regexp.new(/YYYY-MM-DD/)
-      if deliver_at !~ pattern
-        fail ArgumentError, "invalid value for \"deliver_at\", must conform to the pattern #{pattern}."
-      end
-
-      @deliver_at = deliver_at
+      @period = period
     end
 
     # Checks equality by comparing each attribute.
@@ -208,14 +160,8 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          id == o.id &&
-          order_id == o.order_id &&
-          created_at == o.created_at &&
-          value == o.value &&
-          recipient == o.recipient &&
-          deliver_at == o.deliver_at &&
-          custom_fields == o.custom_fields &&
-          delivery == o.delivery
+          amount == o.amount &&
+          period == o.period
     end
 
     # @see the `==` method
@@ -227,7 +173,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, order_id, created_at, value, recipient, deliver_at, custom_fields, delivery].hash
+      [amount, period].hash
     end
 
     # Builds the object from hash

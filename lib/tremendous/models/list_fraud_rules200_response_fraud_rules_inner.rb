@@ -14,16 +14,13 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # Details on how the reward is delivered to the recipient. 
-  class DeliveryDetailsWithLink
-    # How to deliver the reward to the recipient.  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> 
-    attr_accessor :method
+  # An active fraud rule
+  class ListFraudRules200ResponseFraudRulesInner
+    # * `review_country` - Flags when the recipient's IP country matches the criteria in the rule * `review_ip` - Flags when recipient's IP matches one in the list * `review_email` - Flags when the recipient's email matches one in the list * `review_redeemed_rewards_count` - Flags when the recipient redeemed more than the number of rewards specified in the config * `review_redeemed_rewards_amount` - Flags when the recipient redeemed more than the total amount specified in the config * `review_multiple_emails` - Flags when recipient's device or account has multiple emails associated * `review_vpn` - Flags when VPN is suspected * `review_tremendous_flag_list` - Flags rewards when redemption attributes match at least one criteria defined by the Tremendous flag list * `review_previously_blocked_recipients` - Flags rewards when the recipient has been blocked before * `allow_ip` - Releases a reward when a recipient's IP matches one in the list * `allow_email` - Releases a reward when the recipient's email matches one in the list 
+    attr_accessor :rule_type
 
-    # Current status of the delivery of the reward:  * `SCHEDULED` - Reward is scheduled for delivery and will be delivered soon. * `FAILED` - Delivery of reward failed (e.g. email bounced). * `SUCCEEDED` - Reward was successfully delivered (email or text message delivered or reward link opened). * `PENDING` - Delivery is pending but not yet scheduled. 
-    attr_accessor :status
-
-    # Link to redeem the reward at. You need to deliver this link to the recipient.  Only available for rewards for which the `method` for delivery is set to `LINK`. 
-    attr_accessor :link
+    # The configuration associated with the rule. The properties allowed depend on the type of rule. This property is only present for rules that require configuration. 
+    attr_accessor :config
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -50,9 +47,8 @@ module Tremendous
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'method' => :'method',
-        :'status' => :'status',
-        :'link' => :'link'
+        :'rule_type' => :'rule_type',
+        :'config' => :'config'
       }
     end
 
@@ -64,15 +60,15 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'method' => :'String',
-        :'status' => :'String',
-        :'link' => :'String'
+        :'rule_type' => :'String',
+        :'config' => :'Object'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'config'
       ])
     end
 
@@ -80,31 +76,23 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::DeliveryDetailsWithLink` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListFraudRules200ResponseFraudRulesInner` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::DeliveryDetailsWithLink`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListFraudRules200ResponseFraudRulesInner`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'method')
-        self.method = attributes[:'method']
-      else
-        self.method = nil
+      if attributes.key?(:'rule_type')
+        self.rule_type = attributes[:'rule_type']
       end
 
-      if attributes.key?(:'status')
-        self.status = attributes[:'status']
-      else
-        self.status = nil
-      end
-
-      if attributes.key?(:'link')
-        self.link = attributes[:'link']
+      if attributes.key?(:'config')
+        self.config = attributes[:'config']
       end
     end
 
@@ -113,14 +101,6 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @method.nil?
-        invalid_properties.push('invalid value for "method", method cannot be nil.')
-      end
-
-      if @status.nil?
-        invalid_properties.push('invalid value for "status", status cannot be nil.')
-      end
-
       invalid_properties
     end
 
@@ -128,33 +108,19 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @method.nil?
-      method_validator = EnumAttributeValidator.new('String', ["EMAIL", "LINK", "PHONE"])
-      return false unless method_validator.valid?(@method)
-      return false if @status.nil?
-      status_validator = EnumAttributeValidator.new('String', ["SCHEDULED", "FAILED", "SUCCEEDED", "PENDING"])
-      return false unless status_validator.valid?(@status)
+      rule_type_validator = EnumAttributeValidator.new('String', ["review_country", "review_ip", "review_email", "review_redeemed_rewards_count", "review_redeemed_rewards_amount", "review_multiple_emails", "review_vpn", "review_tremendous_flag_list", "review_previously_blocked_recipients", "allow_ip", "allow_email"])
+      return false unless rule_type_validator.valid?(@rule_type)
       true
     end
 
     # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] method Object to be assigned
-    def method=(method)
-      validator = EnumAttributeValidator.new('String', ["EMAIL", "LINK", "PHONE"])
-      unless validator.valid?(method)
-        fail ArgumentError, "invalid value for \"method\", must be one of #{validator.allowable_values}."
+    # @param [Object] rule_type Object to be assigned
+    def rule_type=(rule_type)
+      validator = EnumAttributeValidator.new('String', ["review_country", "review_ip", "review_email", "review_redeemed_rewards_count", "review_redeemed_rewards_amount", "review_multiple_emails", "review_vpn", "review_tremendous_flag_list", "review_previously_blocked_recipients", "allow_ip", "allow_email"])
+      unless validator.valid?(rule_type)
+        fail ArgumentError, "invalid value for \"rule_type\", must be one of #{validator.allowable_values}."
       end
-      @method = method
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] status Object to be assigned
-    def status=(status)
-      validator = EnumAttributeValidator.new('String', ["SCHEDULED", "FAILED", "SUCCEEDED", "PENDING"])
-      unless validator.valid?(status)
-        fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
-      end
-      @status = status
+      @rule_type = rule_type
     end
 
     # Checks equality by comparing each attribute.
@@ -162,9 +128,8 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          method == o.method &&
-          status == o.status &&
-          link == o.link
+          rule_type == o.rule_type &&
+          config == o.config
     end
 
     # @see the `==` method
@@ -176,7 +141,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [method, status, link].hash
+      [rule_type, config].hash
     end
 
     # Builds the object from hash

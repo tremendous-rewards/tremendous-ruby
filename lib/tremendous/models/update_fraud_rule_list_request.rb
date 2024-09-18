@@ -14,12 +14,11 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class RewardValue
-    # Amount of the reward
-    attr_accessor :denomination
+  class UpdateFraudRuleListRequest
+    # * `add` - append the list to the same key of the current configuration * `remove` - remove the entries in the list from the same key of the current configuration 
+    attr_accessor :operation
 
-    # Currency of the reward
-    attr_accessor :currency_code
+    attr_accessor :config
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -46,8 +45,8 @@ module Tremendous
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'denomination' => :'denomination',
-        :'currency_code' => :'currency_code'
+        :'operation' => :'operation',
+        :'config' => :'config'
       }
     end
 
@@ -59,8 +58,8 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'denomination' => :'Float',
-        :'currency_code' => :'String'
+        :'operation' => :'String',
+        :'config' => :'UpdateFraudRuleListRequestConfig'
       }
     end
 
@@ -74,27 +73,27 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::RewardValue` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::UpdateFraudRuleListRequest` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::RewardValue`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::UpdateFraudRuleListRequest`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'denomination')
-        self.denomination = attributes[:'denomination']
+      if attributes.key?(:'operation')
+        self.operation = attributes[:'operation']
       else
-        self.denomination = nil
+        self.operation = nil
       end
 
-      if attributes.key?(:'currency_code')
-        self.currency_code = attributes[:'currency_code']
+      if attributes.key?(:'config')
+        self.config = attributes[:'config']
       else
-        self.currency_code = 'USD'
+        self.config = nil
       end
     end
 
@@ -103,8 +102,12 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @denomination.nil?
-        invalid_properties.push('invalid value for "denomination", denomination cannot be nil.')
+      if @operation.nil?
+        invalid_properties.push('invalid value for "operation", operation cannot be nil.')
+      end
+
+      if @config.nil?
+        invalid_properties.push('invalid value for "config", config cannot be nil.')
       end
 
       invalid_properties
@@ -114,20 +117,21 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @denomination.nil?
-      currency_code_validator = EnumAttributeValidator.new('String', ["USD", "CAD", "EUR", "AED", "AFN", "ALL", "AMD", "ARS", "AUD", "AZN", "BAM", "BDT", "BGN", "BHD", "BIF", "BND", "BOB", "BRL", "BWP", "BYR", "BZD", "CDF", "CHF", "CLP", "CNY", "COP", "CRC", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EEK", "EGP", "ERN", "ETB", "GBP", "GEL", "GHS", "GNF", "GTQ", "HKD", "HNL", "HRK", "HUF", "IDR", "ILS", "INR", "IQD", "IRR", "ISK", "JMD", "JOD", "JPY", "KES", "KHR", "KRW", "KWD", "KZT", "LBP", "LKR", "LTL", "LVL", "MAD", "MDL", "MGA", "MKD", "MMK", "MOP", "MUR", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SDG", "SEK", "SGD", "SOS", "SYP", "THB", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "UYU", "UZS", "VEF", "VND", "XAF", "XOF", "YER", "ZAR", "ZMK"])
-      return false unless currency_code_validator.valid?(@currency_code)
+      return false if @operation.nil?
+      operation_validator = EnumAttributeValidator.new('String', ["add", "remove"])
+      return false unless operation_validator.valid?(@operation)
+      return false if @config.nil?
       true
     end
 
     # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] currency_code Object to be assigned
-    def currency_code=(currency_code)
-      validator = EnumAttributeValidator.new('String', ["USD", "CAD", "EUR", "AED", "AFN", "ALL", "AMD", "ARS", "AUD", "AZN", "BAM", "BDT", "BGN", "BHD", "BIF", "BND", "BOB", "BRL", "BWP", "BYR", "BZD", "CDF", "CHF", "CLP", "CNY", "COP", "CRC", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EEK", "EGP", "ERN", "ETB", "GBP", "GEL", "GHS", "GNF", "GTQ", "HKD", "HNL", "HRK", "HUF", "IDR", "ILS", "INR", "IQD", "IRR", "ISK", "JMD", "JOD", "JPY", "KES", "KHR", "KRW", "KWD", "KZT", "LBP", "LKR", "LTL", "LVL", "MAD", "MDL", "MGA", "MKD", "MMK", "MOP", "MUR", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SDG", "SEK", "SGD", "SOS", "SYP", "THB", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "UYU", "UZS", "VEF", "VND", "XAF", "XOF", "YER", "ZAR", "ZMK"])
-      unless validator.valid?(currency_code)
-        fail ArgumentError, "invalid value for \"currency_code\", must be one of #{validator.allowable_values}."
+    # @param [Object] operation Object to be assigned
+    def operation=(operation)
+      validator = EnumAttributeValidator.new('String', ["add", "remove"])
+      unless validator.valid?(operation)
+        fail ArgumentError, "invalid value for \"operation\", must be one of #{validator.allowable_values}."
       end
-      @currency_code = currency_code
+      @operation = operation
     end
 
     # Checks equality by comparing each attribute.
@@ -135,8 +139,8 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          denomination == o.denomination &&
-          currency_code == o.currency_code
+          operation == o.operation &&
+          config == o.config
     end
 
     # @see the `==` method
@@ -148,7 +152,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [denomination, currency_code].hash
+      [operation, config].hash
     end
 
     # Builds the object from hash

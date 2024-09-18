@@ -140,11 +140,6 @@ module Tremendous
         invalid_properties.push("invalid value for \"order_id\", must conform to the pattern #{pattern}.")
       end
 
-      pattern = Regexp.new(/YYYY-MM-DD/)
-      if !@deliver_at.nil? && @deliver_at !~ pattern
-        invalid_properties.push("invalid value for \"deliver_at\", must conform to the pattern #{pattern}.")
-      end
-
       invalid_properties
     end
 
@@ -154,7 +149,6 @@ module Tremendous
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
       return false if !@order_id.nil? && @order_id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      return false if !@deliver_at.nil? && @deliver_at !~ Regexp.new(/YYYY-MM-DD/)
       true
     end
 
@@ -186,21 +180,6 @@ module Tremendous
       end
 
       @order_id = order_id
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] deliver_at Value to be assigned
-    def deliver_at=(deliver_at)
-      if deliver_at.nil?
-        fail ArgumentError, 'deliver_at cannot be nil'
-      end
-
-      pattern = Regexp.new(/YYYY-MM-DD/)
-      if deliver_at !~ pattern
-        fail ArgumentError, "invalid value for \"deliver_at\", must conform to the pattern #{pattern}."
-      end
-
-      @deliver_at = deliver_at
     end
 
     # Checks equality by comparing each attribute.

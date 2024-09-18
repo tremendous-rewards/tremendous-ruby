@@ -14,20 +14,27 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class OrderForCreate
-    # Reference for this order, supplied by the customer.  When set, `external_id` makes order idempotent. All requests that use the same `external_id` after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a `201` response code. These responses **fail** to create any further orders.  It also allows for retrieving by `external_id` instead of `id` only. 
-    attr_accessor :external_id
+  # The related rewards associated with the fraud review.
+  class GetFraudReview200ResponseFraudReviewRelatedRewards
+    # The IDs of rewards that have similar attributes to the fraud reward. A maximum of 100 IDs is returned. 
+    attr_accessor :ids
 
-    attr_accessor :payment
+    # How many related rewards were found in total.
+    attr_accessor :count
 
-    attr_accessor :reward
+    # How many related rewards have been blocked.
+    attr_accessor :blocked_count
+
+    # Total amount claimed by the related rewards (in USD).
+    attr_accessor :aggregated_value
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'external_id' => :'external_id',
-        :'payment' => :'payment',
-        :'reward' => :'reward'
+        :'ids' => :'ids',
+        :'count' => :'count',
+        :'blocked_count' => :'blocked_count',
+        :'aggregated_value' => :'aggregated_value'
       }
     end
 
@@ -39,16 +46,16 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'external_id' => :'String',
-        :'payment' => :'CreateOrderRequestPayment',
-        :'reward' => :'OrderForCreateReward'
+        :'ids' => :'Array<String>',
+        :'count' => :'Float',
+        :'blocked_count' => :'Float',
+        :'aggregated_value' => :'Float'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'external_id',
       ])
     end
 
@@ -56,31 +63,33 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::OrderForCreate` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::GetFraudReview200ResponseFraudReviewRelatedRewards` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::OrderForCreate`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::GetFraudReview200ResponseFraudReviewRelatedRewards`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'external_id')
-        self.external_id = attributes[:'external_id']
+      if attributes.key?(:'ids')
+        if (value = attributes[:'ids']).is_a?(Array)
+          self.ids = value
+        end
       end
 
-      if attributes.key?(:'payment')
-        self.payment = attributes[:'payment']
-      else
-        self.payment = nil
+      if attributes.key?(:'count')
+        self.count = attributes[:'count']
       end
 
-      if attributes.key?(:'reward')
-        self.reward = attributes[:'reward']
-      else
-        self.reward = nil
+      if attributes.key?(:'blocked_count')
+        self.blocked_count = attributes[:'blocked_count']
+      end
+
+      if attributes.key?(:'aggregated_value')
+        self.aggregated_value = attributes[:'aggregated_value']
       end
     end
 
@@ -89,12 +98,16 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @payment.nil?
-        invalid_properties.push('invalid value for "payment", payment cannot be nil.')
+      if !@count.nil? && @count < 0
+        invalid_properties.push('invalid value for "count", must be greater than or equal to 0.')
       end
 
-      if @reward.nil?
-        invalid_properties.push('invalid value for "reward", reward cannot be nil.')
+      if !@blocked_count.nil? && @blocked_count < 0
+        invalid_properties.push('invalid value for "blocked_count", must be greater than or equal to 0.')
+      end
+
+      if !@aggregated_value.nil? && @aggregated_value < 0
+        invalid_properties.push('invalid value for "aggregated_value", must be greater than or equal to 0.')
       end
 
       invalid_properties
@@ -104,9 +117,52 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @payment.nil?
-      return false if @reward.nil?
+      return false if !@count.nil? && @count < 0
+      return false if !@blocked_count.nil? && @blocked_count < 0
+      return false if !@aggregated_value.nil? && @aggregated_value < 0
       true
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] count Value to be assigned
+    def count=(count)
+      if count.nil?
+        fail ArgumentError, 'count cannot be nil'
+      end
+
+      if count < 0
+        fail ArgumentError, 'invalid value for "count", must be greater than or equal to 0.'
+      end
+
+      @count = count
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] blocked_count Value to be assigned
+    def blocked_count=(blocked_count)
+      if blocked_count.nil?
+        fail ArgumentError, 'blocked_count cannot be nil'
+      end
+
+      if blocked_count < 0
+        fail ArgumentError, 'invalid value for "blocked_count", must be greater than or equal to 0.'
+      end
+
+      @blocked_count = blocked_count
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] aggregated_value Value to be assigned
+    def aggregated_value=(aggregated_value)
+      if aggregated_value.nil?
+        fail ArgumentError, 'aggregated_value cannot be nil'
+      end
+
+      if aggregated_value < 0
+        fail ArgumentError, 'invalid value for "aggregated_value", must be greater than or equal to 0.'
+      end
+
+      @aggregated_value = aggregated_value
     end
 
     # Checks equality by comparing each attribute.
@@ -114,9 +170,10 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          external_id == o.external_id &&
-          payment == o.payment &&
-          reward == o.reward
+          ids == o.ids &&
+          count == o.count &&
+          blocked_count == o.blocked_count &&
+          aggregated_value == o.aggregated_value
     end
 
     # @see the `==` method
@@ -128,7 +185,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [external_id, payment, reward].hash
+      [ids, count, blocked_count, aggregated_value].hash
     end
 
     # Builds the object from hash

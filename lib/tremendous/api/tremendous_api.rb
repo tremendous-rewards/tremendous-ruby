@@ -23,7 +23,7 @@ module Tremendous
     # Approves an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
     # @param id [String] ID of the order that should be approved. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead.
     # @param [Hash] opts the optional parameters
-    # @return [CreateOrder201Response]
+    # @return [CreateOrder200Response]
     def approve_order(id, opts = {})
       data, _status_code, _headers = approve_order_with_http_info(id, opts)
       data
@@ -33,7 +33,7 @@ module Tremendous
     # Approves an order that is pending review, identified by the given &#x60;id&#x60; in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable &#39;Allow approvals via API&#39; via the organization&#39;&#39;s &#39;Order Approvals&#39; settings from the Tremendous dashboard. 
     # @param id [String] ID of the order that should be approved. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead.
     # @param [Hash] opts the optional parameters
-    # @return [Array<(CreateOrder201Response, Integer, Hash)>] CreateOrder201Response data, response status code and response headers
+    # @return [Array<(CreateOrder200Response, Integer, Hash)>] CreateOrder200Response data, response status code and response headers
     def approve_order_with_http_info(id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.approve_order ...'
@@ -65,7 +65,7 @@ module Tremendous
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CreateOrder201Response'
+      return_type = opts[:debug_return_type] || 'CreateOrder200Response'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']
@@ -83,6 +83,69 @@ module Tremendous
       data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: TremendousApi#approve_order\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Block fraud review
+    # Completes the fraud review identified by the given `id` in the URL, and blocks the reward. The reward is canceled and the amount refunded. 
+    # @param id [String] The ID of the reward that should be blocked.
+    # @param [Hash] opts the optional parameters
+    # @return [GetFraudReview200Response]
+    def block_fraud_review(id, opts = {})
+      data, _status_code, _headers = block_fraud_review_with_http_info(id, opts)
+      data
+    end
+
+    # Block fraud review
+    # Completes the fraud review identified by the given &#x60;id&#x60; in the URL, and blocks the reward. The reward is canceled and the amount refunded. 
+    # @param id [String] The ID of the reward that should be blocked.
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(GetFraudReview200Response, Integer, Hash)>] GetFraudReview200Response data, response status code and response headers
+    def block_fraud_review_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.block_fraud_review ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling TremendousApi.block_fraud_review"
+      end
+      # resource path
+      local_var_path = '/fraud_reviews/{id}/block'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'GetFraudReview200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.block_fraud_review",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#block_fraud_review\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -618,6 +681,74 @@ module Tremendous
       return data, status_code, headers
     end
 
+    # Delete fraud rule
+    # Deletes the rule of the type passed in the URL. 
+    # @param rule_type [String] The rule type to create or update.
+    # @param [Hash] opts the optional parameters
+    # @return [DeleteFraudRule200Response]
+    def delete_fraud_rule(rule_type, opts = {})
+      data, _status_code, _headers = delete_fraud_rule_with_http_info(rule_type, opts)
+      data
+    end
+
+    # Delete fraud rule
+    # Deletes the rule of the type passed in the URL. 
+    # @param rule_type [String] The rule type to create or update.
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(DeleteFraudRule200Response, Integer, Hash)>] DeleteFraudRule200Response data, response status code and response headers
+    def delete_fraud_rule_with_http_info(rule_type, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.delete_fraud_rule ...'
+      end
+      # verify the required parameter 'rule_type' is set
+      if @api_client.config.client_side_validation && rule_type.nil?
+        fail ArgumentError, "Missing the required parameter 'rule_type' when calling TremendousApi.delete_fraud_rule"
+      end
+      # verify enum value
+      allowable_values = ["review_country", "review_ip", "review_email", "review_redeemed_rewards_count", "review_redeemed_rewards_amount", "review_multiple_emails", "review_vpn", "review_tremendous_flag_list", "review_previously_blocked_recipients", "allow_ip", "allow_email"]
+      if @api_client.config.client_side_validation && !allowable_values.include?(rule_type)
+        fail ArgumentError, "invalid value for \"rule_type\", must be one of #{allowable_values}"
+      end
+      # resource path
+      local_var_path = '/fraud_rules/{rule_type}'.sub('{' + 'rule_type' + '}', CGI.escape(rule_type.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'DeleteFraudRule200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.delete_fraud_rule",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#delete_fraud_rule\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Delete invoice
     # Removes an invoice. This has no further consequences but is a rather cosmetic operation. 
     # @param id [String] ID of the invoice that should be removed
@@ -943,6 +1074,81 @@ module Tremendous
       return data, status_code, headers
     end
 
+    # Configure fraud rule
+    # Configure a fraud rule of the type passed in the URL. If a rule of the same type already exists, it will be overwritten. 
+    # @param rule_type [String] The rule type to create or update.
+    # @param [Hash] opts the optional parameters
+    # @option opts [FraudRuleRequest] :fraud_rule_request Rules &#x60;review_multiple_emails&#x60;, &#x60;review_vpn&#x60;, &#x60;review_tremendous_flaglist&#x60;, and &#x60;review_previously_blocked_recipients&#x60; require no body.
+    # @return [FraudRule200Response]
+    def fraud_rule(rule_type, opts = {})
+      data, _status_code, _headers = fraud_rule_with_http_info(rule_type, opts)
+      data
+    end
+
+    # Configure fraud rule
+    # Configure a fraud rule of the type passed in the URL. If a rule of the same type already exists, it will be overwritten. 
+    # @param rule_type [String] The rule type to create or update.
+    # @param [Hash] opts the optional parameters
+    # @option opts [FraudRuleRequest] :fraud_rule_request Rules &#x60;review_multiple_emails&#x60;, &#x60;review_vpn&#x60;, &#x60;review_tremendous_flaglist&#x60;, and &#x60;review_previously_blocked_recipients&#x60; require no body.
+    # @return [Array<(FraudRule200Response, Integer, Hash)>] FraudRule200Response data, response status code and response headers
+    def fraud_rule_with_http_info(rule_type, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.fraud_rule ...'
+      end
+      # verify the required parameter 'rule_type' is set
+      if @api_client.config.client_side_validation && rule_type.nil?
+        fail ArgumentError, "Missing the required parameter 'rule_type' when calling TremendousApi.fraud_rule"
+      end
+      # verify enum value
+      allowable_values = ["review_country", "review_ip", "review_email", "review_redeemed_rewards_count", "review_redeemed_rewards_amount", "review_multiple_emails", "review_vpn", "review_tremendous_flag_list", "review_previously_blocked_recipients", "allow_ip", "allow_email"]
+      if @api_client.config.client_side_validation && !allowable_values.include?(rule_type)
+        fail ArgumentError, "invalid value for \"rule_type\", must be one of #{allowable_values}"
+      end
+      # resource path
+      local_var_path = '/fraud_rules/{rule_type}'.sub('{' + 'rule_type' + '}', CGI.escape(rule_type.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'fraud_rule_request'])
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'FraudRule200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.fraud_rule",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#fraud_rule\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Generate a reward URL
     # Generate a redemption link for the reward identified by the `id` in the URL 
     # @param id [String] ID of the reward
@@ -1143,6 +1349,69 @@ module Tremendous
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: TremendousApi#get_campaign\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Retrieve single fraud review
+    # Retrieve the details of a fraud review, identified by the given `id` in the URL. Returns additional details regarding the fraud review beyond what's provided in the List fraud reviews endpoint, including reward details, recipient geolocation, etc. 
+    # @param id [String] The ID of the reward that should be retrieved.
+    # @param [Hash] opts the optional parameters
+    # @return [GetFraudReview200Response]
+    def get_fraud_review(id, opts = {})
+      data, _status_code, _headers = get_fraud_review_with_http_info(id, opts)
+      data
+    end
+
+    # Retrieve single fraud review
+    # Retrieve the details of a fraud review, identified by the given &#x60;id&#x60; in the URL. Returns additional details regarding the fraud review beyond what&#39;s provided in the List fraud reviews endpoint, including reward details, recipient geolocation, etc. 
+    # @param id [String] The ID of the reward that should be retrieved.
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(GetFraudReview200Response, Integer, Hash)>] GetFraudReview200Response data, response status code and response headers
+    def get_fraud_review_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.get_fraud_review ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling TremendousApi.get_fraud_review"
+      end
+      # resource path
+      local_var_path = '/fraud_reviews/{id}'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'GetFraudReview200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.get_fraud_review",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#get_fraud_review\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -1348,7 +1617,7 @@ module Tremendous
     # Retrieve the order, identified by the given `id` in the URL 
     # @param id [String] ID of the order that should be retrieved. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead. 
     # @param [Hash] opts the optional parameters
-    # @return [CreateOrder201Response]
+    # @return [CreateOrder200Response]
     def get_order(id, opts = {})
       data, _status_code, _headers = get_order_with_http_info(id, opts)
       data
@@ -1358,7 +1627,7 @@ module Tremendous
     # Retrieve the order, identified by the given &#x60;id&#x60; in the URL 
     # @param id [String] ID of the order that should be retrieved. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead. 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(CreateOrder201Response, Integer, Hash)>] CreateOrder201Response data, response status code and response headers
+    # @return [Array<(CreateOrder200Response, Integer, Hash)>] CreateOrder200Response data, response status code and response headers
     def get_order_with_http_info(id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.get_order ...'
@@ -1385,7 +1654,7 @@ module Tremendous
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CreateOrder201Response'
+      return_type = opts[:debug_return_type] || 'CreateOrder200Response'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']
@@ -1984,6 +2253,157 @@ module Tremendous
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: TremendousApi#list_forex\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # List fraud reviews
+    # Retrieve a paginated list of all fraud reviews. List can be filtered by status, created or redeemed at dates. 
+    # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :offset Offsets the returned list by the given number of records. The returned fraud reviews are ordered (and offsetted) by their redemption date (DESC).
+    # @option opts [Integer] :limit Limits the number of fraud reviews listed. The default value is 10.
+    # @option opts [String] :status Filters fraud reviews by status. Can be &#x60;flagged&#x60;, &#x60;blocked&#x60; or &#x60;released&#x60;.
+    # @option opts [String] :created_at_gte Return results where the created_at field is &gt;&#x3D; to the supplied value. Expects an ISO 8601 datetime.
+    # @option opts [String] :created_at_lte Return results where the created_at field is &lt;&#x3D; to the supplied value. Expects an ISO 8601 datetime.
+    # @option opts [String] :redeemed_at_gte Return results where the redeemed_at field is &gt;&#x3D; the supplied value. Expects an ISO 8601 datetime.
+    # @option opts [String] :redeemed_at_lte Return results where the redeemed_at field is &lt;&#x3D; the supplied value. Expects an ISO 8601 datetime.
+    # @return [ListFraudReviews200Response]
+    def list_fraud_reviews(opts = {})
+      data, _status_code, _headers = list_fraud_reviews_with_http_info(opts)
+      data
+    end
+
+    # List fraud reviews
+    # Retrieve a paginated list of all fraud reviews. List can be filtered by status, created or redeemed at dates. 
+    # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :offset Offsets the returned list by the given number of records. The returned fraud reviews are ordered (and offsetted) by their redemption date (DESC).
+    # @option opts [Integer] :limit Limits the number of fraud reviews listed. The default value is 10.
+    # @option opts [String] :status Filters fraud reviews by status. Can be &#x60;flagged&#x60;, &#x60;blocked&#x60; or &#x60;released&#x60;.
+    # @option opts [String] :created_at_gte Return results where the created_at field is &gt;&#x3D; to the supplied value. Expects an ISO 8601 datetime.
+    # @option opts [String] :created_at_lte Return results where the created_at field is &lt;&#x3D; to the supplied value. Expects an ISO 8601 datetime.
+    # @option opts [String] :redeemed_at_gte Return results where the redeemed_at field is &gt;&#x3D; the supplied value. Expects an ISO 8601 datetime.
+    # @option opts [String] :redeemed_at_lte Return results where the redeemed_at field is &lt;&#x3D; the supplied value. Expects an ISO 8601 datetime.
+    # @return [Array<(ListFraudReviews200Response, Integer, Hash)>] ListFraudReviews200Response data, response status code and response headers
+    def list_fraud_reviews_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.list_fraud_reviews ...'
+      end
+      if @api_client.config.client_side_validation && !opts[:'offset'].nil? && opts[:'offset'] < 0
+        fail ArgumentError, 'invalid value for "opts[:"offset"]" when calling TremendousApi.list_fraud_reviews, must be greater than or equal to 0.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] > 100
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling TremendousApi.list_fraud_reviews, must be smaller than or equal to 100.'
+      end
+
+      if @api_client.config.client_side_validation && !opts[:'limit'].nil? && opts[:'limit'] < 1
+        fail ArgumentError, 'invalid value for "opts[:"limit"]" when calling TremendousApi.list_fraud_reviews, must be greater than or equal to 1.'
+      end
+
+      allowable_values = ["flagged", "blocked", "released"]
+      if @api_client.config.client_side_validation && opts[:'status'] && !allowable_values.include?(opts[:'status'])
+        fail ArgumentError, "invalid value for \"status\", must be one of #{allowable_values}"
+      end
+      # resource path
+      local_var_path = '/fraud_reviews'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'status'] = opts[:'status'] if !opts[:'status'].nil?
+      query_params[:'created_at[gte]'] = opts[:'created_at_gte'] if !opts[:'created_at_gte'].nil?
+      query_params[:'created_at[lte]'] = opts[:'created_at_lte'] if !opts[:'created_at_lte'].nil?
+      query_params[:'redeemed_at[gte]'] = opts[:'redeemed_at_gte'] if !opts[:'redeemed_at_gte'].nil?
+      query_params[:'redeemed_at[lte]'] = opts[:'redeemed_at_lte'] if !opts[:'redeemed_at_lte'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'ListFraudReviews200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.list_fraud_reviews",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#list_fraud_reviews\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # List fraud rules
+    # List active fraud rules associated with the organization tied to your API key. 
+    # @param [Hash] opts the optional parameters
+    # @return [ListFraudRules200Response]
+    def list_fraud_rules(opts = {})
+      data, _status_code, _headers = list_fraud_rules_with_http_info(opts)
+      data
+    end
+
+    # List fraud rules
+    # List active fraud rules associated with the organization tied to your API key. 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(ListFraudRules200Response, Integer, Hash)>] ListFraudRules200Response data, response status code and response headers
+    def list_fraud_rules_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.list_fraud_rules ...'
+      end
+      # resource path
+      local_var_path = '/fraud_rules'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'ListFraudRules200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.list_fraud_rules",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#list_fraud_rules\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -2663,7 +3083,7 @@ module Tremendous
     # Rejects an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
     # @param id [String] ID of the order that should be rejected. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead.
     # @param [Hash] opts the optional parameters
-    # @return [CreateOrder201Response]
+    # @return [CreateOrder200Response]
     def reject_order(id, opts = {})
       data, _status_code, _headers = reject_order_with_http_info(id, opts)
       data
@@ -2673,7 +3093,7 @@ module Tremendous
     # Rejects an order that is pending review, identified by the given &#x60;id&#x60; in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable &#39;Allow approvals via API&#39; via the organization&#39;&#39;s &#39;Order Approvals&#39; settings from the Tremendous dashboard. 
     # @param id [String] ID of the order that should be rejected. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead.
     # @param [Hash] opts the optional parameters
-    # @return [Array<(CreateOrder201Response, Integer, Hash)>] CreateOrder201Response data, response status code and response headers
+    # @return [Array<(CreateOrder200Response, Integer, Hash)>] CreateOrder200Response data, response status code and response headers
     def reject_order_with_http_info(id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.reject_order ...'
@@ -2705,7 +3125,7 @@ module Tremendous
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CreateOrder201Response'
+      return_type = opts[:debug_return_type] || 'CreateOrder200Response'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']
@@ -2723,6 +3143,69 @@ module Tremendous
       data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: TremendousApi#reject_order\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Release fraud review
+    # Completes the fraud review identified by the given `id` in the URL, and releases the associated reward to the recipient. 
+    # @param id [String] The ID of the reward that should be released.
+    # @param [Hash] opts the optional parameters
+    # @return [GetFraudReview200Response]
+    def release_fraud_review(id, opts = {})
+      data, _status_code, _headers = release_fraud_review_with_http_info(id, opts)
+      data
+    end
+
+    # Release fraud review
+    # Completes the fraud review identified by the given &#x60;id&#x60; in the URL, and releases the associated reward to the recipient. 
+    # @param id [String] The ID of the reward that should be released.
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(GetFraudReview200Response, Integer, Hash)>] GetFraudReview200Response data, response status code and response headers
+    def release_fraud_review_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.release_fraud_review ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling TremendousApi.release_fraud_review"
+      end
+      # resource path
+      local_var_path = '/fraud_reviews/{id}/release'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'GetFraudReview200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.release_fraud_review",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#release_fraud_review\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -3026,6 +3509,85 @@ module Tremendous
       data, status_code, headers = @api_client.call_api(:PUT, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: TremendousApi#update_campaign\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Update fraud rule list
+    # Use this endpoint to modify a list associated with an already-configured rule. Add and remove operations supported.  For example, to append new IPs to the `review_ip` rule, a valid JSON body would be: ```json   {     \"operation\": \"add\",     \"config\": {       \"ips\": [\"123.123.123.123\"]     }   } ``` 
+    # @param rule_type [String] The rule type to create or update.
+    # @param update_fraud_rule_list_request [UpdateFraudRuleListRequest] The lists to add or remove from the current configuration
+    # @param [Hash] opts the optional parameters
+    # @return [UpdateFraudRuleList200Response]
+    def update_fraud_rule_list(rule_type, update_fraud_rule_list_request, opts = {})
+      data, _status_code, _headers = update_fraud_rule_list_with_http_info(rule_type, update_fraud_rule_list_request, opts)
+      data
+    end
+
+    # Update fraud rule list
+    # Use this endpoint to modify a list associated with an already-configured rule. Add and remove operations supported.  For example, to append new IPs to the &#x60;review_ip&#x60; rule, a valid JSON body would be: &#x60;&#x60;&#x60;json   {     \&quot;operation\&quot;: \&quot;add\&quot;,     \&quot;config\&quot;: {       \&quot;ips\&quot;: [\&quot;123.123.123.123\&quot;]     }   } &#x60;&#x60;&#x60; 
+    # @param rule_type [String] The rule type to create or update.
+    # @param update_fraud_rule_list_request [UpdateFraudRuleListRequest] The lists to add or remove from the current configuration
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(UpdateFraudRuleList200Response, Integer, Hash)>] UpdateFraudRuleList200Response data, response status code and response headers
+    def update_fraud_rule_list_with_http_info(rule_type, update_fraud_rule_list_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.update_fraud_rule_list ...'
+      end
+      # verify the required parameter 'rule_type' is set
+      if @api_client.config.client_side_validation && rule_type.nil?
+        fail ArgumentError, "Missing the required parameter 'rule_type' when calling TremendousApi.update_fraud_rule_list"
+      end
+      # verify enum value
+      allowable_values = ["review_country", "review_ip", "review_email", "allow_ip", "allow_email"]
+      if @api_client.config.client_side_validation && !allowable_values.include?(rule_type)
+        fail ArgumentError, "invalid value for \"rule_type\", must be one of #{allowable_values}"
+      end
+      # verify the required parameter 'update_fraud_rule_list_request' is set
+      if @api_client.config.client_side_validation && update_fraud_rule_list_request.nil?
+        fail ArgumentError, "Missing the required parameter 'update_fraud_rule_list_request' when calling TremendousApi.update_fraud_rule_list"
+      end
+      # resource path
+      local_var_path = '/fraud_rules/{rule_type}/update_list'.sub('{' + 'rule_type' + '}', CGI.escape(rule_type.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json'])
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(update_fraud_rule_list_request)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'UpdateFraudRuleList200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.update_fraud_rule_list",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#update_fraud_rule_list\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end

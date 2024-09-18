@@ -14,12 +14,12 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class RewardValue
-    # Amount of the reward
-    attr_accessor :denomination
+  class FraudConfigRedeemedRewardsCount
+    # The number of redeemed rewards to use as a threshold.
+    attr_accessor :amount
 
-    # Currency of the reward
-    attr_accessor :currency_code
+    # The period, in days, to consider for the count. Use `all_time` to consider any redeemed rewards.
+    attr_accessor :period
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -46,8 +46,8 @@ module Tremendous
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'denomination' => :'denomination',
-        :'currency_code' => :'currency_code'
+        :'amount' => :'amount',
+        :'period' => :'period'
       }
     end
 
@@ -59,8 +59,8 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'denomination' => :'Float',
-        :'currency_code' => :'String'
+        :'amount' => :'Integer',
+        :'period' => :'String'
       }
     end
 
@@ -74,27 +74,27 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::RewardValue` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::FraudConfigRedeemedRewardsCount` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::RewardValue`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::FraudConfigRedeemedRewardsCount`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'denomination')
-        self.denomination = attributes[:'denomination']
+      if attributes.key?(:'amount')
+        self.amount = attributes[:'amount']
       else
-        self.denomination = nil
+        self.amount = nil
       end
 
-      if attributes.key?(:'currency_code')
-        self.currency_code = attributes[:'currency_code']
+      if attributes.key?(:'period')
+        self.period = attributes[:'period']
       else
-        self.currency_code = 'USD'
+        self.period = nil
       end
     end
 
@@ -103,8 +103,16 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @denomination.nil?
-        invalid_properties.push('invalid value for "denomination", denomination cannot be nil.')
+      if @amount.nil?
+        invalid_properties.push('invalid value for "amount", amount cannot be nil.')
+      end
+
+      if @amount < 1
+        invalid_properties.push('invalid value for "amount", must be greater than or equal to 1.')
+      end
+
+      if @period.nil?
+        invalid_properties.push('invalid value for "period", period cannot be nil.')
       end
 
       invalid_properties
@@ -114,20 +122,36 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @denomination.nil?
-      currency_code_validator = EnumAttributeValidator.new('String', ["USD", "CAD", "EUR", "AED", "AFN", "ALL", "AMD", "ARS", "AUD", "AZN", "BAM", "BDT", "BGN", "BHD", "BIF", "BND", "BOB", "BRL", "BWP", "BYR", "BZD", "CDF", "CHF", "CLP", "CNY", "COP", "CRC", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EEK", "EGP", "ERN", "ETB", "GBP", "GEL", "GHS", "GNF", "GTQ", "HKD", "HNL", "HRK", "HUF", "IDR", "ILS", "INR", "IQD", "IRR", "ISK", "JMD", "JOD", "JPY", "KES", "KHR", "KRW", "KWD", "KZT", "LBP", "LKR", "LTL", "LVL", "MAD", "MDL", "MGA", "MKD", "MMK", "MOP", "MUR", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SDG", "SEK", "SGD", "SOS", "SYP", "THB", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "UYU", "UZS", "VEF", "VND", "XAF", "XOF", "YER", "ZAR", "ZMK"])
-      return false unless currency_code_validator.valid?(@currency_code)
+      return false if @amount.nil?
+      return false if @amount < 1
+      return false if @period.nil?
+      period_validator = EnumAttributeValidator.new('String', ["7", "30", "90", "120", "365", "all_time"])
+      return false unless period_validator.valid?(@period)
       true
     end
 
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] currency_code Object to be assigned
-    def currency_code=(currency_code)
-      validator = EnumAttributeValidator.new('String', ["USD", "CAD", "EUR", "AED", "AFN", "ALL", "AMD", "ARS", "AUD", "AZN", "BAM", "BDT", "BGN", "BHD", "BIF", "BND", "BOB", "BRL", "BWP", "BYR", "BZD", "CDF", "CHF", "CLP", "CNY", "COP", "CRC", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EEK", "EGP", "ERN", "ETB", "GBP", "GEL", "GHS", "GNF", "GTQ", "HKD", "HNL", "HRK", "HUF", "IDR", "ILS", "INR", "IQD", "IRR", "ISK", "JMD", "JOD", "JPY", "KES", "KHR", "KRW", "KWD", "KZT", "LBP", "LKR", "LTL", "LVL", "MAD", "MDL", "MGA", "MKD", "MMK", "MOP", "MUR", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SDG", "SEK", "SGD", "SOS", "SYP", "THB", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "UYU", "UZS", "VEF", "VND", "XAF", "XOF", "YER", "ZAR", "ZMK"])
-      unless validator.valid?(currency_code)
-        fail ArgumentError, "invalid value for \"currency_code\", must be one of #{validator.allowable_values}."
+    # Custom attribute writer method with validation
+    # @param [Object] amount Value to be assigned
+    def amount=(amount)
+      if amount.nil?
+        fail ArgumentError, 'amount cannot be nil'
       end
-      @currency_code = currency_code
+
+      if amount < 1
+        fail ArgumentError, 'invalid value for "amount", must be greater than or equal to 1.'
+      end
+
+      @amount = amount
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] period Object to be assigned
+    def period=(period)
+      validator = EnumAttributeValidator.new('String', ["7", "30", "90", "120", "365", "all_time"])
+      unless validator.valid?(period)
+        fail ArgumentError, "invalid value for \"period\", must be one of #{validator.allowable_values}."
+      end
+      @period = period
     end
 
     # Checks equality by comparing each attribute.
@@ -135,8 +159,8 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          denomination == o.denomination &&
-          currency_code == o.currency_code
+          amount == o.amount &&
+          period == o.period
     end
 
     # @see the `==` method
@@ -148,7 +172,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [denomination, currency_code].hash
+      [amount, period].hash
     end
 
     # Builds the object from hash

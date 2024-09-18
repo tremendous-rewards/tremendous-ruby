@@ -15,7 +15,7 @@ require 'time'
 
 module Tremendous
   # A single reward, sent to a recipient. A reward is always part of an order.  Either `products` or `campaign_id` must be specified. 
-  class OrderForCreateReward
+  class SingleRewardOrderReward
     # Tremendous ID of the reward
     attr_accessor :id
 
@@ -80,7 +80,7 @@ module Tremendous
         :'deliver_at' => :'Date',
         :'custom_fields' => :'Array<RewardBaseCustomFieldsInner>',
         :'language' => :'String',
-        :'delivery' => :'CreateOrderRequestRewardDelivery'
+        :'delivery' => :'SingleRewardOrder1RewardDelivery'
       }
     end
 
@@ -95,13 +95,13 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::OrderForCreateReward` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::SingleRewardOrderReward` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::OrderForCreateReward`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::SingleRewardOrderReward`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
@@ -179,11 +179,6 @@ module Tremendous
         invalid_properties.push('invalid value for "products", number of items must be greater than or equal to 1.')
       end
 
-      pattern = Regexp.new(/YYYY-MM-DD/)
-      if !@deliver_at.nil? && @deliver_at !~ pattern
-        invalid_properties.push("invalid value for \"deliver_at\", must conform to the pattern #{pattern}.")
-      end
-
       invalid_properties
     end
 
@@ -195,7 +190,6 @@ module Tremendous
       return false if !@order_id.nil? && @order_id !~ Regexp.new(/[A-Z0-9]{4,20}/)
       return false if !@campaign_id.nil? && @campaign_id !~ Regexp.new(/[A-Z0-9]{4,20}/)
       return false if !@products.nil? && @products.length < 1
-      return false if !@deliver_at.nil? && @deliver_at !~ Regexp.new(/YYYY-MM-DD/)
       true
     end
 
@@ -252,21 +246,6 @@ module Tremendous
       end
 
       @products = products
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] deliver_at Value to be assigned
-    def deliver_at=(deliver_at)
-      if deliver_at.nil?
-        fail ArgumentError, 'deliver_at cannot be nil'
-      end
-
-      pattern = Regexp.new(/YYYY-MM-DD/)
-      if deliver_at !~ pattern
-        fail ArgumentError, "invalid value for \"deliver_at\", must conform to the pattern #{pattern}."
-      end
-
-      @deliver_at = deliver_at
     end
 
     # Checks equality by comparing each attribute.

@@ -14,39 +14,23 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # A single reward, sent to a recipient. A reward is always part of an order.  Either `products` or `campaign_id` must be specified. 
-  class CreateOrderRequestReward
-    # ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. 
-    attr_accessor :campaign_id
+  # The Geo location, based on the recipient's IP.
+  class GetFraudReview200ResponseFraudReviewGeo
+    # The recipient's IP.
+    attr_accessor :ip
 
-    # List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.  Providing a `products` array will override the products made available by the campaign specified using the `campaign_id` property unless the `products` array is empty. It will _not_ override other campaign attributes, like the message and customization of the look and feel. 
-    attr_accessor :products
+    # The country code (ISO-3166 alpha-2 character code) linked to the recipient's IP.
+    attr_accessor :country
 
-    attr_accessor :value
-
-    attr_accessor :recipient
-
-    # Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.
-    attr_accessor :deliver_at
-
-    attr_accessor :custom_fields
-
-    # Set this to translate the redemption experience for this reward. Pass a 2-letter [ISO-639-1 code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) for the desired language. Defaults to `en`. 
-    attr_accessor :language
-
-    attr_accessor :delivery
+    # The city associated with the recipient's IP.
+    attr_accessor :city
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'campaign_id' => :'campaign_id',
-        :'products' => :'products',
-        :'value' => :'value',
-        :'recipient' => :'recipient',
-        :'deliver_at' => :'deliver_at',
-        :'custom_fields' => :'custom_fields',
-        :'language' => :'language',
-        :'delivery' => :'delivery'
+        :'ip' => :'ip',
+        :'country' => :'country',
+        :'city' => :'city'
       }
     end
 
@@ -58,21 +42,15 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'campaign_id' => :'String',
-        :'products' => :'Array<String>',
-        :'value' => :'ListRewards200ResponseRewardsInnerValue',
-        :'recipient' => :'ListRewards200ResponseRewardsInnerRecipient',
-        :'deliver_at' => :'Date',
-        :'custom_fields' => :'Array<CreateOrderRequestRewardCustomFieldsInner>',
-        :'language' => :'String',
-        :'delivery' => :'CreateOrderRequestRewardDelivery'
+        :'ip' => :'String',
+        :'country' => :'String',
+        :'city' => :'String'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'campaign_id',
       ])
     end
 
@@ -80,51 +58,27 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateOrderRequestReward` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::GetFraudReview200ResponseFraudReviewGeo` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateOrderRequestReward`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::GetFraudReview200ResponseFraudReviewGeo`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'campaign_id')
-        self.campaign_id = attributes[:'campaign_id']
+      if attributes.key?(:'ip')
+        self.ip = attributes[:'ip']
       end
 
-      if attributes.key?(:'products')
-        if (value = attributes[:'products']).is_a?(Array)
-          self.products = value
-        end
+      if attributes.key?(:'country')
+        self.country = attributes[:'country']
       end
 
-      if attributes.key?(:'value')
-        self.value = attributes[:'value']
-      end
-
-      if attributes.key?(:'recipient')
-        self.recipient = attributes[:'recipient']
-      end
-
-      if attributes.key?(:'deliver_at')
-        self.deliver_at = attributes[:'deliver_at']
-      end
-
-      if attributes.key?(:'custom_fields')
-        if (value = attributes[:'custom_fields']).is_a?(Array)
-          self.custom_fields = value
-        end
-      end
-
-      if attributes.key?(:'language')
-        self.language = attributes[:'language']
-      end
-
-      if attributes.key?(:'delivery')
-        self.delivery = attributes[:'delivery']
+      if attributes.key?(:'city')
+        self.city = attributes[:'city']
       end
     end
 
@@ -133,20 +87,6 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !@campaign_id.nil? && @campaign_id !~ pattern
-        invalid_properties.push("invalid value for \"campaign_id\", must conform to the pattern #{pattern}.")
-      end
-
-      if !@products.nil? && @products.length < 1
-        invalid_properties.push('invalid value for "products", number of items must be greater than or equal to 1.')
-      end
-
-      pattern = Regexp.new(/YYYY-MM-DD/)
-      if !@deliver_at.nil? && @deliver_at !~ pattern
-        invalid_properties.push("invalid value for \"deliver_at\", must conform to the pattern #{pattern}.")
-      end
-
       invalid_properties
     end
 
@@ -154,50 +94,7 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if !@campaign_id.nil? && @campaign_id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      return false if !@products.nil? && @products.length < 1
-      return false if !@deliver_at.nil? && @deliver_at !~ Regexp.new(/YYYY-MM-DD/)
       true
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] campaign_id Value to be assigned
-    def campaign_id=(campaign_id)
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !campaign_id.nil? && campaign_id !~ pattern
-        fail ArgumentError, "invalid value for \"campaign_id\", must conform to the pattern #{pattern}."
-      end
-
-      @campaign_id = campaign_id
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] products Value to be assigned
-    def products=(products)
-      if products.nil?
-        fail ArgumentError, 'products cannot be nil'
-      end
-
-      if products.length < 1
-        fail ArgumentError, 'invalid value for "products", number of items must be greater than or equal to 1.'
-      end
-
-      @products = products
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] deliver_at Value to be assigned
-    def deliver_at=(deliver_at)
-      if deliver_at.nil?
-        fail ArgumentError, 'deliver_at cannot be nil'
-      end
-
-      pattern = Regexp.new(/YYYY-MM-DD/)
-      if deliver_at !~ pattern
-        fail ArgumentError, "invalid value for \"deliver_at\", must conform to the pattern #{pattern}."
-      end
-
-      @deliver_at = deliver_at
     end
 
     # Checks equality by comparing each attribute.
@@ -205,14 +102,9 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          campaign_id == o.campaign_id &&
-          products == o.products &&
-          value == o.value &&
-          recipient == o.recipient &&
-          deliver_at == o.deliver_at &&
-          custom_fields == o.custom_fields &&
-          language == o.language &&
-          delivery == o.delivery
+          ip == o.ip &&
+          country == o.country &&
+          city == o.city
     end
 
     # @see the `==` method
@@ -224,7 +116,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [campaign_id, products, value, recipient, deliver_at, custom_fields, language, delivery].hash
+      [ip, country, city].hash
     end
 
     # Builds the object from hash

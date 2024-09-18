@@ -66,6 +66,8 @@ module Tremendous
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'sender_name',
+        :'subject_line',
         :'logo_image_url',
         :'logo_image_height_px',
         :'logo_background_color',
