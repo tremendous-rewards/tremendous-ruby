@@ -15,7 +15,7 @@ require 'time'
 
 module Tremendous
   # An order wraps around the fulfilment of one or more rewards.
-  class OrderWithLink
+  class SingleRewardOrderWithoutLinkOrder
     # Tremendous ID of the order
     attr_accessor :id
 
@@ -36,7 +36,7 @@ module Tremendous
     # The ID for the invoice associated with this order
     attr_accessor :invoice_id
 
-    attr_accessor :rewards
+    attr_accessor :reward
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -70,7 +70,7 @@ module Tremendous
         :'status' => :'status',
         :'payment' => :'payment',
         :'invoice_id' => :'invoice_id',
-        :'rewards' => :'rewards'
+        :'reward' => :'reward'
       }
     end
 
@@ -89,7 +89,7 @@ module Tremendous
         :'status' => :'String',
         :'payment' => :'OrderBasePayment',
         :'invoice_id' => :'String',
-        :'rewards' => :'Array<OrderWithLinkRewardsInner>'
+        :'reward' => :'OrderWithoutLinkReward'
       }
     end
 
@@ -105,13 +105,13 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::OrderWithLink` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::SingleRewardOrderWithoutLinkOrder` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::OrderWithLink`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::SingleRewardOrderWithoutLinkOrder`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
@@ -150,10 +150,8 @@ module Tremendous
         self.invoice_id = attributes[:'invoice_id']
       end
 
-      if attributes.key?(:'rewards')
-        if (value = attributes[:'rewards']).is_a?(Array)
-          self.rewards = value
-        end
+      if attributes.key?(:'reward')
+        self.reward = attributes[:'reward']
       end
     end
 
@@ -184,10 +182,6 @@ module Tremendous
         invalid_properties.push('invalid value for "status", status cannot be nil.')
       end
 
-      if !@rewards.nil? && @rewards.length < 1
-        invalid_properties.push('invalid value for "rewards", number of items must be greater than or equal to 1.')
-      end
-
       invalid_properties
     end
 
@@ -202,7 +196,6 @@ module Tremendous
       return false if @status.nil?
       status_validator = EnumAttributeValidator.new('String', ["CANCELED", "CART", "EXECUTED", "FAILED", "PENDING APPROVAL", "PENDING INTERNAL PAYMENT APPROVAL"])
       return false unless status_validator.valid?(@status)
-      return false if !@rewards.nil? && @rewards.length < 1
       true
     end
 
@@ -242,20 +235,6 @@ module Tremendous
       @status = status
     end
 
-    # Custom attribute writer method with validation
-    # @param [Object] rewards Value to be assigned
-    def rewards=(rewards)
-      if rewards.nil?
-        fail ArgumentError, 'rewards cannot be nil'
-      end
-
-      if rewards.length < 1
-        fail ArgumentError, 'invalid value for "rewards", number of items must be greater than or equal to 1.'
-      end
-
-      @rewards = rewards
-    end
-
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -268,7 +247,7 @@ module Tremendous
           status == o.status &&
           payment == o.payment &&
           invoice_id == o.invoice_id &&
-          rewards == o.rewards
+          reward == o.reward
     end
 
     # @see the `==` method
@@ -280,7 +259,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, external_id, campaign_id, created_at, status, payment, invoice_id, rewards].hash
+      [id, external_id, campaign_id, created_at, status, payment, invoice_id, reward].hash
     end
 
     # Builds the object from hash

@@ -14,40 +14,14 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class RewardValue
-    # Amount of the reward
-    attr_accessor :denomination
-
-    # Currency of the reward
-    attr_accessor :currency_code
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
+  class SingleRewardOrder1Payment
+    # Tremendous ID of the funding source that will be used to pay for the order. Use `balance` to use your Tremendous's balance.
+    attr_accessor :funding_source_id
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'denomination' => :'denomination',
-        :'currency_code' => :'currency_code'
+        :'funding_source_id' => :'funding_source_id'
       }
     end
 
@@ -59,8 +33,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'denomination' => :'Float',
-        :'currency_code' => :'String'
+        :'funding_source_id' => :'String'
       }
     end
 
@@ -74,27 +47,21 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::RewardValue` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::SingleRewardOrder1Payment` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::RewardValue`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::SingleRewardOrder1Payment`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'denomination')
-        self.denomination = attributes[:'denomination']
+      if attributes.key?(:'funding_source_id')
+        self.funding_source_id = attributes[:'funding_source_id']
       else
-        self.denomination = nil
-      end
-
-      if attributes.key?(:'currency_code')
-        self.currency_code = attributes[:'currency_code']
-      else
-        self.currency_code = 'USD'
+        self.funding_source_id = nil
       end
     end
 
@@ -103,8 +70,8 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @denomination.nil?
-        invalid_properties.push('invalid value for "denomination", denomination cannot be nil.')
+      if @funding_source_id.nil?
+        invalid_properties.push('invalid value for "funding_source_id", funding_source_id cannot be nil.')
       end
 
       invalid_properties
@@ -114,20 +81,8 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @denomination.nil?
-      currency_code_validator = EnumAttributeValidator.new('String', ["USD", "CAD", "EUR", "AED", "AFN", "ALL", "AMD", "ARS", "AUD", "AZN", "BAM", "BDT", "BGN", "BHD", "BIF", "BND", "BOB", "BRL", "BWP", "BYR", "BZD", "CDF", "CHF", "CLP", "CNY", "COP", "CRC", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EEK", "EGP", "ERN", "ETB", "GBP", "GEL", "GHS", "GNF", "GTQ", "HKD", "HNL", "HRK", "HUF", "IDR", "ILS", "INR", "IQD", "IRR", "ISK", "JMD", "JOD", "JPY", "KES", "KHR", "KRW", "KWD", "KZT", "LBP", "LKR", "LTL", "LVL", "MAD", "MDL", "MGA", "MKD", "MMK", "MOP", "MUR", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SDG", "SEK", "SGD", "SOS", "SYP", "THB", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "UYU", "UZS", "VEF", "VND", "XAF", "XOF", "YER", "ZAR", "ZMK"])
-      return false unless currency_code_validator.valid?(@currency_code)
+      return false if @funding_source_id.nil?
       true
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] currency_code Object to be assigned
-    def currency_code=(currency_code)
-      validator = EnumAttributeValidator.new('String', ["USD", "CAD", "EUR", "AED", "AFN", "ALL", "AMD", "ARS", "AUD", "AZN", "BAM", "BDT", "BGN", "BHD", "BIF", "BND", "BOB", "BRL", "BWP", "BYR", "BZD", "CDF", "CHF", "CLP", "CNY", "COP", "CRC", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EEK", "EGP", "ERN", "ETB", "GBP", "GEL", "GHS", "GNF", "GTQ", "HKD", "HNL", "HRK", "HUF", "IDR", "ILS", "INR", "IQD", "IRR", "ISK", "JMD", "JOD", "JPY", "KES", "KHR", "KRW", "KWD", "KZT", "LBP", "LKR", "LTL", "LVL", "MAD", "MDL", "MGA", "MKD", "MMK", "MOP", "MUR", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SDG", "SEK", "SGD", "SOS", "SYP", "THB", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "UYU", "UZS", "VEF", "VND", "XAF", "XOF", "YER", "ZAR", "ZMK"])
-      unless validator.valid?(currency_code)
-        fail ArgumentError, "invalid value for \"currency_code\", must be one of #{validator.allowable_values}."
-      end
-      @currency_code = currency_code
     end
 
     # Checks equality by comparing each attribute.
@@ -135,8 +90,7 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          denomination == o.denomination &&
-          currency_code == o.currency_code
+          funding_source_id == o.funding_source_id
     end
 
     # @see the `==` method
@@ -148,7 +102,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [denomination, currency_code].hash
+      [funding_source_id].hash
     end
 
     # Builds the object from hash

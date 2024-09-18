@@ -14,14 +14,14 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class CreateOrderRequestPayment
-    # Tremendous ID of the funding source that will be used to pay for the order. Use `balance` to use your Tremendous's balance.
-    attr_accessor :funding_source_id
+  class FraudRule200Response
+    # A description of the result
+    attr_accessor :message
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'funding_source_id' => :'funding_source_id'
+        :'message' => :'message'
       }
     end
 
@@ -33,7 +33,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'funding_source_id' => :'String'
+        :'message' => :'String'
       }
     end
 
@@ -47,21 +47,21 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateOrderRequestPayment` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::FraudRule200Response` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateOrderRequestPayment`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::FraudRule200Response`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'funding_source_id')
-        self.funding_source_id = attributes[:'funding_source_id']
+      if attributes.key?(:'message')
+        self.message = attributes[:'message']
       else
-        self.funding_source_id = nil
+        self.message = nil
       end
     end
 
@@ -70,8 +70,8 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @funding_source_id.nil?
-        invalid_properties.push('invalid value for "funding_source_id", funding_source_id cannot be nil.')
+      if @message.nil?
+        invalid_properties.push('invalid value for "message", message cannot be nil.')
       end
 
       invalid_properties
@@ -81,7 +81,7 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @funding_source_id.nil?
+      return false if @message.nil?
       true
     end
 
@@ -90,7 +90,7 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          funding_source_id == o.funding_source_id
+          message == o.message
     end
 
     # @see the `==` method
@@ -102,7 +102,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [funding_source_id].hash
+      [message].hash
     end
 
     # Builds the object from hash
