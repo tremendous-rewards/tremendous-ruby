@@ -37,6 +37,15 @@ RSpec.describe "Orders endpoints" do
     expect(data.order.id).to be
     expect(data.order.campaign_id).to eq(CAMPAIGN_ID)
     expect(data.order.status).to eq("EXECUTED")
+
+    order = tremendous_api.get_order(data.order.id).order
+
+    expect(order.id).to eq(data.order.id)
+    expect(order.campaign_id).to eq(CAMPAIGN_ID)
+    expect(order.status).to eq("EXECUTED")
+
+    expect(order.rewards.length).to eq(1)
+    expect(order.rewards[0].recipient.email).to eq(RECIPIENT_EMAIL)
   end
 
   it "raise validation errors" do

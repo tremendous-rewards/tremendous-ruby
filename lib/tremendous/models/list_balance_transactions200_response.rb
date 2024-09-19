@@ -15,12 +15,12 @@ require 'time'
 
 module Tremendous
   class ListBalanceTransactions200Response
-    attr_accessor :invoices
+    attr_accessor :transactions
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'invoices' => :'invoices'
+        :'transactions' => :'transactions'
       }
     end
 
@@ -32,7 +32,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'invoices' => :'Array<ListBalanceTransactions200ResponseInvoicesInner>'
+        :'transactions' => :'Array<ListBalanceTransactions200ResponseTransactionsInner>'
       }
     end
 
@@ -57,10 +57,12 @@ module Tremendous
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'invoices')
-        if (value = attributes[:'invoices']).is_a?(Array)
-          self.invoices = value
+      if attributes.key?(:'transactions')
+        if (value = attributes[:'transactions']).is_a?(Array)
+          self.transactions = value
         end
+      else
+        self.transactions = nil
       end
     end
 
@@ -69,6 +71,10 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if @transactions.nil?
+        invalid_properties.push('invalid value for "transactions", transactions cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -76,6 +82,7 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if @transactions.nil?
       true
     end
 
@@ -84,7 +91,7 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          invoices == o.invoices
+          transactions == o.transactions
     end
 
     # @see the `==` method
@@ -96,7 +103,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [invoices].hash
+      [transactions].hash
     end
 
     # Builds the object from hash

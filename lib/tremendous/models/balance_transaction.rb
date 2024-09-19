@@ -50,7 +50,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'created_at' => :'Date',
+        :'created_at' => :'Time',
         :'amount' => :'Float',
         :'balance' => :'Float',
         :'action' => :'String',
@@ -81,22 +81,32 @@ module Tremendous
 
       if attributes.key?(:'created_at')
         self.created_at = attributes[:'created_at']
+      else
+        self.created_at = nil
       end
 
       if attributes.key?(:'amount')
         self.amount = attributes[:'amount']
+      else
+        self.amount = nil
       end
 
       if attributes.key?(:'balance')
         self.balance = attributes[:'balance']
+      else
+        self.balance = nil
       end
 
       if attributes.key?(:'action')
         self.action = attributes[:'action']
+      else
+        self.action = nil
       end
 
       if attributes.key?(:'description')
         self.description = attributes[:'description']
+      else
+        self.description = nil
       end
     end
 
@@ -105,6 +115,26 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if @created_at.nil?
+        invalid_properties.push('invalid value for "created_at", created_at cannot be nil.')
+      end
+
+      if @amount.nil?
+        invalid_properties.push('invalid value for "amount", amount cannot be nil.')
+      end
+
+      if @balance.nil?
+        invalid_properties.push('invalid value for "balance", balance cannot be nil.')
+      end
+
+      if @action.nil?
+        invalid_properties.push('invalid value for "action", action cannot be nil.')
+      end
+
+      if @description.nil?
+        invalid_properties.push('invalid value for "description", description cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -112,6 +142,11 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if @created_at.nil?
+      return false if @amount.nil?
+      return false if @balance.nil?
+      return false if @action.nil?
+      return false if @description.nil?
       true
     end
 

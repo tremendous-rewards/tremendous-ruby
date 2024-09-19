@@ -15,7 +15,7 @@ require 'time'
 
 module Tremendous
   # A single reward, sent to a recipient. A reward is always part of an order.  Either `products` or `campaign_id` must be specified. 
-  class OrderWithoutLinkReward
+  class OrderWithoutLinkRewardsInner
     # Tremendous ID of the reward
     attr_accessor :id
 
@@ -90,13 +90,13 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::OrderWithoutLinkReward` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::OrderWithoutLinkRewardsInner` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::OrderWithoutLinkReward`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::OrderWithoutLinkRewardsInner`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }

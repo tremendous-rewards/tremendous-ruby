@@ -15,7 +15,7 @@ require 'time'
 
 module Tremendous
   # A balance transaction represents a specific movement or change in an account's balance. 
-  class ListBalanceTransactions200ResponseInvoicesInner
+  class ListBalanceTransactions200ResponseTransactionsInner
     # Date that the transaction was created
     attr_accessor :created_at
 
@@ -50,7 +50,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'created_at' => :'Date',
+        :'created_at' => :'Time',
         :'amount' => :'Float',
         :'balance' => :'Float',
         :'action' => :'String',
@@ -68,35 +68,45 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListBalanceTransactions200ResponseInvoicesInner` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListBalanceTransactions200ResponseTransactionsInner` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListBalanceTransactions200ResponseInvoicesInner`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListBalanceTransactions200ResponseTransactionsInner`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
       if attributes.key?(:'created_at')
         self.created_at = attributes[:'created_at']
+      else
+        self.created_at = nil
       end
 
       if attributes.key?(:'amount')
         self.amount = attributes[:'amount']
+      else
+        self.amount = nil
       end
 
       if attributes.key?(:'balance')
         self.balance = attributes[:'balance']
+      else
+        self.balance = nil
       end
 
       if attributes.key?(:'action')
         self.action = attributes[:'action']
+      else
+        self.action = nil
       end
 
       if attributes.key?(:'description')
         self.description = attributes[:'description']
+      else
+        self.description = nil
       end
     end
 
@@ -105,6 +115,26 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if @created_at.nil?
+        invalid_properties.push('invalid value for "created_at", created_at cannot be nil.')
+      end
+
+      if @amount.nil?
+        invalid_properties.push('invalid value for "amount", amount cannot be nil.')
+      end
+
+      if @balance.nil?
+        invalid_properties.push('invalid value for "balance", balance cannot be nil.')
+      end
+
+      if @action.nil?
+        invalid_properties.push('invalid value for "action", action cannot be nil.')
+      end
+
+      if @description.nil?
+        invalid_properties.push('invalid value for "description", description cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -112,6 +142,11 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if @created_at.nil?
+      return false if @amount.nil?
+      return false if @balance.nil?
+      return false if @action.nil?
+      return false if @description.nil?
       true
     end
 

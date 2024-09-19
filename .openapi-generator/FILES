@@ -11,6 +11,7 @@ lib/tremendous/models/balance_transaction.rb
 lib/tremendous/models/base_order_for_create.rb
 lib/tremendous/models/campaign.rb
 lib/tremendous/models/campaign_base.rb
+lib/tremendous/models/channel.rb
 lib/tremendous/models/create_api_key200_response.rb
 lib/tremendous/models/create_campaign201_response.rb
 lib/tremendous/models/create_campaign_request.rb
@@ -81,7 +82,7 @@ lib/tremendous/models/get_product_response.rb
 lib/tremendous/models/get_reward200_response.rb
 lib/tremendous/models/invoice.rb
 lib/tremendous/models/list_balance_transactions200_response.rb
-lib/tremendous/models/list_balance_transactions200_response_invoices_inner.rb
+lib/tremendous/models/list_balance_transactions200_response_transactions_inner.rb
 lib/tremendous/models/list_campaigns200_response.rb
 lib/tremendous/models/list_campaigns200_response_campaigns_inner.rb
 lib/tremendous/models/list_campaigns200_response_campaigns_inner_email_style.rb
@@ -134,7 +135,7 @@ lib/tremendous/models/order_base.rb
 lib/tremendous/models/order_base_payment.rb
 lib/tremendous/models/order_status.rb
 lib/tremendous/models/order_without_link.rb
-lib/tremendous/models/order_without_link_reward.rb
+lib/tremendous/models/order_without_link_rewards_inner.rb
 lib/tremendous/models/organization.rb
 lib/tremendous/models/payment_details.rb
 lib/tremendous/models/payment_details_refund.rb

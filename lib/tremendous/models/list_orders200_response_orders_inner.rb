@@ -31,12 +31,15 @@ module Tremendous
     # Execution status of a given order  <table>   <thead>     <tr>       <th>         Status       </th>       <th>         Description       </th>     </tr>   </thead>   <tbody>     <tr>       <td>         <code>           CANCELED         </code>       </td>       <td>         The order and all of its rewards were canceled.       </td>     </tr>     <tr>       <td>         <code>           CART         </code>       </td>       <td>         The order has been created, but hasn't yet been processed.       </td>     </tr>     <tr>       <td>         <code>           EXECUTED         </code>       </td>       <td>         The order has been executed. Payment has been handled and rewards are being delivered (if applicable).       </td>     </tr>     <tr>       <td>         <code>           FAILED         </code>       </td>       <td>         The order could not be processed due to an error. E.g. due to insufficient funds in the account.       </td>     </tr>     <tr>       <td>         <code>           PENDING APPROVAL         </code>       </td>       <td>         The order has been created but needs approval to be executed.       </td>     </tr>     <tr>       <td>         <code>           PENDING INTERNAL PAYMENT APPROVAL         </code>       </td>       <td>         The order has been created but it is under review and requires approval from our team.       </td>     </tr>    </tbody> </table> 
     attr_accessor :status
 
+    # Name of the channel in which the order was created
+    attr_accessor :channel
+
     attr_accessor :payment
 
     # The ID for the invoice associated with this order
     attr_accessor :invoice_id
 
-    attr_accessor :reward
+    attr_accessor :rewards
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -68,9 +71,10 @@ module Tremendous
         :'campaign_id' => :'campaign_id',
         :'created_at' => :'created_at',
         :'status' => :'status',
+        :'channel' => :'channel',
         :'payment' => :'payment',
         :'invoice_id' => :'invoice_id',
-        :'reward' => :'reward'
+        :'rewards' => :'rewards'
       }
     end
 
@@ -87,9 +91,10 @@ module Tremendous
         :'campaign_id' => :'String',
         :'created_at' => :'Time',
         :'status' => :'String',
+        :'channel' => :'String',
         :'payment' => :'ListOrders200ResponseOrdersInnerPayment',
         :'invoice_id' => :'String',
-        :'reward' => :'ListRewards200ResponseRewardsInner'
+        :'rewards' => :'Array<ListRewards200ResponseRewardsInner>'
       }
     end
 
@@ -142,6 +147,10 @@ module Tremendous
         self.status = nil
       end
 
+      if attributes.key?(:'channel')
+        self.channel = attributes[:'channel']
+      end
+
       if attributes.key?(:'payment')
         self.payment = attributes[:'payment']
       end
@@ -150,8 +159,10 @@ module Tremendous
         self.invoice_id = attributes[:'invoice_id']
       end
 
-      if attributes.key?(:'reward')
-        self.reward = attributes[:'reward']
+      if attributes.key?(:'rewards')
+        if (value = attributes[:'rewards']).is_a?(Array)
+          self.rewards = value
+        end
       end
     end
 
@@ -196,6 +207,8 @@ module Tremendous
       return false if @status.nil?
       status_validator = EnumAttributeValidator.new('String', ["CANCELED", "CART", "EXECUTED", "FAILED", "PENDING APPROVAL", "PENDING INTERNAL PAYMENT APPROVAL"])
       return false unless status_validator.valid?(@status)
+      channel_validator = EnumAttributeValidator.new('String', ["UI", "API", "EMBED", "DECIPHER", "QUALTRICS", "TYPEFORM", "SURVEY MONKEY"])
+      return false unless channel_validator.valid?(@channel)
       true
     end
 
@@ -235,6 +248,16 @@ module Tremendous
       @status = status
     end
 
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] channel Object to be assigned
+    def channel=(channel)
+      validator = EnumAttributeValidator.new('String', ["UI", "API", "EMBED", "DECIPHER", "QUALTRICS", "TYPEFORM", "SURVEY MONKEY"])
+      unless validator.valid?(channel)
+        fail ArgumentError, "invalid value for \"channel\", must be one of #{validator.allowable_values}."
+      end
+      @channel = channel
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -245,9 +268,10 @@ module Tremendous
           campaign_id == o.campaign_id &&
           created_at == o.created_at &&
           status == o.status &&
+          channel == o.channel &&
           payment == o.payment &&
           invoice_id == o.invoice_id &&
-          reward == o.reward
+          rewards == o.rewards
     end
 
     # @see the `==` method
@@ -259,7 +283,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, external_id, campaign_id, created_at, status, payment, invoice_id, reward].hash
+      [id, external_id, campaign_id, created_at, status, channel, payment, invoice_id, rewards].hash
     end
 
     # Builds the object from hash

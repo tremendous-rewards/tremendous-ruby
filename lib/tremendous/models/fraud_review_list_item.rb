@@ -65,7 +65,7 @@ module Tremendous
       {
         :'status' => :'String',
         :'reasons' => :'Array<String>',
-        :'reward' => :'OrderWithoutLinkReward'
+        :'reward' => :'OrderWithoutLinkRewardsInner'
       }
     end
 
