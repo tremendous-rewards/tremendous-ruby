@@ -17,10 +17,14 @@ module Tremendous
   class ListFraudReviews200Response
     attr_accessor :fraud_reviews
 
+    # The total number of fraud reviews
+    attr_accessor :total_count
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'fraud_reviews' => :'fraud_reviews'
+        :'fraud_reviews' => :'fraud_reviews',
+        :'total_count' => :'total_count'
       }
     end
 
@@ -32,7 +36,8 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'fraud_reviews' => :'Array<ListFraudReviews200ResponseFraudReviewsInner>'
+        :'fraud_reviews' => :'Array<ListFraudReviews200ResponseFraudReviewsInner>',
+        :'total_count' => :'Integer'
       }
     end
 
@@ -64,6 +69,12 @@ module Tremendous
       else
         self.fraud_reviews = nil
       end
+
+      if attributes.key?(:'total_count')
+        self.total_count = attributes[:'total_count']
+      else
+        self.total_count = nil
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -75,6 +86,10 @@ module Tremendous
         invalid_properties.push('invalid value for "fraud_reviews", fraud_reviews cannot be nil.')
       end
 
+      if @total_count.nil?
+        invalid_properties.push('invalid value for "total_count", total_count cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -83,6 +98,7 @@ module Tremendous
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @fraud_reviews.nil?
+      return false if @total_count.nil?
       true
     end
 
@@ -91,7 +107,8 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          fraud_reviews == o.fraud_reviews
+          fraud_reviews == o.fraud_reviews &&
+          total_count == o.total_count
     end
 
     # @see the `==` method
@@ -103,7 +120,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [fraud_reviews].hash
+      [fraud_reviews, total_count].hash
     end
 
     # Builds the object from hash

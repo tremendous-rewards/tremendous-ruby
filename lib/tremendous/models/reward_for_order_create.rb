@@ -80,7 +80,7 @@ module Tremendous
         :'deliver_at' => :'Date',
         :'custom_fields' => :'Array<RewardBaseCustomFieldsInner>',
         :'language' => :'String',
-        :'delivery' => :'SingleRewardOrder1RewardDelivery'
+        :'delivery' => :'SingleRewardOrderRewardDelivery'
       }
     end
 

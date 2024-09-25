@@ -19,7 +19,7 @@ module Tremendous
       # List of class defined in oneOf (OpenAPI v3)
       def openapi_one_of
         [
-          :'SingleRewardOrder1'
+          :'SingleRewardOrder'
         ]
       end
 

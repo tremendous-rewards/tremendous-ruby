@@ -15,7 +15,7 @@ require 'time'
 
 module Tremendous
   # Reward custom data for searching, tracking or copy (see [Adding custom fields to orders](https://developers.tremendous.com/reference/using-custom-fields-to-add-custom-data-to-rewards).)
-  class SingleRewardOrder1RewardCustomFieldsInner
+  class SingleRewardOrderRewardCustomFieldsInner
     # Tremendous ID of the custom field
     attr_accessor :id
 
@@ -54,13 +54,13 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::SingleRewardOrder1RewardCustomFieldsInner` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::SingleRewardOrderRewardCustomFieldsInner` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::SingleRewardOrder1RewardCustomFieldsInner`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::SingleRewardOrderRewardCustomFieldsInner`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }

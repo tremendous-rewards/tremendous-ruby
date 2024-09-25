@@ -16,15 +16,6 @@ require 'time'
 module Tremendous
   # A single reward, sent to a recipient. A reward is always part of an order.  Either `products` or `campaign_id` must be specified. 
   class SingleRewardOrderReward
-    # Tremendous ID of the reward
-    attr_accessor :id
-
-    # Tremendous ID of the order this reward is part of.
-    attr_accessor :order_id
-
-    # Date the reward was created
-    attr_accessor :created_at
-
     # ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. 
     attr_accessor :campaign_id
 
@@ -48,9 +39,6 @@ module Tremendous
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'id' => :'id',
-        :'order_id' => :'order_id',
-        :'created_at' => :'created_at',
         :'campaign_id' => :'campaign_id',
         :'products' => :'products',
         :'value' => :'value',
@@ -70,17 +58,14 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'id' => :'String',
-        :'order_id' => :'String',
-        :'created_at' => :'Time',
         :'campaign_id' => :'String',
         :'products' => :'Array<String>',
         :'value' => :'ListRewards200ResponseRewardsInnerValue',
         :'recipient' => :'ListRewards200ResponseRewardsInnerRecipient',
         :'deliver_at' => :'Date',
-        :'custom_fields' => :'Array<RewardBaseCustomFieldsInner>',
+        :'custom_fields' => :'Array<SingleRewardOrderRewardCustomFieldsInner>',
         :'language' => :'String',
-        :'delivery' => :'SingleRewardOrder1RewardDelivery'
+        :'delivery' => :'SingleRewardOrderRewardDelivery'
       }
     end
 
@@ -105,18 +90,6 @@ module Tremendous
         end
         h[k.to_sym] = v
       }
-
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
-      end
-
-      if attributes.key?(:'order_id')
-        self.order_id = attributes[:'order_id']
-      end
-
-      if attributes.key?(:'created_at')
-        self.created_at = attributes[:'created_at']
-      end
 
       if attributes.key?(:'campaign_id')
         self.campaign_id = attributes[:'campaign_id']
@@ -161,16 +134,6 @@ module Tremendous
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
       pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !@id.nil? && @id !~ pattern
-        invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
-      end
-
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !@order_id.nil? && @order_id !~ pattern
-        invalid_properties.push("invalid value for \"order_id\", must conform to the pattern #{pattern}.")
-      end
-
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
       if !@campaign_id.nil? && @campaign_id !~ pattern
         invalid_properties.push("invalid value for \"campaign_id\", must conform to the pattern #{pattern}.")
       end
@@ -186,41 +149,9 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      return false if !@order_id.nil? && @order_id !~ Regexp.new(/[A-Z0-9]{4,20}/)
       return false if !@campaign_id.nil? && @campaign_id !~ Regexp.new(/[A-Z0-9]{4,20}/)
       return false if !@products.nil? && @products.length < 1
       true
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] id Value to be assigned
-    def id=(id)
-      if id.nil?
-        fail ArgumentError, 'id cannot be nil'
-      end
-
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if id !~ pattern
-        fail ArgumentError, "invalid value for \"id\", must conform to the pattern #{pattern}."
-      end
-
-      @id = id
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] order_id Value to be assigned
-    def order_id=(order_id)
-      if order_id.nil?
-        fail ArgumentError, 'order_id cannot be nil'
-      end
-
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if order_id !~ pattern
-        fail ArgumentError, "invalid value for \"order_id\", must conform to the pattern #{pattern}."
-      end
-
-      @order_id = order_id
     end
 
     # Custom attribute writer method with validation
@@ -253,9 +184,6 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          id == o.id &&
-          order_id == o.order_id &&
-          created_at == o.created_at &&
           campaign_id == o.campaign_id &&
           products == o.products &&
           value == o.value &&
@@ -275,7 +203,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, order_id, created_at, campaign_id, products, value, recipient, deliver_at, custom_fields, language, delivery].hash
+      [campaign_id, products, value, recipient, deliver_at, custom_fields, language, delivery].hash
     end
 
     # Builds the object from hash

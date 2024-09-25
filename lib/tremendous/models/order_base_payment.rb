@@ -27,39 +27,13 @@ module Tremendous
 
     attr_accessor :refund
 
-    # Name of the channel in which the order was created
-    attr_accessor :channel
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
-
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'subtotal' => :'subtotal',
         :'total' => :'total',
         :'fees' => :'fees',
-        :'refund' => :'refund',
-        :'channel' => :'channel'
+        :'refund' => :'refund'
       }
     end
 
@@ -74,8 +48,7 @@ module Tremendous
         :'subtotal' => :'Float',
         :'total' => :'Float',
         :'fees' => :'Float',
-        :'refund' => :'PaymentDetailsRefund',
-        :'channel' => :'String'
+        :'refund' => :'PaymentDetailsRefund'
       }
     end
 
@@ -115,10 +88,6 @@ module Tremendous
       if attributes.key?(:'refund')
         self.refund = attributes[:'refund']
       end
-
-      if attributes.key?(:'channel')
-        self.channel = attributes[:'channel']
-      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -148,8 +117,6 @@ module Tremendous
       return false if !@subtotal.nil? && @subtotal < 0
       return false if !@total.nil? && @total < 0
       return false if !@fees.nil? && @fees < 0
-      channel_validator = EnumAttributeValidator.new('String', ["UI", "API", "EMBED", "DECIPHER", "QUALTRICS", "TYPEFORM", "SURVEY MONKEY"])
-      return false unless channel_validator.valid?(@channel)
       true
     end
 
@@ -195,16 +162,6 @@ module Tremendous
       @fees = fees
     end
 
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] channel Object to be assigned
-    def channel=(channel)
-      validator = EnumAttributeValidator.new('String', ["UI", "API", "EMBED", "DECIPHER", "QUALTRICS", "TYPEFORM", "SURVEY MONKEY"])
-      unless validator.valid?(channel)
-        fail ArgumentError, "invalid value for \"channel\", must be one of #{validator.allowable_values}."
-      end
-      @channel = channel
-    end
-
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -213,8 +170,7 @@ module Tremendous
           subtotal == o.subtotal &&
           total == o.total &&
           fees == o.fees &&
-          refund == o.refund &&
-          channel == o.channel
+          refund == o.refund
     end
 
     # @see the `==` method
@@ -226,7 +182,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [subtotal, total, fees, refund, channel].hash
+      [subtotal, total, fees, refund].hash
     end
 
     # Builds the object from hash
