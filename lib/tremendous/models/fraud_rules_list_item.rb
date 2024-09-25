@@ -61,7 +61,7 @@ module Tremendous
     def self.openapi_types
       {
         :'rule_type' => :'String',
-        :'config' => :'Object'
+        :'config' => :'Hash<String, Object>'
       }
     end
 
@@ -92,7 +92,9 @@ module Tremendous
       end
 
       if attributes.key?(:'config')
-        self.config = attributes[:'config']
+        if (value = attributes[:'config']).is_a?(Hash)
+          self.config = value
+        end
       end
     end
 

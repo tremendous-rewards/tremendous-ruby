@@ -38,7 +38,7 @@ module Tremendous
     def self.openapi_types
       {
         :'message' => :'String',
-        :'payload' => :'Object'
+        :'payload' => :'Hash<String, Object>'
       }
     end
 
@@ -68,7 +68,9 @@ module Tremendous
       end
 
       if attributes.key?(:'payload')
-        self.payload = attributes[:'payload']
+        if (value = attributes[:'payload']).is_a?(Hash)
+          self.payload = value
+        end
       end
     end
 
