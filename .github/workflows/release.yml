@@ -19,7 +19,6 @@ jobs:
         id: release
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          release-type: ruby
 
       - uses: actions/checkout@v4
         if: ${{ steps.release.outputs.release_created }}
