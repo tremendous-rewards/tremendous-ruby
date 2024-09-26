@@ -14,7 +14,6 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # Organizations are a way to separate different parts of your business within the same Tremendous account. Your root Tremendous account is an organization itself and can have multiple sub-organizations.  You can assign users in your Tremendous team as members to any organization. Users can be members of multiple organizations at once.  Each organizations can have it's own API key. 
   class CreateOrganization200ResponseOrganization
     attr_accessor :id
 
@@ -24,36 +23,16 @@ module Tremendous
     # URL of the website of that organization
     attr_accessor :website
 
-    # Status of the organization. Organizations need to be approved to be able to use them to send out rewards.
-    attr_accessor :status
+    attr_accessor :copy_settings
 
-    # Timestamp of when the organization has been created.  *This field is only returned when creating an organization.* It is not returned anymore when retrieving or listing organizations. 
+    # Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).
+    attr_accessor :phone
+
+    # Timestamp of when the organization has been created. 
     attr_accessor :created_at
 
-    # The API key for the created organization. This property is only returned when `with_api_key` is set to `true`. 
+    # The API key for the created organization. This property is only returned when `api_key` is set to `true`. 
     attr_accessor :api_key
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -61,7 +40,8 @@ module Tremendous
         :'id' => :'id',
         :'name' => :'name',
         :'website' => :'website',
-        :'status' => :'status',
+        :'copy_settings' => :'copy_settings',
+        :'phone' => :'phone',
         :'created_at' => :'created_at',
         :'api_key' => :'api_key'
       }
@@ -78,7 +58,8 @@ module Tremendous
         :'id' => :'String',
         :'name' => :'String',
         :'website' => :'String',
-        :'status' => :'String',
+        :'copy_settings' => :'CreateOrganizationRequestCopySettings',
+        :'phone' => :'String',
         :'created_at' => :'Date',
         :'api_key' => :'String'
       }
@@ -87,6 +68,7 @@ module Tremendous
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'phone',
       ])
     end
 
@@ -121,8 +103,12 @@ module Tremendous
         self.website = nil
       end
 
-      if attributes.key?(:'status')
-        self.status = attributes[:'status']
+      if attributes.key?(:'copy_settings')
+        self.copy_settings = attributes[:'copy_settings']
+      end
+
+      if attributes.key?(:'phone')
+        self.phone = attributes[:'phone']
       end
 
       if attributes.key?(:'created_at')
@@ -162,8 +148,6 @@ module Tremendous
       return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
       return false if @name.nil?
       return false if @website.nil?
-      status_validator = EnumAttributeValidator.new('String', ["PENDING", "APPROVED", "REJECTED"])
-      return false unless status_validator.valid?(@status)
       true
     end
 
@@ -182,16 +166,6 @@ module Tremendous
       @id = id
     end
 
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] status Object to be assigned
-    def status=(status)
-      validator = EnumAttributeValidator.new('String', ["PENDING", "APPROVED", "REJECTED"])
-      unless validator.valid?(status)
-        fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
-      end
-      @status = status
-    end
-
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -200,7 +174,8 @@ module Tremendous
           id == o.id &&
           name == o.name &&
           website == o.website &&
-          status == o.status &&
+          copy_settings == o.copy_settings &&
+          phone == o.phone &&
           created_at == o.created_at &&
           api_key == o.api_key
     end
@@ -214,7 +189,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, website, status, created_at, api_key].hash
+      [id, name, website, copy_settings, phone, created_at, api_key].hash
     end
 
     # Builds the object from hash

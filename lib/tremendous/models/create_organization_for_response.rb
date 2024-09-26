@@ -14,41 +14,36 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # Details on how the reward is delivered to the recipient. 
-  class ListRewards200ResponseRewardsInnerDelivery
-    # How to deliver the reward to the recipient.  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> 
-    attr_accessor :method
+  class CreateOrganizationForResponse
+    attr_accessor :id
 
-    # Current status of the delivery of the reward:  * `SCHEDULED` - Reward is scheduled for delivery and will be delivered soon. * `FAILED` - Delivery of reward failed (e.g. email bounced). * `SUCCEEDED` - Reward was successfully delivered (email or text message delivered or reward link opened). * `PENDING` - Delivery is pending but not yet scheduled. 
-    attr_accessor :status
+    # Name of the organization
+    attr_accessor :name
 
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
+    # URL of the website of that organization
+    attr_accessor :website
 
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
+    # Default value is `false`. Set to true to also generate an API key associated to the new organization.
+    attr_accessor :with_api_key
 
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
+    attr_accessor :copy_settings
+
+    # Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).
+    attr_accessor :phone
+
+    # Timestamp of when the organization has been created. 
+    attr_accessor :created_at
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'method' => :'method',
-        :'status' => :'status'
+        :'id' => :'id',
+        :'name' => :'name',
+        :'website' => :'website',
+        :'with_api_key' => :'with_api_key',
+        :'copy_settings' => :'copy_settings',
+        :'phone' => :'phone',
+        :'created_at' => :'created_at'
       }
     end
 
@@ -60,14 +55,20 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'method' => :'String',
-        :'status' => :'String'
+        :'id' => :'String',
+        :'name' => :'String',
+        :'website' => :'String',
+        :'with_api_key' => :'Boolean',
+        :'copy_settings' => :'CreateOrganizationRequestCopySettings',
+        :'phone' => :'String',
+        :'created_at' => :'Date'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'phone',
       ])
     end
 
@@ -75,23 +76,47 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListRewards200ResponseRewardsInnerDelivery` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateOrganizationForResponse` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListRewards200ResponseRewardsInnerDelivery`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateOrganizationForResponse`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'method')
-        self.method = attributes[:'method']
+      if attributes.key?(:'id')
+        self.id = attributes[:'id']
       end
 
-      if attributes.key?(:'status')
-        self.status = attributes[:'status']
+      if attributes.key?(:'name')
+        self.name = attributes[:'name']
+      else
+        self.name = nil
+      end
+
+      if attributes.key?(:'website')
+        self.website = attributes[:'website']
+      else
+        self.website = nil
+      end
+
+      if attributes.key?(:'with_api_key')
+        self.with_api_key = attributes[:'with_api_key']
+      end
+
+      if attributes.key?(:'copy_settings')
+        self.copy_settings = attributes[:'copy_settings']
+      end
+
+      if attributes.key?(:'phone')
+        self.phone = attributes[:'phone']
+      end
+
+      if attributes.key?(:'created_at')
+        self.created_at = attributes[:'created_at']
       end
     end
 
@@ -100,6 +125,19 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
+      if !@id.nil? && @id !~ pattern
+        invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
+      end
+
+      if @name.nil?
+        invalid_properties.push('invalid value for "name", name cannot be nil.')
+      end
+
+      if @website.nil?
+        invalid_properties.push('invalid value for "website", website cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -107,31 +145,25 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      method_validator = EnumAttributeValidator.new('String', ["EMAIL", "LINK", "PHONE"])
-      return false unless method_validator.valid?(@method)
-      status_validator = EnumAttributeValidator.new('String', ["SCHEDULED", "FAILED", "SUCCEEDED", "PENDING"])
-      return false unless status_validator.valid?(@status)
+      return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
+      return false if @name.nil?
+      return false if @website.nil?
       true
     end
 
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] method Object to be assigned
-    def method=(method)
-      validator = EnumAttributeValidator.new('String', ["EMAIL", "LINK", "PHONE"])
-      unless validator.valid?(method)
-        fail ArgumentError, "invalid value for \"method\", must be one of #{validator.allowable_values}."
+    # Custom attribute writer method with validation
+    # @param [Object] id Value to be assigned
+    def id=(id)
+      if id.nil?
+        fail ArgumentError, 'id cannot be nil'
       end
-      @method = method
-    end
 
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] status Object to be assigned
-    def status=(status)
-      validator = EnumAttributeValidator.new('String', ["SCHEDULED", "FAILED", "SUCCEEDED", "PENDING"])
-      unless validator.valid?(status)
-        fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
+      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
+      if id !~ pattern
+        fail ArgumentError, "invalid value for \"id\", must conform to the pattern #{pattern}."
       end
-      @status = status
+
+      @id = id
     end
 
     # Checks equality by comparing each attribute.
@@ -139,8 +171,13 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          method == o.method &&
-          status == o.status
+          id == o.id &&
+          name == o.name &&
+          website == o.website &&
+          with_api_key == o.with_api_key &&
+          copy_settings == o.copy_settings &&
+          phone == o.phone &&
+          created_at == o.created_at
     end
 
     # @see the `==` method
@@ -152,7 +189,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [method, status].hash
+      [id, name, website, with_api_key, copy_settings, phone, created_at].hash
     end
 
     # Builds the object from hash

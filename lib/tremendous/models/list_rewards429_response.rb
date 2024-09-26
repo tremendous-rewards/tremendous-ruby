@@ -15,11 +15,15 @@ require 'time'
 
 module Tremendous
   class ListRewards429Response
+    # HTTP status code of the response
+    attr_accessor :status
+
     attr_accessor :errors
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'status' => :'status',
         :'errors' => :'errors'
       }
     end
@@ -32,6 +36,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'status' => :'Integer',
         :'errors' => :'ListRewards401ResponseErrors'
       }
     end
@@ -56,6 +61,10 @@ module Tremendous
         end
         h[k.to_sym] = v
       }
+
+      if attributes.key?(:'status')
+        self.status = attributes[:'status']
+      end
 
       if attributes.key?(:'errors')
         self.errors = attributes[:'errors']
@@ -89,6 +98,7 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          status == o.status &&
           errors == o.errors
     end
 
@@ -101,7 +111,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [errors].hash
+      [status, errors].hash
     end
 
     # Builds the object from hash
