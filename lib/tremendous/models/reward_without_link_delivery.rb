@@ -88,14 +88,10 @@ module Tremendous
 
       if attributes.key?(:'method')
         self.method = attributes[:'method']
-      else
-        self.method = nil
       end
 
       if attributes.key?(:'status')
         self.status = attributes[:'status']
-      else
-        self.status = nil
       end
     end
 
@@ -104,14 +100,6 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @method.nil?
-        invalid_properties.push('invalid value for "method", method cannot be nil.')
-      end
-
-      if @status.nil?
-        invalid_properties.push('invalid value for "status", status cannot be nil.')
-      end
-
       invalid_properties
     end
 
@@ -119,10 +107,8 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @method.nil?
       method_validator = EnumAttributeValidator.new('String', ["EMAIL", "LINK", "PHONE"])
       return false unless method_validator.valid?(@method)
-      return false if @status.nil?
       status_validator = EnumAttributeValidator.new('String', ["SCHEDULED", "FAILED", "SUCCEEDED", "PENDING"])
       return false unless status_validator.valid?(@status)
       true

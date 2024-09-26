@@ -15,12 +15,15 @@ require 'time'
 
 module Tremendous
   # Details on how the reward is delivered to the recipient. 
-  class ListRewards200ResponseRewardsInnerDelivery
+  class DeliveryDetailsWithLink
     # How to deliver the reward to the recipient.  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> 
     attr_accessor :method
 
     # Current status of the delivery of the reward:  * `SCHEDULED` - Reward is scheduled for delivery and will be delivered soon. * `FAILED` - Delivery of reward failed (e.g. email bounced). * `SUCCEEDED` - Reward was successfully delivered (email or text message delivered or reward link opened). * `PENDING` - Delivery is pending but not yet scheduled. 
     attr_accessor :status
+
+    # Link to redeem the reward at. You need to deliver this link to the recipient. 
+    attr_accessor :link
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -48,7 +51,8 @@ module Tremendous
     def self.attribute_map
       {
         :'method' => :'method',
-        :'status' => :'status'
+        :'status' => :'status',
+        :'link' => :'link'
       }
     end
 
@@ -61,7 +65,8 @@ module Tremendous
     def self.openapi_types
       {
         :'method' => :'String',
-        :'status' => :'String'
+        :'status' => :'String',
+        :'link' => :'String'
       }
     end
 
@@ -75,23 +80,31 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListRewards200ResponseRewardsInnerDelivery` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::DeliveryDetailsWithLink` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListRewards200ResponseRewardsInnerDelivery`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::DeliveryDetailsWithLink`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
       if attributes.key?(:'method')
         self.method = attributes[:'method']
+      else
+        self.method = nil
       end
 
       if attributes.key?(:'status')
         self.status = attributes[:'status']
+      else
+        self.status = nil
+      end
+
+      if attributes.key?(:'link')
+        self.link = attributes[:'link']
       end
     end
 
@@ -100,6 +113,14 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if @method.nil?
+        invalid_properties.push('invalid value for "method", method cannot be nil.')
+      end
+
+      if @status.nil?
+        invalid_properties.push('invalid value for "status", status cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -107,8 +128,10 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if @method.nil?
       method_validator = EnumAttributeValidator.new('String', ["EMAIL", "LINK", "PHONE"])
       return false unless method_validator.valid?(@method)
+      return false if @status.nil?
       status_validator = EnumAttributeValidator.new('String', ["SCHEDULED", "FAILED", "SUCCEEDED", "PENDING"])
       return false unless status_validator.valid?(@status)
       true
@@ -140,7 +163,8 @@ module Tremendous
       return true if self.equal?(o)
       self.class == o.class &&
           method == o.method &&
-          status == o.status
+          status == o.status &&
+          link == o.link
     end
 
     # @see the `==` method
@@ -152,7 +176,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [method, status].hash
+      [method, status, link].hash
     end
 
     # Builds the object from hash

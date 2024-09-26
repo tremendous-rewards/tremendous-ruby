@@ -91,6 +91,8 @@ module Tremendous
 
       if attributes.key?(:'with_api_key')
         self.with_api_key = attributes[:'with_api_key']
+      else
+        self.with_api_key = nil
       end
 
       if attributes.key?(:'copy_settings')
@@ -115,6 +117,10 @@ module Tremendous
         invalid_properties.push('invalid value for "website", website cannot be nil.')
       end
 
+      if @with_api_key.nil?
+        invalid_properties.push('invalid value for "with_api_key", with_api_key cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -124,6 +130,7 @@ module Tremendous
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @name.nil?
       return false if @website.nil?
+      return false if @with_api_key.nil?
       true
     end
 

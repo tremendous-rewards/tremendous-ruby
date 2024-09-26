@@ -32,7 +32,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'order' => :'ListOrders200ResponseOrdersInner'
+        :'order' => :'CreateOrder200ResponseOrder'
       }
     end
 
