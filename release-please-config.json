@@ -1,6 +1,7 @@
 {
   "packages": {
     ".": {
+      "package-name": "tremendous_ruby",
       "changelog-path": "CHANGELOG.md",
       "release-type": "ruby",
       "bump-minor-pre-major": false,
