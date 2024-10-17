@@ -32,7 +32,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'order' => :'SingleRewardOrderWithLinkOrder'
+        :'order' => :'OrderWithLink'
       }
     end
 

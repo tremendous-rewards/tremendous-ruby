@@ -36,7 +36,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'fraud_reviews' => :'Array<ListFraudReviews200ResponseFraudReviewsInner>',
+        :'fraud_reviews' => :'Array<FraudReviewListItem>',
         :'total_count' => :'Integer'
       }
     end

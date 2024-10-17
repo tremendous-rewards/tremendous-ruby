@@ -16,7 +16,6 @@ require 'time'
 module Tremendous
   # The fraud review associated with a reward.
   class FraudReview
-    # The current status of the fraud review:  * `flagged` - The reward has been flagged for and waiting manual review. * `blocked` - The reward was reviewed and blocked. * `released` - The reward was reviewed and released. 
     attr_accessor :status
 
     # The array may contain multiple reasons, depending on which rule(s) flagged the reward for review. Reasons can be any of the following:  * `Disallowed IP` * `Disallowed email` * `Disallowed country` * `Over reward dollar limit` * `Over reward count limit` * `VPN detected` * `Device related to multiple emails` * `Device or account related to multiple emails` * `IP on a Tremendous fraud list` * `Bank account on a Tremendous fraud list` * `Fingerprint on a Tremendous fraud list` * `Email on a Tremendous fraud list` * `Phone on a Tremendous fraud list` * `IP related to a blocked reward` * `Bank account related to a blocked reward` * `Fingerprint related to a blocked reward` * `Email related to a blocked reward` * `Phone related to a blocked reward` * `Allowed IP` * `Allowed email` 
@@ -33,7 +32,6 @@ module Tremendous
     # The device fingerprint, if known.
     attr_accessor :device_id
 
-    # The product selected to claim the reward
     attr_accessor :redemption_method
 
     # Date the reward was redeemed
@@ -89,16 +87,16 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'status' => :'String',
-        :'reasons' => :'Array<String>',
+        :'status' => :'FraudReviewStatus',
+        :'reasons' => :'Array<FraudReviewReason>',
         :'reviewed_by' => :'String',
         :'reviewed_at' => :'Time',
-        :'related_rewards' => :'GetFraudReview200ResponseFraudReviewRelatedRewards',
+        :'related_rewards' => :'FraudReviewRelatedRewards',
         :'device_id' => :'String',
-        :'redemption_method' => :'String',
+        :'redemption_method' => :'FraudReviewRedemptionMethod',
         :'redeemed_at' => :'Time',
-        :'geo' => :'GetFraudReview200ResponseFraudReviewGeo',
-        :'reward' => :'OrderWithoutLinkRewardsInner'
+        :'geo' => :'FraudReviewGeo',
+        :'reward' => :'RewardWithoutLink'
       }
     end
 
@@ -178,31 +176,7 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      status_validator = EnumAttributeValidator.new('String', ["flagged", "blocked", "released"])
-      return false unless status_validator.valid?(@status)
-      redemption_method_validator = EnumAttributeValidator.new('String', ["paypal", "bank", "merchant card", "visa card", "charity", "venmo"])
-      return false unless redemption_method_validator.valid?(@redemption_method)
       true
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] status Object to be assigned
-    def status=(status)
-      validator = EnumAttributeValidator.new('String', ["flagged", "blocked", "released"])
-      unless validator.valid?(status)
-        fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
-      end
-      @status = status
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] redemption_method Object to be assigned
-    def redemption_method=(redemption_method)
-      validator = EnumAttributeValidator.new('String', ["paypal", "bank", "merchant card", "visa card", "charity", "venmo"])
-      unless validator.valid?(redemption_method)
-        fail ArgumentError, "invalid value for \"redemption_method\", must be one of #{validator.allowable_values}."
-      end
-      @redemption_method = redemption_method
     end
 
     # Checks equality by comparing each attribute.

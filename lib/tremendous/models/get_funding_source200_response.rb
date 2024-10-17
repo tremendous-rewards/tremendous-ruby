@@ -32,7 +32,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'funding_source' => :'ListFundingSources200ResponseFundingSourcesInner'
+        :'funding_source' => :'FundingSource'
       }
     end
 

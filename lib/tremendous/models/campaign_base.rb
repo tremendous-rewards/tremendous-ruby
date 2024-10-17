@@ -55,8 +55,8 @@ module Tremendous
         :'name' => :'String',
         :'description' => :'String',
         :'products' => :'Array<String>',
-        :'webpage_style' => :'ListCampaigns200ResponseCampaignsInnerWebpageStyle',
-        :'email_style' => :'ListCampaigns200ResponseCampaignsInnerEmailStyle'
+        :'webpage_style' => :'CampaignBaseWebpageStyle',
+        :'email_style' => :'CampaignBaseEmailStyle'
       }
     end
 

@@ -32,7 +32,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'member' => :'ListMembers200ResponseMembersInner'
+        :'member' => :'MemberWithoutEvents'
       }
     end
 

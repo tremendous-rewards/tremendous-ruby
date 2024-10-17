@@ -23,7 +23,7 @@ module Tremendous
     # Approves an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
     # @param id [String] ID of the order that should be approved. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead.
     # @param [Hash] opts the optional parameters
-    # @return [CreateOrder201Response]
+    # @return [SingleRewardOrderWithoutLink]
     def approve_order(id, opts = {})
       data, _status_code, _headers = approve_order_with_http_info(id, opts)
       data
@@ -33,7 +33,7 @@ module Tremendous
     # Approves an order that is pending review, identified by the given &#x60;id&#x60; in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable &#39;Allow approvals via API&#39; via the organization&#39;&#39;s &#39;Order Approvals&#39; settings from the Tremendous dashboard. 
     # @param id [String] ID of the order that should be approved. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead.
     # @param [Hash] opts the optional parameters
-    # @return [Array<(CreateOrder201Response, Integer, Hash)>] CreateOrder201Response data, response status code and response headers
+    # @return [Array<(SingleRewardOrderWithoutLink, Integer, Hash)>] SingleRewardOrderWithoutLink data, response status code and response headers
     def approve_order_with_http_info(id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.approve_order ...'
@@ -65,7 +65,7 @@ module Tremendous
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CreateOrder201Response'
+      return_type = opts[:debug_return_type] || 'SingleRewardOrderWithoutLink'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']
@@ -208,25 +208,25 @@ module Tremendous
     end
 
     # Create campaign
-    # @param create_campaign_request [CreateCampaignRequest] Campaign details
+    # @param campaign [Campaign] Campaign details
     # @param [Hash] opts the optional parameters
     # @return [CreateCampaign201Response]
-    def create_campaign(create_campaign_request, opts = {})
-      data, _status_code, _headers = create_campaign_with_http_info(create_campaign_request, opts)
+    def create_campaign(campaign, opts = {})
+      data, _status_code, _headers = create_campaign_with_http_info(campaign, opts)
       data
     end
 
     # Create campaign
-    # @param create_campaign_request [CreateCampaignRequest] Campaign details
+    # @param campaign [Campaign] Campaign details
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreateCampaign201Response, Integer, Hash)>] CreateCampaign201Response data, response status code and response headers
-    def create_campaign_with_http_info(create_campaign_request, opts = {})
+    def create_campaign_with_http_info(campaign, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.create_campaign ...'
       end
-      # verify the required parameter 'create_campaign_request' is set
-      if @api_client.config.client_side_validation && create_campaign_request.nil?
-        fail ArgumentError, "Missing the required parameter 'create_campaign_request' when calling TremendousApi.create_campaign"
+      # verify the required parameter 'campaign' is set
+      if @api_client.config.client_side_validation && campaign.nil?
+        fail ArgumentError, "Missing the required parameter 'campaign' when calling TremendousApi.create_campaign"
       end
       # resource path
       local_var_path = '/campaigns'
@@ -248,7 +248,7 @@ module Tremendous
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(create_campaign_request)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(campaign)
 
       # return_type
       return_type = opts[:debug_return_type] || 'CreateCampaign201Response'
@@ -274,7 +274,7 @@ module Tremendous
     end
 
     # Create invoice
-    # Creating an invoice is the way for your organization to fund your account's balance.  1. Create an invoice 2. Pay the invoice 3. Funds get added to your account's balance  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">po_number</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference to the purchase order number within your organization</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">amount</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the invoice in USD</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">memo</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>A note to be included in the invoice. This is for your internal use and will not be visible to the recipient.</p> </td></tr>   </tbody> </table>  </div>  
+    # Creating an invoice is the way for your organization to fund your account's balance.  1. Create an invoice 2. Pay the invoice 3. Funds get added to your account's balance 
     # @param create_invoice_request [CreateInvoiceRequest] Invoice details
     # @param [Hash] opts the optional parameters
     # @return [CreateInvoice200Response]
@@ -284,7 +284,7 @@ module Tremendous
     end
 
     # Create invoice
-    # Creating an invoice is the way for your organization to fund your account&#39;s balance.  1. Create an invoice 2. Pay the invoice 3. Funds get added to your account&#39;s balance  ## Request body  &lt;div class&#x3D;\&quot;object-schema-request-schema\&quot;&gt;   &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;po_number&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Reference to the purchase order number within your organization&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;amount&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;number&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;double&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Amount of the invoice in USD&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;memo&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;A note to be included in the invoice. This is for your internal use and will not be visible to the recipient.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/div&gt;  
+    # Creating an invoice is the way for your organization to fund your account&#39;s balance.  1. Create an invoice 2. Pay the invoice 3. Funds get added to your account&#39;s balance 
     # @param create_invoice_request [CreateInvoiceRequest] Invoice details
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreateInvoice200Response, Integer, Hash)>] CreateInvoice200Response data, response status code and response headers
@@ -343,26 +343,26 @@ module Tremendous
 
     # Create member
     # Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly. These actions include adding funding sources to the organization, creating Campaigns, and more.  ### Permissions  Members can have a role that determine their permissions within the organization. Check the Roles API for the available roles.  To create members of a sub-organizations [create an API key for that organization](/reference/post_organizations-id-create-api-key) first, then use the new API key in the create member request.  ### Inviting new members  After creating a member, an automatic invite is sent to the email address. If the user is not registered yet, that person will then need to sign up for a Tremendous account.  > ❗️ Automatic invitations are not available in the sandbox > > You must manually use the returned `invite_url` field in the payload instead. 
-    # @param create_member_request [CreateMemberRequest] Member details
+    # @param create_member [CreateMember] Member details
     # @param [Hash] opts the optional parameters
     # @return [CreateMember200Response]
-    def create_member(create_member_request, opts = {})
-      data, _status_code, _headers = create_member_with_http_info(create_member_request, opts)
+    def create_member(create_member, opts = {})
+      data, _status_code, _headers = create_member_with_http_info(create_member, opts)
       data
     end
 
     # Create member
     # Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly. These actions include adding funding sources to the organization, creating Campaigns, and more.  ### Permissions  Members can have a role that determine their permissions within the organization. Check the Roles API for the available roles.  To create members of a sub-organizations [create an API key for that organization](/reference/post_organizations-id-create-api-key) first, then use the new API key in the create member request.  ### Inviting new members  After creating a member, an automatic invite is sent to the email address. If the user is not registered yet, that person will then need to sign up for a Tremendous account.  &gt; ❗️ Automatic invitations are not available in the sandbox &gt; &gt; You must manually use the returned &#x60;invite_url&#x60; field in the payload instead. 
-    # @param create_member_request [CreateMemberRequest] Member details
+    # @param create_member [CreateMember] Member details
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreateMember200Response, Integer, Hash)>] CreateMember200Response data, response status code and response headers
-    def create_member_with_http_info(create_member_request, opts = {})
+    def create_member_with_http_info(create_member, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.create_member ...'
       end
-      # verify the required parameter 'create_member_request' is set
-      if @api_client.config.client_side_validation && create_member_request.nil?
-        fail ArgumentError, "Missing the required parameter 'create_member_request' when calling TremendousApi.create_member"
+      # verify the required parameter 'create_member' is set
+      if @api_client.config.client_side_validation && create_member.nil?
+        fail ArgumentError, "Missing the required parameter 'create_member' when calling TremendousApi.create_member"
       end
       # resource path
       local_var_path = '/members'
@@ -384,7 +384,7 @@ module Tremendous
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(create_member_request)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(create_member)
 
       # return_type
       return_type = opts[:debug_return_type] || 'CreateMember200Response'
@@ -410,20 +410,20 @@ module Tremendous
     end
 
     # Create order
-    # Every time you want to send out a reward through Tremendous you need to create an order for it.  > 📘 Getting started with your first order > > Our step-by-step guide walks you through everything you need > to send your first gift card through the Tremendous API: > > <strong><a style=\"display: block; margin-top: 20px;\" href=\"/docs/sending-rewards-intro\">Check it out!</a></strong>  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">external_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference for this order, supplied by the customer.</p>  <p>When set, <code>external_id</code> makes order idempotent. All requests that use the same <code>external_id</code> after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a <code>201</code> response code. These responses <strong>fail</strong> to create any further orders.</p>  <p>It also allows for retrieving by <code>external_id</code> instead of <code>id</code> only.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">payment</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">funding_source_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the funding source that will be used to pay for the order. Use <code>balance</code> to use your Tremendous&#39;s balance.</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">reward</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>A single reward, sent to a recipient. A reward is always part of an order.</p>  <p>Either <code>products</code> or <code>campaign_id</code> must be specified.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the reward</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">order_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the order this reward is part of.</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">created_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date-time</span></td><td><p>Date the reward was created</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">campaign_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from.</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">products</code> </div> </td><td><span class=\"property-type\">array</span> <span class=\"property-format\">string</span></td><td><p>List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.</p>  <p>Providing a <code>products</code> array will override the products made available by the campaign specified using the <code>campaign_id</code> property unless the <code>products</code> array is empty. It will <em>not</em> override other campaign attributes, like the message and customization of the look and feel.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">denomination</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the reward</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">currency_code</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Currency of the reward</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">recipient</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details of the recipient of the reward</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">name</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Name of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">email</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Email address of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">phone</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Phone number of the recipient. For non-US phone numbers, specify the country code (prefixed with +).</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">deliver_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">custom_fields</code> </div> </td><td><span class=\"property-type\">array</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show array item type</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the custom field</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Value of the custom field</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">label</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Label of the custom field</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">language</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Set this to translate the redemption experience for this reward. Pass a 2-letter <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\">ISO-639-1 code</a> for the desired language. Defaults to <code>en</code>.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivery</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details on how the reward is delivered to the recipient.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">method</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>How to deliver the reward to the recipient.</p>  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> </td></tr>   </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </div>   ### Funding sources  There are different ways to pay for gift cards and rewards on Tremendous. Every payment mechanism is called a \"funding source\".  You can retrieve a list of all available funding sources by using the [Funding sources API endpoint](https://tremendous.readme.io/reference/core-funding-source-index).  The Tremendous API sandbox environment comes with a single funding source that allows you to spend up to $5,000 in *fake money* to test the API. [Learn more about the sandbox environment](https://tremendous.readme.io/reference/sandbox).  The HTTP status code `200` on the response will be used to indicate success.  After processing successfully the reward gets queued to be delivered to it's recipient (for delivery method `EMAIL` and `PHONE`). Delivery will happen asynchronously, after the response has been sent.  ### Idempotence  Requests issued with the same external_id are idempotent.  Submitting an order with an already existing `external_id`, will result in a `201` response code. In this case the response will return a representation of the already existing order in the response body. 
+    # Every time you want to send out a reward through Tremendous you need to create an order for it.  > 📘 Getting started with your first order > > Our step-by-step guide walks you through everything you need > to send your first gift card through the Tremendous API: > > <strong><a style=\"display: block; margin-top: 20px;\" href=\"/docs/sending-rewards-intro\">Check it out!</a></strong>  ### Funding sources  There are different ways to pay for gift cards and rewards on Tremendous. Every payment mechanism is called a \"funding source\".  You can retrieve a list of all available funding sources by using the [Funding sources API endpoint](https://tremendous.readme.io/reference/core-funding-source-index).  The Tremendous API sandbox environment comes with a single funding source that allows you to spend up to $5,000 in *fake money* to test the API. [Learn more about the sandbox environment](https://tremendous.readme.io/reference/sandbox).  The HTTP status code `200` on the response will be used to indicate success.  After processing successfully the reward gets queued to be delivered to it's recipient (for delivery method `EMAIL` and `PHONE`). Delivery will happen asynchronously, after the response has been sent.  ### Idempotence  Requests issued with the same external_id are idempotent.  Submitting an order with an already existing `external_id`, will result in a `201` response code. In this case the response will return a representation of the already existing order in the response body. 
     # @param create_order_request [CreateOrderRequest] Order to create
     # @param [Hash] opts the optional parameters
-    # @return [CreateOrder200Response]
+    # @return [SingleRewardOrderWithLink]
     def create_order(create_order_request, opts = {})
       data, _status_code, _headers = create_order_with_http_info(create_order_request, opts)
       data
     end
 
     # Create order
-    # Every time you want to send out a reward through Tremendous you need to create an order for it.  &gt; 📘 Getting started with your first order &gt; &gt; Our step-by-step guide walks you through everything you need &gt; to send your first gift card through the Tremendous API: &gt; &gt; &lt;strong&gt;&lt;a style&#x3D;\&quot;display: block; margin-top: 20px;\&quot; href&#x3D;\&quot;/docs/sending-rewards-intro\&quot;&gt;Check it out!&lt;/a&gt;&lt;/strong&gt;  ## Request body  &lt;div class&#x3D;\&quot;object-schema-request-schema\&quot;&gt;   &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;external_id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Reference for this order, supplied by the customer.&lt;/p&gt;  &lt;p&gt;When set, &lt;code&gt;external_id&lt;/code&gt; makes order idempotent. All requests that use the same &lt;code&gt;external_id&lt;/code&gt; after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a &lt;code&gt;201&lt;/code&gt; response code. These responses &lt;strong&gt;fail&lt;/strong&gt; to create any further orders.&lt;/p&gt;  &lt;p&gt;It also allows for retrieving by &lt;code&gt;external_id&lt;/code&gt; instead of &lt;code&gt;id&lt;/code&gt; only.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;payment&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;funding_source_id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Tremendous ID of the funding source that will be used to pay for the order. Use &lt;code&gt;balance&lt;/code&gt; to use your Tremendous&amp;#39;s balance.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;  &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;reward&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;A single reward, sent to a recipient. A reward is always part of an order.&lt;/p&gt;  &lt;p&gt;Either &lt;code&gt;products&lt;/code&gt; or &lt;code&gt;campaign_id&lt;/code&gt; must be specified.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;property-conditional-hint-response-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Tremendous ID of the reward&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;property-conditional-hint-response-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;order_id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Tremendous ID of the order this reward is part of.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;property-conditional-hint-response-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;created_at&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;date-time&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Date the reward was created&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;property-conditional-hint-request-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;campaign_id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;property-conditional-hint-request-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;products&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;array&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.&lt;/p&gt;  &lt;p&gt;Providing a &lt;code&gt;products&lt;/code&gt; array will override the products made available by the campaign specified using the &lt;code&gt;campaign_id&lt;/code&gt; property unless the &lt;code&gt;products&lt;/code&gt; array is empty. It will &lt;em&gt;not&lt;/em&gt; override other campaign attributes, like the message and customization of the look and feel.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;value&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;denomination&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;number&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;double&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Amount of the reward&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;currency_code&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Currency of the reward&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;  &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;recipient&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Details of the recipient of the reward&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;name&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Name of the recipient&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;email&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Email address of the recipient&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;phone&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Phone number of the recipient. For non-US phone numbers, specify the country code (prefixed with +).&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;  &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;deliver_at&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;date&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;custom_fields&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;array&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show array item type&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Tremendous ID of the custom field&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;value&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Value of the custom field&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;property-conditional-hint-response-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;label&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Label of the custom field&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;  &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;language&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Set this to translate the redemption experience for this reward. Pass a 2-letter &lt;a href&#x3D;\&quot;https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\&quot;&gt;ISO-639-1 code&lt;/a&gt; for the desired language. Defaults to &lt;code&gt;en&lt;/code&gt;.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;delivery&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Details on how the reward is delivered to the recipient.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;method&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;How to deliver the reward to the recipient.&lt;/p&gt;  &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Delivery Method&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody&gt;     &lt;tr&gt;       &lt;td&gt;&lt;code&gt;EMAIL&lt;/code&gt;&lt;/td&gt;       &lt;td&gt;Deliver the reward to the recipient by email&lt;/td&gt;     &lt;/tr&gt;     &lt;tr&gt;       &lt;td&gt;&lt;code&gt;LINK&lt;/code&gt;&lt;/td&gt;       &lt;td&gt;         &lt;p&gt;Deliver the reward to the recipient via a link.&lt;/p&gt;         &lt;p&gt;The link can be retrieved on a successfully ordered reward via the &lt;code&gt;/rewards&lt;/code&gt; or &lt;code&gt;/rewards/{id}&lt;/code&gt; endpoint. That link must then be  delivered to the recipient out-of-band.&lt;/p&gt;       &lt;/td&gt;     &lt;/tr&gt;     &lt;tr&gt;       &lt;td&gt;&lt;code&gt;PHONE&lt;/code&gt;&lt;/td&gt;       &lt;td&gt;Deliver the reward to the recipient by SMS&lt;/td&gt;     &lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;    &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;    &lt;/tbody&gt; &lt;/table&gt;  &lt;/div&gt;   ### Funding sources  There are different ways to pay for gift cards and rewards on Tremendous. Every payment mechanism is called a \&quot;funding source\&quot;.  You can retrieve a list of all available funding sources by using the [Funding sources API endpoint](https://tremendous.readme.io/reference/core-funding-source-index).  The Tremendous API sandbox environment comes with a single funding source that allows you to spend up to $5,000 in *fake money* to test the API. [Learn more about the sandbox environment](https://tremendous.readme.io/reference/sandbox).  The HTTP status code &#x60;200&#x60; on the response will be used to indicate success.  After processing successfully the reward gets queued to be delivered to it&#39;s recipient (for delivery method &#x60;EMAIL&#x60; and &#x60;PHONE&#x60;). Delivery will happen asynchronously, after the response has been sent.  ### Idempotence  Requests issued with the same external_id are idempotent.  Submitting an order with an already existing &#x60;external_id&#x60;, will result in a &#x60;201&#x60; response code. In this case the response will return a representation of the already existing order in the response body. 
+    # Every time you want to send out a reward through Tremendous you need to create an order for it.  &gt; 📘 Getting started with your first order &gt; &gt; Our step-by-step guide walks you through everything you need &gt; to send your first gift card through the Tremendous API: &gt; &gt; &lt;strong&gt;&lt;a style&#x3D;\&quot;display: block; margin-top: 20px;\&quot; href&#x3D;\&quot;/docs/sending-rewards-intro\&quot;&gt;Check it out!&lt;/a&gt;&lt;/strong&gt;  ### Funding sources  There are different ways to pay for gift cards and rewards on Tremendous. Every payment mechanism is called a \&quot;funding source\&quot;.  You can retrieve a list of all available funding sources by using the [Funding sources API endpoint](https://tremendous.readme.io/reference/core-funding-source-index).  The Tremendous API sandbox environment comes with a single funding source that allows you to spend up to $5,000 in *fake money* to test the API. [Learn more about the sandbox environment](https://tremendous.readme.io/reference/sandbox).  The HTTP status code &#x60;200&#x60; on the response will be used to indicate success.  After processing successfully the reward gets queued to be delivered to it&#39;s recipient (for delivery method &#x60;EMAIL&#x60; and &#x60;PHONE&#x60;). Delivery will happen asynchronously, after the response has been sent.  ### Idempotence  Requests issued with the same external_id are idempotent.  Submitting an order with an already existing &#x60;external_id&#x60;, will result in a &#x60;201&#x60; response code. In this case the response will return a representation of the already existing order in the response body. 
     # @param create_order_request [CreateOrderRequest] Order to create
     # @param [Hash] opts the optional parameters
-    # @return [Array<(CreateOrder200Response, Integer, Hash)>] CreateOrder200Response data, response status code and response headers
+    # @return [Array<(SingleRewardOrderWithLink, Integer, Hash)>] SingleRewardOrderWithLink data, response status code and response headers
     def create_order_with_http_info(create_order_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.create_order ...'
@@ -455,7 +455,7 @@ module Tremendous
       post_body = opts[:debug_body] || @api_client.object_to_http_body(create_order_request)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CreateOrder200Response'
+      return_type = opts[:debug_return_type] || 'SingleRewardOrderWithLink'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']
@@ -479,26 +479,26 @@ module Tremendous
 
     # Create organization
     # Organizations are a way to separate different parts of your business within the same Tremendous account.  You can assign users in your Tremendous team as members to any organization. Users can be members of multiple organizations at once.  API keys belong to a single organization. The API key used in a request determines on behalf of which organization the request is carried out.  **Important note:** When creating an organization, you are required to either pass `with_api_key` or `copy_settings[user]` in the request body as `true`. This ensures that your new Organization can either be accessed via the API or the Dashboard. 
-    # @param create_organization_request [CreateOrganizationRequest] Organization details
+    # @param create_organization [CreateOrganization] Organization details
     # @param [Hash] opts the optional parameters
     # @return [CreateOrganization200Response]
-    def create_organization(create_organization_request, opts = {})
-      data, _status_code, _headers = create_organization_with_http_info(create_organization_request, opts)
+    def create_organization(create_organization, opts = {})
+      data, _status_code, _headers = create_organization_with_http_info(create_organization, opts)
       data
     end
 
     # Create organization
     # Organizations are a way to separate different parts of your business within the same Tremendous account.  You can assign users in your Tremendous team as members to any organization. Users can be members of multiple organizations at once.  API keys belong to a single organization. The API key used in a request determines on behalf of which organization the request is carried out.  **Important note:** When creating an organization, you are required to either pass &#x60;with_api_key&#x60; or &#x60;copy_settings[user]&#x60; in the request body as &#x60;true&#x60;. This ensures that your new Organization can either be accessed via the API or the Dashboard. 
-    # @param create_organization_request [CreateOrganizationRequest] Organization details
+    # @param create_organization [CreateOrganization] Organization details
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreateOrganization200Response, Integer, Hash)>] CreateOrganization200Response data, response status code and response headers
-    def create_organization_with_http_info(create_organization_request, opts = {})
+    def create_organization_with_http_info(create_organization, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.create_organization ...'
       end
-      # verify the required parameter 'create_organization_request' is set
-      if @api_client.config.client_side_validation && create_organization_request.nil?
-        fail ArgumentError, "Missing the required parameter 'create_organization_request' when calling TremendousApi.create_organization"
+      # verify the required parameter 'create_organization' is set
+      if @api_client.config.client_side_validation && create_organization.nil?
+        fail ArgumentError, "Missing the required parameter 'create_organization' when calling TremendousApi.create_organization"
       end
       # resource path
       local_var_path = '/organizations'
@@ -520,7 +520,7 @@ module Tremendous
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(create_organization_request)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(create_organization)
 
       # return_type
       return_type = opts[:debug_return_type] || 'CreateOrganization200Response'
@@ -546,27 +546,27 @@ module Tremendous
     end
 
     # Create webhook
-    # Tremendous uses webhooks as a notification system for various events that happen in your account.  > 📘 Learn more about Webhooks > > Our guide explains everything you need to know about the Tremendous webhooks: > [Read it here](/docs/webhooks-1)  Every organization can define a single webhook endpoint where we send requests to, whenever an event happens.  This endpoint allows you to setup that endpoint. The URL of the endpoint can be changed by making a request to this endpoint again with the new URL.  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">url</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">uri</span></td><td><p>URL the webhook will make requests to</p> </td></tr>   </tbody> </table>  </div>  
-    # @param create_webhook_request [CreateWebhookRequest] Webhook details
+    # Tremendous uses webhooks as a notification system for various events that happen in your account.  > 📘 Learn more about Webhooks > > Our guide explains everything you need to know about the Tremendous webhooks: > [Read it here](/docs/webhooks-1)  Every organization can define a single webhook endpoint where we send requests to, whenever an event happens.  This endpoint allows you to setup that endpoint. The URL of the endpoint can be changed by making a request to this endpoint again with the new URL. 
+    # @param webhook_post [WebhookPost] Webhook details
     # @param [Hash] opts the optional parameters
     # @return [CreateWebhook200Response]
-    def create_webhook(create_webhook_request, opts = {})
-      data, _status_code, _headers = create_webhook_with_http_info(create_webhook_request, opts)
+    def create_webhook(webhook_post, opts = {})
+      data, _status_code, _headers = create_webhook_with_http_info(webhook_post, opts)
       data
     end
 
     # Create webhook
-    # Tremendous uses webhooks as a notification system for various events that happen in your account.  &gt; 📘 Learn more about Webhooks &gt; &gt; Our guide explains everything you need to know about the Tremendous webhooks: &gt; [Read it here](/docs/webhooks-1)  Every organization can define a single webhook endpoint where we send requests to, whenever an event happens.  This endpoint allows you to setup that endpoint. The URL of the endpoint can be changed by making a request to this endpoint again with the new URL.  ## Request body  &lt;div class&#x3D;\&quot;object-schema-request-schema\&quot;&gt;   &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;url&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;uri&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;URL the webhook will make requests to&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/div&gt;  
-    # @param create_webhook_request [CreateWebhookRequest] Webhook details
+    # Tremendous uses webhooks as a notification system for various events that happen in your account.  &gt; 📘 Learn more about Webhooks &gt; &gt; Our guide explains everything you need to know about the Tremendous webhooks: &gt; [Read it here](/docs/webhooks-1)  Every organization can define a single webhook endpoint where we send requests to, whenever an event happens.  This endpoint allows you to setup that endpoint. The URL of the endpoint can be changed by making a request to this endpoint again with the new URL. 
+    # @param webhook_post [WebhookPost] Webhook details
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreateWebhook200Response, Integer, Hash)>] CreateWebhook200Response data, response status code and response headers
-    def create_webhook_with_http_info(create_webhook_request, opts = {})
+    def create_webhook_with_http_info(webhook_post, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.create_webhook ...'
       end
-      # verify the required parameter 'create_webhook_request' is set
-      if @api_client.config.client_side_validation && create_webhook_request.nil?
-        fail ArgumentError, "Missing the required parameter 'create_webhook_request' when calling TremendousApi.create_webhook"
+      # verify the required parameter 'webhook_post' is set
+      if @api_client.config.client_side_validation && webhook_post.nil?
+        fail ArgumentError, "Missing the required parameter 'webhook_post' when calling TremendousApi.create_webhook"
       end
       # resource path
       local_var_path = '/webhooks'
@@ -588,7 +588,7 @@ module Tremendous
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(create_webhook_request)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(webhook_post)
 
       # return_type
       return_type = opts[:debug_return_type] || 'CreateWebhook200Response'
@@ -615,9 +615,9 @@ module Tremendous
 
     # Delete fraud rule
     # Deletes the rule of the type passed in the URL. 
-    # @param rule_type [String] The rule type to create or update.
+    # @param rule_type [FraudRuleType] The rule type to create or update.
     # @param [Hash] opts the optional parameters
-    # @return [DeleteFraudRule200Response]
+    # @return [FraudGenericResponse]
     def delete_fraud_rule(rule_type, opts = {})
       data, _status_code, _headers = delete_fraud_rule_with_http_info(rule_type, opts)
       data
@@ -625,9 +625,9 @@ module Tremendous
 
     # Delete fraud rule
     # Deletes the rule of the type passed in the URL. 
-    # @param rule_type [String] The rule type to create or update.
+    # @param rule_type [FraudRuleType] The rule type to create or update.
     # @param [Hash] opts the optional parameters
-    # @return [Array<(DeleteFraudRule200Response, Integer, Hash)>] DeleteFraudRule200Response data, response status code and response headers
+    # @return [Array<(FraudGenericResponse, Integer, Hash)>] FraudGenericResponse data, response status code and response headers
     def delete_fraud_rule_with_http_info(rule_type, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.delete_fraud_rule ...'
@@ -635,11 +635,6 @@ module Tremendous
       # verify the required parameter 'rule_type' is set
       if @api_client.config.client_side_validation && rule_type.nil?
         fail ArgumentError, "Missing the required parameter 'rule_type' when calling TremendousApi.delete_fraud_rule"
-      end
-      # verify enum value
-      allowable_values = ["review_country", "review_ip", "review_email", "review_redeemed_rewards_count", "review_redeemed_rewards_amount", "review_multiple_emails", "review_vpn", "review_tremendous_flag_list", "review_previously_blocked_recipients", "allow_ip", "allow_email"]
-      if @api_client.config.client_side_validation && !allowable_values.include?(rule_type)
-        fail ArgumentError, "invalid value for \"rule_type\", must be one of #{allowable_values}"
       end
       # resource path
       local_var_path = '/fraud_rules/{rule_type}'.sub('{' + 'rule_type' + '}', CGI.escape(rule_type.to_s))
@@ -659,7 +654,7 @@ module Tremendous
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'DeleteFraudRule200Response'
+      return_type = opts[:debug_return_type] || 'FraudGenericResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']
@@ -940,10 +935,10 @@ module Tremendous
 
     # Configure fraud rule
     # Configure a fraud rule of the type passed in the URL. If a rule of the same type already exists, it will be overwritten. 
-    # @param rule_type [String] The rule type to create or update.
+    # @param rule_type [FraudRuleType] The rule type to create or update.
     # @param [Hash] opts the optional parameters
     # @option opts [FraudRuleRequest] :fraud_rule_request Rules &#x60;review_multiple_emails&#x60;, &#x60;review_vpn&#x60;, &#x60;review_tremendous_flaglist&#x60;, and &#x60;review_previously_blocked_recipients&#x60; require no body.
-    # @return [FraudRule200Response]
+    # @return [FraudGenericResponse]
     def fraud_rule(rule_type, opts = {})
       data, _status_code, _headers = fraud_rule_with_http_info(rule_type, opts)
       data
@@ -951,10 +946,10 @@ module Tremendous
 
     # Configure fraud rule
     # Configure a fraud rule of the type passed in the URL. If a rule of the same type already exists, it will be overwritten. 
-    # @param rule_type [String] The rule type to create or update.
+    # @param rule_type [FraudRuleType] The rule type to create or update.
     # @param [Hash] opts the optional parameters
     # @option opts [FraudRuleRequest] :fraud_rule_request Rules &#x60;review_multiple_emails&#x60;, &#x60;review_vpn&#x60;, &#x60;review_tremendous_flaglist&#x60;, and &#x60;review_previously_blocked_recipients&#x60; require no body.
-    # @return [Array<(FraudRule200Response, Integer, Hash)>] FraudRule200Response data, response status code and response headers
+    # @return [Array<(FraudGenericResponse, Integer, Hash)>] FraudGenericResponse data, response status code and response headers
     def fraud_rule_with_http_info(rule_type, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.fraud_rule ...'
@@ -962,11 +957,6 @@ module Tremendous
       # verify the required parameter 'rule_type' is set
       if @api_client.config.client_side_validation && rule_type.nil?
         fail ArgumentError, "Missing the required parameter 'rule_type' when calling TremendousApi.fraud_rule"
-      end
-      # verify enum value
-      allowable_values = ["review_country", "review_ip", "review_email", "review_redeemed_rewards_count", "review_redeemed_rewards_amount", "review_multiple_emails", "review_vpn", "review_tremendous_flag_list", "review_previously_blocked_recipients", "allow_ip", "allow_email"]
-      if @api_client.config.client_side_validation && !allowable_values.include?(rule_type)
-        fail ArgumentError, "invalid value for \"rule_type\", must be one of #{allowable_values}"
       end
       # resource path
       local_var_path = '/fraud_rules/{rule_type}'.sub('{' + 'rule_type' + '}', CGI.escape(rule_type.to_s))
@@ -991,7 +981,7 @@ module Tremendous
       post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'fraud_rule_request'])
 
       # return_type
-      return_type = opts[:debug_return_type] || 'FraudRule200Response'
+      return_type = opts[:debug_return_type] || 'FraudGenericResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']
@@ -1481,7 +1471,7 @@ module Tremendous
     # Retrieve the order, identified by the given `id` in the URL 
     # @param id [String] ID of the order that should be retrieved. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead. 
     # @param [Hash] opts the optional parameters
-    # @return [CreateOrder201Response]
+    # @return [SingleRewardOrderWithoutLink]
     def get_order(id, opts = {})
       data, _status_code, _headers = get_order_with_http_info(id, opts)
       data
@@ -1491,7 +1481,7 @@ module Tremendous
     # Retrieve the order, identified by the given &#x60;id&#x60; in the URL 
     # @param id [String] ID of the order that should be retrieved. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead. 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(CreateOrder201Response, Integer, Hash)>] CreateOrder201Response data, response status code and response headers
+    # @return [Array<(SingleRewardOrderWithoutLink, Integer, Hash)>] SingleRewardOrderWithoutLink data, response status code and response headers
     def get_order_with_http_info(id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.get_order ...'
@@ -1518,7 +1508,7 @@ module Tremendous
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CreateOrder201Response'
+      return_type = opts[:debug_return_type] || 'SingleRewardOrderWithoutLink'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']
@@ -2822,7 +2812,7 @@ module Tremendous
     # Rejects an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
     # @param id [String] ID of the order that should be rejected. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead.
     # @param [Hash] opts the optional parameters
-    # @return [CreateOrder201Response]
+    # @return [SingleRewardOrderWithoutLink]
     def reject_order(id, opts = {})
       data, _status_code, _headers = reject_order_with_http_info(id, opts)
       data
@@ -2832,7 +2822,7 @@ module Tremendous
     # Rejects an order that is pending review, identified by the given &#x60;id&#x60; in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable &#39;Allow approvals via API&#39; via the organization&#39;&#39;s &#39;Order Approvals&#39; settings from the Tremendous dashboard. 
     # @param id [String] ID of the order that should be rejected. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead.
     # @param [Hash] opts the optional parameters
-    # @return [Array<(CreateOrder201Response, Integer, Hash)>] CreateOrder201Response data, response status code and response headers
+    # @return [Array<(SingleRewardOrderWithoutLink, Integer, Hash)>] SingleRewardOrderWithoutLink data, response status code and response headers
     def reject_order_with_http_info(id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.reject_order ...'
@@ -2864,7 +2854,7 @@ module Tremendous
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CreateOrder201Response'
+      return_type = opts[:debug_return_type] || 'SingleRewardOrderWithoutLink'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']
@@ -2953,6 +2943,7 @@ module Tremendous
     # Resends a reward, identified by the given `id` in the URL, to its recipient. 
     # @param id [String] ID of the reward that should be resent
     # @param [Hash] opts the optional parameters
+    # @option opts [ResendRewardRequest] :resend_reward_request _Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of &#x60;updated_email&#x60; or &#x60;updated_phone&#x60;, not both. 
     # @return [Object]
     def resend_reward(id, opts = {})
       data, _status_code, _headers = resend_reward_with_http_info(id, opts)
@@ -2963,6 +2954,7 @@ module Tremendous
     # Resends a reward, identified by the given &#x60;id&#x60; in the URL, to its recipient. 
     # @param id [String] ID of the reward that should be resent
     # @param [Hash] opts the optional parameters
+    # @option opts [ResendRewardRequest] :resend_reward_request _Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of &#x60;updated_email&#x60; or &#x60;updated_phone&#x60;, not both. 
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def resend_reward_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -2987,12 +2979,17 @@ module Tremendous
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'resend_reward_request'])
 
       # return_type
       return_type = opts[:debug_return_type] || 'Object'
@@ -3098,20 +3095,20 @@ module Tremendous
 
     # Update campaign
     # @param id [String] ID of the campaign that should be updated
-    # @param update_campaign_request [UpdateCampaignRequest] Campaign details
+    # @param update_campaign [UpdateCampaign] Campaign details
     # @param [Hash] opts the optional parameters
     # @return [CreateCampaign201Response]
-    def update_campaign(id, update_campaign_request, opts = {})
-      data, _status_code, _headers = update_campaign_with_http_info(id, update_campaign_request, opts)
+    def update_campaign(id, update_campaign, opts = {})
+      data, _status_code, _headers = update_campaign_with_http_info(id, update_campaign, opts)
       data
     end
 
     # Update campaign
     # @param id [String] ID of the campaign that should be updated
-    # @param update_campaign_request [UpdateCampaignRequest] Campaign details
+    # @param update_campaign [UpdateCampaign] Campaign details
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreateCampaign201Response, Integer, Hash)>] CreateCampaign201Response data, response status code and response headers
-    def update_campaign_with_http_info(id, update_campaign_request, opts = {})
+    def update_campaign_with_http_info(id, update_campaign, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.update_campaign ...'
       end
@@ -3124,9 +3121,9 @@ module Tremendous
         fail ArgumentError, "invalid value for 'id' when calling TremendousApi.update_campaign, must conform to the pattern #{pattern}."
       end
 
-      # verify the required parameter 'update_campaign_request' is set
-      if @api_client.config.client_side_validation && update_campaign_request.nil?
-        fail ArgumentError, "Missing the required parameter 'update_campaign_request' when calling TremendousApi.update_campaign"
+      # verify the required parameter 'update_campaign' is set
+      if @api_client.config.client_side_validation && update_campaign.nil?
+        fail ArgumentError, "Missing the required parameter 'update_campaign' when calling TremendousApi.update_campaign"
       end
       # resource path
       local_var_path = '/campaigns/{id}'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
@@ -3148,7 +3145,7 @@ module Tremendous
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(update_campaign_request)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(update_campaign)
 
       # return_type
       return_type = opts[:debug_return_type] || 'CreateCampaign201Response'
@@ -3178,7 +3175,7 @@ module Tremendous
     # @param rule_type [String] The rule type to create or update.
     # @param update_fraud_rule_list_request [UpdateFraudRuleListRequest] The lists to add or remove from the current configuration
     # @param [Hash] opts the optional parameters
-    # @return [UpdateFraudRuleList200Response]
+    # @return [FraudGenericResponse]
     def update_fraud_rule_list(rule_type, update_fraud_rule_list_request, opts = {})
       data, _status_code, _headers = update_fraud_rule_list_with_http_info(rule_type, update_fraud_rule_list_request, opts)
       data
@@ -3189,7 +3186,7 @@ module Tremendous
     # @param rule_type [String] The rule type to create or update.
     # @param update_fraud_rule_list_request [UpdateFraudRuleListRequest] The lists to add or remove from the current configuration
     # @param [Hash] opts the optional parameters
-    # @return [Array<(UpdateFraudRuleList200Response, Integer, Hash)>] UpdateFraudRuleList200Response data, response status code and response headers
+    # @return [Array<(FraudGenericResponse, Integer, Hash)>] FraudGenericResponse data, response status code and response headers
     def update_fraud_rule_list_with_http_info(rule_type, update_fraud_rule_list_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.update_fraud_rule_list ...'
@@ -3230,7 +3227,7 @@ module Tremendous
       post_body = opts[:debug_body] || @api_client.object_to_http_body(update_fraud_rule_list_request)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'UpdateFraudRuleList200Response'
+      return_type = opts[:debug_return_type] || 'FraudGenericResponse'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']

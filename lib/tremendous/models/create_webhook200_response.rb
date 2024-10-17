@@ -32,7 +32,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'webhook' => :'ListWebhooks200ResponseWebhooksInner'
+        :'webhook' => :'Webhook'
       }
     end
 

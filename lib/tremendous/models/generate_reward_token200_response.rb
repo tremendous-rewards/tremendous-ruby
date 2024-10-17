@@ -32,7 +32,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'reward' => :'GenerateRewardToken200ResponseReward'
+        :'reward' => :'RewardToken'
       }
     end
 

@@ -23,6 +23,9 @@ module Tremendous
     # URL of the website of that organization
     attr_accessor :website
 
+    # Default value is `false`. Set to true to also generate an API key associated to the new organization.
+    attr_accessor :with_api_key
+
     attr_accessor :copy_settings
 
     # Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).
@@ -40,6 +43,7 @@ module Tremendous
         :'id' => :'id',
         :'name' => :'name',
         :'website' => :'website',
+        :'with_api_key' => :'with_api_key',
         :'copy_settings' => :'copy_settings',
         :'phone' => :'phone',
         :'created_at' => :'created_at',
@@ -58,7 +62,8 @@ module Tremendous
         :'id' => :'String',
         :'name' => :'String',
         :'website' => :'String',
-        :'copy_settings' => :'CreateOrganizationRequestCopySettings',
+        :'with_api_key' => :'Boolean',
+        :'copy_settings' => :'CreateOrganizationCopySettings',
         :'phone' => :'String',
         :'created_at' => :'Date',
         :'api_key' => :'String'
@@ -70,6 +75,13 @@ module Tremendous
       Set.new([
         :'phone',
       ])
+    end
+
+    # List of class defined in allOf (OpenAPI v3)
+    def self.openapi_all_of
+      [
+      :'CreateOrganizationForResponse'
+      ]
     end
 
     # Initializes the object
@@ -101,6 +113,10 @@ module Tremendous
         self.website = attributes[:'website']
       else
         self.website = nil
+      end
+
+      if attributes.key?(:'with_api_key')
+        self.with_api_key = attributes[:'with_api_key']
       end
 
       if attributes.key?(:'copy_settings')
@@ -174,6 +190,7 @@ module Tremendous
           id == o.id &&
           name == o.name &&
           website == o.website &&
+          with_api_key == o.with_api_key &&
           copy_settings == o.copy_settings &&
           phone == o.phone &&
           created_at == o.created_at &&
@@ -189,7 +206,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, website, copy_settings, phone, created_at, api_key].hash
+      [id, name, website, with_api_key, copy_settings, phone, created_at, api_key].hash
     end
 
     # Builds the object from hash

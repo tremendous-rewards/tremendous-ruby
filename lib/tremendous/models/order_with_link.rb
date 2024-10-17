@@ -14,24 +14,19 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # An order wraps around the fulfilment of one or more rewards.
   class OrderWithLink
-    # Tremendous ID of the order
     attr_accessor :id
 
     # Reference for this order, supplied by the customer.  When set, `external_id` makes order idempotent. All requests that use the same `external_id` after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a `201` response code. These responses **fail** to create any further orders.  It also allows for retrieving by `external_id` instead of `id` only. 
     attr_accessor :external_id
 
-    # ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. 
     attr_accessor :campaign_id
 
     # Date the order has been created
     attr_accessor :created_at
 
-    # Execution status of a given order  <table>   <thead>     <tr>       <th>         Status       </th>       <th>         Description       </th>     </tr>   </thead>   <tbody>     <tr>       <td>         <code>           CANCELED         </code>       </td>       <td>         The order and all of its rewards were canceled.       </td>     </tr>     <tr>       <td>         <code>           CART         </code>       </td>       <td>         The order has been created, but hasn't yet been processed.       </td>     </tr>     <tr>       <td>         <code>           EXECUTED         </code>       </td>       <td>         The order has been executed. Payment has been handled and rewards are being delivered (if applicable).       </td>     </tr>     <tr>       <td>         <code>           FAILED         </code>       </td>       <td>         The order could not be processed due to an error. E.g. due to insufficient funds in the account.       </td>     </tr>     <tr>       <td>         <code>           PENDING APPROVAL         </code>       </td>       <td>         The order has been created but needs approval to be executed.       </td>     </tr>     <tr>       <td>         <code>           PENDING INTERNAL PAYMENT APPROVAL         </code>       </td>       <td>         The order has been created but it is under review and requires approval from our team.       </td>     </tr>    </tbody> </table> 
     attr_accessor :status
 
-    # Name of the channel in which the order was created
     attr_accessor :channel
 
     attr_accessor :payment
@@ -90,11 +85,11 @@ module Tremendous
         :'external_id' => :'String',
         :'campaign_id' => :'String',
         :'created_at' => :'Time',
-        :'status' => :'String',
-        :'channel' => :'String',
+        :'status' => :'OrderStatus',
+        :'channel' => :'Channel',
         :'payment' => :'OrderBasePayment',
         :'invoice_id' => :'String',
-        :'rewards' => :'Array<OrderWithLinkRewardsInner>'
+        :'rewards' => :'Array<RewardWithLink>'
       }
     end
 
@@ -104,6 +99,13 @@ module Tremendous
         :'external_id',
         :'campaign_id',
       ])
+    end
+
+    # List of class defined in allOf (OpenAPI v3)
+    def self.openapi_all_of
+      [
+      :'OrderBase'
+      ]
     end
 
     # Initializes the object
@@ -176,11 +178,6 @@ module Tremendous
       end
 
       pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if @id !~ pattern
-        invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
-      end
-
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
       if !@campaign_id.nil? && @campaign_id !~ pattern
         invalid_properties.push("invalid value for \"campaign_id\", must conform to the pattern #{pattern}.")
       end
@@ -201,30 +198,10 @@ module Tremendous
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @id.nil?
-      return false if @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
       return false if !@campaign_id.nil? && @campaign_id !~ Regexp.new(/[A-Z0-9]{4,20}/)
       return false if @created_at.nil?
       return false if @status.nil?
-      status_validator = EnumAttributeValidator.new('String', ["CANCELED", "CART", "EXECUTED", "FAILED", "PENDING APPROVAL", "PENDING INTERNAL PAYMENT APPROVAL"])
-      return false unless status_validator.valid?(@status)
-      channel_validator = EnumAttributeValidator.new('String', ["UI", "API", "EMBED", "DECIPHER", "QUALTRICS", "TYPEFORM", "SURVEY MONKEY"])
-      return false unless channel_validator.valid?(@channel)
       true
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] id Value to be assigned
-    def id=(id)
-      if id.nil?
-        fail ArgumentError, 'id cannot be nil'
-      end
-
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if id !~ pattern
-        fail ArgumentError, "invalid value for \"id\", must conform to the pattern #{pattern}."
-      end
-
-      @id = id
     end
 
     # Custom attribute writer method with validation
@@ -236,26 +213,6 @@ module Tremendous
       end
 
       @campaign_id = campaign_id
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] status Object to be assigned
-    def status=(status)
-      validator = EnumAttributeValidator.new('String', ["CANCELED", "CART", "EXECUTED", "FAILED", "PENDING APPROVAL", "PENDING INTERNAL PAYMENT APPROVAL"])
-      unless validator.valid?(status)
-        fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
-      end
-      @status = status
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] channel Object to be assigned
-    def channel=(channel)
-      validator = EnumAttributeValidator.new('String', ["UI", "API", "EMBED", "DECIPHER", "QUALTRICS", "TYPEFORM", "SURVEY MONKEY"])
-      unless validator.valid?(channel)
-        fail ArgumentError, "invalid value for \"channel\", must be one of #{validator.allowable_values}."
-      end
-      @channel = channel
     end
 
     # Checks equality by comparing each attribute.

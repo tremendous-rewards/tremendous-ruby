@@ -32,7 +32,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'campaign' => :'ListCampaigns200ResponseCampaignsInner'
+        :'campaign' => :'Campaign'
       }
     end
 

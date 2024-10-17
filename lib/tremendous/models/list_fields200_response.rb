@@ -32,7 +32,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'fields' => :'Array<ListFields200ResponseFieldsInner>'
+        :'fields' => :'Array<Field>'
       }
     end
 
