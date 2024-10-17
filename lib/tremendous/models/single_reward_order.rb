@@ -41,8 +41,8 @@ module Tremendous
     def self.openapi_types
       {
         :'external_id' => :'String',
-        :'payment' => :'SingleRewardOrderPayment',
-        :'reward' => :'SingleRewardOrderReward'
+        :'payment' => :'BaseOrderForCreatePayment',
+        :'reward' => :'Object'
       }
     end
 
@@ -51,6 +51,13 @@ module Tremendous
       Set.new([
         :'external_id',
       ])
+    end
+
+    # List of class defined in allOf (OpenAPI v3)
+    def self.openapi_all_of
+      [
+      :'BaseOrderForCreate'
+      ]
     end
 
     # Initializes the object
@@ -74,6 +81,8 @@ module Tremendous
 
       if attributes.key?(:'payment')
         self.payment = attributes[:'payment']
+      else
+        self.payment = nil
       end
 
       if attributes.key?(:'reward')
@@ -88,6 +97,10 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if @payment.nil?
+        invalid_properties.push('invalid value for "payment", payment cannot be nil.')
+      end
+
       if @reward.nil?
         invalid_properties.push('invalid value for "reward", reward cannot be nil.')
       end
@@ -99,6 +112,7 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if @payment.nil?
       return false if @reward.nil?
       true
     end

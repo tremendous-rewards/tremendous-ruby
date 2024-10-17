@@ -92,10 +92,10 @@ module Tremendous
         :'description' => :'String',
         :'category' => :'String',
         :'disclosure' => :'String',
-        :'skus' => :'Array<ListProductsResponseProductsInnerSkusInner>',
-        :'currency_codes' => :'Array<String>',
-        :'countries' => :'Array<ListProductsResponseProductsInnerCountriesInner>',
-        :'images' => :'Array<ListProductsResponseProductsInnerImagesInner>'
+        :'skus' => :'Array<ProductSkusInner>',
+        :'currency_codes' => :'Array<CurrencyCodes>',
+        :'countries' => :'Array<ProductCountriesInner>',
+        :'images' => :'Array<ProductImagesInner>'
       }
     end
 
@@ -282,6 +282,20 @@ module Tremendous
         fail ArgumentError, "invalid value for \"category\", must be one of #{validator.allowable_values}."
       end
       @category = category
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] currency_codes Value to be assigned
+    def currency_codes=(currency_codes)
+      if currency_codes.nil?
+        fail ArgumentError, 'currency_codes cannot be nil'
+      end
+
+      if currency_codes.length < 1
+        fail ArgumentError, 'invalid value for "currency_codes", number of items must be greater than or equal to 1.'
+      end
+
+      @currency_codes = currency_codes
     end
 
     # Custom attribute writer method with validation

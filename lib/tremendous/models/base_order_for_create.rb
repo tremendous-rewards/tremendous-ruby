@@ -37,7 +37,7 @@ module Tremendous
     def self.openapi_types
       {
         :'external_id' => :'String',
-        :'payment' => :'SingleRewardOrderPayment'
+        :'payment' => :'BaseOrderForCreatePayment'
       }
     end
 

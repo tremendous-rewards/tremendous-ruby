@@ -16,16 +16,13 @@ require 'time'
 module Tremendous
   # A single reward, sent to a recipient. A reward is always part of an order.  Either `products` or `campaign_id` must be specified. 
   class RewardBase
-    # Tremendous ID of the reward
     attr_accessor :id
 
-    # Tremendous ID of the order this reward is part of.
     attr_accessor :order_id
 
     # Date the reward was created
     attr_accessor :created_at
 
-    # ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. 
     attr_accessor :campaign_id
 
     # List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.  Providing a `products` array will override the products made available by the campaign specified using the `campaign_id` property unless the `products` array is empty. It will _not_ override other campaign attributes, like the message and customization of the look and feel. 
@@ -68,10 +65,10 @@ module Tremendous
         :'created_at' => :'Time',
         :'campaign_id' => :'String',
         :'products' => :'Array<String>',
-        :'value' => :'ListRewards200ResponseRewardsInnerValue',
-        :'recipient' => :'ListRewards200ResponseRewardsInnerRecipient',
+        :'value' => :'RewardValue',
+        :'recipient' => :'Recipient',
         :'deliver_at' => :'Date',
-        :'custom_fields' => :'Array<RewardBaseCustomFieldsInner>'
+        :'custom_fields' => :'Array<CustomField>'
       }
     end
 

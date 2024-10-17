@@ -14,7 +14,6 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # Cost breakdown of the order (cost of rewards + fees). Cost and fees are always denominated in USD, independent from the currency of the ordered rewards. Note that this property will only appear for processed orders (`status` is `EXECUTED`).
   class OrderBasePayment
     # Total price of the order before fees (in USD)
     attr_accessor :subtotal
@@ -56,6 +55,13 @@ module Tremendous
     def self.openapi_nullable
       Set.new([
       ])
+    end
+
+    # List of class defined in allOf (OpenAPI v3)
+    def self.openapi_all_of
+      [
+      :'PaymentDetails'
+      ]
     end
 
     # Initializes the object

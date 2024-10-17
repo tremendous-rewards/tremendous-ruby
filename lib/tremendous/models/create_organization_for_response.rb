@@ -59,7 +59,7 @@ module Tremendous
         :'name' => :'String',
         :'website' => :'String',
         :'with_api_key' => :'Boolean',
-        :'copy_settings' => :'CreateOrganizationRequestCopySettings',
+        :'copy_settings' => :'CreateOrganizationCopySettings',
         :'phone' => :'String',
         :'created_at' => :'Date'
       }

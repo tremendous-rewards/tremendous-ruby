@@ -15,12 +15,10 @@ require 'time'
 
 module Tremendous
   class Payout
-    # Tremendous ID of the payout
     attr_accessor :id
 
     attr_accessor :status
 
-    # Tremendous ID of the paid out product
     attr_accessor :product_id
 
     # Name of the paid out Product
@@ -31,6 +29,9 @@ module Tremendous
 
     # Date the payout was executed
     attr_accessor :executed_at
+
+    # Date when a delayed payout will be executed in the future
+    attr_accessor :defer_execution_until
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -62,7 +63,8 @@ module Tremendous
         :'product_id' => :'product_id',
         :'product_name' => :'product_name',
         :'created_at' => :'created_at',
-        :'executed_at' => :'executed_at'
+        :'executed_at' => :'executed_at',
+        :'defer_execution_until' => :'defer_execution_until'
       }
     end
 
@@ -79,13 +81,16 @@ module Tremendous
         :'product_id' => :'String',
         :'product_name' => :'String',
         :'created_at' => :'Time',
-        :'executed_at' => :'Time'
+        :'executed_at' => :'Time',
+        :'defer_execution_until' => :'Time'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'executed_at',
+        :'defer_execution_until'
       ])
     end
 
@@ -126,6 +131,10 @@ module Tremendous
 
       if attributes.key?(:'executed_at')
         self.executed_at = attributes[:'executed_at']
+      end
+
+      if attributes.key?(:'defer_execution_until')
+        self.defer_execution_until = attributes[:'defer_execution_until']
       end
     end
 
@@ -208,7 +217,8 @@ module Tremendous
           product_id == o.product_id &&
           product_name == o.product_name &&
           created_at == o.created_at &&
-          executed_at == o.executed_at
+          executed_at == o.executed_at &&
+          defer_execution_until == o.defer_execution_until
     end
 
     # @see the `==` method
@@ -220,7 +230,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, status, product_id, product_name, created_at, executed_at].hash
+      [id, status, product_id, product_name, created_at, executed_at, defer_execution_until].hash
     end
 
     # Builds the object from hash

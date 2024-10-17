@@ -36,7 +36,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'orders' => :'Array<ListOrders200ResponseOrdersInner>',
+        :'orders' => :'Array<OrderWithoutLink>',
         :'total_count' => :'Integer'
       }
     end

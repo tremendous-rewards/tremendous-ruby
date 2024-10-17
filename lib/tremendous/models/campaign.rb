@@ -14,7 +14,6 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # With a campaign you can define the look & feel of how rewards are sent out. It also lets you set the available products (different gift cards, charity, etc.) recipients can choose from. 
   class Campaign
     attr_accessor :id
 
@@ -55,8 +54,8 @@ module Tremendous
         :'name' => :'String',
         :'description' => :'String',
         :'products' => :'Array<String>',
-        :'webpage_style' => :'ListCampaigns200ResponseCampaignsInnerWebpageStyle',
-        :'email_style' => :'ListCampaigns200ResponseCampaignsInnerEmailStyle'
+        :'webpage_style' => :'CampaignBaseWebpageStyle',
+        :'email_style' => :'CampaignBaseEmailStyle'
       }
     end
 
@@ -65,6 +64,13 @@ module Tremendous
       Set.new([
         :'description',
       ])
+    end
+
+    # List of class defined in allOf (OpenAPI v3)
+    def self.openapi_all_of
+      [
+      :'CampaignBase'
+      ]
     end
 
     # Initializes the object
@@ -88,22 +94,16 @@ module Tremendous
 
       if attributes.key?(:'name')
         self.name = attributes[:'name']
-      else
-        self.name = nil
       end
 
       if attributes.key?(:'description')
         self.description = attributes[:'description']
-      else
-        self.description = nil
       end
 
       if attributes.key?(:'products')
         if (value = attributes[:'products']).is_a?(Array)
           self.products = value
         end
-      else
-        self.products = nil
       end
 
       if attributes.key?(:'webpage_style')
@@ -125,14 +125,6 @@ module Tremendous
         invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
       end
 
-      if @name.nil?
-        invalid_properties.push('invalid value for "name", name cannot be nil.')
-      end
-
-      if @products.nil?
-        invalid_properties.push('invalid value for "products", products cannot be nil.')
-      end
-
       invalid_properties
     end
 
@@ -141,8 +133,6 @@ module Tremendous
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      return false if @name.nil?
-      return false if @products.nil?
       true
     end
 

@@ -14,7 +14,6 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly.  These actions include adding funding sources to the organization, creating Campaigns, and more. 
   class MemberWithEvents
     attr_accessor :id
 
@@ -85,7 +84,7 @@ module Tremendous
         :'active' => :'Boolean',
         :'role' => :'String',
         :'status' => :'String',
-        :'events' => :'Array<GetMember200ResponseMemberEventsInner>'
+        :'events' => :'Array<MemberWithEventsAllOfEvents>'
       }
     end
 
@@ -95,6 +94,13 @@ module Tremendous
         :'name',
         :'role',
       ])
+    end
+
+    # List of class defined in allOf (OpenAPI v3)
+    def self.openapi_all_of
+      [
+      :'MemberBase'
+      ]
     end
 
     # Initializes the object

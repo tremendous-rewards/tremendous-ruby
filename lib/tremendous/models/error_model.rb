@@ -37,7 +37,7 @@ module Tremendous
     def self.openapi_types
       {
         :'status' => :'Integer',
-        :'errors' => :'ListRewards401ResponseErrors'
+        :'errors' => :'ErrorModelErrors'
       }
     end
 

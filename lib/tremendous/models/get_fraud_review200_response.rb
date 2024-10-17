@@ -32,7 +32,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'fraud_review' => :'GetFraudReview200ResponseFraudReview'
+        :'fraud_review' => :'FraudReview'
       }
     end
 

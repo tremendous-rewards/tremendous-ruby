@@ -14,7 +14,6 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # With a campaign you can define the look & feel of how rewards are sent out. It also lets you set the available products (different gift cards, charity, etc.) recipients can choose from. 
   class UpdateCampaign
     attr_accessor :id
 
@@ -55,8 +54,8 @@ module Tremendous
         :'name' => :'String',
         :'description' => :'String',
         :'products' => :'Array<String>',
-        :'webpage_style' => :'ListCampaigns200ResponseCampaignsInnerWebpageStyle',
-        :'email_style' => :'ListCampaigns200ResponseCampaignsInnerEmailStyle'
+        :'webpage_style' => :'CampaignBaseWebpageStyle',
+        :'email_style' => :'CampaignBaseEmailStyle'
       }
     end
 
@@ -65,6 +64,13 @@ module Tremendous
       Set.new([
         :'description',
       ])
+    end
+
+    # List of class defined in allOf (OpenAPI v3)
+    def self.openapi_all_of
+      [
+      :'CampaignBase'
+      ]
     end
 
     # Initializes the object

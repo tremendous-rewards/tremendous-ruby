@@ -16,10 +16,8 @@ require 'time'
 module Tremendous
   # Details on how the reward is delivered to the recipient. 
   class DeliveryDetails
-    # How to deliver the reward to the recipient.  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> 
     attr_accessor :method
 
-    # Current status of the delivery of the reward:  * `SCHEDULED` - Reward is scheduled for delivery and will be delivered soon. * `FAILED` - Delivery of reward failed (e.g. email bounced). * `SUCCEEDED` - Reward was successfully delivered (email or text message delivered or reward link opened). * `PENDING` - Delivery is pending but not yet scheduled. 
     attr_accessor :status
 
     class EnumAttributeValidator
@@ -60,8 +58,8 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'method' => :'String',
-        :'status' => :'String'
+        :'method' => :'DeliveryMethod',
+        :'status' => :'DeliveryStatus'
       }
     end
 
@@ -107,31 +105,7 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      method_validator = EnumAttributeValidator.new('String', ["EMAIL", "LINK", "PHONE"])
-      return false unless method_validator.valid?(@method)
-      status_validator = EnumAttributeValidator.new('String', ["SCHEDULED", "FAILED", "SUCCEEDED", "PENDING"])
-      return false unless status_validator.valid?(@status)
       true
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] method Object to be assigned
-    def method=(method)
-      validator = EnumAttributeValidator.new('String', ["EMAIL", "LINK", "PHONE"])
-      unless validator.valid?(method)
-        fail ArgumentError, "invalid value for \"method\", must be one of #{validator.allowable_values}."
-      end
-      @method = method
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] status Object to be assigned
-    def status=(status)
-      validator = EnumAttributeValidator.new('String', ["SCHEDULED", "FAILED", "SUCCEEDED", "PENDING"])
-      unless validator.valid?(status)
-        fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
-      end
-      @status = status
     end
 
     # Checks equality by comparing each attribute.

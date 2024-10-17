@@ -69,7 +69,7 @@ module Tremendous
         :'id' => :'String',
         :'method' => :'String',
         :'type' => :'String',
-        :'meta' => :'ListFundingSources200ResponseFundingSourcesInnerMeta'
+        :'meta' => :'FundingSourceMeta'
       }
     end
 

@@ -14,36 +14,35 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class CreateOrganization
-    attr_accessor :id
+  # Definition of the email style
+  class CampaignBaseEmailStyle
+    # If sending via email, this is how the email will appear to be sent from
+    attr_accessor :sender_name
 
-    # Name of the organization
-    attr_accessor :name
+    # Email subject line
+    attr_accessor :subject_line
 
-    # URL of the website of that organization
-    attr_accessor :website
+    # URL of a publicly-accessible image (png, jpeg, jpg, gif, or svg). This image will be copied to our storage location.
+    attr_accessor :logo_image_url
 
-    # Default value is `false`. Set to true to also generate an API key associated to the new organization.
-    attr_accessor :with_api_key
+    # Image height in pixels
+    attr_accessor :logo_image_height_px
 
-    attr_accessor :copy_settings
+    # Logo backgrond color code (hex, rgb, or rgba)
+    attr_accessor :logo_background_color
 
-    # Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).
-    attr_accessor :phone
-
-    # Timestamp of when the organization has been created. 
-    attr_accessor :created_at
+    # Button color code (hex, rgb, or rgba)
+    attr_accessor :button_color
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'id' => :'id',
-        :'name' => :'name',
-        :'website' => :'website',
-        :'with_api_key' => :'with_api_key',
-        :'copy_settings' => :'copy_settings',
-        :'phone' => :'phone',
-        :'created_at' => :'created_at'
+        :'sender_name' => :'sender_name',
+        :'subject_line' => :'subject_line',
+        :'logo_image_url' => :'logo_image_url',
+        :'logo_image_height_px' => :'logo_image_height_px',
+        :'logo_background_color' => :'logo_background_color',
+        :'button_color' => :'button_color'
       }
     end
 
@@ -55,19 +54,24 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'id' => :'String',
-        :'name' => :'String',
-        :'website' => :'String',
-        :'with_api_key' => :'Boolean',
-        :'copy_settings' => :'CreateOrganizationCopySettings',
-        :'phone' => :'String',
-        :'created_at' => :'Date'
+        :'sender_name' => :'String',
+        :'subject_line' => :'String',
+        :'logo_image_url' => :'String',
+        :'logo_image_height_px' => :'Integer',
+        :'logo_background_color' => :'String',
+        :'button_color' => :'String'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'sender_name',
+        :'subject_line',
+        :'logo_image_url',
+        :'logo_image_height_px',
+        :'logo_background_color',
+        :'button_color'
       ])
     end
 
@@ -75,49 +79,39 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateOrganization` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CampaignBaseEmailStyle` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateOrganization`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CampaignBaseEmailStyle`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
+      if attributes.key?(:'sender_name')
+        self.sender_name = attributes[:'sender_name']
       end
 
-      if attributes.key?(:'name')
-        self.name = attributes[:'name']
-      else
-        self.name = nil
+      if attributes.key?(:'subject_line')
+        self.subject_line = attributes[:'subject_line']
       end
 
-      if attributes.key?(:'website')
-        self.website = attributes[:'website']
-      else
-        self.website = nil
+      if attributes.key?(:'logo_image_url')
+        self.logo_image_url = attributes[:'logo_image_url']
       end
 
-      if attributes.key?(:'with_api_key')
-        self.with_api_key = attributes[:'with_api_key']
-      else
-        self.with_api_key = nil
+      if attributes.key?(:'logo_image_height_px')
+        self.logo_image_height_px = attributes[:'logo_image_height_px']
       end
 
-      if attributes.key?(:'copy_settings')
-        self.copy_settings = attributes[:'copy_settings']
+      if attributes.key?(:'logo_background_color')
+        self.logo_background_color = attributes[:'logo_background_color']
       end
 
-      if attributes.key?(:'phone')
-        self.phone = attributes[:'phone']
-      end
-
-      if attributes.key?(:'created_at')
-        self.created_at = attributes[:'created_at']
+      if attributes.key?(:'button_color')
+        self.button_color = attributes[:'button_color']
       end
     end
 
@@ -126,23 +120,6 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !@id.nil? && @id !~ pattern
-        invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
-      end
-
-      if @name.nil?
-        invalid_properties.push('invalid value for "name", name cannot be nil.')
-      end
-
-      if @website.nil?
-        invalid_properties.push('invalid value for "website", website cannot be nil.')
-      end
-
-      if @with_api_key.nil?
-        invalid_properties.push('invalid value for "with_api_key", with_api_key cannot be nil.')
-      end
-
       invalid_properties
     end
 
@@ -150,26 +127,7 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      return false if @name.nil?
-      return false if @website.nil?
-      return false if @with_api_key.nil?
       true
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] id Value to be assigned
-    def id=(id)
-      if id.nil?
-        fail ArgumentError, 'id cannot be nil'
-      end
-
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if id !~ pattern
-        fail ArgumentError, "invalid value for \"id\", must conform to the pattern #{pattern}."
-      end
-
-      @id = id
     end
 
     # Checks equality by comparing each attribute.
@@ -177,13 +135,12 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          id == o.id &&
-          name == o.name &&
-          website == o.website &&
-          with_api_key == o.with_api_key &&
-          copy_settings == o.copy_settings &&
-          phone == o.phone &&
-          created_at == o.created_at
+          sender_name == o.sender_name &&
+          subject_line == o.subject_line &&
+          logo_image_url == o.logo_image_url &&
+          logo_image_height_px == o.logo_image_height_px &&
+          logo_background_color == o.logo_background_color &&
+          button_color == o.button_color
     end
 
     # @see the `==` method
@@ -195,7 +152,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, website, with_api_key, copy_settings, phone, created_at].hash
+      [sender_name, subject_line, logo_image_url, logo_image_height_px, logo_background_color, button_color].hash
     end
 
     # Builds the object from hash

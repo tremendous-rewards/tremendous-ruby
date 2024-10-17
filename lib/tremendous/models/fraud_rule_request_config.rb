@@ -20,13 +20,12 @@ module Tremendous
       # List of class defined in anyOf (OpenAPI v3)
       def openapi_any_of
         [
-          :'AllowEmail',
-          :'AllowIp',
-          :'ReviewCountry',
-          :'ReviewEmail',
-          :'ReviewIp',
-          :'ReviewRedeemedRewardsAmount',
-          :'ReviewRedeemedRewardsCount'
+          :'FraudConfigAllowEmail',
+          :'FraudConfigCountry',
+          :'FraudConfigIP',
+          :'FraudConfigRedeemedRewardsAmount',
+          :'FraudConfigRedeemedRewardsCount',
+          :'FraudConfigReviewEmail'
         ]
       end
 

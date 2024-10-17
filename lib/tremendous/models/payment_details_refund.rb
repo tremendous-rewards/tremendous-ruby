@@ -14,7 +14,6 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # Breakdown of the order refunds (total amount in USD, independent from the currency of the ordered rewards). Note that this property will only appear for canceled orders or orders with canceled rewards. 
   class PaymentDetailsRefund
     # Total amount of the order refunds (in USD)
     attr_accessor :total
@@ -42,6 +41,13 @@ module Tremendous
     def self.openapi_nullable
       Set.new([
       ])
+    end
+
+    # List of class defined in allOf (OpenAPI v3)
+    def self.openapi_all_of
+      [
+      :'RefundDetails'
+      ]
     end
 
     # Initializes the object
