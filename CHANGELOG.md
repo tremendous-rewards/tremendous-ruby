@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.7.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.6.0...tremendous_ruby/v5.7.0) (2024-11-04)
+
+
+### Features
+
+* add /reports endpoints ([#45](https://github.com/tremendous-rewards/tremendous-ruby/issues/45)) ([2793112](https://github.com/tremendous-rewards/tremendous-ruby/commit/2793112e8eb2dc362391e7dda56c760c1dc55450))
+* add support for updated_phone and updated_email on POST /api/v2/reward/:id/resend ([2793112](https://github.com/tremendous-rewards/tremendous-ruby/commit/2793112e8eb2dc362391e7dda56c760c1dc55450))
+
 ## [5.6.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby-v5.5.0...tremendous_ruby/v5.6.0) (2024-09-26)
 
 
