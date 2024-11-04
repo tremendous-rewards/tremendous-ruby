@@ -545,6 +545,74 @@ module Tremendous
       return data, status_code, headers
     end
 
+    # Create report
+    # Creating a report allows your organization to programmatically retrieve information that's available in our dashboard UI.  This request creates a new report object with a unique ID, and kicks off an async report generation.  To retrieve a completed report, either poll `/api/v2/reports/{id}` or listen for REPORTS webhook event.  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">report_type</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Type of report for retrieval. <table> <thead> <tr> <th>Report type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>digital_rewards</code></td> <td>Report for Tremendous digital reward history</td> </tr> </tbody> </table></p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">format</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Format the report will be generated in. <table> <thead> <tr> <th>Format</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>csv</code></td> <td>CSV format for report</td> </tr> </tbody> </table></p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">filters</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Filters to apply to the report. Corresponds to the filters provided in the dashboard</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">digital_rewards</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Filters object for a <code>report_type: digital_rewards</code> report</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">amount</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Amount of the rewards returned in the report</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">gte</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Minimum amount of the rewards that should be returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">lte</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Maximum amount of the rewards that should be returned in the report</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">campaign_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the Tremendous campaign that this report should be limited to</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">created_at</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Creation dates of rewards returned in the report</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">gte</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Minimum date the reward was created</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">lte</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Maximum date the reward was created</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivered_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Delivery date for gifts that should be returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivery_method</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Delivery method for rewards returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">order_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the Tremendous order that this report should be limited to</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">order_status</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Order status for rewards returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">status</code> </div> </td><td><span class=\"property-type\">array</span> <span class=\"property-format\">string</span></td><td><p>Status for rewards returned in the report</p> </td></tr>   </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </div>   ## Rate limits  Some reports may take a long time to generate and we limit the number of reports that can be simulataneously generated by an organization at a given time. If you exceed the rate limit, you'll receive a `429` response. 
+    # @param create_report_request [CreateReportRequest] Report to create
+    # @param [Hash] opts the optional parameters
+    # @return [CreateReport201Response]
+    def create_report(create_report_request, opts = {})
+      data, _status_code, _headers = create_report_with_http_info(create_report_request, opts)
+      data
+    end
+
+    # Create report
+    # Creating a report allows your organization to programmatically retrieve information that&#39;s available in our dashboard UI.  This request creates a new report object with a unique ID, and kicks off an async report generation.  To retrieve a completed report, either poll &#x60;/api/v2/reports/{id}&#x60; or listen for REPORTS webhook event.  ## Request body  &lt;div class&#x3D;\&quot;object-schema-request-schema\&quot;&gt;   &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;report_type&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Type of report for retrieval. &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;Report type&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;&lt;code&gt;digital_rewards&lt;/code&gt;&lt;/td&gt; &lt;td&gt;Report for Tremendous digital reward history&lt;/td&gt; &lt;/tr&gt; &lt;/tbody&gt; &lt;/table&gt;&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;format&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Format the report will be generated in. &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;Format&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;&lt;code&gt;csv&lt;/code&gt;&lt;/td&gt; &lt;td&gt;CSV format for report&lt;/td&gt; &lt;/tr&gt; &lt;/tbody&gt; &lt;/table&gt;&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;filters&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Filters to apply to the report. Corresponds to the filters provided in the dashboard&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;digital_rewards&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Filters object for a &lt;code&gt;report_type: digital_rewards&lt;/code&gt; report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;amount&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Amount of the rewards returned in the report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;gte&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;number&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;double&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Minimum amount of the rewards that should be returned in the report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;lte&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;number&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;double&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Maximum amount of the rewards that should be returned in the report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;  &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;campaign_id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;ID of the Tremendous campaign that this report should be limited to&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;created_at&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Creation dates of rewards returned in the report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;gte&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;date&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Minimum date the reward was created&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;lte&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;date&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Maximum date the reward was created&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;  &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;delivered_at&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;date&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Delivery date for gifts that should be returned in the report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;delivery_method&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Delivery method for rewards returned in the report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;order_id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;ID of the Tremendous order that this report should be limited to&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;order_status&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Order status for rewards returned in the report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;status&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;array&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Status for rewards returned in the report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;    &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;    &lt;/tbody&gt; &lt;/table&gt;  &lt;/div&gt;   ## Rate limits  Some reports may take a long time to generate and we limit the number of reports that can be simulataneously generated by an organization at a given time. If you exceed the rate limit, you&#39;ll receive a &#x60;429&#x60; response. 
+    # @param create_report_request [CreateReportRequest] Report to create
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(CreateReport201Response, Integer, Hash)>] CreateReport201Response data, response status code and response headers
+    def create_report_with_http_info(create_report_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.create_report ...'
+      end
+      # verify the required parameter 'create_report_request' is set
+      if @api_client.config.client_side_validation && create_report_request.nil?
+        fail ArgumentError, "Missing the required parameter 'create_report_request' when calling TremendousApi.create_report"
+      end
+      # resource path
+      local_var_path = '/reports'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(create_report_request)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CreateReport201Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.create_report",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#create_report\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Create webhook
     # Tremendous uses webhooks as a notification system for various events that happen in your account.  > 📘 Learn more about Webhooks > > Our guide explains everything you need to know about the Tremendous webhooks: > [Read it here](/docs/webhooks-1)  Every organization can define a single webhook endpoint where we send requests to, whenever an event happens.  This endpoint allows you to setup that endpoint. The URL of the endpoint can be changed by making a request to this endpoint again with the new URL.  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">url</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">uri</span></td><td><p>URL the webhook will make requests to</p> </td></tr>   </tbody> </table>  </div>  
     # @param create_webhook_request [CreateWebhookRequest] Webhook details
@@ -1670,6 +1738,69 @@ module Tremendous
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: TremendousApi#get_product\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Retrieve report
+    # Retrieve the report, identified by the given `id` in the URL  Using the ID that was returned by `POST /api/v2/reports`, retrieves a download link for the report, identified by the given ID in the URL. Returns the report’s current status and, if available, the URL for download. The URL is valid for 7 days. 
+    # @param id [String] ID of the report that should be retrieved. ID is returned from &#x60;POST&#x60; to /api/v2/reports 
+    # @param [Hash] opts the optional parameters
+    # @return [CreateReport201Response]
+    def get_report(id, opts = {})
+      data, _status_code, _headers = get_report_with_http_info(id, opts)
+      data
+    end
+
+    # Retrieve report
+    # Retrieve the report, identified by the given &#x60;id&#x60; in the URL  Using the ID that was returned by &#x60;POST /api/v2/reports&#x60;, retrieves a download link for the report, identified by the given ID in the URL. Returns the report’s current status and, if available, the URL for download. The URL is valid for 7 days. 
+    # @param id [String] ID of the report that should be retrieved. ID is returned from &#x60;POST&#x60; to /api/v2/reports 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(CreateReport201Response, Integer, Hash)>] CreateReport201Response data, response status code and response headers
+    def get_report_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.get_report ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling TremendousApi.get_report"
+      end
+      # resource path
+      local_var_path = '/reports/{id}'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CreateReport201Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.get_report",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#get_report\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -2953,6 +3084,7 @@ module Tremendous
     # Resends a reward, identified by the given `id` in the URL, to its recipient. 
     # @param id [String] ID of the reward that should be resent
     # @param [Hash] opts the optional parameters
+    # @option opts [ResendRewardRequest] :resend_reward_request _Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of &#x60;updated_email&#x60; or &#x60;updated_phone&#x60;, not both. 
     # @return [Object]
     def resend_reward(id, opts = {})
       data, _status_code, _headers = resend_reward_with_http_info(id, opts)
@@ -2963,6 +3095,7 @@ module Tremendous
     # Resends a reward, identified by the given &#x60;id&#x60; in the URL, to its recipient. 
     # @param id [String] ID of the reward that should be resent
     # @param [Hash] opts the optional parameters
+    # @option opts [ResendRewardRequest] :resend_reward_request _Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of &#x60;updated_email&#x60; or &#x60;updated_phone&#x60;, not both. 
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def resend_reward_with_http_info(id, opts = {})
       if @api_client.config.debugging
@@ -2987,12 +3120,17 @@ module Tremendous
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'resend_reward_request'])
 
       # return_type
       return_type = opts[:debug_return_type] || 'Object'
