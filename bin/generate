@@ -11,7 +11,6 @@ yq -i '.paths.*.*.tags = ["Tremendous"]' "$spec"
 docker run --rm \
   -v ./:/output \
   -v $(realpath $spec):/spec.yml \
-  -v ~/tmp:/input \
   openapitools/openapi-generator-cli:v7.8.0 generate \
   -i /spec.yml \
   -g ruby \
