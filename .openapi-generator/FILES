@@ -33,6 +33,13 @@ lib/tremendous/models/create_organization_for_response.rb
 lib/tremendous/models/create_organization_properties.rb
 lib/tremendous/models/create_organization_request.rb
 lib/tremendous/models/create_organization_request_copy_settings.rb
+lib/tremendous/models/create_report201_response.rb
+lib/tremendous/models/create_report201_response_report.rb
+lib/tremendous/models/create_report_request.rb
+lib/tremendous/models/create_report_request_filters.rb
+lib/tremendous/models/create_report_request_filters_digital_rewards.rb
+lib/tremendous/models/create_report_request_filters_digital_rewards_amount.rb
+lib/tremendous/models/create_report_request_filters_digital_rewards_created_at.rb
 lib/tremendous/models/create_webhook200_response.rb
 lib/tremendous/models/create_webhook_request.rb
 lib/tremendous/models/currency_codes.rb
@@ -100,6 +107,7 @@ lib/tremendous/models/list_fraud_rules200_response_fraud_rules_inner.rb
 lib/tremendous/models/list_funding_sources200_response.rb
 lib/tremendous/models/list_funding_sources200_response_funding_sources_inner.rb
 lib/tremendous/models/list_funding_sources200_response_funding_sources_inner_meta.rb
+lib/tremendous/models/list_funding_sources200_response_funding_sources_inner_meta_failure_details.rb
 lib/tremendous/models/list_invoices200_response.rb
 lib/tremendous/models/list_invoices200_response_invoices_inner.rb
 lib/tremendous/models/list_members200_response.rb
@@ -148,7 +156,9 @@ lib/tremendous/models/payout.rb
 lib/tremendous/models/product.rb
 lib/tremendous/models/recipient.rb
 lib/tremendous/models/refund_details.rb
+lib/tremendous/models/report.rb
 lib/tremendous/models/resend_reward422_response.rb
+lib/tremendous/models/resend_reward_request.rb
 lib/tremendous/models/review_country.rb
 lib/tremendous/models/review_country1.rb
 lib/tremendous/models/review_email.rb

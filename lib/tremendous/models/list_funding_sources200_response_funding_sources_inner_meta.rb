@@ -48,8 +48,16 @@ module Tremendous
     # **Only available when `method` is set to `credit_card`.**  Is this credit card expired 
     attr_accessor :expired
 
+    # **Only available when `method` is set to `credit_card`.**  Year part of card's expiration date 
+    attr_accessor :year
+
+    # **Only available when `method` is set to `credit_card`.**  Month part of card's expiration date 
+    attr_accessor :month
+
     # **Only available when `method` is set to `bank_account` or `credit_card`.**  Point in time when the last order failed using this bank account or credit card as a funding source. 
     attr_accessor :last_payment_failed_at
+
+    attr_accessor :failure_details
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -87,7 +95,10 @@ module Tremendous
         :'network' => :'network',
         :'last4' => :'last4',
         :'expired' => :'expired',
-        :'last_payment_failed_at' => :'last_payment_failed_at'
+        :'year' => :'year',
+        :'month' => :'month',
+        :'last_payment_failed_at' => :'last_payment_failed_at',
+        :'failure_details' => :'failure_details'
       }
     end
 
@@ -110,7 +121,10 @@ module Tremendous
         :'network' => :'String',
         :'last4' => :'String',
         :'expired' => :'Boolean',
-        :'last_payment_failed_at' => :'Time'
+        :'year' => :'String',
+        :'month' => :'String',
+        :'last_payment_failed_at' => :'Time',
+        :'failure_details' => :'ListFundingSources200ResponseFundingSourcesInnerMetaFailureDetails'
       }
     end
 
@@ -118,7 +132,8 @@ module Tremendous
     def self.openapi_nullable
       Set.new([
         :'bank_name',
-        :'last_payment_failed_at'
+        :'last_payment_failed_at',
+        :'failure_details'
       ])
     end
 
@@ -181,8 +196,20 @@ module Tremendous
         self.expired = attributes[:'expired']
       end
 
+      if attributes.key?(:'year')
+        self.year = attributes[:'year']
+      end
+
+      if attributes.key?(:'month')
+        self.month = attributes[:'month']
+      end
+
       if attributes.key?(:'last_payment_failed_at')
         self.last_payment_failed_at = attributes[:'last_payment_failed_at']
+      end
+
+      if attributes.key?(:'failure_details')
+        self.failure_details = attributes[:'failure_details']
       end
     end
 
@@ -217,7 +244,7 @@ module Tremendous
       return false unless account_type_validator.valid?(@account_type)
       return false if !@account_number_mask.nil? && @account_number_mask !~ Regexp.new(/[0-9]{4}/)
       return false if !@account_routing_mask.nil? && @account_routing_mask !~ Regexp.new(/[0-9]{4}/)
-      network_validator = EnumAttributeValidator.new('String', ["MasterCard", "Amex", "JCB", "Diner's Club", "visa", "discover", "laser", "elo", "maestro", "solo"])
+      network_validator = EnumAttributeValidator.new('String', ["MasterCard", "Amex", "JCB", "Diner's Club", "Visa", "Discover", "Laser", "Elo", "Maestro", "Solo"])
       return false unless network_validator.valid?(@network)
       return false if !@last4.nil? && @last4 !~ Regexp.new(/[0-9]{4}/)
       true
@@ -266,7 +293,7 @@ module Tremendous
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] network Object to be assigned
     def network=(network)
-      validator = EnumAttributeValidator.new('String', ["MasterCard", "Amex", "JCB", "Diner's Club", "visa", "discover", "laser", "elo", "maestro", "solo"])
+      validator = EnumAttributeValidator.new('String', ["MasterCard", "Amex", "JCB", "Diner's Club", "Visa", "Discover", "Laser", "Elo", "Maestro", "Solo"])
       unless validator.valid?(network)
         fail ArgumentError, "invalid value for \"network\", must be one of #{validator.allowable_values}."
       end
@@ -304,7 +331,10 @@ module Tremendous
           network == o.network &&
           last4 == o.last4 &&
           expired == o.expired &&
-          last_payment_failed_at == o.last_payment_failed_at
+          year == o.year &&
+          month == o.month &&
+          last_payment_failed_at == o.last_payment_failed_at &&
+          failure_details == o.failure_details
     end
 
     # @see the `==` method
@@ -316,7 +346,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [available_cents, pending_cents, accountholder_name, account_type, bank_name, account_number_mask, account_routing_mask, refundable, network, last4, expired, last_payment_failed_at].hash
+      [available_cents, pending_cents, accountholder_name, account_type, bank_name, account_number_mask, account_routing_mask, refundable, network, last4, expired, year, month, last_payment_failed_at, failure_details].hash
     end
 
     # Builds the object from hash

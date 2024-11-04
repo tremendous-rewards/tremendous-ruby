@@ -14,59 +14,17 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class Payout
-    # Tremendous ID of the payout
-    attr_accessor :id
+  class CreateReport201Response
+    attr_accessor :report
 
-    attr_accessor :status
-
-    # Tremendous ID of the paid out product
-    attr_accessor :product_id
-
-    # Name of the paid out Product
-    attr_accessor :product_name
-
-    # Date the payout was created
-    attr_accessor :created_at
-
-    # Date the payout was executed
-    attr_accessor :executed_at
-
-    # Date when a delayed payout will be executed in the future
-    attr_accessor :defer_execution_until
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
+    # Report status message
+    attr_accessor :message
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'id' => :'id',
-        :'status' => :'status',
-        :'product_id' => :'product_id',
-        :'product_name' => :'product_name',
-        :'created_at' => :'created_at',
-        :'executed_at' => :'executed_at',
-        :'defer_execution_until' => :'defer_execution_until'
+        :'report' => :'report',
+        :'message' => :'message'
       }
     end
 
@@ -78,21 +36,14 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'id' => :'String',
-        :'status' => :'String',
-        :'product_id' => :'String',
-        :'product_name' => :'String',
-        :'created_at' => :'Time',
-        :'executed_at' => :'Time',
-        :'defer_execution_until' => :'Time'
+        :'report' => :'CreateReport201ResponseReport',
+        :'message' => :'String'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'executed_at',
-        :'defer_execution_until'
       ])
     end
 
@@ -100,43 +51,25 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::Payout` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateReport201Response` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::Payout`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateReport201Response`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
+      if attributes.key?(:'report')
+        self.report = attributes[:'report']
+      else
+        self.report = nil
       end
 
-      if attributes.key?(:'status')
-        self.status = attributes[:'status']
-      end
-
-      if attributes.key?(:'product_id')
-        self.product_id = attributes[:'product_id']
-      end
-
-      if attributes.key?(:'product_name')
-        self.product_name = attributes[:'product_name']
-      end
-
-      if attributes.key?(:'created_at')
-        self.created_at = attributes[:'created_at']
-      end
-
-      if attributes.key?(:'executed_at')
-        self.executed_at = attributes[:'executed_at']
-      end
-
-      if attributes.key?(:'defer_execution_until')
-        self.defer_execution_until = attributes[:'defer_execution_until']
+      if attributes.key?(:'message')
+        self.message = attributes[:'message']
       end
     end
 
@@ -145,14 +78,8 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !@id.nil? && @id !~ pattern
-        invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
-      end
-
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !@product_id.nil? && @product_id !~ pattern
-        invalid_properties.push("invalid value for \"product_id\", must conform to the pattern #{pattern}.")
+      if @report.nil?
+        invalid_properties.push('invalid value for "report", report cannot be nil.')
       end
 
       invalid_properties
@@ -162,51 +89,8 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      status_validator = EnumAttributeValidator.new('String', ["UNEXECUTED", "COMPLETED", "FAILED", "CANCELED", "ORGANIZATION_REVIEW", "ADMIN_HELD"])
-      return false unless status_validator.valid?(@status)
-      return false if !@product_id.nil? && @product_id !~ Regexp.new(/[A-Z0-9]{4,20}/)
+      return false if @report.nil?
       true
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] id Value to be assigned
-    def id=(id)
-      if id.nil?
-        fail ArgumentError, 'id cannot be nil'
-      end
-
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if id !~ pattern
-        fail ArgumentError, "invalid value for \"id\", must conform to the pattern #{pattern}."
-      end
-
-      @id = id
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] status Object to be assigned
-    def status=(status)
-      validator = EnumAttributeValidator.new('String', ["UNEXECUTED", "COMPLETED", "FAILED", "CANCELED", "ORGANIZATION_REVIEW", "ADMIN_HELD"])
-      unless validator.valid?(status)
-        fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
-      end
-      @status = status
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] product_id Value to be assigned
-    def product_id=(product_id)
-      if product_id.nil?
-        fail ArgumentError, 'product_id cannot be nil'
-      end
-
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if product_id !~ pattern
-        fail ArgumentError, "invalid value for \"product_id\", must conform to the pattern #{pattern}."
-      end
-
-      @product_id = product_id
     end
 
     # Checks equality by comparing each attribute.
@@ -214,13 +98,8 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          id == o.id &&
-          status == o.status &&
-          product_id == o.product_id &&
-          product_name == o.product_name &&
-          created_at == o.created_at &&
-          executed_at == o.executed_at &&
-          defer_execution_until == o.defer_execution_until
+          report == o.report &&
+          message == o.message
     end
 
     # @see the `==` method
@@ -232,7 +111,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, status, product_id, product_name, created_at, executed_at, defer_execution_until].hash
+      [report, message].hash
     end
 
     # Builds the object from hash
