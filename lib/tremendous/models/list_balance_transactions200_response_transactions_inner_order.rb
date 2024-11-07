@@ -14,30 +14,21 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # Cost breakdown of the order (cost of rewards + fees). Cost and fees are always denominated in USD, independent from the currency of the ordered rewards. Note that this property will only appear for processed orders (`status` is `EXECUTED`).
-  class ListOrders200ResponseOrdersInnerPayment
-    # Total price of the order before fees (in USD)
-    attr_accessor :subtotal
+  # Order details
+  class ListBalanceTransactions200ResponseTransactionsInnerOrder
+    attr_accessor :id
 
-    # Total price of the order including fees (in USD)
-    attr_accessor :total
+    # Reference for this order, supplied by the customer.  When set, `external_id` makes order idempotent. All requests that use the same `external_id` after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a `201` response code. These responses **fail** to create any further orders.  It also allows for retrieving by `external_id` instead of `id` only. 
+    attr_accessor :external_id
 
-    # Fees for the order (in USD)
-    attr_accessor :fees
-
-    # Discount for the order (in USD)
-    attr_accessor :discount
-
-    attr_accessor :refund
+    attr_accessor :payment
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'subtotal' => :'subtotal',
-        :'total' => :'total',
-        :'fees' => :'fees',
-        :'discount' => :'discount',
-        :'refund' => :'refund'
+        :'id' => :'id',
+        :'external_id' => :'external_id',
+        :'payment' => :'payment'
       }
     end
 
@@ -49,17 +40,16 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'subtotal' => :'Float',
-        :'total' => :'Float',
-        :'fees' => :'Float',
-        :'discount' => :'Float',
-        :'refund' => :'ListOrders200ResponseOrdersInnerPaymentRefund'
+        :'id' => :'String',
+        :'external_id' => :'String',
+        :'payment' => :'ListBalanceTransactions200ResponseTransactionsInnerOrderPayment'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'external_id',
       ])
     end
 
@@ -67,43 +57,27 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListOrders200ResponseOrdersInnerPayment` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListBalanceTransactions200ResponseTransactionsInnerOrder` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListOrders200ResponseOrdersInnerPayment`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListBalanceTransactions200ResponseTransactionsInnerOrder`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'subtotal')
-        self.subtotal = attributes[:'subtotal']
-      else
-        self.subtotal = nil
+      if attributes.key?(:'id')
+        self.id = attributes[:'id']
       end
 
-      if attributes.key?(:'total')
-        self.total = attributes[:'total']
-      else
-        self.total = nil
+      if attributes.key?(:'external_id')
+        self.external_id = attributes[:'external_id']
       end
 
-      if attributes.key?(:'fees')
-        self.fees = attributes[:'fees']
-      else
-        self.fees = nil
-      end
-
-      if attributes.key?(:'discount')
-        self.discount = attributes[:'discount']
-      else
-        self.discount = nil
-      end
-
-      if attributes.key?(:'refund')
-        self.refund = attributes[:'refund']
+      if attributes.key?(:'payment')
+        self.payment = attributes[:'payment']
       end
     end
 
@@ -112,36 +86,9 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @subtotal.nil?
-        invalid_properties.push('invalid value for "subtotal", subtotal cannot be nil.')
-      end
-
-      if @subtotal < 0
-        invalid_properties.push('invalid value for "subtotal", must be greater than or equal to 0.')
-      end
-
-      if @total.nil?
-        invalid_properties.push('invalid value for "total", total cannot be nil.')
-      end
-
-      if @total < 0
-        invalid_properties.push('invalid value for "total", must be greater than or equal to 0.')
-      end
-
-      if @fees.nil?
-        invalid_properties.push('invalid value for "fees", fees cannot be nil.')
-      end
-
-      if @fees < 0
-        invalid_properties.push('invalid value for "fees", must be greater than or equal to 0.')
-      end
-
-      if @discount.nil?
-        invalid_properties.push('invalid value for "discount", discount cannot be nil.')
-      end
-
-      if @discount < 0
-        invalid_properties.push('invalid value for "discount", must be greater than or equal to 0.')
+      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
+      if !@id.nil? && @id !~ pattern
+        invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
       end
 
       invalid_properties
@@ -151,71 +98,23 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @subtotal.nil?
-      return false if @subtotal < 0
-      return false if @total.nil?
-      return false if @total < 0
-      return false if @fees.nil?
-      return false if @fees < 0
-      return false if @discount.nil?
-      return false if @discount < 0
+      return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
       true
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] subtotal Value to be assigned
-    def subtotal=(subtotal)
-      if subtotal.nil?
-        fail ArgumentError, 'subtotal cannot be nil'
+    # @param [Object] id Value to be assigned
+    def id=(id)
+      if id.nil?
+        fail ArgumentError, 'id cannot be nil'
       end
 
-      if subtotal < 0
-        fail ArgumentError, 'invalid value for "subtotal", must be greater than or equal to 0.'
+      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
+      if id !~ pattern
+        fail ArgumentError, "invalid value for \"id\", must conform to the pattern #{pattern}."
       end
 
-      @subtotal = subtotal
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] total Value to be assigned
-    def total=(total)
-      if total.nil?
-        fail ArgumentError, 'total cannot be nil'
-      end
-
-      if total < 0
-        fail ArgumentError, 'invalid value for "total", must be greater than or equal to 0.'
-      end
-
-      @total = total
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] fees Value to be assigned
-    def fees=(fees)
-      if fees.nil?
-        fail ArgumentError, 'fees cannot be nil'
-      end
-
-      if fees < 0
-        fail ArgumentError, 'invalid value for "fees", must be greater than or equal to 0.'
-      end
-
-      @fees = fees
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] discount Value to be assigned
-    def discount=(discount)
-      if discount.nil?
-        fail ArgumentError, 'discount cannot be nil'
-      end
-
-      if discount < 0
-        fail ArgumentError, 'invalid value for "discount", must be greater than or equal to 0.'
-      end
-
-      @discount = discount
+      @id = id
     end
 
     # Checks equality by comparing each attribute.
@@ -223,11 +122,9 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          subtotal == o.subtotal &&
-          total == o.total &&
-          fees == o.fees &&
-          discount == o.discount &&
-          refund == o.refund
+          id == o.id &&
+          external_id == o.external_id &&
+          payment == o.payment
     end
 
     # @see the `==` method
@@ -239,7 +136,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [subtotal, total, fees, discount, refund].hash
+      [id, external_id, payment].hash
     end
 
     # Builds the object from hash
