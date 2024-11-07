@@ -8,6 +8,8 @@ lib/tremendous/models/allow_email1.rb
 lib/tremendous/models/allow_ip.rb
 lib/tremendous/models/allow_ip1.rb
 lib/tremendous/models/balance_transaction.rb
+lib/tremendous/models/balance_transaction_order.rb
+lib/tremendous/models/balance_transaction_order_payment.rb
 lib/tremendous/models/base_order_for_create.rb
 lib/tremendous/models/campaign.rb
 lib/tremendous/models/campaign_base.rb
@@ -65,6 +67,7 @@ lib/tremendous/models/fraud_review_list_item.rb
 lib/tremendous/models/fraud_review_reason.rb
 lib/tremendous/models/fraud_review_redemption_method.rb
 lib/tremendous/models/fraud_review_related_rewards.rb
+lib/tremendous/models/fraud_review_risk.rb
 lib/tremendous/models/fraud_review_status.rb
 lib/tremendous/models/fraud_rule200_response.rb
 lib/tremendous/models/fraud_rule400_response.rb
@@ -93,6 +96,8 @@ lib/tremendous/models/get_reward200_response.rb
 lib/tremendous/models/invoice.rb
 lib/tremendous/models/list_balance_transactions200_response.rb
 lib/tremendous/models/list_balance_transactions200_response_transactions_inner.rb
+lib/tremendous/models/list_balance_transactions200_response_transactions_inner_order.rb
+lib/tremendous/models/list_balance_transactions200_response_transactions_inner_order_payment.rb
 lib/tremendous/models/list_campaigns200_response.rb
 lib/tremendous/models/list_campaigns200_response_campaigns_inner.rb
 lib/tremendous/models/list_campaigns200_response_campaigns_inner_email_style.rb

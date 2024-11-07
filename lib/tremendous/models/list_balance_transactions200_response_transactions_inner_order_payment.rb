@@ -14,8 +14,7 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # Cost breakdown of the order (cost of rewards + fees). Cost and fees are always denominated in USD, independent from the currency of the ordered rewards. Note that this property will only appear for processed orders (`status` is `EXECUTED`).
-  class ListOrders200ResponseOrdersInnerPayment
+  class ListBalanceTransactions200ResponseTransactionsInnerOrderPayment
     # Total price of the order before fees (in USD)
     attr_accessor :subtotal
 
@@ -67,13 +66,13 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListOrders200ResponseOrdersInnerPayment` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListBalanceTransactions200ResponseTransactionsInnerOrderPayment` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListOrders200ResponseOrdersInnerPayment`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListBalanceTransactions200ResponseTransactionsInnerOrderPayment`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }

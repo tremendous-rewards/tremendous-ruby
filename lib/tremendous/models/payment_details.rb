@@ -24,6 +24,9 @@ module Tremendous
     # Fees for the order (in USD)
     attr_accessor :fees
 
+    # Discount for the order (in USD)
+    attr_accessor :discount
+
     attr_accessor :refund
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -32,6 +35,7 @@ module Tremendous
         :'subtotal' => :'subtotal',
         :'total' => :'total',
         :'fees' => :'fees',
+        :'discount' => :'discount',
         :'refund' => :'refund'
       }
     end
@@ -47,6 +51,7 @@ module Tremendous
         :'subtotal' => :'Float',
         :'total' => :'Float',
         :'fees' => :'Float',
+        :'discount' => :'Float',
         :'refund' => :'PaymentDetailsRefund'
       }
     end
@@ -74,14 +79,26 @@ module Tremendous
 
       if attributes.key?(:'subtotal')
         self.subtotal = attributes[:'subtotal']
+      else
+        self.subtotal = nil
       end
 
       if attributes.key?(:'total')
         self.total = attributes[:'total']
+      else
+        self.total = nil
       end
 
       if attributes.key?(:'fees')
         self.fees = attributes[:'fees']
+      else
+        self.fees = nil
+      end
+
+      if attributes.key?(:'discount')
+        self.discount = attributes[:'discount']
+      else
+        self.discount = nil
       end
 
       if attributes.key?(:'refund')
@@ -94,16 +111,36 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if !@subtotal.nil? && @subtotal < 0
+      if @subtotal.nil?
+        invalid_properties.push('invalid value for "subtotal", subtotal cannot be nil.')
+      end
+
+      if @subtotal < 0
         invalid_properties.push('invalid value for "subtotal", must be greater than or equal to 0.')
       end
 
-      if !@total.nil? && @total < 0
+      if @total.nil?
+        invalid_properties.push('invalid value for "total", total cannot be nil.')
+      end
+
+      if @total < 0
         invalid_properties.push('invalid value for "total", must be greater than or equal to 0.')
       end
 
-      if !@fees.nil? && @fees < 0
+      if @fees.nil?
+        invalid_properties.push('invalid value for "fees", fees cannot be nil.')
+      end
+
+      if @fees < 0
         invalid_properties.push('invalid value for "fees", must be greater than or equal to 0.')
+      end
+
+      if @discount.nil?
+        invalid_properties.push('invalid value for "discount", discount cannot be nil.')
+      end
+
+      if @discount < 0
+        invalid_properties.push('invalid value for "discount", must be greater than or equal to 0.')
       end
 
       invalid_properties
@@ -113,9 +150,14 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if !@subtotal.nil? && @subtotal < 0
-      return false if !@total.nil? && @total < 0
-      return false if !@fees.nil? && @fees < 0
+      return false if @subtotal.nil?
+      return false if @subtotal < 0
+      return false if @total.nil?
+      return false if @total < 0
+      return false if @fees.nil?
+      return false if @fees < 0
+      return false if @discount.nil?
+      return false if @discount < 0
       true
     end
 
@@ -161,6 +203,20 @@ module Tremendous
       @fees = fees
     end
 
+    # Custom attribute writer method with validation
+    # @param [Object] discount Value to be assigned
+    def discount=(discount)
+      if discount.nil?
+        fail ArgumentError, 'discount cannot be nil'
+      end
+
+      if discount < 0
+        fail ArgumentError, 'invalid value for "discount", must be greater than or equal to 0.'
+      end
+
+      @discount = discount
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -169,6 +225,7 @@ module Tremendous
           subtotal == o.subtotal &&
           total == o.total &&
           fees == o.fees &&
+          discount == o.discount &&
           refund == o.refund
     end
 
@@ -181,7 +238,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [subtotal, total, fees, refund].hash
+      [subtotal, total, fees, discount, refund].hash
     end
 
     # Builds the object from hash

@@ -31,6 +31,8 @@ module Tremendous
     # A brief description of the transaction
     attr_accessor :description
 
+    attr_accessor :order
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -38,7 +40,8 @@ module Tremendous
         :'amount' => :'amount',
         :'balance' => :'balance',
         :'action' => :'action',
-        :'description' => :'description'
+        :'description' => :'description',
+        :'order' => :'order'
       }
     end
 
@@ -54,7 +57,8 @@ module Tremendous
         :'amount' => :'Float',
         :'balance' => :'Float',
         :'action' => :'String',
-        :'description' => :'String'
+        :'description' => :'String',
+        :'order' => :'BalanceTransactionOrder'
       }
     end
 
@@ -108,6 +112,10 @@ module Tremendous
       else
         self.description = nil
       end
+
+      if attributes.key?(:'order')
+        self.order = attributes[:'order']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -159,7 +167,8 @@ module Tremendous
           amount == o.amount &&
           balance == o.balance &&
           action == o.action &&
-          description == o.description
+          description == o.description &&
+          order == o.order
     end
 
     # @see the `==` method
@@ -171,7 +180,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [created_at, amount, balance, action, description].hash
+      [created_at, amount, balance, action, description, order].hash
     end
 
     # Builds the object from hash

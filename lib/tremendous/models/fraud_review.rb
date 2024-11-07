@@ -19,6 +19,9 @@ module Tremendous
     # The current status of the fraud review:  * `flagged` - The reward has been flagged for and waiting manual review. * `blocked` - The reward was reviewed and blocked. * `released` - The reward was reviewed and released. 
     attr_accessor :status
 
+    # The fraud risk associated with the reward.
+    attr_accessor :risk
+
     # The array may contain multiple reasons, depending on which rule(s) flagged the reward for review. Reasons can be any of the following:  * `Disallowed IP` * `Disallowed email` * `Disallowed country` * `Over reward dollar limit` * `Over reward count limit` * `VPN detected` * `Device related to multiple emails` * `Device or account related to multiple emails` * `IP on a Tremendous fraud list` * `Bank account on a Tremendous fraud list` * `Fingerprint on a Tremendous fraud list` * `Email on a Tremendous fraud list` * `Phone on a Tremendous fraud list` * `IP related to a blocked reward` * `Bank account related to a blocked reward` * `Fingerprint related to a blocked reward` * `Email related to a blocked reward` * `Phone related to a blocked reward` * `Allowed IP` * `Allowed email` 
     attr_accessor :reasons
 
@@ -69,6 +72,7 @@ module Tremendous
     def self.attribute_map
       {
         :'status' => :'status',
+        :'risk' => :'risk',
         :'reasons' => :'reasons',
         :'reviewed_by' => :'reviewed_by',
         :'reviewed_at' => :'reviewed_at',
@@ -90,6 +94,7 @@ module Tremendous
     def self.openapi_types
       {
         :'status' => :'String',
+        :'risk' => :'String',
         :'reasons' => :'Array<String>',
         :'reviewed_by' => :'String',
         :'reviewed_at' => :'Time',
@@ -125,6 +130,10 @@ module Tremendous
 
       if attributes.key?(:'status')
         self.status = attributes[:'status']
+      end
+
+      if attributes.key?(:'risk')
+        self.risk = attributes[:'risk']
       end
 
       if attributes.key?(:'reasons')
@@ -180,6 +189,8 @@ module Tremendous
       warn '[DEPRECATED] the `valid?` method is obsolete'
       status_validator = EnumAttributeValidator.new('String', ["flagged", "blocked", "released"])
       return false unless status_validator.valid?(@status)
+      risk_validator = EnumAttributeValidator.new('String', ["high", "medium", "low"])
+      return false unless risk_validator.valid?(@risk)
       redemption_method_validator = EnumAttributeValidator.new('String', ["paypal", "bank", "merchant card", "visa card", "charity", "venmo"])
       return false unless redemption_method_validator.valid?(@redemption_method)
       true
@@ -193,6 +204,16 @@ module Tremendous
         fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
       end
       @status = status
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] risk Object to be assigned
+    def risk=(risk)
+      validator = EnumAttributeValidator.new('String', ["high", "medium", "low"])
+      unless validator.valid?(risk)
+        fail ArgumentError, "invalid value for \"risk\", must be one of #{validator.allowable_values}."
+      end
+      @risk = risk
     end
 
     # Custom attribute writer method checking allowed values (enum).
@@ -211,6 +232,7 @@ module Tremendous
       return true if self.equal?(o)
       self.class == o.class &&
           status == o.status &&
+          risk == o.risk &&
           reasons == o.reasons &&
           reviewed_by == o.reviewed_by &&
           reviewed_at == o.reviewed_at &&
@@ -231,7 +253,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [status, reasons, reviewed_by, reviewed_at, related_rewards, device_id, redemption_method, redeemed_at, geo, reward].hash
+      [status, risk, reasons, reviewed_by, reviewed_at, related_rewards, device_id, redemption_method, redeemed_at, geo, reward].hash
     end
 
     # Builds the object from hash
