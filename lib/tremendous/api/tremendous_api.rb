@@ -23,7 +23,7 @@ module Tremendous
     # Approves an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
     # @param id [String] ID of the order that should be approved. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead.
     # @param [Hash] opts the optional parameters
-    # @return [CreateOrder201Response]
+    # @return [GetOrder200Response]
     def approve_order(id, opts = {})
       data, _status_code, _headers = approve_order_with_http_info(id, opts)
       data
@@ -33,7 +33,7 @@ module Tremendous
     # Approves an order that is pending review, identified by the given &#x60;id&#x60; in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable &#39;Allow approvals via API&#39; via the organization&#39;&#39;s &#39;Order Approvals&#39; settings from the Tremendous dashboard. 
     # @param id [String] ID of the order that should be approved. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead.
     # @param [Hash] opts the optional parameters
-    # @return [Array<(CreateOrder201Response, Integer, Hash)>] CreateOrder201Response data, response status code and response headers
+    # @return [Array<(GetOrder200Response, Integer, Hash)>] GetOrder200Response data, response status code and response headers
     def approve_order_with_http_info(id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.approve_order ...'
@@ -65,7 +65,7 @@ module Tremendous
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CreateOrder201Response'
+      return_type = opts[:debug_return_type] || 'GetOrder200Response'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']
@@ -1549,7 +1549,7 @@ module Tremendous
     # Retrieve the order, identified by the given `id` in the URL 
     # @param id [String] ID of the order that should be retrieved. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead. 
     # @param [Hash] opts the optional parameters
-    # @return [CreateOrder201Response]
+    # @return [GetOrder200Response]
     def get_order(id, opts = {})
       data, _status_code, _headers = get_order_with_http_info(id, opts)
       data
@@ -1559,7 +1559,7 @@ module Tremendous
     # Retrieve the order, identified by the given &#x60;id&#x60; in the URL 
     # @param id [String] ID of the order that should be retrieved. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead. 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(CreateOrder201Response, Integer, Hash)>] CreateOrder201Response data, response status code and response headers
+    # @return [Array<(GetOrder200Response, Integer, Hash)>] GetOrder200Response data, response status code and response headers
     def get_order_with_http_info(id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.get_order ...'
@@ -1586,7 +1586,7 @@ module Tremendous
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CreateOrder201Response'
+      return_type = opts[:debug_return_type] || 'GetOrder200Response'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']
@@ -2953,7 +2953,7 @@ module Tremendous
     # Rejects an order that is pending review, identified by the given `id` in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable 'Allow approvals via API' via the organization''s 'Order Approvals' settings from the Tremendous dashboard. 
     # @param id [String] ID of the order that should be rejected. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead.
     # @param [Hash] opts the optional parameters
-    # @return [CreateOrder201Response]
+    # @return [GetOrder200Response]
     def reject_order(id, opts = {})
       data, _status_code, _headers = reject_order_with_http_info(id, opts)
       data
@@ -2963,7 +2963,7 @@ module Tremendous
     # Rejects an order that is pending review, identified by the given &#x60;id&#x60; in the URL.  Approvals is a feature that requires orders to be approved by an organization admin before they are sent out. To enable approvals for your organization, please enable &#39;Allow approvals via API&#39; via the organization&#39;&#39;s &#39;Order Approvals&#39; settings from the Tremendous dashboard. 
     # @param id [String] ID of the order that should be rejected. In case the order has an &#x60;external_id&#x60; reference supplied by the customer on creation, it&#39;s possible to use it instead.
     # @param [Hash] opts the optional parameters
-    # @return [Array<(CreateOrder201Response, Integer, Hash)>] CreateOrder201Response data, response status code and response headers
+    # @return [Array<(GetOrder200Response, Integer, Hash)>] GetOrder200Response data, response status code and response headers
     def reject_order_with_http_info(id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.reject_order ...'
@@ -2995,7 +2995,7 @@ module Tremendous
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CreateOrder201Response'
+      return_type = opts[:debug_return_type] || 'GetOrder200Response'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']

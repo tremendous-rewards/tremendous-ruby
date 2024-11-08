@@ -26,7 +26,6 @@ lib/tremendous/models/create_order200_response.rb
 lib/tremendous/models/create_order200_response_order.rb
 lib/tremendous/models/create_order200_response_order_rewards_inner.rb
 lib/tremendous/models/create_order200_response_order_rewards_inner_delivery.rb
-lib/tremendous/models/create_order201_response.rb
 lib/tremendous/models/create_order_request.rb
 lib/tremendous/models/create_organization.rb
 lib/tremendous/models/create_organization200_response.rb
@@ -90,6 +89,7 @@ lib/tremendous/models/get_funding_source200_response.rb
 lib/tremendous/models/get_member200_response.rb
 lib/tremendous/models/get_member200_response_member.rb
 lib/tremendous/models/get_member200_response_member_events_inner.rb
+lib/tremendous/models/get_order200_response.rb
 lib/tremendous/models/get_organization200_response.rb
 lib/tremendous/models/get_product_response.rb
 lib/tremendous/models/get_reward200_response.rb
