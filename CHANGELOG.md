@@ -1,5 +1,18 @@
 # Changelog
 
+## [5.9.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.8.0...tremendous_ruby/v5.9.0) (2024-12-03)
+
+
+### Features
+
+* add `DeliveryMetadata` to `POST /orders` ([#53](https://github.com/tremendous-rewards/tremendous-ruby/issues/53)) ([924de4c](https://github.com/tremendous-rewards/tremendous-ruby/commit/924de4cba47339dceca4f8bb495a552d760c1682)), closes [#52](https://github.com/tremendous-rewards/tremendous-ruby/issues/52)
+
+
+### Bug Fixes
+
+* add missing `FraudReviewReason` value ([924de4c](https://github.com/tremendous-rewards/tremendous-ruby/commit/924de4cba47339dceca4f8bb495a552d760c1682))
+* fix typos ([924de4c](https://github.com/tremendous-rewards/tremendous-ruby/commit/924de4cba47339dceca4f8bb495a552d760c1682))
+
 ## [5.8.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.7.0...tremendous_ruby/v5.8.0) (2024-11-08)
 
 
