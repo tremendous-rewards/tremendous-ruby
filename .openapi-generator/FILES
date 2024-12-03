@@ -48,6 +48,7 @@ lib/tremendous/models/custom_field.rb
 lib/tremendous/models/delete_fraud_rule200_response.rb
 lib/tremendous/models/delivery_details.rb
 lib/tremendous/models/delivery_details_with_link.rb
+lib/tremendous/models/delivery_metadata.rb
 lib/tremendous/models/delivery_method.rb
 lib/tremendous/models/delivery_status.rb
 lib/tremendous/models/error_model.rb
@@ -190,6 +191,7 @@ lib/tremendous/models/single_reward_order_payment.rb
 lib/tremendous/models/single_reward_order_reward.rb
 lib/tremendous/models/single_reward_order_reward_custom_fields_inner.rb
 lib/tremendous/models/single_reward_order_reward_delivery.rb
+lib/tremendous/models/single_reward_order_reward_delivery_meta.rb
 lib/tremendous/models/single_reward_order_with_link.rb
 lib/tremendous/models/single_reward_order_with_link_order.rb
 lib/tremendous/models/single_reward_order_without_link.rb

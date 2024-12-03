@@ -1,7 +1,7 @@
 =begin
 #API Endpoints
 
-#Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and it's members within Tremendous, please see the Tremendous Organizational API.
+#Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and its members within Tremendous, please see the Tremendous Organizational API.
 
 The version of the OpenAPI document: 2
 Contact: developers@tremendous.com
@@ -29,6 +29,7 @@ module Tremendous
     EMAIL_ON_A_TREMENDOUS_FRAUD_LIST = "Email on a Tremendous fraud list".freeze
     PHONE_ON_A_TREMENDOUS_FRAUD_LIST = "Phone on a Tremendous fraud list".freeze
     IP_RELATED_TO_A_BLOCKED_REWARD = "IP related to a blocked reward".freeze
+    DEVICE_RELATED_TO_A_BLOCKED_REWARD = "Device related to a blocked reward".freeze
     BANK_ACCOUNT_RELATED_TO_A_BLOCKED_REWARD = "Bank account related to a blocked reward".freeze
     FINGERPRINT_RELATED_TO_A_BLOCKED_REWARD = "Fingerprint related to a blocked reward".freeze
     EMAIL_RELATED_TO_A_BLOCKED_REWARD = "Email related to a blocked reward".freeze
@@ -37,7 +38,7 @@ module Tremendous
     ALLOWED_EMAIL = "Allowed email".freeze
 
     def self.all_vars
-      @all_vars ||= [DISALLOWED_IP, DISALLOWED_EMAIL, DISALLOWED_COUNTRY, OVER_REWARD_DOLLAR_LIMIT, OVER_REWARD_COUNT_LIMIT, VPN_DETECTED, DEVICE_RELATED_TO_MULTIPLE_EMAILS, DEVICE_OR_ACCOUNT_RELATED_TO_MULTIPLE_EMAILS, IP_ON_A_TREMENDOUS_FRAUD_LIST, BANK_ACCOUNT_ON_A_TREMENDOUS_FRAUD_LIST, FINGERPRINT_ON_A_TREMENDOUS_FRAUD_LIST, EMAIL_ON_A_TREMENDOUS_FRAUD_LIST, PHONE_ON_A_TREMENDOUS_FRAUD_LIST, IP_RELATED_TO_A_BLOCKED_REWARD, BANK_ACCOUNT_RELATED_TO_A_BLOCKED_REWARD, FINGERPRINT_RELATED_TO_A_BLOCKED_REWARD, EMAIL_RELATED_TO_A_BLOCKED_REWARD, PHONE_RELATED_TO_A_BLOCKED_REWARD, ALLOWED_IP, ALLOWED_EMAIL].freeze
+      @all_vars ||= [DISALLOWED_IP, DISALLOWED_EMAIL, DISALLOWED_COUNTRY, OVER_REWARD_DOLLAR_LIMIT, OVER_REWARD_COUNT_LIMIT, VPN_DETECTED, DEVICE_RELATED_TO_MULTIPLE_EMAILS, DEVICE_OR_ACCOUNT_RELATED_TO_MULTIPLE_EMAILS, IP_ON_A_TREMENDOUS_FRAUD_LIST, BANK_ACCOUNT_ON_A_TREMENDOUS_FRAUD_LIST, FINGERPRINT_ON_A_TREMENDOUS_FRAUD_LIST, EMAIL_ON_A_TREMENDOUS_FRAUD_LIST, PHONE_ON_A_TREMENDOUS_FRAUD_LIST, IP_RELATED_TO_A_BLOCKED_REWARD, DEVICE_RELATED_TO_A_BLOCKED_REWARD, BANK_ACCOUNT_RELATED_TO_A_BLOCKED_REWARD, FINGERPRINT_RELATED_TO_A_BLOCKED_REWARD, EMAIL_RELATED_TO_A_BLOCKED_REWARD, PHONE_RELATED_TO_A_BLOCKED_REWARD, ALLOWED_IP, ALLOWED_EMAIL].freeze
     end
 
     # Builds the enum from string

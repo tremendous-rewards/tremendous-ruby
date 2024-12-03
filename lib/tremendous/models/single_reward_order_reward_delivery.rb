@@ -1,7 +1,7 @@
 =begin
 #API Endpoints
 
-#Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and it's members within Tremendous, please see the Tremendous Organizational API.
+#Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and its members within Tremendous, please see the Tremendous Organizational API.
 
 The version of the OpenAPI document: 2
 Contact: developers@tremendous.com
@@ -18,6 +18,8 @@ module Tremendous
   class SingleRewardOrderRewardDelivery
     # How to deliver the reward to the recipient.  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> 
     attr_accessor :method
+
+    attr_accessor :meta
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -44,7 +46,8 @@ module Tremendous
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'method' => :'method'
+        :'method' => :'method',
+        :'meta' => :'meta'
       }
     end
 
@@ -56,7 +59,8 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'method' => :'String'
+        :'method' => :'String',
+        :'meta' => :'SingleRewardOrderRewardDeliveryMeta'
       }
     end
 
@@ -83,6 +87,10 @@ module Tremendous
 
       if attributes.key?(:'method')
         self.method = attributes[:'method']
+      end
+
+      if attributes.key?(:'meta')
+        self.meta = attributes[:'meta']
       end
     end
 
@@ -118,7 +126,8 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          method == o.method
+          method == o.method &&
+          meta == o.meta
     end
 
     # @see the `==` method
@@ -130,7 +139,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [method].hash
+      [method, meta].hash
     end
 
     # Builds the object from hash

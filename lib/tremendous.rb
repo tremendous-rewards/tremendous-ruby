@@ -1,7 +1,7 @@
 =begin
 #API Endpoints
 
-#Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and it's members within Tremendous, please see the Tremendous Organizational API.
+#Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and its members within Tremendous, please see the Tremendous Organizational API.
 
 The version of the OpenAPI document: 2
 Contact: developers@tremendous.com
@@ -62,6 +62,7 @@ require 'tremendous/models/custom_field'
 require 'tremendous/models/delete_fraud_rule200_response'
 require 'tremendous/models/delivery_details'
 require 'tremendous/models/delivery_details_with_link'
+require 'tremendous/models/delivery_metadata'
 require 'tremendous/models/delivery_method'
 require 'tremendous/models/delivery_status'
 require 'tremendous/models/error_model'
@@ -204,6 +205,7 @@ require 'tremendous/models/single_reward_order_payment'
 require 'tremendous/models/single_reward_order_reward'
 require 'tremendous/models/single_reward_order_reward_custom_fields_inner'
 require 'tremendous/models/single_reward_order_reward_delivery'
+require 'tremendous/models/single_reward_order_reward_delivery_meta'
 require 'tremendous/models/single_reward_order_with_link'
 require 'tremendous/models/single_reward_order_with_link_order'
 require 'tremendous/models/single_reward_order_without_link'
