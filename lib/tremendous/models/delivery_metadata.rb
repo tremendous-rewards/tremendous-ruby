@@ -14,43 +14,23 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class CreateReportRequest
-    # Type of report for retrieval. <table> <thead> <tr> <th>Report type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>digital_rewards</code></td> <td>Report for Tremendous digital reward history</td> </tr> </tbody> </table>
-    attr_accessor :report_type
+  # Customizable reward delivery metadata, taking precedence over the related campaign settings. 
+  class DeliveryMetadata
+    # The \"sender name\" used in the delivery. If it's an email reward, \"via Tremendous\" will be appended to the value. Please note that you cannot customize the sender email.
+    attr_accessor :sender_name
 
-    # Format the report will be generated in. <table> <thead> <tr> <th>Format</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>csv</code></td> <td>CSV format for report</td> </tr> </tbody> </table>
-    attr_accessor :format
+    # The subject line used in the delivery.
+    attr_accessor :subject_line
 
-    attr_accessor :filters
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
+    # The content of the message of the reward, shown in the email / SMS and on the landing page.
+    attr_accessor :message
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'report_type' => :'report_type',
-        :'format' => :'format',
-        :'filters' => :'filters'
+        :'sender_name' => :'sender_name',
+        :'subject_line' => :'subject_line',
+        :'message' => :'message'
       }
     end
 
@@ -62,16 +42,15 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'report_type' => :'String',
-        :'format' => :'String',
-        :'filters' => :'CreateReportRequestFilters'
+        :'sender_name' => :'String',
+        :'subject_line' => :'String',
+        :'message' => :'String'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'filters'
       ])
     end
 
@@ -79,31 +58,27 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateReportRequest` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::DeliveryMetadata` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateReportRequest`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::DeliveryMetadata`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'report_type')
-        self.report_type = attributes[:'report_type']
-      else
-        self.report_type = nil
+      if attributes.key?(:'sender_name')
+        self.sender_name = attributes[:'sender_name']
       end
 
-      if attributes.key?(:'format')
-        self.format = attributes[:'format']
-      else
-        self.format = nil
+      if attributes.key?(:'subject_line')
+        self.subject_line = attributes[:'subject_line']
       end
 
-      if attributes.key?(:'filters')
-        self.filters = attributes[:'filters']
+      if attributes.key?(:'message')
+        self.message = attributes[:'message']
       end
     end
 
@@ -112,14 +87,6 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @report_type.nil?
-        invalid_properties.push('invalid value for "report_type", report_type cannot be nil.')
-      end
-
-      if @format.nil?
-        invalid_properties.push('invalid value for "format", format cannot be nil.')
-      end
-
       invalid_properties
     end
 
@@ -127,33 +94,7 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @report_type.nil?
-      report_type_validator = EnumAttributeValidator.new('String', ["digital_rewards"])
-      return false unless report_type_validator.valid?(@report_type)
-      return false if @format.nil?
-      format_validator = EnumAttributeValidator.new('String', ["csv"])
-      return false unless format_validator.valid?(@format)
       true
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] report_type Object to be assigned
-    def report_type=(report_type)
-      validator = EnumAttributeValidator.new('String', ["digital_rewards"])
-      unless validator.valid?(report_type)
-        fail ArgumentError, "invalid value for \"report_type\", must be one of #{validator.allowable_values}."
-      end
-      @report_type = report_type
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] format Object to be assigned
-    def format=(format)
-      validator = EnumAttributeValidator.new('String', ["csv"])
-      unless validator.valid?(format)
-        fail ArgumentError, "invalid value for \"format\", must be one of #{validator.allowable_values}."
-      end
-      @format = format
     end
 
     # Checks equality by comparing each attribute.
@@ -161,9 +102,9 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          report_type == o.report_type &&
-          format == o.format &&
-          filters == o.filters
+          sender_name == o.sender_name &&
+          subject_line == o.subject_line &&
+          message == o.message
     end
 
     # @see the `==` method
@@ -175,7 +116,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [report_type, format, filters].hash
+      [sender_name, subject_line, message].hash
     end
 
     # Builds the object from hash

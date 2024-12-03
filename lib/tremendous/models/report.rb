@@ -1,7 +1,7 @@
 =begin
 #API Endpoints
 
-#Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and it's members within Tremendous, please see the Tremendous Organizational API.
+#Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and its members within Tremendous, please see the Tremendous Organizational API.
 
 The version of the OpenAPI document: 2
 Contact: developers@tremendous.com
@@ -25,7 +25,7 @@ module Tremendous
     # Timestamp of when the report was created 
     attr_accessor :created_at
 
-    # Timestamp of when the report is expected to finish generating. If the report if complete, this will return the time the report completed generating at. 
+    # Timestamp of when the report is expected to finish generating. If the report is complete, this will return the time the report completed generating at. 
     attr_accessor :expected_completion_at
 
     # URL to download the report. Only returned when the report generation is complete and report is ready for download. URL is valid for 7 days from generation completion 

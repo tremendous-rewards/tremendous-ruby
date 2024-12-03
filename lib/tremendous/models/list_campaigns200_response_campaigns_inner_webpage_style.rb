@@ -1,7 +1,7 @@
 =begin
 #API Endpoints
 
-#Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and it's members within Tremendous, please see the Tremendous Organizational API.
+#Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and its members within Tremendous, please see the Tremendous Organizational API.
 
 The version of the OpenAPI document: 2
 Contact: developers@tremendous.com
@@ -28,10 +28,10 @@ module Tremendous
     # Image height in pixels
     attr_accessor :logo_image_height_px
 
-    # Logo backgrond color code (hex, rgb, or rgba)
+    # Logo background color code (hex, rgb, or rgba)
     attr_accessor :logo_background_color
 
-    # Backgrond color code (hex, rgb, or rgba)
+    # Background color code (hex, rgb, or rgba)
     attr_accessor :background_color
 
     # Attribute mapping from ruby-style variable name to JSON key.

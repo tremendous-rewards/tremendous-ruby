@@ -1,7 +1,7 @@
 =begin
 #API Endpoints
 
-#Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and it's members within Tremendous, please see the Tremendous Organizational API.
+#Deliver monetary rewards and incentives to employees, customers, survey participants, and more through the Tremendous API. For organizational tasks, like managing your organization and its members within Tremendous, please see the Tremendous Organizational API.
 
 The version of the OpenAPI document: 2
 Contact: developers@tremendous.com
@@ -22,7 +22,7 @@ module Tremendous
     # The fraud risk associated with the reward.
     attr_accessor :risk
 
-    # The array may contain multiple reasons, depending on which rule(s) flagged the reward for review. Reasons can be any of the following:  * `Disallowed IP` * `Disallowed email` * `Disallowed country` * `Over reward dollar limit` * `Over reward count limit` * `VPN detected` * `Device related to multiple emails` * `Device or account related to multiple emails` * `IP on a Tremendous fraud list` * `Bank account on a Tremendous fraud list` * `Fingerprint on a Tremendous fraud list` * `Email on a Tremendous fraud list` * `Phone on a Tremendous fraud list` * `IP related to a blocked reward` * `Bank account related to a blocked reward` * `Fingerprint related to a blocked reward` * `Email related to a blocked reward` * `Phone related to a blocked reward` * `Allowed IP` * `Allowed email` 
+    # The array may contain multiple reasons, depending on which rule(s) flagged the reward for review. Reasons can be any of the following:  * `Disallowed IP` * `Disallowed email` * `Disallowed country` * `Over reward dollar limit` * `Over reward count limit` * `VPN detected` * `Device related to multiple emails` * `Device or account related to multiple emails` * `IP on a Tremendous fraud list` * `Bank account on a Tremendous fraud list` * `Fingerprint on a Tremendous fraud list` * `Email on a Tremendous fraud list` * `Phone on a Tremendous fraud list` * `IP related to a blocked reward` * `Device related to a blocked reward` * `Bank account related to a blocked reward` * `Fingerprint related to a blocked reward` * `Email related to a blocked reward` * `Phone related to a blocked reward` * `Allowed IP` * `Allowed email` 
     attr_accessor :reasons
 
     # The name of the person who reviewed the reward, or `Automatic Review` if the reward was blocked automatically. Rewards can be automatically blocked if they remain in the flagged fraud queue for more than 30 days.  This field is only present if the status is not `flagged`. 
