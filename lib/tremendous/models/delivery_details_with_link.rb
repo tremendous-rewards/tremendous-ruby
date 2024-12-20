@@ -19,7 +19,7 @@ module Tremendous
     # How to deliver the reward to the recipient.  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> 
     attr_accessor :method
 
-    # Current status of the delivery of the reward:  * `SCHEDULED` - Reward is scheduled for delivery and will be delivered soon. * `FAILED` - Delivery of reward failed (e.g. email bounced). * `SUCCEEDED` - Reward was successfully delivered (email or text message delivered or reward link opened). * `PENDING` - Delivery is pending but not yet scheduled. 
+    # Current status of the delivery of the reward:  * `SCHEDULED` - Reward is scheduled for delivery and will be delivered soon. * `FAILED` - Delivery of reward failed (e.g. email bounced). * `SUCCEEDED` - Reward was successfully delivered (email or text message delivered or reward link active). * `PENDING` - Delivery is pending but not yet scheduled. 
     attr_accessor :status
 
     # Link to redeem the reward at. You need to deliver this link to the recipient. 
