@@ -9,6 +9,9 @@ on:
   pull_request:
     branches:
       - 'main'
+  schedule:
+    - cron: '5 12,15,18 * * 1-5'
+
 
 jobs:
   test:
