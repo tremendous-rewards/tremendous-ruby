@@ -6,4 +6,5 @@ CHANGELOG.md @tremendous-rewards/platform
 lib/tremendous/version.rb @tremendous-rewards/platform
 
 .github/dependabot.yml @tremendous-rewards/platform
-Gemfile{,.lock} @tremendous-rewards/platform
+Gemfile @tremendous-rewards/platform
+Gemfile.lock @tremendous-rewards/platform
