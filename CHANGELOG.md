@@ -1,5 +1,21 @@
 # Changelog
 
+## [5.10.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.9.0...tremendous_ruby/v5.10.0) (2025-06-09)
+
+
+### Features
+
+* add more fields to the Funding Source resource ([44c0d1d](https://github.com/tremendous-rewards/tremendous-ruby/commit/44c0d1d0ee3c78354baf4e0b357b8541d044db70))
+* add support for the Cancel Reward endpoint ([44c0d1d](https://github.com/tremendous-rewards/tremendous-ruby/commit/44c0d1d0ee3c78354baf4e0b357b8541d044db70))
+* add support for the Connected Organization and Connected ([44c0d1d](https://github.com/tremendous-rewards/tremendous-ruby/commit/44c0d1d0ee3c78354baf4e0b357b8541d044db70))
+* regen SDK code ([#65](https://github.com/tremendous-rewards/tremendous-ruby/issues/65)) ([44c0d1d](https://github.com/tremendous-rewards/tremendous-ruby/commit/44c0d1d0ee3c78354baf4e0b357b8541d044db70))
+* update fields regarding disclosures on the Products resource ([44c0d1d](https://github.com/tremendous-rewards/tremendous-ruby/commit/44c0d1d0ee3c78354baf4e0b357b8541d044db70))
+
+
+### Bug Fixes
+
+* expect `200` instead of `201` when creating a Report or a Campaign ([44c0d1d](https://github.com/tremendous-rewards/tremendous-ruby/commit/44c0d1d0ee3c78354baf4e0b357b8541d044db70))
+
 ## [5.9.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.8.0...tremendous_ruby/v5.9.0) (2024-12-03)
 
 
