@@ -21,6 +21,12 @@ module Tremendous
     # You can pay for rewards using different payment methods on Tremendous:  <table>   <thead>     <tr>       <th>Payment Method</th>       <th>Description</th>       </tr>   </thead>   <tbody>     <tr>       <td><code>balance</code></td>       <td>Pre-funded balance in your Tremendous account to draw funds from to send rewards to recipients.</td>     </tr>     <tr>       <td><code>bank_account</code></td>       <td>Bank account to draw funds from to send rewards to recipients.</td>     </tr>     <tr>       <td><code>credit_card</code></td>       <td>Credit card to draw funds from to send rewards to recipients.</td>     </tr>     <tr>       <td><code>invoice</code></td>       <td>Send rewards to recipients and pay by invoice.</td>     </tr>    </tbody> </table> 
     attr_accessor :method
 
+    # Indicates the level of access granted for using this funding source.  Permissions is an array containing the following:   * `api_orders`   * `dashboard_orders`   * `balance_funding` 
+    attr_accessor :usage_permissions
+
+    # Status of the funding_source 
+    attr_accessor :status
+
     # **Only available when `method` is set to `invoice`.** 
     attr_accessor :type
 
@@ -53,6 +59,8 @@ module Tremendous
       {
         :'id' => :'id',
         :'method' => :'method',
+        :'usage_permissions' => :'usage_permissions',
+        :'status' => :'status',
         :'type' => :'type',
         :'meta' => :'meta'
       }
@@ -68,6 +76,8 @@ module Tremendous
       {
         :'id' => :'String',
         :'method' => :'String',
+        :'usage_permissions' => :'Array<String>',
+        :'status' => :'String',
         :'type' => :'String',
         :'meta' => :'ListFundingSources200ResponseFundingSourcesInnerMeta'
       }
@@ -104,6 +114,16 @@ module Tremendous
         self.method = attributes[:'method']
       else
         self.method = nil
+      end
+
+      if attributes.key?(:'usage_permissions')
+        if (value = attributes[:'usage_permissions']).is_a?(Array)
+          self.usage_permissions = value
+        end
+      end
+
+      if attributes.key?(:'status')
+        self.status = attributes[:'status']
       end
 
       if attributes.key?(:'type')
@@ -151,6 +171,8 @@ module Tremendous
       return false if @method.nil?
       method_validator = EnumAttributeValidator.new('String', ["balance", "bank_account", "credit_card", "invoice"])
       return false unless method_validator.valid?(@method)
+      status_validator = EnumAttributeValidator.new('String', ["active", "deleted", "pending_confirmation", "failed"])
+      return false unless status_validator.valid?(@status)
       type_validator = EnumAttributeValidator.new('String', ["COMMERCIAL", "PRO_FORMA", "PREFUNDING_ONLY"])
       return false unless type_validator.valid?(@type)
       return false if @meta.nil?
@@ -183,6 +205,16 @@ module Tremendous
     end
 
     # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] status Object to be assigned
+    def status=(status)
+      validator = EnumAttributeValidator.new('String', ["active", "deleted", "pending_confirmation", "failed"])
+      unless validator.valid?(status)
+        fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
+      end
+      @status = status
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
     # @param [Object] type Object to be assigned
     def type=(type)
       validator = EnumAttributeValidator.new('String', ["COMMERCIAL", "PRO_FORMA", "PREFUNDING_ONLY"])
@@ -199,6 +231,8 @@ module Tremendous
       self.class == o.class &&
           id == o.id &&
           method == o.method &&
+          usage_permissions == o.usage_permissions &&
+          status == o.status &&
           type == o.type &&
           meta == o.meta
     end
@@ -212,7 +246,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, method, type, meta].hash
+      [id, method, usage_permissions, status, type, meta].hash
     end
 
     # Builds the object from hash

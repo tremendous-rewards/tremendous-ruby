@@ -40,6 +40,9 @@ module Tremendous
     # Copy over the fraud prevention settings and rules from the current organization to the new organization. Defaults to `false`.
     attr_accessor :fraud_prevention
 
+    # Copy over the tax management settings, including the association with the parent tax entity, from the current organization to the new organization. Defaults to `false`.
+    attr_accessor :tax_management
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -50,7 +53,8 @@ module Tremendous
         :'security_settings' => :'security_settings',
         :'users' => :'users',
         :'custom_roles' => :'custom_roles',
-        :'fraud_prevention' => :'fraud_prevention'
+        :'fraud_prevention' => :'fraud_prevention',
+        :'tax_management' => :'tax_management'
       }
     end
 
@@ -69,7 +73,8 @@ module Tremendous
         :'security_settings' => :'Boolean',
         :'users' => :'Boolean',
         :'custom_roles' => :'Boolean',
-        :'fraud_prevention' => :'Boolean'
+        :'fraud_prevention' => :'Boolean',
+        :'tax_management' => :'Boolean'
       }
     end
 
@@ -141,6 +146,12 @@ module Tremendous
       else
         self.fraud_prevention = false
       end
+
+      if attributes.key?(:'tax_management')
+        self.tax_management = attributes[:'tax_management']
+      else
+        self.tax_management = false
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -170,7 +181,8 @@ module Tremendous
           security_settings == o.security_settings &&
           users == o.users &&
           custom_roles == o.custom_roles &&
-          fraud_prevention == o.fraud_prevention
+          fraud_prevention == o.fraud_prevention &&
+          tax_management == o.tax_management
     end
 
     # @see the `==` method
@@ -182,7 +194,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [campaigns, custom_fields, order_approvals, payment_methods, security_settings, users, custom_roles, fraud_prevention].hash
+      [campaigns, custom_fields, order_approvals, payment_methods, security_settings, users, custom_roles, fraud_prevention, tax_management].hash
     end
 
     # Builds the object from hash

@@ -150,6 +150,74 @@ module Tremendous
       return data, status_code, headers
     end
 
+    # Cancel reward
+    # Cancels a reward, identified by the given `id` in the URL. Only non-expired rewards with a delivery failure can be canceled. 
+    # @param id [String] ID of the reward that should be canceled
+    # @param [Hash] opts the optional parameters
+    # @return [Object]
+    def cancel_reward(id, opts = {})
+      data, _status_code, _headers = cancel_reward_with_http_info(id, opts)
+      data
+    end
+
+    # Cancel reward
+    # Cancels a reward, identified by the given &#x60;id&#x60; in the URL. Only non-expired rewards with a delivery failure can be canceled. 
+    # @param id [String] ID of the reward that should be canceled
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
+    def cancel_reward_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.cancel_reward ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling TremendousApi.cancel_reward"
+      end
+      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
+      if @api_client.config.client_side_validation && id !~ pattern
+        fail ArgumentError, "invalid value for 'id' when calling TremendousApi.cancel_reward, must conform to the pattern #{pattern}."
+      end
+
+      # resource path
+      local_var_path = '/rewards/{id}/cancel'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'Object'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.cancel_reward",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#cancel_reward\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Create API key
     # Creates a new API key. The API key used to make the request will remain active.  Created API keys are generated randomly and returned in the response. **You cannot retrieve them again.** 
     # @param [Hash] opts the optional parameters
@@ -210,7 +278,7 @@ module Tremendous
     # Create campaign
     # @param create_campaign_request [CreateCampaignRequest] Campaign details
     # @param [Hash] opts the optional parameters
-    # @return [CreateCampaign201Response]
+    # @return [CreateCampaign200Response]
     def create_campaign(create_campaign_request, opts = {})
       data, _status_code, _headers = create_campaign_with_http_info(create_campaign_request, opts)
       data
@@ -219,7 +287,7 @@ module Tremendous
     # Create campaign
     # @param create_campaign_request [CreateCampaignRequest] Campaign details
     # @param [Hash] opts the optional parameters
-    # @return [Array<(CreateCampaign201Response, Integer, Hash)>] CreateCampaign201Response data, response status code and response headers
+    # @return [Array<(CreateCampaign200Response, Integer, Hash)>] CreateCampaign200Response data, response status code and response headers
     def create_campaign_with_http_info(create_campaign_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.create_campaign ...'
@@ -251,7 +319,7 @@ module Tremendous
       post_body = opts[:debug_body] || @api_client.object_to_http_body(create_campaign_request)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CreateCampaign201Response'
+      return_type = opts[:debug_return_type] || 'CreateCampaign200Response'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']
@@ -269,6 +337,216 @@ module Tremendous
       data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: TremendousApi#create_campaign\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Create connected organization
+    # Create a connected organization. 
+    # @param create_connected_organization_request [CreateConnectedOrganizationRequest] Connected organization to create
+    # @param [Hash] opts the optional parameters
+    # @return [CreateConnectedOrganization200Response]
+    def create_connected_organization(create_connected_organization_request, opts = {})
+      data, _status_code, _headers = create_connected_organization_with_http_info(create_connected_organization_request, opts)
+      data
+    end
+
+    # Create connected organization
+    # Create a connected organization. 
+    # @param create_connected_organization_request [CreateConnectedOrganizationRequest] Connected organization to create
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(CreateConnectedOrganization200Response, Integer, Hash)>] CreateConnectedOrganization200Response data, response status code and response headers
+    def create_connected_organization_with_http_info(create_connected_organization_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.create_connected_organization ...'
+      end
+      # verify the required parameter 'create_connected_organization_request' is set
+      if @api_client.config.client_side_validation && create_connected_organization_request.nil?
+        fail ArgumentError, "Missing the required parameter 'create_connected_organization_request' when calling TremendousApi.create_connected_organization"
+      end
+      # resource path
+      local_var_path = '/connected_organizations'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(create_connected_organization_request)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CreateConnectedOrganization200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.create_connected_organization",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#create_connected_organization\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Create connected organization member
+    # Create a connected organization member. 
+    # @param create_connected_organization_member_request [CreateConnectedOrganizationMemberRequest] Connected organization member to create
+    # @param [Hash] opts the optional parameters
+    # @return [CreateConnectedOrganizationMember200Response]
+    def create_connected_organization_member(create_connected_organization_member_request, opts = {})
+      data, _status_code, _headers = create_connected_organization_member_with_http_info(create_connected_organization_member_request, opts)
+      data
+    end
+
+    # Create connected organization member
+    # Create a connected organization member. 
+    # @param create_connected_organization_member_request [CreateConnectedOrganizationMemberRequest] Connected organization member to create
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(CreateConnectedOrganizationMember200Response, Integer, Hash)>] CreateConnectedOrganizationMember200Response data, response status code and response headers
+    def create_connected_organization_member_with_http_info(create_connected_organization_member_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.create_connected_organization_member ...'
+      end
+      # verify the required parameter 'create_connected_organization_member_request' is set
+      if @api_client.config.client_side_validation && create_connected_organization_member_request.nil?
+        fail ArgumentError, "Missing the required parameter 'create_connected_organization_member_request' when calling TremendousApi.create_connected_organization_member"
+      end
+      # resource path
+      local_var_path = '/connected_organization_members'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(create_connected_organization_member_request)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CreateConnectedOrganizationMember200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.create_connected_organization_member",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#create_connected_organization_member\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Create connected organization member session
+    # Create a connected organization member session. 
+    # @param id [String] ID of the connected organization member. 
+    # @param create_connected_organization_member_session_request [CreateConnectedOrganizationMemberSessionRequest] Connected organization member requiring the session
+    # @param [Hash] opts the optional parameters
+    # @return [CreateConnectedOrganizationMemberSession200Response]
+    def create_connected_organization_member_session(id, create_connected_organization_member_session_request, opts = {})
+      data, _status_code, _headers = create_connected_organization_member_session_with_http_info(id, create_connected_organization_member_session_request, opts)
+      data
+    end
+
+    # Create connected organization member session
+    # Create a connected organization member session. 
+    # @param id [String] ID of the connected organization member. 
+    # @param create_connected_organization_member_session_request [CreateConnectedOrganizationMemberSessionRequest] Connected organization member requiring the session
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(CreateConnectedOrganizationMemberSession200Response, Integer, Hash)>] CreateConnectedOrganizationMemberSession200Response data, response status code and response headers
+    def create_connected_organization_member_session_with_http_info(id, create_connected_organization_member_session_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.create_connected_organization_member_session ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling TremendousApi.create_connected_organization_member_session"
+      end
+      # verify the required parameter 'create_connected_organization_member_session_request' is set
+      if @api_client.config.client_side_validation && create_connected_organization_member_session_request.nil?
+        fail ArgumentError, "Missing the required parameter 'create_connected_organization_member_session_request' when calling TremendousApi.create_connected_organization_member_session"
+      end
+      # resource path
+      local_var_path = '/connected_organization_members/{id}/sessions'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(create_connected_organization_member_session_request)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CreateConnectedOrganizationMemberSession200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.create_connected_organization_member_session",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#create_connected_organization_member_session\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -410,7 +688,7 @@ module Tremendous
     end
 
     # Create order
-    # Every time you want to send out a reward through Tremendous you need to create an order for it.  > 📘 Getting started with your first order > > Our step-by-step guide walks you through everything you need > to send your first gift card through the Tremendous API: > > <strong><a style=\"display: block; margin-top: 20px;\" href=\"/docs/sending-rewards-intro\">Check it out!</a></strong>  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">external_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference for this order, supplied by the customer.</p>  <p>When set, <code>external_id</code> makes order idempotent. All requests that use the same <code>external_id</code> after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a <code>201</code> response code. These responses <strong>fail</strong> to create any further orders.</p>  <p>It also allows for retrieving by <code>external_id</code> instead of <code>id</code> only.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">payment</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">funding_source_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the funding source that will be used to pay for the order. Use <code>balance</code> to use your Tremendous&#39;s balance.</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">reward</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>A single reward, sent to a recipient. A reward is always part of an order.</p>  <p>Either <code>products</code> or <code>campaign_id</code> must be specified.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the reward</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">order_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the order this reward is part of.</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">created_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date-time</span></td><td><p>Date the reward was created</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">campaign_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from.</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">products</code> </div> </td><td><span class=\"property-type\">array</span> <span class=\"property-format\">string</span></td><td><p>List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.</p>  <p>Providing a <code>products</code> array will override the products made available by the campaign specified using the <code>campaign_id</code> property unless the <code>products</code> array is empty. It will <em>not</em> override other campaign attributes, like the message and customization of the look and feel.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">denomination</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the reward</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">currency_code</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Currency of the reward</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">recipient</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details of the recipient of the reward</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">name</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Name of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">email</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Email address of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">phone</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Phone number of the recipient. For non-US phone numbers, specify the country code (prefixed with +).</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">deliver_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">custom_fields</code> </div> </td><td><span class=\"property-type\">array</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show array item type</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the custom field</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Value of the custom field</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">label</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Label of the custom field</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">language</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Set this to translate the redemption experience for this reward. Pass a 2-letter <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\">ISO-639-1 code</a> for the desired language. Defaults to <code>en</code>.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivery</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details on how the reward is delivered to the recipient.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">method</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>How to deliver the reward to the recipient.</p>  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">meta</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Customizable reward delivery metadata, taking precedence over the related campaign settings.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">sender_name</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>The &quot;sender name&quot; used in the delivery. If it&#39;s an email reward, &quot;via Tremendous&quot; will be appended to the value. Please note that you cannot customize the sender email.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">subject_line</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>The subject line used in the delivery.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">message</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>The content of the message of the reward, shown in the email / SMS and on the landing page.</p> </td></tr>   </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </div>   ### Funding sources  There are different ways to pay for gift cards and rewards on Tremendous. Every payment mechanism is called a \"funding source\".  You can retrieve a list of all available funding sources by using the [Funding sources API endpoint](https://tremendous.readme.io/reference/core-funding-source-index).  The Tremendous API sandbox environment comes with a single funding source that allows you to spend up to $5,000 in *fake money* to test the API. [Learn more about the sandbox environment](https://tremendous.readme.io/reference/sandbox).  The HTTP status code `200` on the response will be used to indicate success.  After processing successfully the reward gets queued to be delivered to it's recipient (for delivery method `EMAIL` and `PHONE`). Delivery will happen asynchronously, after the response has been sent.  ### Idempotence  Requests issued with the same external_id are idempotent.  Submitting an order with an already existing `external_id`, will result in a `201` response code. In this case the response will return a representation of the already existing order in the response body. 
+    # Every time you want to send out a reward through Tremendous you need to create an order for it.  > 📘 Getting started with your first order > > Our step-by-step guide walks you through everything you need > to send your first gift card through the Tremendous API: > > <strong><a style=\"display: block; margin-top: 20px;\" href=\"/docs/sending-rewards-intro\">Check it out!</a></strong>  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">external_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference for this order, supplied by the customer.</p>  <p>When set, <code>external_id</code> makes order idempotent. All requests that use the same <code>external_id</code> after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a <code>201</code> response code. These responses <strong>fail</strong> to create any further orders.</p>  <p>It also allows for retrieving by <code>external_id</code> instead of <code>id</code> only.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">payment</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">funding_source_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the funding source that will be used to pay for the order. Use <code>balance</code> to use your Tremendous&#39;s balance.</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">reward</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>A single reward, sent to a recipient. A reward is always part of an order.</p>  <p>Either <code>products</code> or <code>campaign_id</code> must be specified.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the reward</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">order_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the order this reward is part of.</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">created_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date-time</span></td><td><p>Date the reward was created</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">campaign_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from.</p> </td></tr> <tr class=\"property-conditional-hint-request-only\"><td><div class=\"property-name\">   <code class=\"property-name\">products</code> </div> </td><td><span class=\"property-type\">array</span> <span class=\"property-format\">string</span></td><td><p>List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.</p>  <p>Providing a <code>products</code> array will override the products made available by the campaign specified using the <code>campaign_id</code> property unless the <code>products</code> array is empty. It will <em>not</em> override other campaign attributes, like the message and customization of the look and feel.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">object</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">denomination</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the reward</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">currency_code</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Currency of the reward</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">recipient</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details of the recipient of the reward</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">name</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Name of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">email</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Email address of the recipient</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">phone</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Phone number of the recipient. For non-US phone numbers, specify the country code (prefixed with +).</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">deliver_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">custom_fields</code> </div> </td><td><span class=\"property-type\">array</span></td><td></td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show array item type</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Tremendous ID of the custom field</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">value</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Value of the custom field</p> </td></tr> <tr class=\"property-conditional-hint-response-only\"><td><div class=\"property-name\">   <code class=\"property-name\">label</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Label of the custom field</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">language</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Set this to translate the redemption experience for this reward. Pass a 2-letter <a href=\"https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\">ISO-639-1 code</a> for the desired language. Defaults to <code>en</code>.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivery</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Details on how the reward is delivered to the recipient.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">method</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>How to deliver the reward to the recipient.</p>  <table>   <thead>     <tr>       <th>Delivery Method</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>EMAIL</code></td>       <td>Deliver the reward to the recipient by email</td>     </tr>     <tr>       <td><code>LINK</code></td>       <td>         <p>Deliver the reward to the recipient via a link.</p>         <p>The link can be retrieved on a successfully ordered reward via the <code>/rewards</code> or <code>/rewards/{id}</code> endpoint. That link must then be  delivered to the recipient out-of-band.</p>       </td>     </tr>     <tr>       <td><code>PHONE</code></td>       <td>Deliver the reward to the recipient by SMS</td>     </tr>   </tbody> </table> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">meta</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Customizable reward delivery metadata, taking precedence over the related campaign settings.</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">sender_name</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>The &quot;sender name&quot; used in the delivery. If it&#39;s an email reward, &quot;via Tremendous&quot; will be appended to the value. Please note that you cannot customize the sender email.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">subject_line</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>The subject line used in the delivery.</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">message</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>The content of the message of the reward, shown in the email / SMS and on the landing page.</p> </td></tr>   </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </div>   ### Funding sources  There are different ways to pay for gift cards and rewards on Tremendous. Every payment mechanism is called a \"funding source\".  You can retrieve a list of all available funding sources by using the [Funding sources API endpoint](https://developers.tremendous.com/reference/list-funding-sources).  The Tremendous API sandbox environment comes with a single funding source that allows you to spend up to $5,000 in *fake money* to test the API. [Learn more about the sandbox environment](https://developers.tremendous.com/docs/sandbox-environment).  The HTTP status code `200` on the response will be used to indicate success.  After processing successfully the reward gets queued to be delivered to it's recipient (for delivery method `EMAIL` and `PHONE`). Delivery will happen asynchronously, after the response has been sent.  ### Idempotence  Requests issued with the same `external_id` are idempotent.  Submitting an order with an already existing `external_id` will not create a new order.  If the payload is the same as a previously issued order, our API will return a `201` response code, along with a representation of the already-existing order in the response body.  If the `external_id` used is for an order with different parameters (e.g. amount, recipient), our API will return a `409` response code, indicating a conflicting resource. 
     # @param create_order_request [CreateOrderRequest] Order to create
     # @param [Hash] opts the optional parameters
     # @return [CreateOrder200Response]
@@ -420,7 +698,7 @@ module Tremendous
     end
 
     # Create order
-    # Every time you want to send out a reward through Tremendous you need to create an order for it.  &gt; 📘 Getting started with your first order &gt; &gt; Our step-by-step guide walks you through everything you need &gt; to send your first gift card through the Tremendous API: &gt; &gt; &lt;strong&gt;&lt;a style&#x3D;\&quot;display: block; margin-top: 20px;\&quot; href&#x3D;\&quot;/docs/sending-rewards-intro\&quot;&gt;Check it out!&lt;/a&gt;&lt;/strong&gt;  ## Request body  &lt;div class&#x3D;\&quot;object-schema-request-schema\&quot;&gt;   &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;external_id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Reference for this order, supplied by the customer.&lt;/p&gt;  &lt;p&gt;When set, &lt;code&gt;external_id&lt;/code&gt; makes order idempotent. All requests that use the same &lt;code&gt;external_id&lt;/code&gt; after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a &lt;code&gt;201&lt;/code&gt; response code. These responses &lt;strong&gt;fail&lt;/strong&gt; to create any further orders.&lt;/p&gt;  &lt;p&gt;It also allows for retrieving by &lt;code&gt;external_id&lt;/code&gt; instead of &lt;code&gt;id&lt;/code&gt; only.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;payment&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;funding_source_id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Tremendous ID of the funding source that will be used to pay for the order. Use &lt;code&gt;balance&lt;/code&gt; to use your Tremendous&amp;#39;s balance.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;  &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;reward&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;A single reward, sent to a recipient. A reward is always part of an order.&lt;/p&gt;  &lt;p&gt;Either &lt;code&gt;products&lt;/code&gt; or &lt;code&gt;campaign_id&lt;/code&gt; must be specified.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;property-conditional-hint-response-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Tremendous ID of the reward&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;property-conditional-hint-response-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;order_id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Tremendous ID of the order this reward is part of.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;property-conditional-hint-response-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;created_at&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;date-time&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Date the reward was created&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;property-conditional-hint-request-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;campaign_id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;property-conditional-hint-request-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;products&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;array&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.&lt;/p&gt;  &lt;p&gt;Providing a &lt;code&gt;products&lt;/code&gt; array will override the products made available by the campaign specified using the &lt;code&gt;campaign_id&lt;/code&gt; property unless the &lt;code&gt;products&lt;/code&gt; array is empty. It will &lt;em&gt;not&lt;/em&gt; override other campaign attributes, like the message and customization of the look and feel.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;value&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;denomination&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;number&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;double&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Amount of the reward&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;currency_code&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Currency of the reward&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;  &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;recipient&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Details of the recipient of the reward&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;name&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Name of the recipient&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;email&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Email address of the recipient&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;phone&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Phone number of the recipient. For non-US phone numbers, specify the country code (prefixed with +).&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;  &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;deliver_at&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;date&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;custom_fields&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;array&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show array item type&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Tremendous ID of the custom field&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;value&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Value of the custom field&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;property-conditional-hint-response-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;label&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Label of the custom field&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;  &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;language&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Set this to translate the redemption experience for this reward. Pass a 2-letter &lt;a href&#x3D;\&quot;https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\&quot;&gt;ISO-639-1 code&lt;/a&gt; for the desired language. Defaults to &lt;code&gt;en&lt;/code&gt;.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;delivery&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Details on how the reward is delivered to the recipient.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;method&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;How to deliver the reward to the recipient.&lt;/p&gt;  &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Delivery Method&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody&gt;     &lt;tr&gt;       &lt;td&gt;&lt;code&gt;EMAIL&lt;/code&gt;&lt;/td&gt;       &lt;td&gt;Deliver the reward to the recipient by email&lt;/td&gt;     &lt;/tr&gt;     &lt;tr&gt;       &lt;td&gt;&lt;code&gt;LINK&lt;/code&gt;&lt;/td&gt;       &lt;td&gt;         &lt;p&gt;Deliver the reward to the recipient via a link.&lt;/p&gt;         &lt;p&gt;The link can be retrieved on a successfully ordered reward via the &lt;code&gt;/rewards&lt;/code&gt; or &lt;code&gt;/rewards/{id}&lt;/code&gt; endpoint. That link must then be  delivered to the recipient out-of-band.&lt;/p&gt;       &lt;/td&gt;     &lt;/tr&gt;     &lt;tr&gt;       &lt;td&gt;&lt;code&gt;PHONE&lt;/code&gt;&lt;/td&gt;       &lt;td&gt;Deliver the reward to the recipient by SMS&lt;/td&gt;     &lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;meta&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Customizable reward delivery metadata, taking precedence over the related campaign settings.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;sender_name&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;The &amp;quot;sender name&amp;quot; used in the delivery. If it&amp;#39;s an email reward, &amp;quot;via Tremendous&amp;quot; will be appended to the value. Please note that you cannot customize the sender email.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;subject_line&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;The subject line used in the delivery.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;message&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;The content of the message of the reward, shown in the email / SMS and on the landing page.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;    &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;    &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;    &lt;/tbody&gt; &lt;/table&gt;  &lt;/div&gt;   ### Funding sources  There are different ways to pay for gift cards and rewards on Tremendous. Every payment mechanism is called a \&quot;funding source\&quot;.  You can retrieve a list of all available funding sources by using the [Funding sources API endpoint](https://tremendous.readme.io/reference/core-funding-source-index).  The Tremendous API sandbox environment comes with a single funding source that allows you to spend up to $5,000 in *fake money* to test the API. [Learn more about the sandbox environment](https://tremendous.readme.io/reference/sandbox).  The HTTP status code &#x60;200&#x60; on the response will be used to indicate success.  After processing successfully the reward gets queued to be delivered to it&#39;s recipient (for delivery method &#x60;EMAIL&#x60; and &#x60;PHONE&#x60;). Delivery will happen asynchronously, after the response has been sent.  ### Idempotence  Requests issued with the same external_id are idempotent.  Submitting an order with an already existing &#x60;external_id&#x60;, will result in a &#x60;201&#x60; response code. In this case the response will return a representation of the already existing order in the response body. 
+    # Every time you want to send out a reward through Tremendous you need to create an order for it.  &gt; 📘 Getting started with your first order &gt; &gt; Our step-by-step guide walks you through everything you need &gt; to send your first gift card through the Tremendous API: &gt; &gt; &lt;strong&gt;&lt;a style&#x3D;\&quot;display: block; margin-top: 20px;\&quot; href&#x3D;\&quot;/docs/sending-rewards-intro\&quot;&gt;Check it out!&lt;/a&gt;&lt;/strong&gt;  ## Request body  &lt;div class&#x3D;\&quot;object-schema-request-schema\&quot;&gt;   &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;external_id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Reference for this order, supplied by the customer.&lt;/p&gt;  &lt;p&gt;When set, &lt;code&gt;external_id&lt;/code&gt; makes order idempotent. All requests that use the same &lt;code&gt;external_id&lt;/code&gt; after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a &lt;code&gt;201&lt;/code&gt; response code. These responses &lt;strong&gt;fail&lt;/strong&gt; to create any further orders.&lt;/p&gt;  &lt;p&gt;It also allows for retrieving by &lt;code&gt;external_id&lt;/code&gt; instead of &lt;code&gt;id&lt;/code&gt; only.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;payment&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;funding_source_id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Tremendous ID of the funding source that will be used to pay for the order. Use &lt;code&gt;balance&lt;/code&gt; to use your Tremendous&amp;#39;s balance.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;  &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;reward&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;A single reward, sent to a recipient. A reward is always part of an order.&lt;/p&gt;  &lt;p&gt;Either &lt;code&gt;products&lt;/code&gt; or &lt;code&gt;campaign_id&lt;/code&gt; must be specified.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;property-conditional-hint-response-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Tremendous ID of the reward&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;property-conditional-hint-response-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;order_id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Tremendous ID of the order this reward is part of.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;property-conditional-hint-response-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;created_at&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;date-time&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Date the reward was created&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;property-conditional-hint-request-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;campaign_id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;property-conditional-hint-request-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;products&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;array&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.&lt;/p&gt;  &lt;p&gt;Providing a &lt;code&gt;products&lt;/code&gt; array will override the products made available by the campaign specified using the &lt;code&gt;campaign_id&lt;/code&gt; property unless the &lt;code&gt;products&lt;/code&gt; array is empty. It will &lt;em&gt;not&lt;/em&gt; override other campaign attributes, like the message and customization of the look and feel.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;value&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;denomination&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;number&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;double&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Amount of the reward&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;currency_code&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Currency of the reward&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;  &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;recipient&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Details of the recipient of the reward&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;name&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Name of the recipient&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;email&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Email address of the recipient&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;phone&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Phone number of the recipient. For non-US phone numbers, specify the country code (prefixed with +).&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;  &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;deliver_at&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;date&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;custom_fields&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;array&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show array item type&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Tremendous ID of the custom field&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;value&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Value of the custom field&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;property-conditional-hint-response-only\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;label&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Label of the custom field&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;  &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;language&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Set this to translate the redemption experience for this reward. Pass a 2-letter &lt;a href&#x3D;\&quot;https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes\&quot;&gt;ISO-639-1 code&lt;/a&gt; for the desired language. Defaults to &lt;code&gt;en&lt;/code&gt;.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;delivery&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Details on how the reward is delivered to the recipient.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;method&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;How to deliver the reward to the recipient.&lt;/p&gt;  &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Delivery Method&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody&gt;     &lt;tr&gt;       &lt;td&gt;&lt;code&gt;EMAIL&lt;/code&gt;&lt;/td&gt;       &lt;td&gt;Deliver the reward to the recipient by email&lt;/td&gt;     &lt;/tr&gt;     &lt;tr&gt;       &lt;td&gt;&lt;code&gt;LINK&lt;/code&gt;&lt;/td&gt;       &lt;td&gt;         &lt;p&gt;Deliver the reward to the recipient via a link.&lt;/p&gt;         &lt;p&gt;The link can be retrieved on a successfully ordered reward via the &lt;code&gt;/rewards&lt;/code&gt; or &lt;code&gt;/rewards/{id}&lt;/code&gt; endpoint. That link must then be  delivered to the recipient out-of-band.&lt;/p&gt;       &lt;/td&gt;     &lt;/tr&gt;     &lt;tr&gt;       &lt;td&gt;&lt;code&gt;PHONE&lt;/code&gt;&lt;/td&gt;       &lt;td&gt;Deliver the reward to the recipient by SMS&lt;/td&gt;     &lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;meta&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Customizable reward delivery metadata, taking precedence over the related campaign settings.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;sender_name&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;The &amp;quot;sender name&amp;quot; used in the delivery. If it&amp;#39;s an email reward, &amp;quot;via Tremendous&amp;quot; will be appended to the value. Please note that you cannot customize the sender email.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;subject_line&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;The subject line used in the delivery.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;message&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;The content of the message of the reward, shown in the email / SMS and on the landing page.&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;    &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;    &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;    &lt;/tbody&gt; &lt;/table&gt;  &lt;/div&gt;   ### Funding sources  There are different ways to pay for gift cards and rewards on Tremendous. Every payment mechanism is called a \&quot;funding source\&quot;.  You can retrieve a list of all available funding sources by using the [Funding sources API endpoint](https://developers.tremendous.com/reference/list-funding-sources).  The Tremendous API sandbox environment comes with a single funding source that allows you to spend up to $5,000 in *fake money* to test the API. [Learn more about the sandbox environment](https://developers.tremendous.com/docs/sandbox-environment).  The HTTP status code &#x60;200&#x60; on the response will be used to indicate success.  After processing successfully the reward gets queued to be delivered to it&#39;s recipient (for delivery method &#x60;EMAIL&#x60; and &#x60;PHONE&#x60;). Delivery will happen asynchronously, after the response has been sent.  ### Idempotence  Requests issued with the same &#x60;external_id&#x60; are idempotent.  Submitting an order with an already existing &#x60;external_id&#x60; will not create a new order.  If the payload is the same as a previously issued order, our API will return a &#x60;201&#x60; response code, along with a representation of the already-existing order in the response body.  If the &#x60;external_id&#x60; used is for an order with different parameters (e.g. amount, recipient), our API will return a &#x60;409&#x60; response code, indicating a conflicting resource. 
     # @param create_order_request [CreateOrderRequest] Order to create
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreateOrder200Response, Integer, Hash)>] CreateOrder200Response data, response status code and response headers
@@ -549,7 +827,7 @@ module Tremendous
     # Creating a report allows your organization to programmatically retrieve information that's available in our dashboard UI.  This request creates a new report object with a unique ID, and kicks off an async report generation.  To retrieve a completed report, either poll `/api/v2/reports/{id}` or listen for REPORTS webhook event.  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">report_type</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Type of report for retrieval. <table> <thead> <tr> <th>Report type</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>digital_rewards</code></td> <td>Report for Tremendous digital reward history</td> </tr> </tbody> </table></p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">format</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Format the report will be generated in. <table> <thead> <tr> <th>Format</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>csv</code></td> <td>CSV format for report</td> </tr> </tbody> </table></p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">filters</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Filters to apply to the report. Corresponds to the filters provided in the dashboard</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">digital_rewards</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Filters object for a <code>report_type: digital_rewards</code> report</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">amount</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Amount of the rewards returned in the report</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">gte</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Minimum amount of the rewards that should be returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">lte</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Maximum amount of the rewards that should be returned in the report</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">campaign_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the Tremendous campaign that this report should be limited to</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">created_at</code> </div> </td><td><span class=\"property-type\">object</span></td><td><p>Creation dates of rewards returned in the report</p> </td></tr>  <tr>     <td colspan=\"3\">       <details>         <summary>Show object properties</summary>         <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">gte</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Minimum date the reward was created</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">lte</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Maximum date the reward was created</p> </td></tr>   </tbody> </table>  </tr>  <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivered_at</code> </div> </td><td><span class=\"property-type\">string</span> <span class=\"property-format\">date</span></td><td><p>Delivery date for gifts that should be returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">delivery_method</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Delivery method for rewards returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">order_id</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>ID of the Tremendous order that this report should be limited to</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">order_status</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Order status for rewards returned in the report</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">status</code> </div> </td><td><span class=\"property-type\">array</span> <span class=\"property-format\">string</span></td><td><p>Status for rewards returned in the report</p> </td></tr>   </tbody> </table>  </tr>    </tbody> </table>  </tr>    </tbody> </table>  </div>   ## Rate limits  Some reports may take a long time to generate and we limit the number of reports that can be simultaneously generated by an organization at a given time. If you exceed the rate limit, you'll receive a `429` response. 
     # @param create_report_request [CreateReportRequest] Report to create
     # @param [Hash] opts the optional parameters
-    # @return [CreateReport201Response]
+    # @return [CreateReport200Response]
     def create_report(create_report_request, opts = {})
       data, _status_code, _headers = create_report_with_http_info(create_report_request, opts)
       data
@@ -559,7 +837,7 @@ module Tremendous
     # Creating a report allows your organization to programmatically retrieve information that&#39;s available in our dashboard UI.  This request creates a new report object with a unique ID, and kicks off an async report generation.  To retrieve a completed report, either poll &#x60;/api/v2/reports/{id}&#x60; or listen for REPORTS webhook event.  ## Request body  &lt;div class&#x3D;\&quot;object-schema-request-schema\&quot;&gt;   &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;report_type&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Type of report for retrieval. &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;Report type&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;&lt;code&gt;digital_rewards&lt;/code&gt;&lt;/td&gt; &lt;td&gt;Report for Tremendous digital reward history&lt;/td&gt; &lt;/tr&gt; &lt;/tbody&gt; &lt;/table&gt;&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;format&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Format the report will be generated in. &lt;table&gt; &lt;thead&gt; &lt;tr&gt; &lt;th&gt;Format&lt;/th&gt; &lt;th&gt;Description&lt;/th&gt; &lt;/tr&gt; &lt;/thead&gt; &lt;tbody&gt; &lt;tr&gt; &lt;td&gt;&lt;code&gt;csv&lt;/code&gt;&lt;/td&gt; &lt;td&gt;CSV format for report&lt;/td&gt; &lt;/tr&gt; &lt;/tbody&gt; &lt;/table&gt;&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;filters&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Filters to apply to the report. Corresponds to the filters provided in the dashboard&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;digital_rewards&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Filters object for a &lt;code&gt;report_type: digital_rewards&lt;/code&gt; report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;amount&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Amount of the rewards returned in the report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;gte&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;number&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;double&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Minimum amount of the rewards that should be returned in the report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;lte&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;number&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;double&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Maximum amount of the rewards that should be returned in the report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;  &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;campaign_id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;ID of the Tremendous campaign that this report should be limited to&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;created_at&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;object&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Creation dates of rewards returned in the report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;  &lt;tr&gt;     &lt;td colspan&#x3D;\&quot;3\&quot;&gt;       &lt;details&gt;         &lt;summary&gt;Show object properties&lt;/summary&gt;         &lt;table&gt;   &lt;thead&gt;     &lt;tr&gt;       &lt;th&gt;Property&lt;/th&gt;       &lt;th&gt;Type&lt;/th&gt;       &lt;th&gt;Description&lt;/th&gt;     &lt;/tr&gt;   &lt;/thead&gt;   &lt;tbody class&#x3D;\&quot;object-schema-table-body\&quot;&gt;     &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;gte&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;date&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Minimum date the reward was created&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;lte&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;date&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Maximum date the reward was created&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;  &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;delivered_at&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;date&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Delivery date for gifts that should be returned in the report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;delivery_method&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Delivery method for rewards returned in the report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;order_id&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;ID of the Tremendous order that this report should be limited to&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;order_status&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Order status for rewards returned in the report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt; &lt;tr class&#x3D;\&quot;\&quot;&gt;&lt;td&gt;&lt;div class&#x3D;\&quot;property-name\&quot;&gt;   &lt;code class&#x3D;\&quot;property-name\&quot;&gt;status&lt;/code&gt; &lt;/div&gt; &lt;/td&gt;&lt;td&gt;&lt;span class&#x3D;\&quot;property-type\&quot;&gt;array&lt;/span&gt; &lt;span class&#x3D;\&quot;property-format\&quot;&gt;string&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;p&gt;Status for rewards returned in the report&lt;/p&gt; &lt;/td&gt;&lt;/tr&gt;   &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;    &lt;/tbody&gt; &lt;/table&gt;  &lt;/tr&gt;    &lt;/tbody&gt; &lt;/table&gt;  &lt;/div&gt;   ## Rate limits  Some reports may take a long time to generate and we limit the number of reports that can be simultaneously generated by an organization at a given time. If you exceed the rate limit, you&#39;ll receive a &#x60;429&#x60; response. 
     # @param create_report_request [CreateReportRequest] Report to create
     # @param [Hash] opts the optional parameters
-    # @return [Array<(CreateReport201Response, Integer, Hash)>] CreateReport201Response data, response status code and response headers
+    # @return [Array<(CreateReport200Response, Integer, Hash)>] CreateReport200Response data, response status code and response headers
     def create_report_with_http_info(create_report_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.create_report ...'
@@ -591,7 +869,7 @@ module Tremendous
       post_body = opts[:debug_body] || @api_client.object_to_http_body(create_report_request)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CreateReport201Response'
+      return_type = opts[:debug_return_type] || 'CreateReport200Response'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']
@@ -1149,79 +1427,11 @@ module Tremendous
       return data, status_code, headers
     end
 
-    # Generate a reward token
-    # Generate a temporary reward token identified by the `id` in the URL. These tokens are needed to render a reward when using [Tremendous Embed](https://github.com/tremendous-rewards/embed/blob/master/docs/documentation.md). The token is valid for 24 hours. 
-    # @param id [String] ID of the reward
-    # @param [Hash] opts the optional parameters
-    # @return [GenerateRewardToken200Response]
-    def generate_reward_token(id, opts = {})
-      data, _status_code, _headers = generate_reward_token_with_http_info(id, opts)
-      data
-    end
-
-    # Generate a reward token
-    # Generate a temporary reward token identified by the &#x60;id&#x60; in the URL. These tokens are needed to render a reward when using [Tremendous Embed](https://github.com/tremendous-rewards/embed/blob/master/docs/documentation.md). The token is valid for 24 hours. 
-    # @param id [String] ID of the reward
-    # @param [Hash] opts the optional parameters
-    # @return [Array<(GenerateRewardToken200Response, Integer, Hash)>] GenerateRewardToken200Response data, response status code and response headers
-    def generate_reward_token_with_http_info(id, opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: TremendousApi.generate_reward_token ...'
-      end
-      # verify the required parameter 'id' is set
-      if @api_client.config.client_side_validation && id.nil?
-        fail ArgumentError, "Missing the required parameter 'id' when calling TremendousApi.generate_reward_token"
-      end
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if @api_client.config.client_side_validation && id !~ pattern
-        fail ArgumentError, "invalid value for 'id' when calling TremendousApi.generate_reward_token, must conform to the pattern #{pattern}."
-      end
-
-      # resource path
-      local_var_path = '/rewards/{id}/generate_embed_token'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
-
-      # query parameters
-      query_params = opts[:query_params] || {}
-
-      # header parameters
-      header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
-      post_body = opts[:debug_body]
-
-      # return_type
-      return_type = opts[:debug_return_type] || 'GenerateRewardToken200Response'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
-
-      new_options = opts.merge(
-        :operation => :"TremendousApi.generate_reward_token",
-        :header_params => header_params,
-        :query_params => query_params,
-        :form_params => form_params,
-        :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
-      )
-
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: TremendousApi#generate_reward_token\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
-    end
-
     # Retrieve campaign
     # Retrieve a campaign, identified by the given `id` in the URL 
     # @param id [String] ID of the campaign that should be retrieved
     # @param [Hash] opts the optional parameters
-    # @return [CreateCampaign201Response]
+    # @return [CreateCampaign200Response]
     def get_campaign(id, opts = {})
       data, _status_code, _headers = get_campaign_with_http_info(id, opts)
       data
@@ -1231,7 +1441,7 @@ module Tremendous
     # Retrieve a campaign, identified by the given &#x60;id&#x60; in the URL 
     # @param id [String] ID of the campaign that should be retrieved
     # @param [Hash] opts the optional parameters
-    # @return [Array<(CreateCampaign201Response, Integer, Hash)>] CreateCampaign201Response data, response status code and response headers
+    # @return [Array<(CreateCampaign200Response, Integer, Hash)>] CreateCampaign200Response data, response status code and response headers
     def get_campaign_with_http_info(id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.get_campaign ...'
@@ -1263,7 +1473,7 @@ module Tremendous
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CreateCampaign201Response'
+      return_type = opts[:debug_return_type] || 'CreateCampaign200Response'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']
@@ -1281,6 +1491,132 @@ module Tremendous
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: TremendousApi#get_campaign\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Retrieve a connected organization
+    # Retrieve the connected organization, identified by the given `id` in the URL
+    # @param id [String] ID of the connected organization that should be retrieved. 
+    # @param [Hash] opts the optional parameters
+    # @return [CreateConnectedOrganization200Response]
+    def get_connected_organization(id, opts = {})
+      data, _status_code, _headers = get_connected_organization_with_http_info(id, opts)
+      data
+    end
+
+    # Retrieve a connected organization
+    # Retrieve the connected organization, identified by the given &#x60;id&#x60; in the URL
+    # @param id [String] ID of the connected organization that should be retrieved. 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(CreateConnectedOrganization200Response, Integer, Hash)>] CreateConnectedOrganization200Response data, response status code and response headers
+    def get_connected_organization_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.get_connected_organization ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling TremendousApi.get_connected_organization"
+      end
+      # resource path
+      local_var_path = '/connected_organizations/{id}'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CreateConnectedOrganization200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.get_connected_organization",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#get_connected_organization\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Retrieve a connected organization member
+    # Retrieve the connected organization member, identified by the given `id` in the URL
+    # @param id [String] ID of the connected organization member that should be retrieved. 
+    # @param [Hash] opts the optional parameters
+    # @return [CreateConnectedOrganizationMember200Response]
+    def get_connected_organization_member(id, opts = {})
+      data, _status_code, _headers = get_connected_organization_member_with_http_info(id, opts)
+      data
+    end
+
+    # Retrieve a connected organization member
+    # Retrieve the connected organization member, identified by the given &#x60;id&#x60; in the URL
+    # @param id [String] ID of the connected organization member that should be retrieved. 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(CreateConnectedOrganizationMember200Response, Integer, Hash)>] CreateConnectedOrganizationMember200Response data, response status code and response headers
+    def get_connected_organization_member_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.get_connected_organization_member ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling TremendousApi.get_connected_organization_member"
+      end
+      # resource path
+      local_var_path = '/connected_organization_members/{id}'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CreateConnectedOrganizationMember200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.get_connected_organization_member",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#get_connected_organization_member\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -1746,7 +2082,7 @@ module Tremendous
     # Retrieve the report, identified by the given `id` in the URL  Using the ID that was returned by `POST /api/v2/reports`, retrieves a download link for the report, identified by the given ID in the URL. Returns the report’s current status and, if available, the URL for download. The URL is valid for 7 days. 
     # @param id [String] ID of the report that should be retrieved. ID is returned from &#x60;POST&#x60; to /api/v2/reports 
     # @param [Hash] opts the optional parameters
-    # @return [CreateReport201Response]
+    # @return [CreateReport200Response]
     def get_report(id, opts = {})
       data, _status_code, _headers = get_report_with_http_info(id, opts)
       data
@@ -1756,7 +2092,7 @@ module Tremendous
     # Retrieve the report, identified by the given &#x60;id&#x60; in the URL  Using the ID that was returned by &#x60;POST /api/v2/reports&#x60;, retrieves a download link for the report, identified by the given ID in the URL. Returns the report’s current status and, if available, the URL for download. The URL is valid for 7 days. 
     # @param id [String] ID of the report that should be retrieved. ID is returned from &#x60;POST&#x60; to /api/v2/reports 
     # @param [Hash] opts the optional parameters
-    # @return [Array<(CreateReport201Response, Integer, Hash)>] CreateReport201Response data, response status code and response headers
+    # @return [Array<(CreateReport200Response, Integer, Hash)>] CreateReport200Response data, response status code and response headers
     def get_report_with_http_info(id, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.get_report ...'
@@ -1783,7 +2119,7 @@ module Tremendous
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CreateReport201Response'
+      return_type = opts[:debug_return_type] || 'CreateReport200Response'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']
@@ -2063,6 +2399,139 @@ module Tremendous
       data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
       if @api_client.config.debugging
         @api_client.config.logger.debug "API called: TremendousApi#list_campaigns\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # List connected organization members
+    # Retrieve a list of connected organization members.
+    # @param connected_organization_id [String] ID of the connected organization.
+    # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :offset Offsets the returned list by the given number of connected organizations.
+    # @option opts [Integer] :limit Limits the number of connected organizations listed. The maximum value is 100 and the default is 10.
+    # @return [ListConnectedOrganizationMembers200Response]
+    def list_connected_organization_members(connected_organization_id, opts = {})
+      data, _status_code, _headers = list_connected_organization_members_with_http_info(connected_organization_id, opts)
+      data
+    end
+
+    # List connected organization members
+    # Retrieve a list of connected organization members.
+    # @param connected_organization_id [String] ID of the connected organization.
+    # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :offset Offsets the returned list by the given number of connected organizations.
+    # @option opts [Integer] :limit Limits the number of connected organizations listed. The maximum value is 100 and the default is 10.
+    # @return [Array<(ListConnectedOrganizationMembers200Response, Integer, Hash)>] ListConnectedOrganizationMembers200Response data, response status code and response headers
+    def list_connected_organization_members_with_http_info(connected_organization_id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.list_connected_organization_members ...'
+      end
+      # verify the required parameter 'connected_organization_id' is set
+      if @api_client.config.client_side_validation && connected_organization_id.nil?
+        fail ArgumentError, "Missing the required parameter 'connected_organization_id' when calling TremendousApi.list_connected_organization_members"
+      end
+      # resource path
+      local_var_path = '/connected_organization_members'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'connected_organization_id'] = connected_organization_id
+      query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'ListConnectedOrganizationMembers200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.list_connected_organization_members",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#list_connected_organization_members\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # List connected organizations
+    # Retrieve a list of connected organizations.
+    # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :offset Offsets the returned list by the given number of connected organizations.
+    # @option opts [Integer] :limit Limits the number of connected organizations listed. The maximum value is 100 and the default is 10.
+    # @return [ListConnectedOrganizations200Response]
+    def list_connected_organizations(opts = {})
+      data, _status_code, _headers = list_connected_organizations_with_http_info(opts)
+      data
+    end
+
+    # List connected organizations
+    # Retrieve a list of connected organizations.
+    # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :offset Offsets the returned list by the given number of connected organizations.
+    # @option opts [Integer] :limit Limits the number of connected organizations listed. The maximum value is 100 and the default is 10.
+    # @return [Array<(ListConnectedOrganizations200Response, Integer, Hash)>] ListConnectedOrganizations200Response data, response status code and response headers
+    def list_connected_organizations_with_http_info(opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.list_connected_organizations ...'
+      end
+      # resource path
+      local_var_path = '/connected_organizations'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+      query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'ListConnectedOrganizations200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.list_connected_organizations",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:GET, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#list_connected_organizations\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
       end
       return data, status_code, headers
     end
@@ -3238,7 +3707,7 @@ module Tremendous
     # @param id [String] ID of the campaign that should be updated
     # @param update_campaign_request [UpdateCampaignRequest] Campaign details
     # @param [Hash] opts the optional parameters
-    # @return [CreateCampaign201Response]
+    # @return [CreateCampaign200Response]
     def update_campaign(id, update_campaign_request, opts = {})
       data, _status_code, _headers = update_campaign_with_http_info(id, update_campaign_request, opts)
       data
@@ -3248,7 +3717,7 @@ module Tremendous
     # @param id [String] ID of the campaign that should be updated
     # @param update_campaign_request [UpdateCampaignRequest] Campaign details
     # @param [Hash] opts the optional parameters
-    # @return [Array<(CreateCampaign201Response, Integer, Hash)>] CreateCampaign201Response data, response status code and response headers
+    # @return [Array<(CreateCampaign200Response, Integer, Hash)>] CreateCampaign200Response data, response status code and response headers
     def update_campaign_with_http_info(id, update_campaign_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.update_campaign ...'
@@ -3289,7 +3758,7 @@ module Tremendous
       post_body = opts[:debug_body] || @api_client.object_to_http_body(update_campaign_request)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'CreateCampaign201Response'
+      return_type = opts[:debug_return_type] || 'CreateCampaign200Response'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']

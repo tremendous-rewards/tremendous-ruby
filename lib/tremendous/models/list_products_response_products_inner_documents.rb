@@ -14,44 +14,23 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class ListProductsResponseProductsInnerImagesInner
-    # URL to this image
-    attr_accessor :src
+  # URLs and files related to product documentation. 
+  class ListProductsResponseProductsInnerDocuments
+    # URL to the cardholder agreement PDF file.
+    attr_accessor :cardholder_agreement_pdf
 
-    # Type of image
-    attr_accessor :type
+    # URL to the cardholder agreement web page.
+    attr_accessor :cardholder_agreement_url
 
-    # The MIME content type of this image
-    attr_accessor :content_type
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
+    # URL to the privacy policy web page.
+    attr_accessor :privacy_policy_url
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'src' => :'src',
-        :'type' => :'type',
-        :'content_type' => :'content_type'
+        :'cardholder_agreement_pdf' => :'cardholder_agreement_pdf',
+        :'cardholder_agreement_url' => :'cardholder_agreement_url',
+        :'privacy_policy_url' => :'privacy_policy_url'
       }
     end
 
@@ -63,16 +42,15 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'src' => :'String',
-        :'type' => :'String',
-        :'content_type' => :'String'
+        :'cardholder_agreement_pdf' => :'String',
+        :'cardholder_agreement_url' => :'String',
+        :'privacy_policy_url' => :'String'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'content_type'
       ])
     end
 
@@ -80,31 +58,27 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListProductsResponseProductsInnerImagesInner` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListProductsResponseProductsInnerDocuments` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListProductsResponseProductsInnerImagesInner`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListProductsResponseProductsInnerDocuments`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'src')
-        self.src = attributes[:'src']
-      else
-        self.src = nil
+      if attributes.key?(:'cardholder_agreement_pdf')
+        self.cardholder_agreement_pdf = attributes[:'cardholder_agreement_pdf']
       end
 
-      if attributes.key?(:'type')
-        self.type = attributes[:'type']
-      else
-        self.type = nil
+      if attributes.key?(:'cardholder_agreement_url')
+        self.cardholder_agreement_url = attributes[:'cardholder_agreement_url']
       end
 
-      if attributes.key?(:'content_type')
-        self.content_type = attributes[:'content_type']
+      if attributes.key?(:'privacy_policy_url')
+        self.privacy_policy_url = attributes[:'privacy_policy_url']
       end
     end
 
@@ -113,14 +87,6 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @src.nil?
-        invalid_properties.push('invalid value for "src", src cannot be nil.')
-      end
-
-      if @type.nil?
-        invalid_properties.push('invalid value for "type", type cannot be nil.')
-      end
-
       invalid_properties
     end
 
@@ -128,21 +94,7 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @src.nil?
-      return false if @type.nil?
-      type_validator = EnumAttributeValidator.new('String', ["card", "logo"])
-      return false unless type_validator.valid?(@type)
       true
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] type Object to be assigned
-    def type=(type)
-      validator = EnumAttributeValidator.new('String', ["card", "logo"])
-      unless validator.valid?(type)
-        fail ArgumentError, "invalid value for \"type\", must be one of #{validator.allowable_values}."
-      end
-      @type = type
     end
 
     # Checks equality by comparing each attribute.
@@ -150,9 +102,9 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          src == o.src &&
-          type == o.type &&
-          content_type == o.content_type
+          cardholder_agreement_pdf == o.cardholder_agreement_pdf &&
+          cardholder_agreement_url == o.cardholder_agreement_url &&
+          privacy_policy_url == o.privacy_policy_url
     end
 
     # @see the `==` method
@@ -164,7 +116,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [src, type, content_type].hash
+      [cardholder_agreement_pdf, cardholder_agreement_url, privacy_policy_url].hash
     end
 
     # Builds the object from hash

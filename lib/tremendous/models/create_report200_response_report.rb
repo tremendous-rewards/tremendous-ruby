@@ -14,15 +14,22 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class ListProductsResponseProductsInnerImagesInner
-    # URL to this image
-    attr_accessor :src
+  # Reports represent a collection of your Tremendous data that can be filtered and downloaded.  The report object that is returned has a unique ID, a status, and an predicted time of report generation completion. When the report generation is complete, it will also contain an expiring url where you can retrieve your report. 
+  class CreateReport200ResponseReport
+    # Tremendous ID of the report, used to retrieve your report
+    attr_accessor :id
 
-    # Type of image
-    attr_accessor :type
+    # Status of this report  <table>   <thead>     <tr>       <th>Status</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>CREATED</code></td>       <td>Report has been created</td>     </tr>     <tr>       <td><code>PROCESSING</code></td>       <td>Report is currently being generated</td>     </tr>     <tr>       <td><code>READY_FOR_DOWNLOAD</code></td>       <td>Report generation is complete and ready for download</td>     </tr>     <tr>       <td><code>FAILED</code></td>       <td>Report failed to generate</td>     </tr>   </tbody> </table> 
+    attr_accessor :status
 
-    # The MIME content type of this image
-    attr_accessor :content_type
+    # Timestamp of when the report was created 
+    attr_accessor :created_at
+
+    # Timestamp of when the report is expected to finish generating. If the report is complete, this will return the time the report completed generating at. 
+    attr_accessor :expected_completion_at
+
+    # URL to download the report. Only returned when the report generation is complete and report is ready for download. URL is valid for 7 days from generation completion 
+    attr_accessor :url
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -49,9 +56,11 @@ module Tremendous
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'src' => :'src',
-        :'type' => :'type',
-        :'content_type' => :'content_type'
+        :'id' => :'id',
+        :'status' => :'status',
+        :'created_at' => :'created_at',
+        :'expected_completion_at' => :'expected_completion_at',
+        :'url' => :'url'
       }
     end
 
@@ -63,16 +72,18 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'src' => :'String',
-        :'type' => :'String',
-        :'content_type' => :'String'
+        :'id' => :'String',
+        :'status' => :'String',
+        :'created_at' => :'Time',
+        :'expected_completion_at' => :'Time',
+        :'url' => :'String'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'content_type'
+        :'url'
       ])
     end
 
@@ -80,31 +91,35 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListProductsResponseProductsInnerImagesInner` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateReport200ResponseReport` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListProductsResponseProductsInnerImagesInner`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateReport200ResponseReport`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'src')
-        self.src = attributes[:'src']
-      else
-        self.src = nil
+      if attributes.key?(:'id')
+        self.id = attributes[:'id']
       end
 
-      if attributes.key?(:'type')
-        self.type = attributes[:'type']
-      else
-        self.type = nil
+      if attributes.key?(:'status')
+        self.status = attributes[:'status']
       end
 
-      if attributes.key?(:'content_type')
-        self.content_type = attributes[:'content_type']
+      if attributes.key?(:'created_at')
+        self.created_at = attributes[:'created_at']
+      end
+
+      if attributes.key?(:'expected_completion_at')
+        self.expected_completion_at = attributes[:'expected_completion_at']
+      end
+
+      if attributes.key?(:'url')
+        self.url = attributes[:'url']
       end
     end
 
@@ -113,14 +128,6 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @src.nil?
-        invalid_properties.push('invalid value for "src", src cannot be nil.')
-      end
-
-      if @type.nil?
-        invalid_properties.push('invalid value for "type", type cannot be nil.')
-      end
-
       invalid_properties
     end
 
@@ -128,21 +135,19 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @src.nil?
-      return false if @type.nil?
-      type_validator = EnumAttributeValidator.new('String', ["card", "logo"])
-      return false unless type_validator.valid?(@type)
+      status_validator = EnumAttributeValidator.new('String', ["CREATED", "PROCESSING", "READY_FOR_DOWNLOAD", "FAILED"])
+      return false unless status_validator.valid?(@status)
       true
     end
 
     # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] type Object to be assigned
-    def type=(type)
-      validator = EnumAttributeValidator.new('String', ["card", "logo"])
-      unless validator.valid?(type)
-        fail ArgumentError, "invalid value for \"type\", must be one of #{validator.allowable_values}."
+    # @param [Object] status Object to be assigned
+    def status=(status)
+      validator = EnumAttributeValidator.new('String', ["CREATED", "PROCESSING", "READY_FOR_DOWNLOAD", "FAILED"])
+      unless validator.valid?(status)
+        fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
       end
-      @type = type
+      @status = status
     end
 
     # Checks equality by comparing each attribute.
@@ -150,9 +155,11 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          src == o.src &&
-          type == o.type &&
-          content_type == o.content_type
+          id == o.id &&
+          status == o.status &&
+          created_at == o.created_at &&
+          expected_completion_at == o.expected_completion_at &&
+          url == o.url
     end
 
     # @see the `==` method
@@ -164,7 +171,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [src, type, content_type].hash
+      [id, status, created_at, expected_completion_at, url].hash
     end
 
     # Builds the object from hash
