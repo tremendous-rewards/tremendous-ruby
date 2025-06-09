@@ -24,7 +24,7 @@ module Tremendous
     # Detailed description of the product. Mostly used for products with a `category` of `charities`.
     attr_accessor :description
 
-    # The category of this product  <table>   <thead>     <tr>       <th>Category</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>ach</code></td>       <td>Bank transfer to the recipient</td>     </tr>     <tr>       <td><code>charity</code></td>       <td>Donations to a charity</td>     </tr>     <tr>       <td><code>merchant_card</code></td>       <td>A gift card for a certain merchant (e.g. Amazon)</td>     </tr>     <tr>       <td><code>paypal</code></td>       <td>Payout via PayPal</td>     </tr>     <tr>       <td><code>venmo</code></td>       <td>Payout via Venmo</td>     </tr>     <tr>       <td><code>visa_card</code></td>       <td>Payout in form of a Visa debit card</td>     </tr>   </tbody> </table> 
+    # The category of this product  <table>   <thead>     <tr>       <th>Category</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>ach</code></td>       <td>Bank transfer to the recipient</td>     </tr>     <tr>       <td><code>charity</code></td>       <td>Donations to a charity</td>     </tr>     <tr>       <td><code>instant_debit_transfer</code></td>       <td>Instant debit transfer to the recipient</td>     </tr>     <tr>       <td><code>merchant_card</code></td>       <td>A gift card for a certain merchant (e.g. Amazon)</td>     </tr>     <tr>       <td><code>paypal</code></td>       <td>Payout via PayPal</td>     </tr>     <tr>       <td><code>venmo</code></td>       <td>Payout via Venmo</td>     </tr>     <tr>       <td><code>visa_card</code></td>       <td>Payout in form of a Visa debit card</td>     </tr>   </tbody> </table> 
     attr_accessor :category
 
     # Legal disclosures for this product. Can be in HTML format.
@@ -41,6 +41,11 @@ module Tremendous
 
     # List of product images associated with this product (e.g. logos or images of the gift cards)
     attr_accessor :images
+
+    # Instructions for how to use the product, if applicable. Mostly used for products with a `category` of `merchant_card`.
+    attr_accessor :usage_instructions
+
+    attr_accessor :documents
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -75,7 +80,9 @@ module Tremendous
         :'skus' => :'skus',
         :'currency_codes' => :'currency_codes',
         :'countries' => :'countries',
-        :'images' => :'images'
+        :'images' => :'images',
+        :'usage_instructions' => :'usage_instructions',
+        :'documents' => :'documents'
       }
     end
 
@@ -95,13 +102,16 @@ module Tremendous
         :'skus' => :'Array<ListProductsResponseProductsInnerSkusInner>',
         :'currency_codes' => :'Array<String>',
         :'countries' => :'Array<ListProductsResponseProductsInnerCountriesInner>',
-        :'images' => :'Array<ListProductsResponseProductsInnerImagesInner>'
+        :'images' => :'Array<ListProductsResponseProductsInnerImagesInner>',
+        :'usage_instructions' => :'String',
+        :'documents' => :'ListProductsResponseProductsInnerDocuments'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'documents'
       ])
     end
 
@@ -179,6 +189,14 @@ module Tremendous
       else
         self.images = nil
       end
+
+      if attributes.key?(:'usage_instructions')
+        self.usage_instructions = attributes[:'usage_instructions']
+      end
+
+      if attributes.key?(:'documents')
+        self.documents = attributes[:'documents']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -247,7 +265,7 @@ module Tremendous
       return false if @name.nil?
       return false if @description.nil?
       return false if @category.nil?
-      category_validator = EnumAttributeValidator.new('String', ["ach", "charity", "merchant_card", "paypal", "venmo", "visa_card"])
+      category_validator = EnumAttributeValidator.new('String', ["ach", "charity", "instant_debit_transfer", "merchant_card", "paypal", "venmo", "visa_card"])
       return false unless category_validator.valid?(@category)
       return false if @disclosure.nil?
       return false if @currency_codes.nil?
@@ -277,7 +295,7 @@ module Tremendous
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] category Object to be assigned
     def category=(category)
-      validator = EnumAttributeValidator.new('String', ["ach", "charity", "merchant_card", "paypal", "venmo", "visa_card"])
+      validator = EnumAttributeValidator.new('String', ["ach", "charity", "instant_debit_transfer", "merchant_card", "paypal", "venmo", "visa_card"])
       unless validator.valid?(category)
         fail ArgumentError, "invalid value for \"category\", must be one of #{validator.allowable_values}."
       end
@@ -325,7 +343,9 @@ module Tremendous
           skus == o.skus &&
           currency_codes == o.currency_codes &&
           countries == o.countries &&
-          images == o.images
+          images == o.images &&
+          usage_instructions == o.usage_instructions &&
+          documents == o.documents
     end
 
     # @see the `==` method
@@ -337,7 +357,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, description, category, disclosure, skus, currency_codes, countries, images].hash
+      [id, name, description, category, disclosure, skus, currency_codes, countries, images, usage_instructions, documents].hash
     end
 
     # Builds the object from hash

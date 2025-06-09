@@ -14,15 +14,30 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class ListProductsResponseProductsInnerImagesInner
-    # URL to this image
-    attr_accessor :src
+  # Associated `member`. `null` until the registration flow for the connected organization has been completed.
+  class ConnectedOrganizationMemberMember
+    attr_accessor :id
 
-    # Type of image
-    attr_accessor :type
+    # Email address of the member
+    attr_accessor :email
 
-    # The MIME content type of this image
-    attr_accessor :content_type
+    # Full name of the member
+    attr_accessor :name
+
+    # Is this member currently active in the organization. If `false`, the member will not be able to access the organization. 
+    attr_accessor :active
+
+    # The role ID associated with the member within the organization. 
+    attr_accessor :role
+
+    # Current status of the member's account.  When creating a member it starts out in the status `INVITED`. As soon as that member open the invitation link and registers an account, the status switches to `REGISTERED`. 
+    attr_accessor :status
+
+    # Timestamp when this member was created.  The `created_at` timestamp is **NOT** returned when retrieving a member (but is part of the response when listing or creating members). 
+    attr_accessor :created_at
+
+    # Timestamp when this member most recently logged into the dashboard of the organization associated with this API key. 
+    attr_accessor :last_login_at
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -49,9 +64,14 @@ module Tremendous
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'src' => :'src',
-        :'type' => :'type',
-        :'content_type' => :'content_type'
+        :'id' => :'id',
+        :'email' => :'email',
+        :'name' => :'name',
+        :'active' => :'active',
+        :'role' => :'role',
+        :'status' => :'status',
+        :'created_at' => :'created_at',
+        :'last_login_at' => :'last_login_at'
       }
     end
 
@@ -63,16 +83,23 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'src' => :'String',
-        :'type' => :'String',
-        :'content_type' => :'String'
+        :'id' => :'String',
+        :'email' => :'String',
+        :'name' => :'String',
+        :'active' => :'Boolean',
+        :'role' => :'String',
+        :'status' => :'String',
+        :'created_at' => :'Time',
+        :'last_login_at' => :'Time'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'content_type'
+        :'name',
+        :'role',
+        :'last_login_at'
       ])
     end
 
@@ -80,31 +107,55 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListProductsResponseProductsInnerImagesInner` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ConnectedOrganizationMemberMember` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!self.class.attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListProductsResponseProductsInnerImagesInner`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ConnectedOrganizationMemberMember`. Please check the name to make sure it's valid. List of attributes: " + self.class.attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'src')
-        self.src = attributes[:'src']
+      if attributes.key?(:'id')
+        self.id = attributes[:'id']
       else
-        self.src = nil
+        self.id = nil
       end
 
-      if attributes.key?(:'type')
-        self.type = attributes[:'type']
+      if attributes.key?(:'email')
+        self.email = attributes[:'email']
       else
-        self.type = nil
+        self.email = nil
       end
 
-      if attributes.key?(:'content_type')
-        self.content_type = attributes[:'content_type']
+      if attributes.key?(:'name')
+        self.name = attributes[:'name']
+      else
+        self.name = nil
+      end
+
+      if attributes.key?(:'active')
+        self.active = attributes[:'active']
+      end
+
+      if attributes.key?(:'role')
+        self.role = attributes[:'role']
+      end
+
+      if attributes.key?(:'status')
+        self.status = attributes[:'status']
+      else
+        self.status = nil
+      end
+
+      if attributes.key?(:'created_at')
+        self.created_at = attributes[:'created_at']
+      end
+
+      if attributes.key?(:'last_login_at')
+        self.last_login_at = attributes[:'last_login_at']
       end
     end
 
@@ -113,12 +164,21 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @src.nil?
-        invalid_properties.push('invalid value for "src", src cannot be nil.')
+      if @id.nil?
+        invalid_properties.push('invalid value for "id", id cannot be nil.')
       end
 
-      if @type.nil?
-        invalid_properties.push('invalid value for "type", type cannot be nil.')
+      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
+      if @id !~ pattern
+        invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
+      end
+
+      if @email.nil?
+        invalid_properties.push('invalid value for "email", email cannot be nil.')
+      end
+
+      if @status.nil?
+        invalid_properties.push('invalid value for "status", status cannot be nil.')
       end
 
       invalid_properties
@@ -128,21 +188,38 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @src.nil?
-      return false if @type.nil?
-      type_validator = EnumAttributeValidator.new('String', ["card", "logo"])
-      return false unless type_validator.valid?(@type)
+      return false if @id.nil?
+      return false if @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
+      return false if @email.nil?
+      return false if @status.nil?
+      status_validator = EnumAttributeValidator.new('String', ["REGISTERED", "INVITED"])
+      return false unless status_validator.valid?(@status)
       true
     end
 
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] type Object to be assigned
-    def type=(type)
-      validator = EnumAttributeValidator.new('String', ["card", "logo"])
-      unless validator.valid?(type)
-        fail ArgumentError, "invalid value for \"type\", must be one of #{validator.allowable_values}."
+    # Custom attribute writer method with validation
+    # @param [Object] id Value to be assigned
+    def id=(id)
+      if id.nil?
+        fail ArgumentError, 'id cannot be nil'
       end
-      @type = type
+
+      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
+      if id !~ pattern
+        fail ArgumentError, "invalid value for \"id\", must conform to the pattern #{pattern}."
+      end
+
+      @id = id
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] status Object to be assigned
+    def status=(status)
+      validator = EnumAttributeValidator.new('String', ["REGISTERED", "INVITED"])
+      unless validator.valid?(status)
+        fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
+      end
+      @status = status
     end
 
     # Checks equality by comparing each attribute.
@@ -150,9 +227,14 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          src == o.src &&
-          type == o.type &&
-          content_type == o.content_type
+          id == o.id &&
+          email == o.email &&
+          name == o.name &&
+          active == o.active &&
+          role == o.role &&
+          status == o.status &&
+          created_at == o.created_at &&
+          last_login_at == o.last_login_at
     end
 
     # @see the `==` method
@@ -164,7 +246,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [src, type, content_type].hash
+      [id, email, name, active, role, status, created_at, last_login_at].hash
     end
 
     # Builds the object from hash
