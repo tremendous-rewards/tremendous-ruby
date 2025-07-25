@@ -14,51 +14,23 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # A single reward, sent to a recipient. A reward is always part of an order.  Either `products` or `campaign_id` must be specified. 
-  class RewardForOrderCreate
+  # The redemption token for a reward.
+  class InlineObject1Reward
     # Tremendous ID of the reward
     attr_accessor :id
 
-    # Tremendous ID of the order this reward is part of.
-    attr_accessor :order_id
+    # The token to redeem the reward. 
+    attr_accessor :token
 
-    # Date the reward was created
-    attr_accessor :created_at
-
-    # ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. 
-    attr_accessor :campaign_id
-
-    # List of IDs of product (different gift cards, charity, etc.) that will be available to the recipient to choose from.  Providing a `products` array will override the products made available by the campaign specified using the `campaign_id` property unless the `products` array is empty. It will _not_ override other campaign attributes, like the message and customization of the look and feel. 
-    attr_accessor :products
-
-    attr_accessor :value
-
-    attr_accessor :recipient
-
-    # Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.
-    attr_accessor :deliver_at
-
-    attr_accessor :custom_fields
-
-    # Set this to translate the redemption experience for this reward. Pass a 2-letter [ISO-639-1 code](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes) for the desired language. Defaults to `en`. 
-    attr_accessor :language
-
-    attr_accessor :delivery
+    # Date the token expires
+    attr_accessor :expires_at
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'id' => :'id',
-        :'order_id' => :'order_id',
-        :'created_at' => :'created_at',
-        :'campaign_id' => :'campaign_id',
-        :'products' => :'products',
-        :'value' => :'value',
-        :'recipient' => :'recipient',
-        :'deliver_at' => :'deliver_at',
-        :'custom_fields' => :'custom_fields',
-        :'language' => :'language',
-        :'delivery' => :'delivery'
+        :'token' => :'token',
+        :'expires_at' => :'expires_at'
       }
     end
 
@@ -76,23 +48,14 @@ module Tremendous
     def self.openapi_types
       {
         :'id' => :'String',
-        :'order_id' => :'String',
-        :'created_at' => :'Time',
-        :'campaign_id' => :'String',
-        :'products' => :'Array<String>',
-        :'value' => :'ListRewards200ResponseRewardsInnerValue',
-        :'recipient' => :'ListRewards200ResponseRewardsInnerRecipient',
-        :'deliver_at' => :'Date',
-        :'custom_fields' => :'Array<RewardBaseCustomFieldsInner>',
-        :'language' => :'String',
-        :'delivery' => :'SingleRewardOrderRewardDelivery'
+        :'token' => :'String',
+        :'expires_at' => :'Time'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'campaign_id',
       ])
     end
 
@@ -100,14 +63,14 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::RewardForOrderCreate` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::InlineObject1Reward` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::RewardForOrderCreate`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::InlineObject1Reward`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
@@ -116,48 +79,12 @@ module Tremendous
         self.id = attributes[:'id']
       end
 
-      if attributes.key?(:'order_id')
-        self.order_id = attributes[:'order_id']
+      if attributes.key?(:'token')
+        self.token = attributes[:'token']
       end
 
-      if attributes.key?(:'created_at')
-        self.created_at = attributes[:'created_at']
-      end
-
-      if attributes.key?(:'campaign_id')
-        self.campaign_id = attributes[:'campaign_id']
-      end
-
-      if attributes.key?(:'products')
-        if (value = attributes[:'products']).is_a?(Array)
-          self.products = value
-        end
-      end
-
-      if attributes.key?(:'value')
-        self.value = attributes[:'value']
-      end
-
-      if attributes.key?(:'recipient')
-        self.recipient = attributes[:'recipient']
-      end
-
-      if attributes.key?(:'deliver_at')
-        self.deliver_at = attributes[:'deliver_at']
-      end
-
-      if attributes.key?(:'custom_fields')
-        if (value = attributes[:'custom_fields']).is_a?(Array)
-          self.custom_fields = value
-        end
-      end
-
-      if attributes.key?(:'language')
-        self.language = attributes[:'language']
-      end
-
-      if attributes.key?(:'delivery')
-        self.delivery = attributes[:'delivery']
+      if attributes.key?(:'expires_at')
+        self.expires_at = attributes[:'expires_at']
       end
     end
 
@@ -171,20 +98,6 @@ module Tremendous
         invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
       end
 
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !@order_id.nil? && @order_id !~ pattern
-        invalid_properties.push("invalid value for \"order_id\", must conform to the pattern #{pattern}.")
-      end
-
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !@campaign_id.nil? && @campaign_id !~ pattern
-        invalid_properties.push("invalid value for \"campaign_id\", must conform to the pattern #{pattern}.")
-      end
-
-      if !@products.nil? && @products.length < 1
-        invalid_properties.push('invalid value for "products", number of items must be greater than or equal to 1.')
-      end
-
       invalid_properties
     end
 
@@ -193,9 +106,6 @@ module Tremendous
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      return false if !@order_id.nil? && @order_id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      return false if !@campaign_id.nil? && @campaign_id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      return false if !@products.nil? && @products.length < 1
       true
     end
 
@@ -214,62 +124,14 @@ module Tremendous
       @id = id
     end
 
-    # Custom attribute writer method with validation
-    # @param [Object] order_id Value to be assigned
-    def order_id=(order_id)
-      if order_id.nil?
-        fail ArgumentError, 'order_id cannot be nil'
-      end
-
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if order_id !~ pattern
-        fail ArgumentError, "invalid value for \"order_id\", must conform to the pattern #{pattern}."
-      end
-
-      @order_id = order_id
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] campaign_id Value to be assigned
-    def campaign_id=(campaign_id)
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !campaign_id.nil? && campaign_id !~ pattern
-        fail ArgumentError, "invalid value for \"campaign_id\", must conform to the pattern #{pattern}."
-      end
-
-      @campaign_id = campaign_id
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] products Value to be assigned
-    def products=(products)
-      if products.nil?
-        fail ArgumentError, 'products cannot be nil'
-      end
-
-      if products.length < 1
-        fail ArgumentError, 'invalid value for "products", number of items must be greater than or equal to 1.'
-      end
-
-      @products = products
-    end
-
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
           id == o.id &&
-          order_id == o.order_id &&
-          created_at == o.created_at &&
-          campaign_id == o.campaign_id &&
-          products == o.products &&
-          value == o.value &&
-          recipient == o.recipient &&
-          deliver_at == o.deliver_at &&
-          custom_fields == o.custom_fields &&
-          language == o.language &&
-          delivery == o.delivery
+          token == o.token &&
+          expires_at == o.expires_at
     end
 
     # @see the `==` method
@@ -281,7 +143,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, order_id, created_at, campaign_id, products, value, recipient, deliver_at, custom_fields, language, delivery].hash
+      [id, token, expires_at].hash
     end
 
     # Builds the object from hash
