@@ -197,7 +197,7 @@ module Tremendous
       return false if @status.nil?
       status_validator = EnumAttributeValidator.new('String', ["CANCELED", "CART", "EXECUTED", "FAILED", "PENDING APPROVAL", "PENDING INTERNAL PAYMENT APPROVAL"])
       return false unless status_validator.valid?(@status)
-      channel_validator = EnumAttributeValidator.new('String', ["UI", "API", "EMBED", "DECIPHER", "QUALTRICS", "TYPEFORM", "SURVEY MONKEY"])
+      channel_validator = EnumAttributeValidator.new('String', ["UI", "API", "EMBED", "DECIPHER", "QUALTRICS", "TYPEFORM", "SURVEY MONKEY", "YOTPO"])
       return false unless channel_validator.valid?(@channel)
       true
     end
@@ -241,7 +241,7 @@ module Tremendous
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] channel Object to be assigned
     def channel=(channel)
-      validator = EnumAttributeValidator.new('String', ["UI", "API", "EMBED", "DECIPHER", "QUALTRICS", "TYPEFORM", "SURVEY MONKEY"])
+      validator = EnumAttributeValidator.new('String', ["UI", "API", "EMBED", "DECIPHER", "QUALTRICS", "TYPEFORM", "SURVEY MONKEY", "YOTPO"])
       unless validator.valid?(channel)
         fail ArgumentError, "invalid value for \"channel\", must be one of #{validator.allowable_values}."
       end

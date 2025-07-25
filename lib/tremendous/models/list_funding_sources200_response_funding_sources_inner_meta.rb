@@ -15,11 +15,14 @@ require 'time'
 
 module Tremendous
   class ListFundingSources200ResponseFundingSourcesInnerMeta
-    # **Only available when `method` is set to `balance`.**  Available amount for this funding source (in Cents USD) 
+    # **Only exists for balance and commercial invoicing.**  For balance: available amount (in cents USD) For commercial invoicing: available credit amount calculated as (credit limit - outstanding balance) (in cents USD) 
     attr_accessor :available_cents
 
     # **Only available when `method` is set to `balance`.**  Funds that are already registered on your Tremendous account but which have not yet been deposited in your account (e.g. unpaid invoices) (in Cents USD). 
     attr_accessor :pending_cents
+
+    # **Only exists for commercial invoicing.**  Available credit limit (in cents USD) 
+    attr_accessor :credit_limit_cents
 
     # **Only available when `method` is set to `bank_account` or `credit_card`.**  Name of the holder of the bank account or credit_card 
     attr_accessor :accountholder_name
@@ -57,6 +60,42 @@ module Tremendous
     # **Only available when `method` is set to `bank_account` or `credit_card`.**  Point in time when the last order failed using this bank account or credit card as a funding source. 
     attr_accessor :last_payment_failed_at
 
+    # **Only available when `method` is set to `invoice`.**  Type of invoice account (e.g., commercial, pro_forma, prefunding_only) 
+    attr_accessor :invoice_type
+
+    # **Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Billing interval for commercial invoice generation (e.g., daily, weekly, monthly, twice_monthly). Returns `null` for pro forma invoices. 
+    attr_accessor :interval
+
+    # **Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Day of the week when commercial invoices are generated (\"0\"=Sunday, \"1\"=Monday, etc.). Returns `null` for pro forma invoices. 
+    attr_accessor :day_of_week
+
+    # **Only available when `method` is set to `invoice`.**  Net payment terms in days (e.g., \"30\" for Net 30) 
+    attr_accessor :net
+
+    # **Only available when `method` is set to `invoice`.**  Company name for invoice billing 
+    attr_accessor :company_name
+
+    # **Only available when `method` is set to `invoice`.**  Primary billing address line 
+    attr_accessor :address_1
+
+    # **Only available when `method` is set to `invoice`.**  Secondary billing address line 
+    attr_accessor :address_2
+
+    # **Only available when `method` is set to `invoice`.**  Billing address city 
+    attr_accessor :city
+
+    # **Only available when `method` is set to `invoice`.**  Billing address state or province 
+    attr_accessor :state
+
+    # **Only available when `method` is set to `invoice`.**  Billing address postal code 
+    attr_accessor :zip
+
+    # **Only available when `method` is set to `invoice`.**  Contact phone number for billing 
+    attr_accessor :phone
+
+    # **Only available when `method` is set to `invoice`.**  Email addresses for invoice delivery (comma-separated) 
+    attr_accessor :emails
+
     attr_accessor :failure_details
 
     class EnumAttributeValidator
@@ -86,6 +125,7 @@ module Tremendous
       {
         :'available_cents' => :'available_cents',
         :'pending_cents' => :'pending_cents',
+        :'credit_limit_cents' => :'credit_limit_cents',
         :'accountholder_name' => :'accountholder_name',
         :'account_type' => :'account_type',
         :'bank_name' => :'bank_name',
@@ -98,6 +138,18 @@ module Tremendous
         :'year' => :'year',
         :'month' => :'month',
         :'last_payment_failed_at' => :'last_payment_failed_at',
+        :'invoice_type' => :'invoice_type',
+        :'interval' => :'interval',
+        :'day_of_week' => :'day_of_week',
+        :'net' => :'net',
+        :'company_name' => :'company_name',
+        :'address_1' => :'address_1',
+        :'address_2' => :'address_2',
+        :'city' => :'city',
+        :'state' => :'state',
+        :'zip' => :'zip',
+        :'phone' => :'phone',
+        :'emails' => :'emails',
         :'failure_details' => :'failure_details'
       }
     end
@@ -112,6 +164,7 @@ module Tremendous
       {
         :'available_cents' => :'Integer',
         :'pending_cents' => :'Integer',
+        :'credit_limit_cents' => :'Integer',
         :'accountholder_name' => :'String',
         :'account_type' => :'String',
         :'bank_name' => :'String',
@@ -124,6 +177,18 @@ module Tremendous
         :'year' => :'String',
         :'month' => :'String',
         :'last_payment_failed_at' => :'Time',
+        :'invoice_type' => :'String',
+        :'interval' => :'String',
+        :'day_of_week' => :'String',
+        :'net' => :'String',
+        :'company_name' => :'String',
+        :'address_1' => :'String',
+        :'address_2' => :'String',
+        :'city' => :'String',
+        :'state' => :'String',
+        :'zip' => :'String',
+        :'phone' => :'String',
+        :'emails' => :'String',
         :'failure_details' => :'ListFundingSources200ResponseFundingSourcesInnerMetaFailureDetails'
       }
     end
@@ -133,6 +198,8 @@ module Tremendous
       Set.new([
         :'bank_name',
         :'last_payment_failed_at',
+        :'interval',
+        :'day_of_week',
         :'failure_details'
       ])
     end
@@ -158,6 +225,10 @@ module Tremendous
 
       if attributes.key?(:'pending_cents')
         self.pending_cents = attributes[:'pending_cents']
+      end
+
+      if attributes.key?(:'credit_limit_cents')
+        self.credit_limit_cents = attributes[:'credit_limit_cents']
       end
 
       if attributes.key?(:'accountholder_name')
@@ -206,6 +277,54 @@ module Tremendous
 
       if attributes.key?(:'last_payment_failed_at')
         self.last_payment_failed_at = attributes[:'last_payment_failed_at']
+      end
+
+      if attributes.key?(:'invoice_type')
+        self.invoice_type = attributes[:'invoice_type']
+      end
+
+      if attributes.key?(:'interval')
+        self.interval = attributes[:'interval']
+      end
+
+      if attributes.key?(:'day_of_week')
+        self.day_of_week = attributes[:'day_of_week']
+      end
+
+      if attributes.key?(:'net')
+        self.net = attributes[:'net']
+      end
+
+      if attributes.key?(:'company_name')
+        self.company_name = attributes[:'company_name']
+      end
+
+      if attributes.key?(:'address_1')
+        self.address_1 = attributes[:'address_1']
+      end
+
+      if attributes.key?(:'address_2')
+        self.address_2 = attributes[:'address_2']
+      end
+
+      if attributes.key?(:'city')
+        self.city = attributes[:'city']
+      end
+
+      if attributes.key?(:'state')
+        self.state = attributes[:'state']
+      end
+
+      if attributes.key?(:'zip')
+        self.zip = attributes[:'zip']
+      end
+
+      if attributes.key?(:'phone')
+        self.phone = attributes[:'phone']
+      end
+
+      if attributes.key?(:'emails')
+        self.emails = attributes[:'emails']
       end
 
       if attributes.key?(:'failure_details')
@@ -322,6 +441,7 @@ module Tremendous
       self.class == o.class &&
           available_cents == o.available_cents &&
           pending_cents == o.pending_cents &&
+          credit_limit_cents == o.credit_limit_cents &&
           accountholder_name == o.accountholder_name &&
           account_type == o.account_type &&
           bank_name == o.bank_name &&
@@ -334,6 +454,18 @@ module Tremendous
           year == o.year &&
           month == o.month &&
           last_payment_failed_at == o.last_payment_failed_at &&
+          invoice_type == o.invoice_type &&
+          interval == o.interval &&
+          day_of_week == o.day_of_week &&
+          net == o.net &&
+          company_name == o.company_name &&
+          address_1 == o.address_1 &&
+          address_2 == o.address_2 &&
+          city == o.city &&
+          state == o.state &&
+          zip == o.zip &&
+          phone == o.phone &&
+          emails == o.emails &&
           failure_details == o.failure_details
     end
 
@@ -346,7 +478,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [available_cents, pending_cents, accountholder_name, account_type, bank_name, account_number_mask, account_routing_mask, refundable, network, last4, expired, year, month, last_payment_failed_at, failure_details].hash
+      [available_cents, pending_cents, credit_limit_cents, accountholder_name, account_type, bank_name, account_number_mask, account_routing_mask, refundable, network, last4, expired, year, month, last_payment_failed_at, invoice_type, interval, day_of_week, net, company_name, address_1, address_2, city, state, zip, phone, emails, failure_details].hash
     end
 
     # Builds the object from hash

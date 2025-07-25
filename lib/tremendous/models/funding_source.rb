@@ -21,10 +21,10 @@ module Tremendous
     # You can pay for rewards using different payment methods on Tremendous:  <table>   <thead>     <tr>       <th>Payment Method</th>       <th>Description</th>       </tr>   </thead>   <tbody>     <tr>       <td><code>balance</code></td>       <td>Pre-funded balance in your Tremendous account to draw funds from to send rewards to recipients.</td>     </tr>     <tr>       <td><code>bank_account</code></td>       <td>Bank account to draw funds from to send rewards to recipients.</td>     </tr>     <tr>       <td><code>credit_card</code></td>       <td>Credit card to draw funds from to send rewards to recipients.</td>     </tr>     <tr>       <td><code>invoice</code></td>       <td>Send rewards to recipients and pay by invoice.</td>     </tr>    </tbody> </table> 
     attr_accessor :method
 
-    # Indicates the level of access granted for using this funding source.  Permissions is an array containing the following:   * `api_orders`   * `dashboard_orders`   * `balance_funding` 
+    # Indicates which actions this funding source can perform.   <table>     <thead>       <tr>         <th>Permission</th>         <th>Description</th>         </tr>     </thead>     <tbody>       <tr>         <td><code>api_orders</code></td>         <td>Usable for orders via API.</td>       </tr>       <tr>         <td><code>dashboard_orders</code></td>         <td>Usable for orders via Tremendous dashboard.</td>       </tr>       <tr>         <td><code>balance_funding</code></td>         <td>Usable to add funds to a balance (via dashboard or API).</td>       </tr>     </tbody>   </table> 
     attr_accessor :usage_permissions
 
-    # Status of the funding_source 
+    # Status of the funding_source    <table>     <thead>       <tr>         <th>Status</th>         <th>Description</th>         </tr>     </thead>     <tbody>       <tr>         <td><code>active</code></td>         <td>Ready for use.</td>       </tr>       <tr>         <td><code>deleted</code></td>         <td>Manually removed, and not usable.</td>       </tr>       <tr>         <td><code>pending_confirmation</code></td>         <td>Awaiting verification of ownership.</td>       </tr>       <tr>         <td><code>failed</code></td>         <td>Last payment attempt failed, and not usable (contact Tremendous support to reinstate).</td>       </tr>     </tbody>   </table> 
     attr_accessor :status
 
     # **Only available when `method` is set to `invoice`.** 
