@@ -104,6 +104,9 @@ lib/tremendous/models/get_order200_response.rb
 lib/tremendous/models/get_organization200_response.rb
 lib/tremendous/models/get_product_response.rb
 lib/tremendous/models/get_reward200_response.rb
+lib/tremendous/models/inline_object.rb
+lib/tremendous/models/inline_object1.rb
+lib/tremendous/models/inline_object1_reward.rb
 lib/tremendous/models/invoice.rb
 lib/tremendous/models/list_balance_transactions200_response.rb
 lib/tremendous/models/list_balance_transactions200_response_transactions_inner.rb
