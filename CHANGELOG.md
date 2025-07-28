@@ -1,5 +1,20 @@
 # Changelog
 
+## [5.11.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.10.0...tremendous_ruby/v5.11.0) (2025-07-28)
+
+
+### Features
+
+* add credit_limit_cents to funding source for commercial invoicing ([ad5528a](https://github.com/tremendous-rewards/tremendous-ruby/commit/ad5528aec291806f601a5064aa2af44aa6b9fe8f))
+* include invoice data in funding sources schema ([ad5528a](https://github.com/tremendous-rewards/tremendous-ruby/commit/ad5528aec291806f601a5064aa2af44aa6b9fe8f))
+* regenerate SDK ([#72](https://github.com/tremendous-rewards/tremendous-ruby/issues/72)) ([ad5528a](https://github.com/tremendous-rewards/tremendous-ruby/commit/ad5528aec291806f601a5064aa2af44aa6b9fe8f))
+* update limit param in List rewards ([ad5528a](https://github.com/tremendous-rewards/tremendous-ruby/commit/ad5528aec291806f601a5064aa2af44aa6b9fe8f)), closes [#71](https://github.com/tremendous-rewards/tremendous-ruby/issues/71)
+
+
+### Bug Fixes
+
+* update amount_money to amount in topup api ([ad5528a](https://github.com/tremendous-rewards/tremendous-ruby/commit/ad5528aec291806f601a5064aa2af44aa6b9fe8f))
+
 ## [5.10.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.9.0...tremendous_ruby/v5.10.0) (2025-06-09)
 
 
