@@ -205,6 +205,8 @@ module Tremendous
         :'last_payment_failed_at',
         :'interval',
         :'day_of_week',
+        :'address_1',
+        :'address_2',
         :'failure_details'
       ])
     end
