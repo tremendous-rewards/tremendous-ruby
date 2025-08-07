@@ -1,5 +1,14 @@
 # Changelog
 
+## [5.12.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.11.0...tremendous_ruby/v5.12.0) (2025-08-07)
+
+
+### Features
+
+* add address fields to funding sources meta schema ([c2c0005](https://github.com/tremendous-rewards/tremendous-ruby/commit/c2c0005c1c3149c460f4be12f635f184615e1907))
+* add Cash App as product category ([c2c0005](https://github.com/tremendous-rewards/tremendous-ruby/commit/c2c0005c1c3149c460f4be12f635f184615e1907))
+* regenerate SDK ([#76](https://github.com/tremendous-rewards/tremendous-ruby/issues/76)) ([c2c0005](https://github.com/tremendous-rewards/tremendous-ruby/commit/c2c0005c1c3149c460f4be12f635f184615e1907))
+
 ## [5.11.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.10.0...tremendous_ruby/v5.11.0) (2025-07-28)
 
 
