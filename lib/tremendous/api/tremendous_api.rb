@@ -3553,10 +3553,10 @@ module Tremendous
     end
 
     # Resend reward
-    # Resends a reward, identified by the given `id` in the URL, to its recipient. 
+    # Resends a reward, identified by the given `id` in the URL, to its recipient. Only rewards with a previous delivery failure can be resent. 
     # @param id [String] ID of the reward that should be resent
     # @param [Hash] opts the optional parameters
-    # @option opts [ResendRewardRequest] :resend_reward_request _Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of &#x60;updated_email&#x60; or &#x60;updated_phone&#x60;, not both. 
+    # @option opts [ResendRewardRequest] :resend_reward_request You can update the email or phone number used for the resend. You can only provide one of &#x60;updated_email&#x60; or &#x60;updated_phone&#x60;, not both. 
     # @return [Object]
     def resend_reward(id, opts = {})
       data, _status_code, _headers = resend_reward_with_http_info(id, opts)
@@ -3564,10 +3564,10 @@ module Tremendous
     end
 
     # Resend reward
-    # Resends a reward, identified by the given &#x60;id&#x60; in the URL, to its recipient. 
+    # Resends a reward, identified by the given &#x60;id&#x60; in the URL, to its recipient. Only rewards with a previous delivery failure can be resent. 
     # @param id [String] ID of the reward that should be resent
     # @param [Hash] opts the optional parameters
-    # @option opts [ResendRewardRequest] :resend_reward_request _Only_ for rewards with a previous delivery failure: You can update the email or phone number used for the resend. You can only provide one of &#x60;updated_email&#x60; or &#x60;updated_phone&#x60;, not both. 
+    # @option opts [ResendRewardRequest] :resend_reward_request You can update the email or phone number used for the resend. You can only provide one of &#x60;updated_email&#x60; or &#x60;updated_phone&#x60;, not both. 
     # @return [Array<(Object, Integer, Hash)>] Object data, response status code and response headers
     def resend_reward_with_http_info(id, opts = {})
       if @api_client.config.debugging
