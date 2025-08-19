@@ -30,21 +30,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v5
-      - name: Debug runner and environment info
-        run: |
-          echo "Runner version info:"
-          if [ -f "/opt/hostedtoolcache/actions-runner/_layout" ]; then
-            cat /opt/hostedtoolcache/actions-runner/_layout 2>/dev/null || echo "Layout file not accessible"
-          fi
-          echo "Runner OS: $(uname -a)"
-          echo "Runner environment: $RUNNER_OS"
-          echo "GitHub Actions Runner: $GITHUB_ACTIONS"
-      - name: Debug environment variables
-        run: |
-          echo "SANDBOX_API_TOKEN is set: $([[ -n "$SANDBOX_API_TOKEN" ]] && echo "yes" || echo "no")"
-          echo "TEST_PRODUCT_ID is set: $([[ -n "$TEST_PRODUCT_ID" ]] && echo "yes" || echo "no")"
-          echo "TEST_CAMPAIGN_ID is set: $([[ -n "$TEST_CAMPAIGN_ID" ]] && echo "yes" || echo "no")"
-          echo "TEST_RECIPIENT_EMAIL is set: $([[ -n "$TEST_RECIPIENT_EMAIL" ]] && echo "yes" || echo "no")"
       - name: Use Ruby ${{ matrix.ruby-version }}
         uses: ruby/setup-ruby@v1
         with:
