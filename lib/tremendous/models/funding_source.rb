@@ -24,7 +24,7 @@ module Tremendous
     # Indicates which actions this funding source can perform.   <table>     <thead>       <tr>         <th>Permission</th>         <th>Description</th>         </tr>     </thead>     <tbody>       <tr>         <td><code>api_orders</code></td>         <td>Usable for orders via API.</td>       </tr>       <tr>         <td><code>dashboard_orders</code></td>         <td>Usable for orders via Tremendous dashboard.</td>       </tr>       <tr>         <td><code>balance_funding</code></td>         <td>Usable to add funds to a balance (via dashboard or API).</td>       </tr>     </tbody>   </table> 
     attr_accessor :usage_permissions
 
-    # Status of the funding_source    <table>     <thead>       <tr>         <th>Status</th>         <th>Description</th>         </tr>     </thead>     <tbody>       <tr>         <td><code>active</code></td>         <td>Ready for use.</td>       </tr>       <tr>         <td><code>deleted</code></td>         <td>Manually removed, and not usable.</td>       </tr>       <tr>         <td><code>pending_confirmation</code></td>         <td>Awaiting verification of ownership.</td>       </tr>       <tr>         <td><code>failed</code></td>         <td>Last payment attempt failed, and not usable (contact Tremendous support to reinstate).</td>       </tr>     </tbody>   </table> 
+    # Status of the funding_source    <table>     <thead>       <tr>         <th>Status</th>         <th>Description</th>         </tr>     </thead>     <tbody>       <tr>         <td><code>active</code></td>         <td>Ready for use.</td>       </tr>       <tr>         <td><code>deleted</code></td>         <td>Manually removed, and not usable.</td>       </tr>       <tr>         <td><code>failed</code></td>         <td>Last payment attempt failed, and not usable (contact Tremendous support to reinstate).</td>       </tr>     </tbody>   </table> 
     attr_accessor :status
 
     # **Only available when `method` is set to `invoice`.** 
@@ -177,7 +177,7 @@ module Tremendous
       return false if @method.nil?
       method_validator = EnumAttributeValidator.new('String', ["balance", "bank_account", "credit_card", "invoice"])
       return false unless method_validator.valid?(@method)
-      status_validator = EnumAttributeValidator.new('String', ["active", "deleted", "pending_confirmation", "failed"])
+      status_validator = EnumAttributeValidator.new('String', ["active", "deleted", "failed"])
       return false unless status_validator.valid?(@status)
       type_validator = EnumAttributeValidator.new('String', ["COMMERCIAL", "PRO_FORMA", "PREFUNDING_ONLY"])
       return false unless type_validator.valid?(@type)
@@ -213,7 +213,7 @@ module Tremendous
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] status Object to be assigned
     def status=(status)
-      validator = EnumAttributeValidator.new('String', ["active", "deleted", "pending_confirmation", "failed"])
+      validator = EnumAttributeValidator.new('String', ["active", "deleted", "failed"])
       unless validator.valid?(status)
         fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
       end

@@ -82,6 +82,10 @@ module Tremendous
         invalid_properties.push('invalid value for "emails", emails cannot be nil.')
       end
 
+      if @emails.length > 50000
+        invalid_properties.push('invalid value for "emails", number of items must be less than or equal to 50000.')
+      end
+
       invalid_properties
     end
 
@@ -90,6 +94,7 @@ module Tremendous
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @emails.nil?
+      return false if @emails.length > 50000
       true
     end
 
@@ -98,6 +103,10 @@ module Tremendous
     def emails=(emails)
       if emails.nil?
         fail ArgumentError, 'emails cannot be nil'
+      end
+
+      if emails.length > 50000
+        fail ArgumentError, 'invalid value for "emails", number of items must be less than or equal to 50000.'
       end
 
       @emails = emails
