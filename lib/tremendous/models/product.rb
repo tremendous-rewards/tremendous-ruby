@@ -24,8 +24,11 @@ module Tremendous
     # Detailed description of the product. Mostly used for products with a `category` of `charities`.
     attr_accessor :description
 
-    # The category of this product  <table>   <thead>     <tr>       <th>Category</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>ach</code></td>       <td>Bank transfer to the recipient</td>     </tr>     <tr>       <td><code>charity</code></td>       <td>Donations to a charity</td>     </tr>     <tr>       <td><code>instant_debit_transfer</code></td>       <td>Instant debit transfer to the recipient</td>     </tr>     <tr>       <td><code>merchant_card</code></td>       <td>A gift card for a certain merchant (e.g. Amazon)</td>     </tr>     <tr>       <td><code>paypal</code></td>       <td>Payout via PayPal</td>     </tr>     <tr>       <td><code>venmo</code></td>       <td>Payout via Venmo</td>     </tr>     <tr>       <td><code>visa_card</code></td>       <td>Payout in form of a Visa debit card</td>     </tr>     <tr>       <td><code>cash_app</code></td>       <td>Payout via Cash App</td>     </tr>   </tbody> </table> 
+    # The category of the product  <table>   <thead>     <tr>       <th>Category</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>ach</code></td>       <td>Bank transfer to the recipient</td>     </tr>     <tr>       <td><code>charity</code></td>       <td>Donations to a charity</td>     </tr>     <tr>       <td><code>instant_debit_transfer</code></td>       <td>Instant debit transfer to the recipient</td>     </tr>     <tr>       <td><code>merchant_card</code></td>       <td>A gift card for a certain merchant (e.g. Amazon)</td>     </tr>     <tr>       <td><code>paypal</code></td>       <td>Payout via PayPal</td>     </tr>     <tr>       <td><code>venmo</code></td>       <td>Payout via Venmo</td>     </tr>     <tr>       <td><code>visa_card</code></td>       <td>Payout in form of a Visa debit card</td>     </tr>     <tr>       <td><code>cash_app</code></td>       <td>Payout via Cash App</td>     </tr>   </tbody> </table> 
     attr_accessor :category
+
+    # Additional classification for the product. Only applicable to products with a `category` of `merchant_card`. Possible subcategories:  * `beauty_and_health` * `digital_financial_services` * `electronics` * `entertainment` * `fashion` * `food_and_drink` * `general_merchandise` * `grocery_and_supermarkets` * `home_and_living` * `mobility_and_fuel` * `sports_and_outdoor_gear` * `travel_and_hospitality` 
+    attr_accessor :subcategory
 
     # Legal disclosures for this product. Can be in HTML format.
     attr_accessor :disclosure
@@ -76,6 +79,7 @@ module Tremendous
         :'name' => :'name',
         :'description' => :'description',
         :'category' => :'category',
+        :'subcategory' => :'subcategory',
         :'disclosure' => :'disclosure',
         :'skus' => :'skus',
         :'currency_codes' => :'currency_codes',
@@ -103,6 +107,7 @@ module Tremendous
         :'name' => :'String',
         :'description' => :'String',
         :'category' => :'String',
+        :'subcategory' => :'String',
         :'disclosure' => :'String',
         :'skus' => :'Array<ListProductsResponseProductsInnerSkusInner>',
         :'currency_codes' => :'Array<String>',
@@ -158,6 +163,10 @@ module Tremendous
         self.category = attributes[:'category']
       else
         self.category = nil
+      end
+
+      if attributes.key?(:'subcategory')
+        self.subcategory = attributes[:'subcategory']
       end
 
       if attributes.key?(:'disclosure')
@@ -273,6 +282,8 @@ module Tremendous
       return false if @category.nil?
       category_validator = EnumAttributeValidator.new('String', ["ach", "charity", "instant_debit_transfer", "merchant_card", "paypal", "venmo", "visa_card", "cash_app"])
       return false unless category_validator.valid?(@category)
+      subcategory_validator = EnumAttributeValidator.new('String', ["beauty_and_health", "digital_financial_services", "electronics", "entertainment", "fashion", "food_and_drink", "general_merchandise", "grocery_and_supermarkets", "home_and_living", "mobility_and_fuel", "sports_and_outdoor_gear", "travel_and_hospitality"])
+      return false unless subcategory_validator.valid?(@subcategory)
       return false if @disclosure.nil?
       return false if @currency_codes.nil?
       return false if @currency_codes.length < 1
@@ -328,6 +339,16 @@ module Tremendous
       @category = category
     end
 
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] subcategory Object to be assigned
+    def subcategory=(subcategory)
+      validator = EnumAttributeValidator.new('String', ["beauty_and_health", "digital_financial_services", "electronics", "entertainment", "fashion", "food_and_drink", "general_merchandise", "grocery_and_supermarkets", "home_and_living", "mobility_and_fuel", "sports_and_outdoor_gear", "travel_and_hospitality"])
+      unless validator.valid?(subcategory)
+        fail ArgumentError, "invalid value for \"subcategory\", must be one of #{validator.allowable_values}."
+      end
+      @subcategory = subcategory
+    end
+
     # Custom attribute writer method with validation
     # @param [Object] disclosure Value to be assigned
     def disclosure=(disclosure)
@@ -375,6 +396,7 @@ module Tremendous
           name == o.name &&
           description == o.description &&
           category == o.category &&
+          subcategory == o.subcategory &&
           disclosure == o.disclosure &&
           skus == o.skus &&
           currency_codes == o.currency_codes &&
@@ -393,7 +415,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, description, category, disclosure, skus, currency_codes, countries, images, usage_instructions, documents].hash
+      [id, name, description, category, subcategory, disclosure, skus, currency_codes, countries, images, usage_instructions, documents].hash
     end
 
     # Builds the object from hash

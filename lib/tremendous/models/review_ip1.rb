@@ -83,6 +83,10 @@ module Tremendous
         invalid_properties.push('invalid value for "ips", ips cannot be nil.')
       end
 
+      if @ips.length > 50000
+        invalid_properties.push('invalid value for "ips", number of items must be less than or equal to 50000.')
+      end
+
       invalid_properties
     end
 
@@ -91,6 +95,7 @@ module Tremendous
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @ips.nil?
+      return false if @ips.length > 50000
       true
     end
 
@@ -99,6 +104,10 @@ module Tremendous
     def ips=(ips)
       if ips.nil?
         fail ArgumentError, 'ips cannot be nil'
+      end
+
+      if ips.length > 50000
+        fail ArgumentError, 'invalid value for "ips", number of items must be less than or equal to 50000.'
       end
 
       @ips = ips

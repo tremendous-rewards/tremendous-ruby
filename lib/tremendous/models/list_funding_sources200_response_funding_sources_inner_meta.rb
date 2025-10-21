@@ -15,10 +15,10 @@ require 'time'
 
 module Tremendous
   class ListFundingSources200ResponseFundingSourcesInnerMeta
-    # **Only exists for balance and commercial invoicing.**  For balance: available amount (in cents USD) For commercial invoicing: available credit amount calculated as (credit limit - outstanding balance) (in cents USD) 
+    # **Only exists for balance and commercial invoicing.**  For balance: available amount (in cents USD) For commercial invoicing: available credit amount calculated as (credit limit - outstanding balance) (in cents USD)  *Caution: In the \"list funding sources\" endpoint this value is cached and may not be up to date. Use the \"get funding source\" endpoint to get the most up to date value.* 
     attr_accessor :available_cents
 
-    # **Only available when `method` is set to `balance`.**  Funds that are already registered on your Tremendous account but which have not yet been deposited in your account (e.g. unpaid invoices) (in Cents USD). 
+    # **Only available when `method` is set to `balance`.**  Funds that are already registered on your Tremendous account but which have not yet been deposited in your account (e.g. payments that need to be manually reviewed by our ops team) (in Cents USD). 
     attr_accessor :pending_cents
 
     # **Only exists for commercial invoicing.**  Available credit limit (in cents USD) 

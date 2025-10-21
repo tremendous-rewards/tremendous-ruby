@@ -3118,6 +3118,7 @@ module Tremendous
     # @param [Hash] opts the optional parameters
     # @option opts [String] :country Comma-separated list of [Alpha-2 country codes](https://www.iban.com/country-codes), used to only retrieve products available in the provided countries
     # @option opts [String] :currency Comma-separated list of [currency codes](https://www.iban.com/currency-codes), used to only retrieve products available in the provided currencies
+    # @option opts [String] :subcategory Comma-separated list of [subcategories](https://developers.tremendous.com/reference/obj-schema-products-1), used to only retrieve products with the provided subcategories
     # @return [ListProductsResponse]
     def list_products(opts = {})
       data, _status_code, _headers = list_products_with_http_info(opts)
@@ -3129,6 +3130,7 @@ module Tremendous
     # @param [Hash] opts the optional parameters
     # @option opts [String] :country Comma-separated list of [Alpha-2 country codes](https://www.iban.com/country-codes), used to only retrieve products available in the provided countries
     # @option opts [String] :currency Comma-separated list of [currency codes](https://www.iban.com/currency-codes), used to only retrieve products available in the provided currencies
+    # @option opts [String] :subcategory Comma-separated list of [subcategories](https://developers.tremendous.com/reference/obj-schema-products-1), used to only retrieve products with the provided subcategories
     # @return [Array<(ListProductsResponse, Integer, Hash)>] ListProductsResponse data, response status code and response headers
     def list_products_with_http_info(opts = {})
       if @api_client.config.debugging
@@ -3141,6 +3143,7 @@ module Tremendous
       query_params = opts[:query_params] || {}
       query_params[:'country'] = opts[:'country'] if !opts[:'country'].nil?
       query_params[:'currency'] = opts[:'currency'] if !opts[:'currency'].nil?
+      query_params[:'subcategory'] = opts[:'subcategory'] if !opts[:'subcategory'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
@@ -3177,7 +3180,7 @@ module Tremendous
     end
 
     # List rewards
-    # Retrieve a list of all created rewards 
+    # Retrieve a list of all created rewards. You can query for rewards by custom field attributes using the field label and values as query params. [Learn more](https://developers.tremendous.com/docs/using-custom-fields-to-add-custom-data-to-rewards#querying-by-custom-fields) 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :offset Offsets the returned list by the given number of rewards. The returned rewards are ordered (and offsetted) by their creation date (DESC).
     # @option opts [Integer] :limit Limits the number of rewards listed. The maximum value is 500 and the default is 100.
@@ -3188,7 +3191,7 @@ module Tremendous
     end
 
     # List rewards
-    # Retrieve a list of all created rewards 
+    # Retrieve a list of all created rewards. You can query for rewards by custom field attributes using the field label and values as query params. [Learn more](https://developers.tremendous.com/docs/using-custom-fields-to-add-custom-data-to-rewards#querying-by-custom-fields) 
     # @param [Hash] opts the optional parameters
     # @option opts [Integer] :offset Offsets the returned list by the given number of rewards. The returned rewards are ordered (and offsetted) by their creation date (DESC).
     # @option opts [Integer] :limit Limits the number of rewards listed. The maximum value is 500 and the default is 100.
