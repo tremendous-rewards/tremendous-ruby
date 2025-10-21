@@ -1,5 +1,15 @@
 # Changelog
 
+## [5.13.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.12.0...tremendous_ruby/v5.13.0) (2025-10-21)
+
+
+### Features
+
+* add `subcategory` enum to Products ([7d4a3d1](https://github.com/tremendous-rewards/tremendous-ruby/commit/7d4a3d1747d1b5813addd9bc25a7983ea7b392d4)), closes [#81](https://github.com/tremendous-rewards/tremendous-ruby/issues/81)
+* enforce a 50000 limit for the IP/email list on custom fraud rules ([7d4a3d1](https://github.com/tremendous-rewards/tremendous-ruby/commit/7d4a3d1747d1b5813addd9bc25a7983ea7b392d4))
+* regen SDK ([#83](https://github.com/tremendous-rewards/tremendous-ruby/issues/83)) ([7d4a3d1](https://github.com/tremendous-rewards/tremendous-ruby/commit/7d4a3d1747d1b5813addd9bc25a7983ea7b392d4))
+* remove `pending_confirmation` status from Funding Sources ([7d4a3d1](https://github.com/tremendous-rewards/tremendous-ruby/commit/7d4a3d1747d1b5813addd9bc25a7983ea7b392d4))
+
 ## [5.12.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.11.0...tremendous_ruby/v5.12.0) (2025-08-07)
 
 
