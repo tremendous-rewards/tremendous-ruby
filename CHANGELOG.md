@@ -1,5 +1,22 @@
 # Changelog
 
+## [5.14.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.13.0...tremendous_ruby/v5.14.0) (2026-01-28)
+
+
+### Features
+
+* add currency support to invoices (USD, EUR, GBP) ([698e964](https://github.com/tremendous-rewards/tremendous-ruby/commit/698e964356f9d90b384bf65c6acb2bdee116b3e8))
+* add new Topups API (create, get, list) ([698e964](https://github.com/tremendous-rewards/tremendous-ruby/commit/698e964356f9d90b384bf65c6acb2bdee116b3e8))
+* allow BALANCE keyword in get_funding_source ([698e964](https://github.com/tremendous-rewards/tremendous-ruby/commit/698e964356f9d90b384bf65c6acb2bdee116b3e8))
+* expand fraud review schema with additional fields ([698e964](https://github.com/tremendous-rewards/tremendous-ruby/commit/698e964356f9d90b384bf65c6acb2bdee116b3e8))
+* regenerate SDK ([#91](https://github.com/tremendous-rewards/tremendous-ruby/issues/91)) ([698e964](https://github.com/tremendous-rewards/tremendous-ruby/commit/698e964356f9d90b384bf65c6acb2bdee116b3e8))
+
+
+### Bug Fixes
+
+* make funding source meta fields nullable ([698e964](https://github.com/tremendous-rewards/tremendous-ruby/commit/698e964356f9d90b384bf65c6acb2bdee116b3e8))
+* update redemption method enum values ([698e964](https://github.com/tremendous-rewards/tremendous-ruby/commit/698e964356f9d90b384bf65c6acb2bdee116b3e8))
+
 ## [5.13.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.12.0...tremendous_ruby/v5.13.0) (2025-10-21)
 
 
