@@ -22,8 +22,11 @@ module Tremendous
     # Reference to the purchase order number within your organization
     attr_accessor :po_number
 
-    # Amount of the invoice in USD
+    # Amount of the invoice
     attr_accessor :amount
+
+    # Currency of the invoice
+    attr_accessor :currency
 
     attr_accessor :international
 
@@ -70,6 +73,7 @@ module Tremendous
         :'id' => :'id',
         :'po_number' => :'po_number',
         :'amount' => :'amount',
+        :'currency' => :'currency',
         :'international' => :'international',
         :'status' => :'status',
         :'orders' => :'orders',
@@ -95,6 +99,7 @@ module Tremendous
         :'id' => :'String',
         :'po_number' => :'String',
         :'amount' => :'Float',
+        :'currency' => :'String',
         :'international' => :'Boolean',
         :'status' => :'String',
         :'orders' => :'Array<String>',
@@ -142,6 +147,12 @@ module Tremendous
         self.amount = attributes[:'amount']
       else
         self.amount = nil
+      end
+
+      if attributes.key?(:'currency')
+        self.currency = attributes[:'currency']
+      else
+        self.currency = 'USD'
       end
 
       if attributes.key?(:'international')
@@ -209,6 +220,8 @@ module Tremendous
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @id.nil?
       return false if @amount.nil?
+      currency_validator = EnumAttributeValidator.new('String', ["USD", "EUR", "GBP"])
+      return false unless currency_validator.valid?(@currency)
       return false if @status.nil?
       status_validator = EnumAttributeValidator.new('String', ["DELETED", "PAID", "OPEN", "MARKED_AS_PAID"])
       return false unless status_validator.valid?(@status)
@@ -234,6 +247,16 @@ module Tremendous
       end
 
       @amount = amount
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] currency Object to be assigned
+    def currency=(currency)
+      validator = EnumAttributeValidator.new('String', ["USD", "EUR", "GBP"])
+      unless validator.valid?(currency)
+        fail ArgumentError, "invalid value for \"currency\", must be one of #{validator.allowable_values}."
+      end
+      @currency = currency
     end
 
     # Custom attribute writer method checking allowed values (enum).
@@ -264,6 +287,7 @@ module Tremendous
           id == o.id &&
           po_number == o.po_number &&
           amount == o.amount &&
+          currency == o.currency &&
           international == o.international &&
           status == o.status &&
           orders == o.orders &&
@@ -281,7 +305,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, po_number, amount, international, status, orders, rewards, created_at, paid_at].hash
+      [id, po_number, amount, currency, international, status, orders, rewards, created_at, paid_at].hash
     end
 
     # Builds the object from hash
