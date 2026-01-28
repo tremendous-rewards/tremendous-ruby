@@ -19,19 +19,8 @@ module Tremendous
     # The current status of the fraud review:  * `flagged` - The reward has been flagged for and waiting manual review. * `blocked` - The reward was reviewed and blocked. * `released` - The reward was reviewed and released. 
     attr_accessor :status
 
-    # The fraud risk associated with the reward.
-    attr_accessor :risk
-
     # The array may contain multiple reasons, depending on which rule(s) flagged the reward for review. Reasons can be any of the following:  * `Disallowed IP` * `Disallowed email` * `Disallowed country` * `Over reward dollar limit` * `Over reward count limit` * `VPN detected` * `Device related to multiple emails` * `Device or account related to multiple emails` * `IP on a Tremendous fraud list` * `Bank account on a Tremendous fraud list` * `Fingerprint on a Tremendous fraud list` * `Email on a Tremendous fraud list` * `Phone on a Tremendous fraud list` * `IP related to a blocked reward` * `Device related to a blocked reward` * `Bank account related to a blocked reward` * `Fingerprint related to a blocked reward` * `Email related to a blocked reward` * `Phone related to a blocked reward` * `Allowed IP` * `Allowed email` 
     attr_accessor :reasons
-
-    # The name of the person who reviewed the reward, or `Automatic Review` if the reward was blocked automatically. Rewards can be automatically blocked if they remain in the flagged fraud queue for more than 30 days.  This field is only present if the status is not `flagged`. 
-    attr_accessor :reviewed_by
-
-    # When the reward was blocked or released following fraud review.  This field is only present if the status is not `flagged`. 
-    attr_accessor :reviewed_at
-
-    attr_accessor :related_rewards
 
     # The device fingerprint, if known.
     attr_accessor :device_id
@@ -45,6 +34,20 @@ module Tremendous
     attr_accessor :geo
 
     attr_accessor :reward
+
+    # The name of the person who reviewed the reward, or `Automatic Review` if the reward was blocked automatically. Rewards can be automatically blocked if they remain in the flagged fraud queue for more than 30 days.  This field is only present if the status is not `flagged`. 
+    attr_accessor :reviewed_by
+
+    # When the reward was blocked or released following fraud review.  This field is only present if the status is not `flagged`. 
+    attr_accessor :reviewed_at
+
+    # A hash of the destination account for redemption methods that require providing 3rd party account details (e.g., PayPal, Venmo, ACH/CashApp, international bank transfers, etc.). The hash is globally unique by redemption method + account combination. This field is omitted for redemption methods that don't have a destination account (e.g., merchant cards, charities, etc.). 
+    attr_accessor :redemption_method_account_hash
+
+    # The fraud risk associated with the reward.
+    attr_accessor :risk
+
+    attr_accessor :related_rewards
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -72,16 +75,17 @@ module Tremendous
     def self.attribute_map
       {
         :'status' => :'status',
-        :'risk' => :'risk',
         :'reasons' => :'reasons',
-        :'reviewed_by' => :'reviewed_by',
-        :'reviewed_at' => :'reviewed_at',
-        :'related_rewards' => :'related_rewards',
         :'device_id' => :'device_id',
         :'redemption_method' => :'redemption_method',
         :'redeemed_at' => :'redeemed_at',
         :'geo' => :'geo',
-        :'reward' => :'reward'
+        :'reward' => :'reward',
+        :'reviewed_by' => :'reviewed_by',
+        :'reviewed_at' => :'reviewed_at',
+        :'redemption_method_account_hash' => :'redemption_method_account_hash',
+        :'risk' => :'risk',
+        :'related_rewards' => :'related_rewards'
       }
     end
 
@@ -99,16 +103,17 @@ module Tremendous
     def self.openapi_types
       {
         :'status' => :'String',
-        :'risk' => :'String',
         :'reasons' => :'Array<String>',
-        :'reviewed_by' => :'String',
-        :'reviewed_at' => :'Time',
-        :'related_rewards' => :'GetFraudReview200ResponseFraudReviewRelatedRewards',
         :'device_id' => :'String',
         :'redemption_method' => :'String',
         :'redeemed_at' => :'Time',
-        :'geo' => :'GetFraudReview200ResponseFraudReviewGeo',
-        :'reward' => :'OrderWithoutLinkRewardsInner'
+        :'geo' => :'ListFraudReviews200ResponseFraudReviewsInnerGeo',
+        :'reward' => :'OrderWithoutLinkRewardsInner',
+        :'reviewed_by' => :'String',
+        :'reviewed_at' => :'Time',
+        :'redemption_method_account_hash' => :'String',
+        :'risk' => :'String',
+        :'related_rewards' => :'GetFraudReview200ResponseFraudReviewRelatedRewards'
       }
     end
 
@@ -138,26 +143,10 @@ module Tremendous
         self.status = attributes[:'status']
       end
 
-      if attributes.key?(:'risk')
-        self.risk = attributes[:'risk']
-      end
-
       if attributes.key?(:'reasons')
         if (value = attributes[:'reasons']).is_a?(Array)
           self.reasons = value
         end
-      end
-
-      if attributes.key?(:'reviewed_by')
-        self.reviewed_by = attributes[:'reviewed_by']
-      end
-
-      if attributes.key?(:'reviewed_at')
-        self.reviewed_at = attributes[:'reviewed_at']
-      end
-
-      if attributes.key?(:'related_rewards')
-        self.related_rewards = attributes[:'related_rewards']
       end
 
       if attributes.key?(:'device_id')
@@ -179,6 +168,26 @@ module Tremendous
       if attributes.key?(:'reward')
         self.reward = attributes[:'reward']
       end
+
+      if attributes.key?(:'reviewed_by')
+        self.reviewed_by = attributes[:'reviewed_by']
+      end
+
+      if attributes.key?(:'reviewed_at')
+        self.reviewed_at = attributes[:'reviewed_at']
+      end
+
+      if attributes.key?(:'redemption_method_account_hash')
+        self.redemption_method_account_hash = attributes[:'redemption_method_account_hash']
+      end
+
+      if attributes.key?(:'risk')
+        self.risk = attributes[:'risk']
+      end
+
+      if attributes.key?(:'related_rewards')
+        self.related_rewards = attributes[:'related_rewards']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -195,10 +204,10 @@ module Tremendous
       warn '[DEPRECATED] the `valid?` method is obsolete'
       status_validator = EnumAttributeValidator.new('String', ["flagged", "blocked", "released"])
       return false unless status_validator.valid?(@status)
+      redemption_method_validator = EnumAttributeValidator.new('String', ["bank transfer", "charity", "instant debit transfer", "international bank transfer", "merchant card", "paypal", "venmo", "visa card"])
+      return false unless redemption_method_validator.valid?(@redemption_method)
       risk_validator = EnumAttributeValidator.new('String', ["high", "medium", "low"])
       return false unless risk_validator.valid?(@risk)
-      redemption_method_validator = EnumAttributeValidator.new('String', ["paypal", "bank", "merchant card", "visa card", "charity", "venmo"])
-      return false unless redemption_method_validator.valid?(@redemption_method)
       true
     end
 
@@ -213,6 +222,16 @@ module Tremendous
     end
 
     # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] redemption_method Object to be assigned
+    def redemption_method=(redemption_method)
+      validator = EnumAttributeValidator.new('String', ["bank transfer", "charity", "instant debit transfer", "international bank transfer", "merchant card", "paypal", "venmo", "visa card"])
+      unless validator.valid?(redemption_method)
+        fail ArgumentError, "invalid value for \"redemption_method\", must be one of #{validator.allowable_values}."
+      end
+      @redemption_method = redemption_method
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
     # @param [Object] risk Object to be assigned
     def risk=(risk)
       validator = EnumAttributeValidator.new('String', ["high", "medium", "low"])
@@ -222,32 +241,23 @@ module Tremendous
       @risk = risk
     end
 
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] redemption_method Object to be assigned
-    def redemption_method=(redemption_method)
-      validator = EnumAttributeValidator.new('String', ["paypal", "bank", "merchant card", "visa card", "charity", "venmo"])
-      unless validator.valid?(redemption_method)
-        fail ArgumentError, "invalid value for \"redemption_method\", must be one of #{validator.allowable_values}."
-      end
-      @redemption_method = redemption_method
-    end
-
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
           status == o.status &&
-          risk == o.risk &&
           reasons == o.reasons &&
-          reviewed_by == o.reviewed_by &&
-          reviewed_at == o.reviewed_at &&
-          related_rewards == o.related_rewards &&
           device_id == o.device_id &&
           redemption_method == o.redemption_method &&
           redeemed_at == o.redeemed_at &&
           geo == o.geo &&
-          reward == o.reward
+          reward == o.reward &&
+          reviewed_by == o.reviewed_by &&
+          reviewed_at == o.reviewed_at &&
+          redemption_method_account_hash == o.redemption_method_account_hash &&
+          risk == o.risk &&
+          related_rewards == o.related_rewards
     end
 
     # @see the `==` method
@@ -259,7 +269,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [status, risk, reasons, reviewed_by, reviewed_at, related_rewards, device_id, redemption_method, redeemed_at, geo, reward].hash
+      [status, reasons, device_id, redemption_method, redeemed_at, geo, reward, reviewed_by, reviewed_at, redemption_method_account_hash, risk, related_rewards].hash
     end
 
     # Builds the object from hash

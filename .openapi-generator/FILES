@@ -53,6 +53,8 @@ lib/tremendous/models/create_report_request_filters.rb
 lib/tremendous/models/create_report_request_filters_digital_rewards.rb
 lib/tremendous/models/create_report_request_filters_digital_rewards_amount.rb
 lib/tremendous/models/create_report_request_filters_digital_rewards_created_at.rb
+lib/tremendous/models/create_topup200_response.rb
+lib/tremendous/models/create_topup_request.rb
 lib/tremendous/models/create_webhook200_response.rb
 lib/tremendous/models/create_webhook_request.rb
 lib/tremendous/models/currency_codes.rb
@@ -74,6 +76,7 @@ lib/tremendous/models/fraud_config_redeemed_rewards_count.rb
 lib/tremendous/models/fraud_config_review_email.rb
 lib/tremendous/models/fraud_generic_response.rb
 lib/tremendous/models/fraud_review.rb
+lib/tremendous/models/fraud_review_base.rb
 lib/tremendous/models/fraud_review_geo.rb
 lib/tremendous/models/fraud_review_list_item.rb
 lib/tremendous/models/fraud_review_reason.rb
@@ -94,7 +97,6 @@ lib/tremendous/models/generate_reward_link200_response_reward.rb
 lib/tremendous/models/generate_reward_link403_response.rb
 lib/tremendous/models/get_fraud_review200_response.rb
 lib/tremendous/models/get_fraud_review200_response_fraud_review.rb
-lib/tremendous/models/get_fraud_review200_response_fraud_review_geo.rb
 lib/tremendous/models/get_fraud_review200_response_fraud_review_related_rewards.rb
 lib/tremendous/models/get_funding_source200_response.rb
 lib/tremendous/models/get_member200_response.rb
@@ -127,6 +129,7 @@ lib/tremendous/models/list_fields200_response_fields_inner.rb
 lib/tremendous/models/list_forex_response.rb
 lib/tremendous/models/list_fraud_reviews200_response.rb
 lib/tremendous/models/list_fraud_reviews200_response_fraud_reviews_inner.rb
+lib/tremendous/models/list_fraud_reviews200_response_fraud_reviews_inner_geo.rb
 lib/tremendous/models/list_fraud_rules200_response.rb
 lib/tremendous/models/list_fraud_rules200_response_fraud_rules_inner.rb
 lib/tremendous/models/list_funding_sources200_response.rb
@@ -160,6 +163,8 @@ lib/tremendous/models/list_rewards401_response_errors.rb
 lib/tremendous/models/list_rewards429_response.rb
 lib/tremendous/models/list_roles200_response.rb
 lib/tremendous/models/list_roles200_response_roles_inner.rb
+lib/tremendous/models/list_topups200_response.rb
+lib/tremendous/models/list_topups200_response_topups_inner.rb
 lib/tremendous/models/list_webhook_events200_response.rb
 lib/tremendous/models/list_webhooks200_response.rb
 lib/tremendous/models/list_webhooks200_response_webhooks_inner.rb
@@ -217,6 +222,8 @@ lib/tremendous/models/single_reward_order_with_link.rb
 lib/tremendous/models/single_reward_order_with_link_order.rb
 lib/tremendous/models/single_reward_order_without_link.rb
 lib/tremendous/models/single_reward_order_without_link_order.rb
+lib/tremendous/models/topup.rb
+lib/tremendous/models/topup_create_request.rb
 lib/tremendous/models/update_campaign.rb
 lib/tremendous/models/update_campaign_request.rb
 lib/tremendous/models/update_fraud_rule_list200_response.rb

@@ -14,48 +14,22 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class CreateInvoiceRequest
-    # Reference to the purchase order number within your organization
-    attr_accessor :po_number
+  class TopupCreateRequest
+    # The ID of the funding source to top up.
+    attr_accessor :funding_source_id
 
-    # Amount of the invoice
+    # Unique key that ensures this request is only processed once. 
+    attr_accessor :idempotency_key
+
+    # Amount in USD intended to be added to your organization’s balance.
     attr_accessor :amount
-
-    # Currency of the invoice
-    attr_accessor :currency
-
-    # A note to be included in the invoice. This is for your internal use and will not be visible to the recipient. 
-    attr_accessor :memo
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'po_number' => :'po_number',
-        :'amount' => :'amount',
-        :'currency' => :'currency',
-        :'memo' => :'memo'
+        :'funding_source_id' => :'funding_source_id',
+        :'idempotency_key' => :'idempotency_key',
+        :'amount' => :'amount'
       }
     end
 
@@ -72,18 +46,15 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'po_number' => :'String',
-        :'amount' => :'Float',
-        :'currency' => :'String',
-        :'memo' => :'String'
+        :'funding_source_id' => :'String',
+        :'idempotency_key' => :'String',
+        :'amount' => :'Float'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'po_number',
-        :'memo'
       ])
     end
 
@@ -91,36 +62,34 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateInvoiceRequest` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::TopupCreateRequest` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateInvoiceRequest`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::TopupCreateRequest`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'po_number')
-        self.po_number = attributes[:'po_number']
+      if attributes.key?(:'funding_source_id')
+        self.funding_source_id = attributes[:'funding_source_id']
+      else
+        self.funding_source_id = nil
+      end
+
+      if attributes.key?(:'idempotency_key')
+        self.idempotency_key = attributes[:'idempotency_key']
+      else
+        self.idempotency_key = nil
       end
 
       if attributes.key?(:'amount')
         self.amount = attributes[:'amount']
       else
         self.amount = nil
-      end
-
-      if attributes.key?(:'currency')
-        self.currency = attributes[:'currency']
-      else
-        self.currency = 'USD'
-      end
-
-      if attributes.key?(:'memo')
-        self.memo = attributes[:'memo']
       end
     end
 
@@ -129,6 +98,14 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if @funding_source_id.nil?
+        invalid_properties.push('invalid value for "funding_source_id", funding_source_id cannot be nil.')
+      end
+
+      if @idempotency_key.nil?
+        invalid_properties.push('invalid value for "idempotency_key", idempotency_key cannot be nil.')
+      end
+
       if @amount.nil?
         invalid_properties.push('invalid value for "amount", amount cannot be nil.')
       end
@@ -140,10 +117,30 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if @funding_source_id.nil?
+      return false if @idempotency_key.nil?
       return false if @amount.nil?
-      currency_validator = EnumAttributeValidator.new('String', ["USD", "EUR", "GBP"])
-      return false unless currency_validator.valid?(@currency)
       true
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] funding_source_id Value to be assigned
+    def funding_source_id=(funding_source_id)
+      if funding_source_id.nil?
+        fail ArgumentError, 'funding_source_id cannot be nil'
+      end
+
+      @funding_source_id = funding_source_id
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] idempotency_key Value to be assigned
+    def idempotency_key=(idempotency_key)
+      if idempotency_key.nil?
+        fail ArgumentError, 'idempotency_key cannot be nil'
+      end
+
+      @idempotency_key = idempotency_key
     end
 
     # Custom attribute writer method with validation
@@ -156,25 +153,14 @@ module Tremendous
       @amount = amount
     end
 
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] currency Object to be assigned
-    def currency=(currency)
-      validator = EnumAttributeValidator.new('String', ["USD", "EUR", "GBP"])
-      unless validator.valid?(currency)
-        fail ArgumentError, "invalid value for \"currency\", must be one of #{validator.allowable_values}."
-      end
-      @currency = currency
-    end
-
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          po_number == o.po_number &&
-          amount == o.amount &&
-          currency == o.currency &&
-          memo == o.memo
+          funding_source_id == o.funding_source_id &&
+          idempotency_key == o.idempotency_key &&
+          amount == o.amount
     end
 
     # @see the `==` method
@@ -186,7 +172,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [po_number, amount, currency, memo].hash
+      [funding_source_id, idempotency_key, amount].hash
     end
 
     # Builds the object from hash

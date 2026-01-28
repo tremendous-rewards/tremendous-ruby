@@ -14,48 +14,17 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class CreateInvoiceRequest
-    # Reference to the purchase order number within your organization
-    attr_accessor :po_number
+  class ListTopups200Response
+    attr_accessor :topups
 
-    # Amount of the invoice
-    attr_accessor :amount
-
-    # Currency of the invoice
-    attr_accessor :currency
-
-    # A note to be included in the invoice. This is for your internal use and will not be visible to the recipient. 
-    attr_accessor :memo
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
+    # The total number of topups across all pages
+    attr_accessor :total_count
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'po_number' => :'po_number',
-        :'amount' => :'amount',
-        :'currency' => :'currency',
-        :'memo' => :'memo'
+        :'topups' => :'topups',
+        :'total_count' => :'total_count'
       }
     end
 
@@ -72,18 +41,14 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'po_number' => :'String',
-        :'amount' => :'Float',
-        :'currency' => :'String',
-        :'memo' => :'String'
+        :'topups' => :'Array<ListTopups200ResponseTopupsInner>',
+        :'total_count' => :'Integer'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'po_number',
-        :'memo'
       ])
     end
 
@@ -91,36 +56,26 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateInvoiceRequest` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListTopups200Response` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateInvoiceRequest`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListTopups200Response`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'po_number')
-        self.po_number = attributes[:'po_number']
+      if attributes.key?(:'topups')
+        if (value = attributes[:'topups']).is_a?(Array)
+          self.topups = value
+        end
       end
 
-      if attributes.key?(:'amount')
-        self.amount = attributes[:'amount']
-      else
-        self.amount = nil
-      end
-
-      if attributes.key?(:'currency')
-        self.currency = attributes[:'currency']
-      else
-        self.currency = 'USD'
-      end
-
-      if attributes.key?(:'memo')
-        self.memo = attributes[:'memo']
+      if attributes.key?(:'total_count')
+        self.total_count = attributes[:'total_count']
       end
     end
 
@@ -129,10 +84,6 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @amount.nil?
-        invalid_properties.push('invalid value for "amount", amount cannot be nil.')
-      end
-
       invalid_properties
     end
 
@@ -140,30 +91,7 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @amount.nil?
-      currency_validator = EnumAttributeValidator.new('String', ["USD", "EUR", "GBP"])
-      return false unless currency_validator.valid?(@currency)
       true
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] amount Value to be assigned
-    def amount=(amount)
-      if amount.nil?
-        fail ArgumentError, 'amount cannot be nil'
-      end
-
-      @amount = amount
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] currency Object to be assigned
-    def currency=(currency)
-      validator = EnumAttributeValidator.new('String', ["USD", "EUR", "GBP"])
-      unless validator.valid?(currency)
-        fail ArgumentError, "invalid value for \"currency\", must be one of #{validator.allowable_values}."
-      end
-      @currency = currency
     end
 
     # Checks equality by comparing each attribute.
@@ -171,10 +99,8 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          po_number == o.po_number &&
-          amount == o.amount &&
-          currency == o.currency &&
-          memo == o.memo
+          topups == o.topups &&
+          total_count == o.total_count
     end
 
     # @see the `==` method
@@ -186,7 +112,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [po_number, amount, currency, memo].hash
+      [topups, total_count].hash
     end
 
     # Builds the object from hash

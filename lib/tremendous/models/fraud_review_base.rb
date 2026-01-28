@@ -15,7 +15,7 @@ require 'time'
 
 module Tremendous
   # The fraud review associated with a reward.
-  class GetFraudReview200ResponseFraudReview
+  class FraudReviewBase
     # The current status of the fraud review:  * `flagged` - The reward has been flagged for and waiting manual review. * `blocked` - The reward was reviewed and blocked. * `released` - The reward was reviewed and released. 
     attr_accessor :status
 
@@ -43,11 +43,6 @@ module Tremendous
 
     # A hash of the destination account for redemption methods that require providing 3rd party account details (e.g., PayPal, Venmo, ACH/CashApp, international bank transfers, etc.). The hash is globally unique by redemption method + account combination. This field is omitted for redemption methods that don't have a destination account (e.g., merchant cards, charities, etc.). 
     attr_accessor :redemption_method_account_hash
-
-    # The fraud risk associated with the reward.
-    attr_accessor :risk
-
-    attr_accessor :related_rewards
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -83,9 +78,7 @@ module Tremendous
         :'reward' => :'reward',
         :'reviewed_by' => :'reviewed_by',
         :'reviewed_at' => :'reviewed_at',
-        :'redemption_method_account_hash' => :'redemption_method_account_hash',
-        :'risk' => :'risk',
-        :'related_rewards' => :'related_rewards'
+        :'redemption_method_account_hash' => :'redemption_method_account_hash'
       }
     end
 
@@ -108,12 +101,10 @@ module Tremendous
         :'redemption_method' => :'String',
         :'redeemed_at' => :'Time',
         :'geo' => :'ListFraudReviews200ResponseFraudReviewsInnerGeo',
-        :'reward' => :'ListRewards200ResponseRewardsInner',
+        :'reward' => :'OrderWithoutLinkRewardsInner',
         :'reviewed_by' => :'String',
         :'reviewed_at' => :'Time',
-        :'redemption_method_account_hash' => :'String',
-        :'risk' => :'String',
-        :'related_rewards' => :'GetFraudReview200ResponseFraudReviewRelatedRewards'
+        :'redemption_method_account_hash' => :'String'
       }
     end
 
@@ -127,14 +118,14 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::GetFraudReview200ResponseFraudReview` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::FraudReviewBase` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::GetFraudReview200ResponseFraudReview`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::FraudReviewBase`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
@@ -180,14 +171,6 @@ module Tremendous
       if attributes.key?(:'redemption_method_account_hash')
         self.redemption_method_account_hash = attributes[:'redemption_method_account_hash']
       end
-
-      if attributes.key?(:'risk')
-        self.risk = attributes[:'risk']
-      end
-
-      if attributes.key?(:'related_rewards')
-        self.related_rewards = attributes[:'related_rewards']
-      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -206,8 +189,6 @@ module Tremendous
       return false unless status_validator.valid?(@status)
       redemption_method_validator = EnumAttributeValidator.new('String', ["bank transfer", "charity", "instant debit transfer", "international bank transfer", "merchant card", "paypal", "venmo", "visa card"])
       return false unless redemption_method_validator.valid?(@redemption_method)
-      risk_validator = EnumAttributeValidator.new('String', ["high", "medium", "low"])
-      return false unless risk_validator.valid?(@risk)
       true
     end
 
@@ -231,16 +212,6 @@ module Tremendous
       @redemption_method = redemption_method
     end
 
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] risk Object to be assigned
-    def risk=(risk)
-      validator = EnumAttributeValidator.new('String', ["high", "medium", "low"])
-      unless validator.valid?(risk)
-        fail ArgumentError, "invalid value for \"risk\", must be one of #{validator.allowable_values}."
-      end
-      @risk = risk
-    end
-
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -255,9 +226,7 @@ module Tremendous
           reward == o.reward &&
           reviewed_by == o.reviewed_by &&
           reviewed_at == o.reviewed_at &&
-          redemption_method_account_hash == o.redemption_method_account_hash &&
-          risk == o.risk &&
-          related_rewards == o.related_rewards
+          redemption_method_account_hash == o.redemption_method_account_hash
     end
 
     # @see the `==` method
@@ -269,7 +238,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [status, reasons, device_id, redemption_method, redeemed_at, geo, reward, reviewed_by, reviewed_at, redemption_method_account_hash, risk, related_rewards].hash
+      [status, reasons, device_id, redemption_method, redeemed_at, geo, reward, reviewed_by, reviewed_at, redemption_method_account_hash].hash
     end
 
     # Builds the object from hash
