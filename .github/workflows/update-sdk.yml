@@ -11,11 +11,9 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - id: generate
-        run: ./bin/check-updates
+      - run: ./bin/update-sdk
 
-      - if: ${{ steps.generate.outputs.changed == 'true' }}
-        uses: peter-evans/create-pull-request@v7
+      - uses: peter-evans/create-pull-request@v7
         with:
           title: "Update SDK for latest API spec changes"
           body: |
@@ -30,7 +28,7 @@ jobs:
           commit-message: "Update generated SDK from latest OpenAPI spec"
           labels: automated
 
-      - if: failure()
+      - if: ${{ failure() }}
         uses: slackapi/slack-github-action@v2
         with:
           webhook: ${{ secrets.SLACK_BOT_ENGINEERING_OSS_WEBHOOK_URL }}
