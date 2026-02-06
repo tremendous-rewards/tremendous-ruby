@@ -14,54 +14,13 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class ListFields200ResponseFieldsInner
-    attr_accessor :id
-
-    # Label of the field
-    attr_accessor :label
-
-    # Type of the values of the field  <table>   <thead>     <tr>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>Checkbox</code></td>       <td>A boolean value (true/false)</td>     </tr>     <tr>       <td><code>Currency</code></td>       <td>A monetary value</td>     </tr>     <tr>       <td><code>Date</code></td>       <td>A date value</td>     </tr>     <tr>       <td><code>Dropdown</code></td>       <td>A single selection from predefined options (see <code>data.options</code>)</td>     </tr>     <tr>       <td><code>Email</code></td>       <td>An email address</td>     </tr>     <tr>       <td><code>List</code></td>       <td>Multiple selections from predefined options (see <code>data.options</code>)</td>     </tr>     <tr>       <td><code>Number</code></td>       <td>A numeric value</td>     </tr>     <tr>       <td><code>Phone</code></td>       <td>A phone number</td>     </tr>     <tr>       <td><code>Text</code></td>       <td>A single-line text value</td>     </tr>     <tr>       <td><code>TextArea</code></td>       <td>A multi-line text value</td>     </tr>   </tbody> </table> 
-    attr_accessor :data_type
-
-    attr_accessor :data
-
-    # Is this field required (true) or optional (false)
-    attr_accessor :required
-
-    # Type of objects this field gets associated with
-    attr_accessor :scope
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
+  class CreateField200Response
+    attr_accessor :field
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'id' => :'id',
-        :'label' => :'label',
-        :'data_type' => :'data_type',
-        :'data' => :'data',
-        :'required' => :'required',
-        :'scope' => :'scope'
+        :'field' => :'field'
       }
     end
 
@@ -78,12 +37,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'id' => :'String',
-        :'label' => :'String',
-        :'data_type' => :'String',
-        :'data' => :'ListFields200ResponseFieldsInnerData',
-        :'required' => :'Boolean',
-        :'scope' => :'String'
+        :'field' => :'ListFields200ResponseFieldsInner'
       }
     end
 
@@ -97,40 +51,22 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListFields200ResponseFieldsInner` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateField200Response` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListFields200ResponseFieldsInner`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateField200Response`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
-      end
-
-      if attributes.key?(:'label')
-        self.label = attributes[:'label']
-      end
-
-      if attributes.key?(:'data_type')
-        self.data_type = attributes[:'data_type']
-      end
-
-      if attributes.key?(:'data')
-        self.data = attributes[:'data']
-      end
-
-      if attributes.key?(:'required')
-        self.required = attributes[:'required']
-      end
-
-      if attributes.key?(:'scope')
-        self.scope = attributes[:'scope']
+      if attributes.key?(:'field')
+        self.field = attributes[:'field']
+      else
+        self.field = nil
       end
     end
 
@@ -139,9 +75,8 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !@id.nil? && @id !~ pattern
-        invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
+      if @field.nil?
+        invalid_properties.push('invalid value for "field", field cannot be nil.')
       end
 
       invalid_properties
@@ -151,35 +86,18 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      data_type_validator = EnumAttributeValidator.new('String', ["Checkbox", "Currency", "Date", "Dropdown", "Email", "List", "Number", "Phone", "Text", "TextArea"])
-      return false unless data_type_validator.valid?(@data_type)
+      return false if @field.nil?
       true
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] id Value to be assigned
-    def id=(id)
-      if id.nil?
-        fail ArgumentError, 'id cannot be nil'
+    # @param [Object] field Value to be assigned
+    def field=(field)
+      if field.nil?
+        fail ArgumentError, 'field cannot be nil'
       end
 
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if id !~ pattern
-        fail ArgumentError, "invalid value for \"id\", must conform to the pattern #{pattern}."
-      end
-
-      @id = id
-    end
-
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] data_type Object to be assigned
-    def data_type=(data_type)
-      validator = EnumAttributeValidator.new('String', ["Checkbox", "Currency", "Date", "Dropdown", "Email", "List", "Number", "Phone", "Text", "TextArea"])
-      unless validator.valid?(data_type)
-        fail ArgumentError, "invalid value for \"data_type\", must be one of #{validator.allowable_values}."
-      end
-      @data_type = data_type
+      @field = field
     end
 
     # Checks equality by comparing each attribute.
@@ -187,12 +105,7 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          id == o.id &&
-          label == o.label &&
-          data_type == o.data_type &&
-          data == o.data &&
-          required == o.required &&
-          scope == o.scope
+          field == o.field
     end
 
     # @see the `==` method
@@ -204,7 +117,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, label, data_type, data, required, scope].hash
+      [field].hash
     end
 
     # Builds the object from hash
