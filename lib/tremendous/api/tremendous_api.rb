@@ -551,6 +551,74 @@ module Tremendous
       return data, status_code, headers
     end
 
+    # Create field
+    # Create a custom field to be associated with rewards. Custom fields can be used for reporting and analytics purposes. 
+    # @param create_field_request [CreateFieldRequest] Field details
+    # @param [Hash] opts the optional parameters
+    # @return [CreateField200Response]
+    def create_field(create_field_request, opts = {})
+      data, _status_code, _headers = create_field_with_http_info(create_field_request, opts)
+      data
+    end
+
+    # Create field
+    # Create a custom field to be associated with rewards. Custom fields can be used for reporting and analytics purposes. 
+    # @param create_field_request [CreateFieldRequest] Field details
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(CreateField200Response, Integer, Hash)>] CreateField200Response data, response status code and response headers
+    def create_field_with_http_info(create_field_request, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.create_field ...'
+      end
+      # verify the required parameter 'create_field_request' is set
+      if @api_client.config.client_side_validation && create_field_request.nil?
+        fail ArgumentError, "Missing the required parameter 'create_field_request' when calling TremendousApi.create_field"
+      end
+      # resource path
+      local_var_path = '/fields'
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(create_field_request)
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CreateField200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.create_field",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#create_field\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Create invoice
     # Creating an invoice is the way for your organization to fund your account's balance.  1. Create an invoice 2. Pay the invoice 3. Funds get added to your account's balance  ## Request body  <div class=\"object-schema-request-schema\">   <table>   <thead>     <tr>       <th>Property</th>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody class=\"object-schema-table-body\">     <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">po_number</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Reference to the purchase order number within your organization</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">amount</code> </div> </td><td><span class=\"property-type\">number</span> <span class=\"property-format\">double</span></td><td><p>Amount of the invoice</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">currency</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>Currency of the invoice</p> </td></tr> <tr class=\"\"><td><div class=\"property-name\">   <code class=\"property-name\">memo</code> </div> </td><td><span class=\"property-type\">string</span></td><td><p>A note to be included in the invoice. This is for your internal use and will not be visible to the recipient.</p> </td></tr>   </tbody> </table>  </div>  
     # @param create_invoice_request [CreateInvoiceRequest] Invoice details

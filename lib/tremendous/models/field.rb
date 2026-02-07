@@ -20,7 +20,7 @@ module Tremendous
     # Label of the field
     attr_accessor :label
 
-    # Type of the values of the field
+    # Type of the values of the field  <table>   <thead>     <tr>       <th>Type</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>Checkbox</code></td>       <td>A boolean value (true/false)</td>     </tr>     <tr>       <td><code>Currency</code></td>       <td>A monetary value</td>     </tr>     <tr>       <td><code>Date</code></td>       <td>A date value</td>     </tr>     <tr>       <td><code>Dropdown</code></td>       <td>A single selection from predefined options (see <code>data.options</code>)</td>     </tr>     <tr>       <td><code>Email</code></td>       <td>An email address</td>     </tr>     <tr>       <td><code>List</code></td>       <td>Multiple selections from predefined options (see <code>data.options</code>)</td>     </tr>     <tr>       <td><code>Number</code></td>       <td>A numeric value</td>     </tr>     <tr>       <td><code>Phone</code></td>       <td>A phone number</td>     </tr>     <tr>       <td><code>Text</code></td>       <td>A single-line text value</td>     </tr>     <tr>       <td><code>TextArea</code></td>       <td>A multi-line text value</td>     </tr>   </tbody> </table> 
     attr_accessor :data_type
 
     attr_accessor :data
@@ -30,6 +30,28 @@ module Tremendous
 
     # Type of objects this field gets associated with
     attr_accessor :scope
+
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
+
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
+
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -59,7 +81,7 @@ module Tremendous
         :'id' => :'String',
         :'label' => :'String',
         :'data_type' => :'String',
-        :'data' => :'Hash<String, Object>',
+        :'data' => :'ListFields200ResponseFieldsInnerData',
         :'required' => :'Boolean',
         :'scope' => :'String'
       }
@@ -100,9 +122,7 @@ module Tremendous
       end
 
       if attributes.key?(:'data')
-        if (value = attributes[:'data']).is_a?(Hash)
-          self.data = value
-        end
+        self.data = attributes[:'data']
       end
 
       if attributes.key?(:'required')
@@ -132,6 +152,8 @@ module Tremendous
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
+      data_type_validator = EnumAttributeValidator.new('String', ["Checkbox", "Currency", "Date", "Dropdown", "Email", "List", "Number", "Phone", "Text", "TextArea"])
+      return false unless data_type_validator.valid?(@data_type)
       true
     end
 
@@ -148,6 +170,16 @@ module Tremendous
       end
 
       @id = id
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] data_type Object to be assigned
+    def data_type=(data_type)
+      validator = EnumAttributeValidator.new('String', ["Checkbox", "Currency", "Date", "Dropdown", "Email", "List", "Number", "Phone", "Text", "TextArea"])
+      unless validator.valid?(data_type)
+        fail ArgumentError, "invalid value for \"data_type\", must be one of #{validator.allowable_values}."
+      end
+      @data_type = data_type
     end
 
     # Checks equality by comparing each attribute.
