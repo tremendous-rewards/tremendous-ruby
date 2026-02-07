@@ -1,5 +1,18 @@
 # Changelog
 
+## [5.15.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.14.0...tremendous_ruby/v5.15.0) (2026-02-07)
+
+
+### Features
+
+* add create field endpoint (POST /fields) ([f4527d0](https://github.com/tremendous-rewards/tremendous-ruby/commit/f4527d02cc5a720878c1d9d28c4b1f9b4bb9b8ec))
+* regenerate SDK ([#96](https://github.com/tremendous-rewards/tremendous-ruby/issues/96)) ([f4527d0](https://github.com/tremendous-rewards/tremendous-ruby/commit/f4527d02cc5a720878c1d9d28c4b1f9b4bb9b8ec))
+
+
+### Bug Fixes
+
+* type field data as structured object instead of untyped hash ([f4527d0](https://github.com/tremendous-rewards/tremendous-ruby/commit/f4527d02cc5a720878c1d9d28c4b1f9b4bb9b8ec))
+
 ## [5.14.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.13.0...tremendous_ruby/v5.14.0) (2026-01-28)
 
 
