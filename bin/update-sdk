@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -e
+
+test -f "$1" && spec="$1" || spec=$(./bin/download-spec)
+
+./bin/generate "$spec"
