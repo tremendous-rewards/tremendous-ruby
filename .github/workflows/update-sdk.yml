@@ -4,6 +4,10 @@ on:
   schedule:
     - cron:  '0 */6 * * *'
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   update-sdk:
     if: github.repository == 'tremendous-rewards/tremendous-ruby'
@@ -28,12 +32,20 @@ jobs:
           commit-message: "Update generated SDK from latest OpenAPI spec"
           labels: automated
 
-      - if: ${{ failure() }}
-        uses: slackapi/slack-github-action@v2
+  notify:
+    needs: update-sdk
+    if: ${{ failure() }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: notify
+        uses: slackapi/slack-github-action@v2.1.1
         with:
-          webhook: ${{ secrets.SLACK_BOT_ENGINEERING_OSS_WEBHOOK_URL }}
+          errors: true
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
           webhook-type: incoming-webhook
           payload: |
-            {
-              "text": "Failed to auto-update the Ruby SDK from the latest API spec.\n<${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|View workflow run>"
-            }
+            blocks:
+            - type: "section"
+              text:
+                type: "mrkdwn"
+                text: "⛔ *<${{ github.server_url }}/${{ github.repository }}|${{ github.repository }}> failed to auto-update SDK*: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|build here>."
