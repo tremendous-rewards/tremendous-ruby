@@ -25,6 +25,9 @@ module Tremendous
     # Date the reward was created
     attr_accessor :created_at
 
+    # Expiration date of the reward. If null, the reward does not expire.
+    attr_accessor :expires_at
+
     attr_accessor :value
 
     attr_accessor :recipient
@@ -42,6 +45,7 @@ module Tremendous
         :'id' => :'id',
         :'order_id' => :'order_id',
         :'created_at' => :'created_at',
+        :'expires_at' => :'expires_at',
         :'value' => :'value',
         :'recipient' => :'recipient',
         :'deliver_at' => :'deliver_at',
@@ -66,6 +70,7 @@ module Tremendous
         :'id' => :'String',
         :'order_id' => :'String',
         :'created_at' => :'Time',
+        :'expires_at' => :'Time',
         :'value' => :'ListRewards200ResponseRewardsInnerValue',
         :'recipient' => :'ListRewards200ResponseRewardsInnerRecipient',
         :'deliver_at' => :'Date',
@@ -77,6 +82,7 @@ module Tremendous
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'expires_at',
       ])
     end
 
@@ -106,6 +112,10 @@ module Tremendous
 
       if attributes.key?(:'created_at')
         self.created_at = attributes[:'created_at']
+      end
+
+      if attributes.key?(:'expires_at')
+        self.expires_at = attributes[:'expires_at']
       end
 
       if attributes.key?(:'value')
@@ -196,6 +206,7 @@ module Tremendous
           id == o.id &&
           order_id == o.order_id &&
           created_at == o.created_at &&
+          expires_at == o.expires_at &&
           value == o.value &&
           recipient == o.recipient &&
           deliver_at == o.deliver_at &&
@@ -212,7 +223,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, order_id, created_at, value, recipient, deliver_at, custom_fields, delivery].hash
+      [id, order_id, created_at, expires_at, value, recipient, deliver_at, custom_fields, delivery].hash
     end
 
     # Builds the object from hash

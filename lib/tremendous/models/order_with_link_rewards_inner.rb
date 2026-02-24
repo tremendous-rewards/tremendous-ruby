@@ -25,6 +25,9 @@ module Tremendous
     # Date the reward was created
     attr_accessor :created_at
 
+    # Expiration date of the reward. If null, the reward does not expire.
+    attr_accessor :expires_at
+
     # ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. 
     attr_accessor :campaign_id
 
@@ -48,6 +51,7 @@ module Tremendous
         :'id' => :'id',
         :'order_id' => :'order_id',
         :'created_at' => :'created_at',
+        :'expires_at' => :'expires_at',
         :'campaign_id' => :'campaign_id',
         :'products' => :'products',
         :'value' => :'value',
@@ -74,6 +78,7 @@ module Tremendous
         :'id' => :'String',
         :'order_id' => :'String',
         :'created_at' => :'Time',
+        :'expires_at' => :'Time',
         :'campaign_id' => :'String',
         :'products' => :'Array<String>',
         :'value' => :'ListRewards200ResponseRewardsInnerValue',
@@ -87,6 +92,7 @@ module Tremendous
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'expires_at',
         :'campaign_id',
       ])
     end
@@ -117,6 +123,10 @@ module Tremendous
 
       if attributes.key?(:'created_at')
         self.created_at = attributes[:'created_at']
+      end
+
+      if attributes.key?(:'expires_at')
+        self.expires_at = attributes[:'expires_at']
       end
 
       if attributes.key?(:'campaign_id')
@@ -253,6 +263,7 @@ module Tremendous
           id == o.id &&
           order_id == o.order_id &&
           created_at == o.created_at &&
+          expires_at == o.expires_at &&
           campaign_id == o.campaign_id &&
           products == o.products &&
           value == o.value &&
@@ -271,7 +282,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, order_id, created_at, campaign_id, products, value, recipient, deliver_at, custom_fields, delivery].hash
+      [id, order_id, created_at, expires_at, campaign_id, products, value, recipient, deliver_at, custom_fields, delivery].hash
     end
 
     # Builds the object from hash
