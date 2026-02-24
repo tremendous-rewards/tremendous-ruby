@@ -1,0 +1,46 @@
+#!/bin/bash
+
+set -eo pipefail
+
+git add -N .
+diff=$(git diff)
+
+if [ -z "$diff" ]; then
+  exit 0
+fi
+
+: "${ANTHROPIC_API_KEY:?must be set}"
+
+max_chars=100000
+if [ ${#diff} -gt $max_chars ]; then
+  diff="${diff:0:$max_chars}
+
+... (diff truncated)"
+fi
+
+prompt='You are reviewing changes to an auto-generated Ruby SDK that wraps the Tremendous API (generated from an OpenAPI spec using openapi-generator).
+
+Analyze the git diff and write a concise PR description summarizing the meaningful API changes. Focus on:
+- New API endpoints added or removed
+- Changes to request/response models (new fields, removed fields, type changes)
+- Other notable changes
+
+Ignore auto-generated boilerplate. Be concise. Use markdown bullet points. Do not include a title or headers.'
+
+jq -n \
+  --arg prompt "$prompt" \
+  --arg diff "$diff" \
+  '{
+    model: "claude-sonnet-4-20250514",
+    max_tokens: 1024,
+    system: $prompt,
+    messages: [
+      {role: "user", content: $diff}
+    ]
+  }' \
+| curl -sf https://api.anthropic.com/v1/messages \
+    -H "x-api-key: ${ANTHROPIC_API_KEY}" \
+    -H "anthropic-version: 2023-06-01" \
+    -H "Content-Type: application/json" \
+    -d @- \
+| jq -r '.content[0].text'
