@@ -6,7 +6,6 @@
 ### Features
 
 * Add `expires_at` to Rewards ([4967958](https://github.com/tremendous-rewards/tremendous-ruby/commit/4967958bc6c2bec1915f05adfee4a480ec4879e4))
-* regenerate SDK ([#99](https://github.com/tremendous-rewards/tremendous-ruby/issues/99)) ([4967958](https://github.com/tremendous-rewards/tremendous-ruby/commit/4967958bc6c2bec1915f05adfee4a480ec4879e4))
 
 
 ### Bug Fixes
