@@ -1,5 +1,18 @@
 # Changelog
 
+## [5.16.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.15.0...tremendous_ruby/v5.16.0) (2026-02-25)
+
+
+### Features
+
+* Add `expires_at` to Rewards ([4967958](https://github.com/tremendous-rewards/tremendous-ruby/commit/4967958bc6c2bec1915f05adfee4a480ec4879e4))
+* regenerate SDK ([#99](https://github.com/tremendous-rewards/tremendous-ruby/issues/99)) ([4967958](https://github.com/tremendous-rewards/tremendous-ruby/commit/4967958bc6c2bec1915f05adfee4a480ec4879e4))
+
+
+### Bug Fixes
+
+* Remove `BGN` currency code reference ([4967958](https://github.com/tremendous-rewards/tremendous-ruby/commit/4967958bc6c2bec1915f05adfee4a480ec4879e4))
+
 ## [5.15.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.14.0...tremendous_ruby/v5.15.0) (2026-02-07)
 
 
