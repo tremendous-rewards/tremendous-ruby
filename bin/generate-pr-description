@@ -24,6 +24,7 @@ Write a PR description as a list of conventional commit lines summarizing the me
 
 Rules:
 - One line per distinct change, no blank lines between them
+- Each line MUST be at most 70 characters (including the type prefix). This is critical because GitHub squash merges wrap lines at ~72 chars, which breaks Release Please changelog parsing.
 - No bullet points, no dashes, no markdown headers, no prose
 - Use backticks for code references (field names, endpoints, enum values)
 - Be specific: mention endpoint paths, field names or enum values when relevant
