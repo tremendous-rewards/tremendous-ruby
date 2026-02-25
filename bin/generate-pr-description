@@ -26,7 +26,8 @@ Rules:
 - One line per distinct change, no blank lines between them
 - No bullet points, no dashes, no markdown headers, no prose
 - Use backticks for code references (field names, endpoints, enum values)
-- Be specific: mention endpoint paths, field names, model names, or enum values when relevant
+- Be specific: mention endpoint paths, field names or enum values when relevant
+- Omit implementation details, like class names. Use resource names like "Reward" or "Product" instead.
 - Ignore auto-generated boilerplate (module declarations, require statements, etc.)
 - Group related small changes into a single line when appropriate
 
