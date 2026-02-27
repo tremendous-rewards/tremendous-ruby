@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.17.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.16.0...tremendous_ruby/v5.17.0) (2026-02-27)
+
+
+### Features
+
+* rename order `status` enum `CART` to `OPEN` ([b18981c](https://github.com/tremendous-rewards/tremendous-ruby/commit/b18981cdafc817e2eb2cdd5ec2fe462849301ee6))
+
 ## [5.16.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.15.0...tremendous_ruby/v5.16.0) (2026-02-25)
 
 
