@@ -16,14 +16,14 @@ require 'time'
 module Tremendous
   class OrderStatus
     CANCELED = "CANCELED".freeze
-    CART = "CART".freeze
+    OPEN = "OPEN".freeze
     EXECUTED = "EXECUTED".freeze
     FAILED = "FAILED".freeze
     PENDING_APPROVAL = "PENDING APPROVAL".freeze
     PENDING_INTERNAL_PAYMENT_APPROVAL = "PENDING INTERNAL PAYMENT APPROVAL".freeze
 
     def self.all_vars
-      @all_vars ||= [CANCELED, CART, EXECUTED, FAILED, PENDING_APPROVAL, PENDING_INTERNAL_PAYMENT_APPROVAL].freeze
+      @all_vars ||= [CANCELED, OPEN, EXECUTED, FAILED, PENDING_APPROVAL, PENDING_INTERNAL_PAYMENT_APPROVAL].freeze
     end
 
     # Builds the enum from string
