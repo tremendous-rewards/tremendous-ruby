@@ -39,7 +39,7 @@ jobs:
             echo "EOF"
           } >> "$GITHUB_OUTPUT"
 
-      - uses: peter-evans/create-pull-request@v7
+      - uses: peter-evans/create-pull-request@v8
         with:
           title: "chore: regenerate SDK"
           body: ${{ steps.describe.outputs.body }}
