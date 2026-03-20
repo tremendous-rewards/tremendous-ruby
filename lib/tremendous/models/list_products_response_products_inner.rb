@@ -24,7 +24,7 @@ module Tremendous
     # Detailed description of the product.
     attr_accessor :description
 
-    # The category of the product  <table>   <thead>     <tr>       <th>Category</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>ach</code></td>       <td>Bank transfer to the recipient</td>     </tr>     <tr>       <td><code>charity</code></td>       <td>Donations to a charity</td>     </tr>     <tr>       <td><code>instant_debit_transfer</code></td>       <td>Instant debit transfer to the recipient</td>     </tr>     <tr>       <td><code>merchant_card</code></td>       <td>A gift card for a certain merchant (e.g. Amazon)</td>     </tr>     <tr>       <td><code>paypal</code></td>       <td>Payout via PayPal</td>     </tr>     <tr>       <td><code>venmo</code></td>       <td>Payout via Venmo</td>     </tr>     <tr>       <td><code>visa_card</code></td>       <td>Payout in form of a Visa debit card</td>     </tr>     <tr>       <td><code>cash_app</code></td>       <td>Payout via Cash App</td>     </tr>   </tbody> </table> 
+    # The category of the product  <table>   <thead>     <tr>       <th>Category</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>ach</code></td>       <td>Bank transfer to the recipient</td>     </tr>     <tr>       <td><code>charity</code></td>       <td>Donations to a charity</td>     </tr>     <tr>       <td><code>instant_debit_transfer</code></td>       <td>Instant debit transfer to the recipient</td>     </tr>     <tr>       <td><code>merchant_card</code></td>       <td>A gift card for a certain merchant (e.g. Amazon)</td>     </tr>     <tr>       <td><code>paypal</code></td>       <td>Payout via PayPal</td>     </tr>     <tr>       <td><code>venmo</code></td>       <td>Payout via Venmo</td>     </tr>     <tr>       <td><code>visa_card</code></td>       <td>Payout in form of a Visa debit card</td>     </tr>     <tr>       <td><code>cash_app</code></td>       <td>Payout via Cash App</td>     </tr>     <tr>       <td><code>international_bank</code></td>       <td>Bank transfer to recipients outside of the US</td>     </tr>   </tbody> </table> 
     attr_accessor :category
 
     # Additional classification for the product. Only applicable to products with a `category` of `merchant_card`. Possible subcategories:  * `beauty_and_health` * `digital_financial_services` * `electronics` * `entertainment` * `fashion` * `food_and_drink` * `general_merchandise` * `grocery_and_supermarkets` * `home_and_living` * `mobility_and_fuel` * `sports_and_outdoor_gear` * `travel_and_hospitality` 
@@ -280,7 +280,7 @@ module Tremendous
       return false if @name.nil?
       return false if @description.nil?
       return false if @category.nil?
-      category_validator = EnumAttributeValidator.new('String', ["ach", "charity", "instant_debit_transfer", "merchant_card", "paypal", "venmo", "visa_card", "cash_app"])
+      category_validator = EnumAttributeValidator.new('String', ["ach", "charity", "instant_debit_transfer", "merchant_card", "paypal", "venmo", "visa_card", "cash_app", "international_bank"])
       return false unless category_validator.valid?(@category)
       subcategory_validator = EnumAttributeValidator.new('String', ["beauty_and_health", "digital_financial_services", "electronics", "entertainment", "fashion", "food_and_drink", "general_merchandise", "grocery_and_supermarkets", "home_and_living", "mobility_and_fuel", "sports_and_outdoor_gear", "travel_and_hospitality"])
       return false unless subcategory_validator.valid?(@subcategory)
@@ -332,7 +332,7 @@ module Tremendous
     # Custom attribute writer method checking allowed values (enum).
     # @param [Object] category Object to be assigned
     def category=(category)
-      validator = EnumAttributeValidator.new('String', ["ach", "charity", "instant_debit_transfer", "merchant_card", "paypal", "venmo", "visa_card", "cash_app"])
+      validator = EnumAttributeValidator.new('String', ["ach", "charity", "instant_debit_transfer", "merchant_card", "paypal", "venmo", "visa_card", "cash_app", "international_bank"])
       unless validator.valid?(category)
         fail ArgumentError, "invalid value for \"category\", must be one of #{validator.allowable_values}."
       end
