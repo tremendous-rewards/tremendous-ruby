@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.18.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.17.0...tremendous_ruby/v5.18.0) (2026-03-20)
+
+
+### Features
+
+* add `international_bank` to product `category` enum ([23e951b](https://github.com/tremendous-rewards/tremendous-ruby/commit/23e951b3b6dbbb4b133927ff9a4686c98d68e4e6))
+* add `PENDING SETTLEMENT` to order `status` enum ([23e951b](https://github.com/tremendous-rewards/tremendous-ruby/commit/23e951b3b6dbbb4b133927ff9a4686c98d68e4e6))
+
 ## [5.17.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.16.0...tremendous_ruby/v5.17.0) (2026-02-27)
 
 
