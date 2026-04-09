@@ -12,7 +12,8 @@ Gem::Specification.new do |spec|
   spec.email         = ["developers@tremendous.com"]
   spec.metadata      = {
     "documentation_uri" => "https://www.tremendous.com/docs",
-    "source_code_uri"   => spec.homepage
+    "source_code_uri"   => spec.homepage,
+    "rubygems_mfa_required" => "true"
   }
 
   spec.add_runtime_dependency "faraday", ">= 1.0.1", "< 3.0"
