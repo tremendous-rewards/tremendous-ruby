@@ -33,7 +33,7 @@ module Tremendous
     BOB = "BOB".freeze
     BRL = "BRL".freeze
     BWP = "BWP".freeze
-    BYR = "BYR".freeze
+    BYN = "BYN".freeze
     BZD = "BZD".freeze
     CDF = "CDF".freeze
     CHF = "CHF".freeze
@@ -47,7 +47,6 @@ module Tremendous
     DKK = "DKK".freeze
     DOP = "DOP".freeze
     DZD = "DZD".freeze
-    EEK = "EEK".freeze
     EGP = "EGP".freeze
     ERN = "ERN".freeze
     ETB = "ETB".freeze
@@ -76,8 +75,6 @@ module Tremendous
     KZT = "KZT".freeze
     LBP = "LBP".freeze
     LKR = "LKR".freeze
-    LTL = "LTL".freeze
-    LVL = "LVL".freeze
     MAD = "MAD".freeze
     MDL = "MDL".freeze
     MGA = "MGA".freeze
@@ -129,10 +126,9 @@ module Tremendous
     XOF = "XOF".freeze
     YER = "YER".freeze
     ZAR = "ZAR".freeze
-    ZMK = "ZMK".freeze
 
     def self.all_vars
-      @all_vars ||= [USD, CAD, EUR, AED, AFN, ALL, AMD, ARS, AUD, AZN, BAM, BDT, BHD, BIF, BND, BOB, BRL, BWP, BYR, BZD, CDF, CHF, CLP, CNY, COP, CRC, CVE, CZK, DJF, DKK, DOP, DZD, EEK, EGP, ERN, ETB, GBP, GEL, GHS, GNF, GTQ, HKD, HNL, HRK, HUF, IDR, ILS, INR, IQD, IRR, ISK, JMD, JOD, JPY, KES, KHR, KRW, KWD, KZT, LBP, LKR, LTL, LVL, MAD, MDL, MGA, MKD, MMK, MOP, MUR, MXN, MYR, MZN, NAD, NGN, NIO, NOK, NPR, NZD, OMR, PAB, PEN, PHP, PKR, PLN, PYG, QAR, RON, RSD, RUB, RWF, SAR, SDG, SEK, SGD, SOS, SYP, THB, TND, TOP, TRY, TTD, TWD, TZS, UAH, UGX, UYU, UZS, VEF, VND, XAF, XOF, YER, ZAR, ZMK].freeze
+      @all_vars ||= [USD, CAD, EUR, AED, AFN, ALL, AMD, ARS, AUD, AZN, BAM, BDT, BHD, BIF, BND, BOB, BRL, BWP, BYN, BZD, CDF, CHF, CLP, CNY, COP, CRC, CVE, CZK, DJF, DKK, DOP, DZD, EGP, ERN, ETB, GBP, GEL, GHS, GNF, GTQ, HKD, HNL, HRK, HUF, IDR, ILS, INR, IQD, IRR, ISK, JMD, JOD, JPY, KES, KHR, KRW, KWD, KZT, LBP, LKR, MAD, MDL, MGA, MKD, MMK, MOP, MUR, MXN, MYR, MZN, NAD, NGN, NIO, NOK, NPR, NZD, OMR, PAB, PEN, PHP, PKR, PLN, PYG, QAR, RON, RSD, RUB, RWF, SAR, SDG, SEK, SGD, SOS, SYP, THB, TND, TOP, TRY, TTD, TWD, TZS, UAH, UGX, UYU, UZS, VEF, VND, XAF, XOF, YER, ZAR].freeze
     end
 
     # Builds the enum from string
