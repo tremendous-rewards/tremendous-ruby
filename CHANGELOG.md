@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.18.1](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.18.0...tremendous_ruby/v5.18.1) (2026-04-14)
+
+
+### Bug Fixes
+
+* remove obsolete `EEK`, `LTL`, `LVL`, `ZMK` currencies ([5bf49db](https://github.com/tremendous-rewards/tremendous-ruby/commit/5bf49db07f5685ba3b452226ddac65ee885c37aa))
+* replace `BYR` with `BYN` in currency codes ([5bf49db](https://github.com/tremendous-rewards/tremendous-ruby/commit/5bf49db07f5685ba3b452226ddac65ee885c37aa))
+
 ## [5.18.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.17.0...tremendous_ruby/v5.18.0) (2026-03-20)
 
 
