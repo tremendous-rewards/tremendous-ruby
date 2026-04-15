@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.19.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.18.1...tremendous_ruby/v5.19.0) (2026-04-15)
+
+
+### Features
+
+* add delete connected organization endpoint ([183c48b](https://github.com/tremendous-rewards/tremendous-ruby/commit/183c48b0800b389e96ea6de2687d8912f00a9929))
+* add delete connected organization member endpoint ([183c48b](https://github.com/tremendous-rewards/tremendous-ruby/commit/183c48b0800b389e96ea6de2687d8912f00a9929))
+
 ## [5.18.1](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.18.0...tremendous_ruby/v5.18.1) (2026-04-14)
 
 
