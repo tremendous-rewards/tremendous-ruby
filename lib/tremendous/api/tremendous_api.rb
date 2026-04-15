@@ -1089,6 +1089,132 @@ module Tremendous
       return data, status_code, headers
     end
 
+    # Delete a connected organization
+    # Deletes a connected organization and revokes the associated OAuth connection. The underlying Tremendous organization is not affected and remains accessible. 
+    # @param id [String] ID of the connected organization to delete. 
+    # @param [Hash] opts the optional parameters
+    # @return [CreateConnectedOrganization200Response]
+    def delete_connected_organization(id, opts = {})
+      data, _status_code, _headers = delete_connected_organization_with_http_info(id, opts)
+      data
+    end
+
+    # Delete a connected organization
+    # Deletes a connected organization and revokes the associated OAuth connection. The underlying Tremendous organization is not affected and remains accessible. 
+    # @param id [String] ID of the connected organization to delete. 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(CreateConnectedOrganization200Response, Integer, Hash)>] CreateConnectedOrganization200Response data, response status code and response headers
+    def delete_connected_organization_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.delete_connected_organization ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling TremendousApi.delete_connected_organization"
+      end
+      # resource path
+      local_var_path = '/connected_organizations/{id}'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CreateConnectedOrganization200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.delete_connected_organization",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#delete_connected_organization\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
+    # Remove a connected organization member
+    # Removes a connected organization member. If the member has completed registration and has an associated Tremendous member, that membership is also revoked. The connected organization itself is not affected. 
+    # @param id [String] ID of the connected organization member to remove. 
+    # @param [Hash] opts the optional parameters
+    # @return [CreateConnectedOrganizationMember200Response]
+    def delete_connected_organization_member(id, opts = {})
+      data, _status_code, _headers = delete_connected_organization_member_with_http_info(id, opts)
+      data
+    end
+
+    # Remove a connected organization member
+    # Removes a connected organization member. If the member has completed registration and has an associated Tremendous member, that membership is also revoked. The connected organization itself is not affected. 
+    # @param id [String] ID of the connected organization member to remove. 
+    # @param [Hash] opts the optional parameters
+    # @return [Array<(CreateConnectedOrganizationMember200Response, Integer, Hash)>] CreateConnectedOrganizationMember200Response data, response status code and response headers
+    def delete_connected_organization_member_with_http_info(id, opts = {})
+      if @api_client.config.debugging
+        @api_client.config.logger.debug 'Calling API: TremendousApi.delete_connected_organization_member ...'
+      end
+      # verify the required parameter 'id' is set
+      if @api_client.config.client_side_validation && id.nil?
+        fail ArgumentError, "Missing the required parameter 'id' when calling TremendousApi.delete_connected_organization_member"
+      end
+      # resource path
+      local_var_path = '/connected_organization_members/{id}'.sub('{' + 'id' + '}', CGI.escape(id.to_s))
+
+      # query parameters
+      query_params = opts[:query_params] || {}
+
+      # header parameters
+      header_params = opts[:header_params] || {}
+      # HTTP header 'Accept' (if needed)
+      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+
+      # form parameters
+      form_params = opts[:form_params] || {}
+
+      # http body (model)
+      post_body = opts[:debug_body]
+
+      # return_type
+      return_type = opts[:debug_return_type] || 'CreateConnectedOrganizationMember200Response'
+
+      # auth_names
+      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
+
+      new_options = opts.merge(
+        :operation => :"TremendousApi.delete_connected_organization_member",
+        :header_params => header_params,
+        :query_params => query_params,
+        :form_params => form_params,
+        :body => post_body,
+        :auth_names => auth_names,
+        :return_type => return_type
+      )
+
+      data, status_code, headers = @api_client.call_api(:DELETE, local_var_path, new_options)
+      if @api_client.config.debugging
+        @api_client.config.logger.debug "API called: TremendousApi#delete_connected_organization_member\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
+      end
+      return data, status_code, headers
+    end
+
     # Delete fraud rule
     # Deletes the rule of the type passed in the URL. 
     # @param rule_type [String] The rule type to create or update.
