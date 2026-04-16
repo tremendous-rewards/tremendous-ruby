@@ -1,5 +1,18 @@
 # Changelog
 
+## [5.20.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.19.0...tremendous_ruby/v5.20.0) (2026-04-16)
+
+
+### Features
+
+* add `currency_code` field to create invoice ([afb5295](https://github.com/tremendous-rewards/tremendous-ruby/commit/afb5295a70b70d99955321210423fa017defe88e))
+
+
+### Bug Fixes
+
+* deprecate `currency` in favor of `currency_code` ([afb5295](https://github.com/tremendous-rewards/tremendous-ruby/commit/afb5295a70b70d99955321210423fa017defe88e))
+* remove default `USD` for invoice `currency` ([afb5295](https://github.com/tremendous-rewards/tremendous-ruby/commit/afb5295a70b70d99955321210423fa017defe88e))
+
 ## [5.19.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.18.1...tremendous_ruby/v5.19.0) (2026-04-15)
 
 
