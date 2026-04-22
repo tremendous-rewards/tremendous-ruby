@@ -1,5 +1,31 @@
 # Changelog
 
+## [5.22.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.21.0...tremendous_ruby/v5.22.0) (2026-04-22)
+
+
+### Features
+
+* add `available_amount`, `pending_amount` to funding sources ([dbcca88](https://github.com/tremendous-rewards/tremendous-ruby/commit/dbcca88d8e737f0d1fed244ef1811b7da071291c))
+* add `credit_limit_amount` to funding source meta ([dbcca88](https://github.com/tremendous-rewards/tremendous-ruby/commit/dbcca88d8e737f0d1fed244ef1811b7da071291c))
+* add `currency_code` to balance transactions ([dbcca88](https://github.com/tremendous-rewards/tremendous-ruby/commit/dbcca88d8e737f0d1fed244ef1811b7da071291c))
+* add `currency_code` to connected organizations ([dbcca88](https://github.com/tremendous-rewards/tremendous-ruby/commit/dbcca88d8e737f0d1fed244ef1811b7da071291c))
+* add `currency_code` to create organization request ([dbcca88](https://github.com/tremendous-rewards/tremendous-ruby/commit/dbcca88d8e737f0d1fed244ef1811b7da071291c))
+* add `currency_code` to fraud review related rewards ([dbcca88](https://github.com/tremendous-rewards/tremendous-ruby/commit/dbcca88d8e737f0d1fed244ef1811b7da071291c))
+* add `currency_code` to funding source meta ([dbcca88](https://github.com/tremendous-rewards/tremendous-ruby/commit/dbcca88d8e737f0d1fed244ef1811b7da071291c))
+* add `currency_code` to order payments and refunds ([dbcca88](https://github.com/tremendous-rewards/tremendous-ruby/commit/dbcca88d8e737f0d1fed244ef1811b7da071291c))
+* add `currency_code` to organizations ([dbcca88](https://github.com/tremendous-rewards/tremendous-ruby/commit/dbcca88d8e737f0d1fed244ef1811b7da071291c))
+* add `currency_code` to topups ([dbcca88](https://github.com/tremendous-rewards/tremendous-ruby/commit/dbcca88d8e737f0d1fed244ef1811b7da071291c))
+* add `expected_settlement_at` to topups ([dbcca88](https://github.com/tremendous-rewards/tremendous-ruby/commit/dbcca88d8e737f0d1fed244ef1811b7da071291c))
+* add `fee_charged_to` enum to campaigns ([dbcca88](https://github.com/tremendous-rewards/tremendous-ruby/commit/dbcca88d8e737f0d1fed244ef1811b7da071291c))
+* add `instant_credit_amount` to topups ([dbcca88](https://github.com/tremendous-rewards/tremendous-ruby/commit/dbcca88d8e737f0d1fed244ef1811b7da071291c))
+* add `partially_credited` topup status ([dbcca88](https://github.com/tremendous-rewards/tremendous-ruby/commit/dbcca88d8e737f0d1fed244ef1811b7da071291c))
+* add `settled_amount` to topups ([dbcca88](https://github.com/tremendous-rewards/tremendous-ruby/commit/dbcca88d8e737f0d1fed244ef1811b7da071291c))
+
+
+### Bug Fixes
+
+* make recipient `name` nullable on rewards ([dbcca88](https://github.com/tremendous-rewards/tremendous-ruby/commit/dbcca88d8e737f0d1fed244ef1811b7da071291c))
+
 ## [5.21.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.20.0...tremendous_ruby/v5.21.0) (2026-04-17)
 
 
