@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.23.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.22.0...tremendous_ruby/v5.23.0) (2026-04-22)
+
+
+### Features
+
+* add `external_name`, `external_email`, `role` to connected org ([a4c5e3d](https://github.com/tremendous-rewards/tremendous-ruby/commit/a4c5e3d2ecc14c71bf96e3c259eaf88fc0011f57))
+
 ## [5.22.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.21.0...tremendous_ruby/v5.22.0) (2026-04-22)
 
 
