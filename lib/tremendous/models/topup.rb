@@ -18,8 +18,11 @@ module Tremendous
     # Unique identifier for the topup request.
     attr_accessor :id
 
-    # Amount in USD intended to be added to your organization’s balance.
+    # Amount to add to your organization's balance, denominated in `currency_code`.
     attr_accessor :amount
+
+    # Currency of the topup amount. Always matches the organization's currency.
+    attr_accessor :currency_code
 
     # Amount of the processing fee for the topup (typically reserved for credit card topups).
     attr_accessor :processing_fee
@@ -27,7 +30,7 @@ module Tremendous
     # ID of the funding_source object used for this topup.
     attr_accessor :funding_source_id
 
-    # Status of the topup <table>   <thead>     <tr>       <th>         Status       </th>       <th>         Description       </th>     </tr>   </thead>   <tbody>     <tr>       <td>         <code>           created         </code>       </td>       <td>         The topup is processing (and may be under review).       </td>     </tr>     <tr>       <td>         <code>           fully_credited         </code>       </td>       <td>         The funds have been added to the balance.       </td>     </tr>     <tr>       <td>         <code>           reversed         </code>       </td>       <td>         The topup was credited, but then reversed due to a chargeback or ACH return.       </td>     </tr>     <tr>       <td>         <code>           rejected         </code>       </td>       <td>         The topup was rejected by an admin.       </td>     </tr>   </tbody> </table> 
+    # Status of the topup <table>   <thead>     <tr>       <th>         Status       </th>       <th>         Description       </th>     </tr>   </thead>   <tbody>     <tr>       <td>         <code>           created         </code>       </td>       <td>         The topup is processing (and may be under review).       </td>     </tr>     <tr>       <td>         <code>           partially_credited         </code>       </td>       <td>         Some funds have been credited to the balance. The remainder will be credited by <code>expected_settlement_at</code>.       </td>     </tr>     <tr>       <td>         <code>           fully_credited         </code>       </td>       <td>         All funds have been added to the balance.       </td>     </tr>     <tr>       <td>         <code>           reversed         </code>       </td>       <td>         The topup was credited, but then reversed due to a chargeback or ACH return.       </td>     </tr>     <tr>       <td>         <code>           rejected         </code>       </td>       <td>         The topup was rejected by an admin.       </td>     </tr>   </tbody> </table> 
     attr_accessor :status
 
     # Timestamp indicating when the topup object was created (when the request was made).
@@ -48,11 +51,21 @@ module Tremendous
     # Idempotency key to prevent duplicate requests.
     attr_accessor :idempotency_key
 
+    # Amount credited to the balance immediately. Equals `amount` for non-ACH topups or ACH debits fully within instant funding limits. Can be 0 if nothing was credited instantly.
+    attr_accessor :instant_credit_amount
+
+    # Amount that will be available once the settlement period elapses. 0 if nothing is settling.
+    attr_accessor :settled_amount
+
+    # Timestamp indicating when the pending amount will be credited to the balance. Null if the topup was fully credited immediately.
+    attr_accessor :expected_settlement_at
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'id' => :'id',
         :'amount' => :'amount',
+        :'currency_code' => :'currency_code',
         :'processing_fee' => :'processing_fee',
         :'funding_source_id' => :'funding_source_id',
         :'status' => :'status',
@@ -61,7 +74,10 @@ module Tremendous
         :'rejected_at' => :'rejected_at',
         :'reversed_at' => :'reversed_at',
         :'reversed_reason' => :'reversed_reason',
-        :'idempotency_key' => :'idempotency_key'
+        :'idempotency_key' => :'idempotency_key',
+        :'instant_credit_amount' => :'instant_credit_amount',
+        :'settled_amount' => :'settled_amount',
+        :'expected_settlement_at' => :'expected_settlement_at'
       }
     end
 
@@ -80,6 +96,7 @@ module Tremendous
       {
         :'id' => :'String',
         :'amount' => :'Float',
+        :'currency_code' => :'String',
         :'processing_fee' => :'Float',
         :'funding_source_id' => :'String',
         :'status' => :'String',
@@ -88,7 +105,10 @@ module Tremendous
         :'rejected_at' => :'Time',
         :'reversed_at' => :'Time',
         :'reversed_reason' => :'String',
-        :'idempotency_key' => :'String'
+        :'idempotency_key' => :'String',
+        :'instant_credit_amount' => :'Float',
+        :'settled_amount' => :'Float',
+        :'expected_settlement_at' => :'Date'
       }
     end
 
@@ -99,7 +119,8 @@ module Tremendous
         :'rejected_at',
         :'reversed_at',
         :'reversed_reason',
-        :'idempotency_key'
+        :'idempotency_key',
+        :'expected_settlement_at'
       ])
     end
 
@@ -125,6 +146,10 @@ module Tremendous
 
       if attributes.key?(:'amount')
         self.amount = attributes[:'amount']
+      end
+
+      if attributes.key?(:'currency_code')
+        self.currency_code = attributes[:'currency_code']
       end
 
       if attributes.key?(:'processing_fee')
@@ -162,6 +187,18 @@ module Tremendous
       if attributes.key?(:'idempotency_key')
         self.idempotency_key = attributes[:'idempotency_key']
       end
+
+      if attributes.key?(:'instant_credit_amount')
+        self.instant_credit_amount = attributes[:'instant_credit_amount']
+      end
+
+      if attributes.key?(:'settled_amount')
+        self.settled_amount = attributes[:'settled_amount']
+      end
+
+      if attributes.key?(:'expected_settlement_at')
+        self.expected_settlement_at = attributes[:'expected_settlement_at']
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -186,6 +223,7 @@ module Tremendous
       self.class == o.class &&
           id == o.id &&
           amount == o.amount &&
+          currency_code == o.currency_code &&
           processing_fee == o.processing_fee &&
           funding_source_id == o.funding_source_id &&
           status == o.status &&
@@ -194,7 +232,10 @@ module Tremendous
           rejected_at == o.rejected_at &&
           reversed_at == o.reversed_at &&
           reversed_reason == o.reversed_reason &&
-          idempotency_key == o.idempotency_key
+          idempotency_key == o.idempotency_key &&
+          instant_credit_amount == o.instant_credit_amount &&
+          settled_amount == o.settled_amount &&
+          expected_settlement_at == o.expected_settlement_at
     end
 
     # @see the `==` method
@@ -206,7 +247,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, amount, processing_fee, funding_source_id, status, created_at, fully_credited_at, rejected_at, reversed_at, reversed_reason, idempotency_key].hash
+      [id, amount, currency_code, processing_fee, funding_source_id, status, created_at, fully_credited_at, rejected_at, reversed_at, reversed_reason, idempotency_key, instant_credit_amount, settled_amount, expected_settlement_at].hash
     end
 
     # Builds the object from hash

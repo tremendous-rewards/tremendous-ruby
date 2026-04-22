@@ -19,10 +19,13 @@ module Tremendous
     # Date that the transaction was created
     attr_accessor :created_at
 
-    # Amount of the transaction in USD
+    # Amount of the transaction, denominated in `currency_code`.
     attr_accessor :amount
 
-    # The updated total after the transaction. Note that this running balance may be delayed and contain `null`.
+    # Currency of the transaction amount and running balance. Always matches the organization's currency.
+    attr_accessor :currency_code
+
+    # The updated total after the transaction, denominated in `currency_code`. Note that this running balance may be delayed and contain `null`.
     attr_accessor :balance
 
     # The action that was performed
@@ -38,6 +41,7 @@ module Tremendous
       {
         :'created_at' => :'created_at',
         :'amount' => :'amount',
+        :'currency_code' => :'currency_code',
         :'balance' => :'balance',
         :'action' => :'action',
         :'description' => :'description',
@@ -60,6 +64,7 @@ module Tremendous
       {
         :'created_at' => :'Time',
         :'amount' => :'Float',
+        :'currency_code' => :'String',
         :'balance' => :'Float',
         :'action' => :'String',
         :'description' => :'String',
@@ -101,6 +106,12 @@ module Tremendous
         self.amount = nil
       end
 
+      if attributes.key?(:'currency_code')
+        self.currency_code = attributes[:'currency_code']
+      else
+        self.currency_code = nil
+      end
+
       if attributes.key?(:'balance')
         self.balance = attributes[:'balance']
       else
@@ -137,6 +148,10 @@ module Tremendous
         invalid_properties.push('invalid value for "amount", amount cannot be nil.')
       end
 
+      if @currency_code.nil?
+        invalid_properties.push('invalid value for "currency_code", currency_code cannot be nil.')
+      end
+
       if @balance.nil?
         invalid_properties.push('invalid value for "balance", balance cannot be nil.')
       end
@@ -158,6 +173,7 @@ module Tremendous
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @created_at.nil?
       return false if @amount.nil?
+      return false if @currency_code.nil?
       return false if @balance.nil?
       return false if @action.nil?
       return false if @description.nil?
@@ -182,6 +198,16 @@ module Tremendous
       end
 
       @amount = amount
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] currency_code Value to be assigned
+    def currency_code=(currency_code)
+      if currency_code.nil?
+        fail ArgumentError, 'currency_code cannot be nil'
+      end
+
+      @currency_code = currency_code
     end
 
     # Custom attribute writer method with validation
@@ -221,6 +247,7 @@ module Tremendous
       self.class == o.class &&
           created_at == o.created_at &&
           amount == o.amount &&
+          currency_code == o.currency_code &&
           balance == o.balance &&
           action == o.action &&
           description == o.description &&
@@ -236,7 +263,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [created_at, amount, balance, action, description, order].hash
+      [created_at, amount, currency_code, balance, action, description, order].hash
     end
 
     # Builds the object from hash

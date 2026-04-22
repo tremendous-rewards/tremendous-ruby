@@ -113,7 +113,7 @@ module Tremendous
         :'reviewed_at' => :'Time',
         :'redemption_method_account_hash' => :'String',
         :'risk' => :'String',
-        :'related_rewards' => :'GetFraudReview200ResponseFraudReviewRelatedRewards'
+        :'related_rewards' => :'FraudReviewRelatedRewards'
       }
     end
 

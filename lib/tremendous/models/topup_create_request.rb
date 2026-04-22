@@ -21,7 +21,7 @@ module Tremendous
     # Unique key that ensures this request is only processed once. 
     attr_accessor :idempotency_key
 
-    # Amount in USD intended to be added to your organization’s balance.
+    # Amount to add to your organization's balance, denominated in `currency_code`.
     attr_accessor :amount
 
     # Attribute mapping from ruby-style variable name to JSON key.

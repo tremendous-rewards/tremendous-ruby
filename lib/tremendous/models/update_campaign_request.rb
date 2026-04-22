@@ -25,9 +25,34 @@ module Tremendous
     # List of IDs of products (different gift cards, charity, etc.) that are available in this campaign. 
     attr_accessor :products
 
+    # Determines whether fees for premium products are added to the order total (`SENDER`) or deducted from the recipient's reward amount (`RECIPIENT`). Campaigns with `RECIPIENT` must include at least one fee-free product. 
+    attr_accessor :fee_charged_to
+
     attr_accessor :webpage_style
 
     attr_accessor :email_style
+
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
+
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
+
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -35,6 +60,7 @@ module Tremendous
         :'name' => :'name',
         :'description' => :'description',
         :'products' => :'products',
+        :'fee_charged_to' => :'fee_charged_to',
         :'webpage_style' => :'webpage_style',
         :'email_style' => :'email_style'
       }
@@ -56,6 +82,7 @@ module Tremendous
         :'name' => :'String',
         :'description' => :'String',
         :'products' => :'Array<String>',
+        :'fee_charged_to' => :'String',
         :'webpage_style' => :'ListCampaigns200ResponseCampaignsInnerWebpageStyle',
         :'email_style' => :'ListCampaigns200ResponseCampaignsInnerEmailStyle'
       }
@@ -65,6 +92,7 @@ module Tremendous
     def self.openapi_nullable
       Set.new([
         :'description',
+        :'fee_charged_to',
       ])
     end
 
@@ -98,6 +126,10 @@ module Tremendous
         end
       end
 
+      if attributes.key?(:'fee_charged_to')
+        self.fee_charged_to = attributes[:'fee_charged_to']
+      end
+
       if attributes.key?(:'webpage_style')
         self.webpage_style = attributes[:'webpage_style']
       end
@@ -119,7 +151,19 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      fee_charged_to_validator = EnumAttributeValidator.new('String', ["SENDER", "RECIPIENT"])
+      return false unless fee_charged_to_validator.valid?(@fee_charged_to)
       true
+    end
+
+    # Custom attribute writer method checking allowed values (enum).
+    # @param [Object] fee_charged_to Object to be assigned
+    def fee_charged_to=(fee_charged_to)
+      validator = EnumAttributeValidator.new('String', ["SENDER", "RECIPIENT"])
+      unless validator.valid?(fee_charged_to)
+        fail ArgumentError, "invalid value for \"fee_charged_to\", must be one of #{validator.allowable_values}."
+      end
+      @fee_charged_to = fee_charged_to
     end
 
     # Checks equality by comparing each attribute.
@@ -130,6 +174,7 @@ module Tremendous
           name == o.name &&
           description == o.description &&
           products == o.products &&
+          fee_charged_to == o.fee_charged_to &&
           webpage_style == o.webpage_style &&
           email_style == o.email_style
     end
@@ -143,7 +188,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, description, products, webpage_style, email_style].hash
+      [name, description, products, fee_charged_to, webpage_style, email_style].hash
     end
 
     # Builds the object from hash

@@ -28,6 +28,9 @@ module Tremendous
     # Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).
     attr_accessor :phone
 
+    # Currency code for the new organization. Defaults to the current organization's currency if not provided.
+    attr_accessor :currency_code
+
     # Timestamp of when the organization has been created. 
     attr_accessor :created_at
 
@@ -42,6 +45,7 @@ module Tremendous
         :'website' => :'website',
         :'copy_settings' => :'copy_settings',
         :'phone' => :'phone',
+        :'currency_code' => :'currency_code',
         :'created_at' => :'created_at',
         :'api_key' => :'api_key'
       }
@@ -65,6 +69,7 @@ module Tremendous
         :'website' => :'String',
         :'copy_settings' => :'CreateOrganizationRequestCopySettings',
         :'phone' => :'String',
+        :'currency_code' => :'String',
         :'created_at' => :'Date',
         :'api_key' => :'String'
       }
@@ -115,6 +120,10 @@ module Tremendous
 
       if attributes.key?(:'phone')
         self.phone = attributes[:'phone']
+      end
+
+      if attributes.key?(:'currency_code')
+        self.currency_code = attributes[:'currency_code']
       end
 
       if attributes.key?(:'created_at')
@@ -202,6 +211,7 @@ module Tremendous
           website == o.website &&
           copy_settings == o.copy_settings &&
           phone == o.phone &&
+          currency_code == o.currency_code &&
           created_at == o.created_at &&
           api_key == o.api_key
     end
@@ -215,7 +225,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, website, copy_settings, phone, created_at, api_key].hash
+      [id, name, website, copy_settings, phone, currency_code, created_at, api_key].hash
     end
 
     # Builds the object from hash

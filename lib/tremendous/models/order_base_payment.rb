@@ -14,19 +14,22 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # Cost breakdown of the order (cost of rewards + fees). Cost and fees are always denominated in USD, independent from the currency of the ordered rewards. Note that this property will only appear for processed orders (`status` is `EXECUTED`).
+  # Cost breakdown of the order (cost of rewards + fees). Cost and fees are denominated in the organization's currency (see payment `currency_code`), independent of the ordered rewards' currency. Note that this property will only appear for processed orders (`status` is `EXECUTED`).
   class OrderBasePayment
-    # Total price of the order before fees (in USD)
+    # Total price of the order before fees, denominated in `currency_code`.
     attr_accessor :subtotal
 
-    # Total price of the order including fees (in USD)
+    # Total price of the order including fees, denominated in `currency_code`.
     attr_accessor :total
 
-    # Fees for the order (in USD)
+    # Fees for the order, denominated in `currency_code`.
     attr_accessor :fees
 
-    # Discount for the order (in USD)
+    # Discount for the order, denominated in `currency_code`.
     attr_accessor :discount
+
+    # Currency in which the payment amounts (subtotal, total, fees, discount, refund) are denominated.  This always matches the organization's currency. 
+    attr_accessor :currency_code
 
     attr_accessor :refund
 
@@ -37,6 +40,7 @@ module Tremendous
         :'total' => :'total',
         :'fees' => :'fees',
         :'discount' => :'discount',
+        :'currency_code' => :'currency_code',
         :'refund' => :'refund'
       }
     end
@@ -58,6 +62,7 @@ module Tremendous
         :'total' => :'Float',
         :'fees' => :'Float',
         :'discount' => :'Float',
+        :'currency_code' => :'String',
         :'refund' => :'PaymentDetailsRefund'
       }
     end
@@ -108,6 +113,12 @@ module Tremendous
         self.discount = nil
       end
 
+      if attributes.key?(:'currency_code')
+        self.currency_code = attributes[:'currency_code']
+      else
+        self.currency_code = nil
+      end
+
       if attributes.key?(:'refund')
         self.refund = attributes[:'refund']
       end
@@ -150,6 +161,10 @@ module Tremendous
         invalid_properties.push('invalid value for "discount", must be greater than or equal to 0.')
       end
 
+      if @currency_code.nil?
+        invalid_properties.push('invalid value for "currency_code", currency_code cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -165,6 +180,7 @@ module Tremendous
       return false if @fees < 0
       return false if @discount.nil?
       return false if @discount < 0
+      return false if @currency_code.nil?
       true
     end
 
@@ -224,6 +240,16 @@ module Tremendous
       @discount = discount
     end
 
+    # Custom attribute writer method with validation
+    # @param [Object] currency_code Value to be assigned
+    def currency_code=(currency_code)
+      if currency_code.nil?
+        fail ArgumentError, 'currency_code cannot be nil'
+      end
+
+      @currency_code = currency_code
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
@@ -233,6 +259,7 @@ module Tremendous
           total == o.total &&
           fees == o.fees &&
           discount == o.discount &&
+          currency_code == o.currency_code &&
           refund == o.refund
     end
 
@@ -245,7 +272,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [subtotal, total, fees, discount, refund].hash
+      [subtotal, total, fees, discount, currency_code, refund].hash
     end
 
     # Builds the object from hash
