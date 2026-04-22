@@ -18,10 +18,22 @@ module Tremendous
     # The ID of the connected organization.
     attr_accessor :connected_organization_id
 
+    # The name associated with the user in your systems.
+    attr_accessor :external_name
+
+    # The email associated with the user in your systems.
+    attr_accessor :external_email
+
+    # The role ID to assign to the member within the organization. Only applicable when the connected organization is already linked to an existing Tremendous organization. 
+    attr_accessor :role
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'connected_organization_id' => :'connected_organization_id'
+        :'connected_organization_id' => :'connected_organization_id',
+        :'external_name' => :'external_name',
+        :'external_email' => :'external_email',
+        :'role' => :'role'
       }
     end
 
@@ -38,7 +50,10 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'connected_organization_id' => :'String'
+        :'connected_organization_id' => :'String',
+        :'external_name' => :'String',
+        :'external_email' => :'String',
+        :'role' => :'String'
       }
     end
 
@@ -68,6 +83,18 @@ module Tremendous
         self.connected_organization_id = attributes[:'connected_organization_id']
       else
         self.connected_organization_id = nil
+      end
+
+      if attributes.key?(:'external_name')
+        self.external_name = attributes[:'external_name']
+      end
+
+      if attributes.key?(:'external_email')
+        self.external_email = attributes[:'external_email']
+      end
+
+      if attributes.key?(:'role')
+        self.role = attributes[:'role']
       end
     end
 
@@ -106,7 +133,10 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          connected_organization_id == o.connected_organization_id
+          connected_organization_id == o.connected_organization_id &&
+          external_name == o.external_name &&
+          external_email == o.external_email &&
+          role == o.role
     end
 
     # @see the `==` method
@@ -118,7 +148,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [connected_organization_id].hash
+      [connected_organization_id, external_name, external_email, role].hash
     end
 
     # Builds the object from hash
