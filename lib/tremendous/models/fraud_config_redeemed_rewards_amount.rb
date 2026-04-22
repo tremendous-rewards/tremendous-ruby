@@ -15,7 +15,7 @@ require 'time'
 
 module Tremendous
   class FraudConfigRedeemedRewardsAmount
-    # The total amount in USD of redeemed rewards to use as a threshold.
+    # The total amount of redeemed rewards to use as a threshold. The amount is denominated in the organization's currency.
     attr_accessor :amount
 
     # The period, in days, to consider for the count. Use `all_time` to consider any redeemed rewards.

@@ -14,15 +14,19 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # Breakdown of the order refunds (total amount in USD, independent from the currency of the ordered rewards). Note that this property will only appear for canceled orders or orders with canceled rewards. 
+  # Breakdown of the order refunds (total denominated in `currency_code`, independent of the ordered rewards' currency). Note that this property will only appear for canceled orders or orders with canceled rewards. 
   class ListOrders200ResponseOrdersInnerPaymentRefund
-    # Total amount of the order refunds (in USD)
+    # Total amount of the order refunds, denominated in `currency_code`.
     attr_accessor :total
+
+    # Currency of the refund. Always matches the organization's currency.
+    attr_accessor :currency_code
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'total' => :'total'
+        :'total' => :'total',
+        :'currency_code' => :'currency_code'
       }
     end
 
@@ -39,7 +43,8 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'total' => :'Float'
+        :'total' => :'Float',
+        :'currency_code' => :'String'
       }
     end
 
@@ -70,6 +75,12 @@ module Tremendous
       else
         self.total = nil
       end
+
+      if attributes.key?(:'currency_code')
+        self.currency_code = attributes[:'currency_code']
+      else
+        self.currency_code = nil
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -85,6 +96,10 @@ module Tremendous
         invalid_properties.push('invalid value for "total", must be greater than or equal to 0.')
       end
 
+      if @currency_code.nil?
+        invalid_properties.push('invalid value for "currency_code", currency_code cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -94,6 +109,7 @@ module Tremendous
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @total.nil?
       return false if @total < 0
+      return false if @currency_code.nil?
       true
     end
 
@@ -111,12 +127,23 @@ module Tremendous
       @total = total
     end
 
+    # Custom attribute writer method with validation
+    # @param [Object] currency_code Value to be assigned
+    def currency_code=(currency_code)
+      if currency_code.nil?
+        fail ArgumentError, 'currency_code cannot be nil'
+      end
+
+      @currency_code = currency_code
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          total == o.total
+          total == o.total &&
+          currency_code == o.currency_code
     end
 
     # @see the `==` method
@@ -128,7 +155,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [total].hash
+      [total, currency_code].hash
     end
 
     # Builds the object from hash

@@ -29,6 +29,9 @@ module Tremendous
     # Phone number of the organization. For non-US phone numbers, specify the country code (prefixed with +).
     attr_accessor :phone
 
+    # Currency code for the new organization. Defaults to the current organization's currency if not provided.
+    attr_accessor :currency_code
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -36,7 +39,8 @@ module Tremendous
         :'website' => :'website',
         :'with_api_key' => :'with_api_key',
         :'copy_settings' => :'copy_settings',
-        :'phone' => :'phone'
+        :'phone' => :'phone',
+        :'currency_code' => :'currency_code'
       }
     end
 
@@ -57,7 +61,8 @@ module Tremendous
         :'website' => :'String',
         :'with_api_key' => :'Boolean',
         :'copy_settings' => :'CreateOrganizationRequestCopySettings',
-        :'phone' => :'String'
+        :'phone' => :'String',
+        :'currency_code' => :'String'
       }
     end
 
@@ -107,6 +112,10 @@ module Tremendous
 
       if attributes.key?(:'phone')
         self.phone = attributes[:'phone']
+      end
+
+      if attributes.key?(:'currency_code')
+        self.currency_code = attributes[:'currency_code']
       end
     end
 
@@ -179,7 +188,8 @@ module Tremendous
           website == o.website &&
           with_api_key == o.with_api_key &&
           copy_settings == o.copy_settings &&
-          phone == o.phone
+          phone == o.phone &&
+          currency_code == o.currency_code
     end
 
     # @see the `==` method
@@ -191,7 +201,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, website, with_api_key, copy_settings, phone].hash
+      [name, website, with_api_key, copy_settings, phone, currency_code].hash
     end
 
     # Builds the object from hash

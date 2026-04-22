@@ -24,6 +24,9 @@ module Tremendous
     # URL of the website of that organization
     attr_accessor :website
 
+    # Currency used for this organization's balances, orders, and transactions.
+    attr_accessor :currency_code
+
     # Status of the organization. Organizations need to be approved to be able to use them to send out rewards.
     attr_accessor :status
 
@@ -58,6 +61,7 @@ module Tremendous
         :'id' => :'id',
         :'name' => :'name',
         :'website' => :'website',
+        :'currency_code' => :'currency_code',
         :'status' => :'status',
         :'created_at' => :'created_at'
       }
@@ -79,6 +83,7 @@ module Tremendous
         :'id' => :'String',
         :'name' => :'String',
         :'website' => :'String',
+        :'currency_code' => :'String',
         :'status' => :'String',
         :'created_at' => :'Date'
       }
@@ -120,6 +125,10 @@ module Tremendous
         self.website = attributes[:'website']
       else
         self.website = nil
+      end
+
+      if attributes.key?(:'currency_code')
+        self.currency_code = attributes[:'currency_code']
       end
 
       if attributes.key?(:'status')
@@ -217,6 +226,7 @@ module Tremendous
           id == o.id &&
           name == o.name &&
           website == o.website &&
+          currency_code == o.currency_code &&
           status == o.status &&
           created_at == o.created_at
     end
@@ -230,7 +240,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, website, status, created_at].hash
+      [id, name, website, currency_code, status, created_at].hash
     end
 
     # Builds the object from hash

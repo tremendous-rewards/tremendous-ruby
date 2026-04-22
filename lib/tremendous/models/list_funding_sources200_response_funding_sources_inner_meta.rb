@@ -15,13 +15,25 @@ require 'time'
 
 module Tremendous
   class ListFundingSources200ResponseFundingSourcesInnerMeta
-    # **Only exists for balance and commercial invoicing.**  For balance: available amount (in cents USD) For commercial invoicing: available credit amount calculated as (credit limit - outstanding balance) (in cents USD)  *Caution: In the \"list funding sources\" endpoint this value is cached and may not be up to date. Use the \"get funding source\" endpoint to get the most up to date value.* 
+    # **Only exists for balance and commercial invoicing.**  For balance: available amount denominated in `currency_code`. For commercial invoicing: available credit amount denominated in `currency_code`, calculated as (credit limit - outstanding balance).  *Caution: In the \"list funding sources\" endpoint this value is cached and may not be up to date. Use the \"get funding source\" endpoint to get the most up to date value.* 
+    attr_accessor :available_amount
+
+    # Same as `available_amount`, but in cents.
     attr_accessor :available_cents
 
-    # **Only available when `method` is set to `balance`.**  Funds that are already registered on your Tremendous account but which have not yet been deposited in your account (e.g. payments that need to be manually reviewed by our ops team) (in Cents USD). 
+    # **Only exists for balance and commercial invoicing.**  The currency of the balance or credit amounts (e.g. `available_amount`, `pending_amount`, `credit_limit_amount`).  Always matches the organization's currency. 
+    attr_accessor :currency_code
+
+    # **Only available when `method` is set to `balance`.**  Funds registered on your Tremendous account but not yet deposited in your account (e.g. payments that need to be manually reviewed by our ops team). Denominated in `currency_code`. 
+    attr_accessor :pending_amount
+
+    # Same as `pending_amount`, but in cents.
     attr_accessor :pending_cents
 
-    # **Only exists for commercial invoicing.**  Available credit limit (in cents USD) 
+    # **Only exists for commercial invoicing.**  Available credit limit denominated in `currency_code`. 
+    attr_accessor :credit_limit_amount
+
+    # Same as `credit_limit_amount`, but in cents.
     attr_accessor :credit_limit_cents
 
     # **Only available when `method` is set to `bank_account` or `credit_card`.**  Name of the holder of the bank account or credit_card 
@@ -123,8 +135,12 @@ module Tremendous
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
+        :'available_amount' => :'available_amount',
         :'available_cents' => :'available_cents',
+        :'currency_code' => :'currency_code',
+        :'pending_amount' => :'pending_amount',
         :'pending_cents' => :'pending_cents',
+        :'credit_limit_amount' => :'credit_limit_amount',
         :'credit_limit_cents' => :'credit_limit_cents',
         :'accountholder_name' => :'accountholder_name',
         :'account_type' => :'account_type',
@@ -167,8 +183,12 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
+        :'available_amount' => :'Float',
         :'available_cents' => :'Integer',
+        :'currency_code' => :'String',
+        :'pending_amount' => :'Float',
         :'pending_cents' => :'Integer',
+        :'credit_limit_amount' => :'Float',
         :'credit_limit_cents' => :'Integer',
         :'accountholder_name' => :'String',
         :'account_type' => :'String',
@@ -232,12 +252,28 @@ module Tremendous
         h[k.to_sym] = v
       }
 
+      if attributes.key?(:'available_amount')
+        self.available_amount = attributes[:'available_amount']
+      end
+
       if attributes.key?(:'available_cents')
         self.available_cents = attributes[:'available_cents']
       end
 
+      if attributes.key?(:'currency_code')
+        self.currency_code = attributes[:'currency_code']
+      end
+
+      if attributes.key?(:'pending_amount')
+        self.pending_amount = attributes[:'pending_amount']
+      end
+
       if attributes.key?(:'pending_cents')
         self.pending_cents = attributes[:'pending_cents']
+      end
+
+      if attributes.key?(:'credit_limit_amount')
+        self.credit_limit_amount = attributes[:'credit_limit_amount']
       end
 
       if attributes.key?(:'credit_limit_cents')
@@ -452,8 +488,12 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
+          available_amount == o.available_amount &&
           available_cents == o.available_cents &&
+          currency_code == o.currency_code &&
+          pending_amount == o.pending_amount &&
           pending_cents == o.pending_cents &&
+          credit_limit_amount == o.credit_limit_amount &&
           credit_limit_cents == o.credit_limit_cents &&
           accountholder_name == o.accountholder_name &&
           account_type == o.account_type &&
@@ -491,7 +531,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [available_cents, pending_cents, credit_limit_cents, accountholder_name, account_type, bank_name, account_number_mask, account_routing_mask, refundable, network, last4, expired, year, month, last_payment_failed_at, invoice_type, interval, day_of_week, net, company_name, address_1, address_2, city, state, zip, phone, emails, failure_details].hash
+      [available_amount, available_cents, currency_code, pending_amount, pending_cents, credit_limit_amount, credit_limit_cents, accountholder_name, account_type, bank_name, account_number_mask, account_routing_mask, refundable, network, last4, expired, year, month, last_payment_failed_at, invoice_type, interval, day_of_week, net, company_name, address_1, address_2, city, state, zip, phone, emails, failure_details].hash
     end
 
     # Builds the object from hash

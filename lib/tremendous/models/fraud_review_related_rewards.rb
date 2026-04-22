@@ -14,6 +14,7 @@ require 'date'
 require 'time'
 
 module Tremendous
+  # The related rewards associated with the fraud review.
   class FraudReviewRelatedRewards
     # The IDs of rewards that have similar attributes to the fraud reward. A maximum of 100 IDs is returned. 
     attr_accessor :ids
@@ -24,8 +25,11 @@ module Tremendous
     # How many related rewards have been blocked.
     attr_accessor :blocked_count
 
-    # Total amount claimed by the related rewards (in USD).
+    # Total amount claimed by the related rewards, denominated in `currency_code`. 
     attr_accessor :aggregated_value
+
+    # Currency of the aggregated value. Always matches the organization's currency.
+    attr_accessor :currency_code
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
@@ -33,7 +37,8 @@ module Tremendous
         :'ids' => :'ids',
         :'count' => :'count',
         :'blocked_count' => :'blocked_count',
-        :'aggregated_value' => :'aggregated_value'
+        :'aggregated_value' => :'aggregated_value',
+        :'currency_code' => :'currency_code'
       }
     end
 
@@ -53,7 +58,8 @@ module Tremendous
         :'ids' => :'Array<String>',
         :'count' => :'Float',
         :'blocked_count' => :'Float',
-        :'aggregated_value' => :'Float'
+        :'aggregated_value' => :'Float',
+        :'currency_code' => :'String'
       }
     end
 
@@ -95,6 +101,10 @@ module Tremendous
 
       if attributes.key?(:'aggregated_value')
         self.aggregated_value = attributes[:'aggregated_value']
+      end
+
+      if attributes.key?(:'currency_code')
+        self.currency_code = attributes[:'currency_code']
       end
     end
 
@@ -178,7 +188,8 @@ module Tremendous
           ids == o.ids &&
           count == o.count &&
           blocked_count == o.blocked_count &&
-          aggregated_value == o.aggregated_value
+          aggregated_value == o.aggregated_value &&
+          currency_code == o.currency_code
     end
 
     # @see the `==` method
@@ -190,7 +201,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [ids, count, blocked_count, aggregated_value].hash
+      [ids, count, blocked_count, aggregated_value, currency_code].hash
     end
 
     # Builds the object from hash
