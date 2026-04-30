@@ -72,6 +72,7 @@ module Tremendous
     def self.openapi_nullable
       Set.new([
         :'headline',
+        :'message',
         :'logo_image_url',
         :'logo_image_height_px',
         :'logo_background_color',

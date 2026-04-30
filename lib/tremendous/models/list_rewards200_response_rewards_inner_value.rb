@@ -18,7 +18,7 @@ module Tremendous
     # Amount of the reward
     attr_accessor :denomination
 
-    # Currency of the reward
+    # Currency of the reward. Defaults to the organization's currency if not provided.
     attr_accessor :currency_code
 
     class EnumAttributeValidator
@@ -99,8 +99,6 @@ module Tremendous
 
       if attributes.key?(:'currency_code')
         self.currency_code = attributes[:'currency_code']
-      else
-        self.currency_code = 'USD'
       end
     end
 
