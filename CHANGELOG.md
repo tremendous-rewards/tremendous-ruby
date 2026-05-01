@@ -1,5 +1,18 @@
 # Changelog
 
+## [5.24.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.23.0...tremendous_ruby/v5.24.0) (2026-05-01)
+
+
+### Features
+
+* add fraud reason `Allowed country` ([73423d3](https://github.com/tremendous-rewards/tremendous-ruby/commit/73423d37aa5b2cbfd2e1d7ffe3cad8993689d6fa))
+* add fraud reason `Device on a Tremendous fraud list` ([73423d3](https://github.com/tremendous-rewards/tremendous-ruby/commit/73423d37aa5b2cbfd2e1d7ffe3cad8993689d6fa))
+
+
+### Bug Fixes
+
+* make campaign webpage style `message` nullable ([73423d3](https://github.com/tremendous-rewards/tremendous-ruby/commit/73423d37aa5b2cbfd2e1d7ffe3cad8993689d6fa))
+
 ## [5.23.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.22.0...tremendous_ruby/v5.23.0) (2026-04-22)
 
 
