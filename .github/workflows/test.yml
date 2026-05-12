@@ -29,13 +29,19 @@ jobs:
       TEST_RECIPIENT_EMAIL:  ${{ secrets.TEST_RECIPIENT_EMAIL }}
 
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Use Ruby ${{ matrix.ruby-version }}
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@6aaa311d81eba98ae12eaffbcb63296ace0efcde # v1
         with:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: true
       - run: bin/rspec
+
+  actionlint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+      - uses: rhysd/actionlint@914e7df21a07ef503a81201c76d2b11c789d3fca # v1.7.12
 
   notify:
     needs: test
@@ -43,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: notify
-        uses: slackapi/slack-github-action@v3.0.3
+        uses: slackapi/slack-github-action@45a88b9581bfab2566dc881e2cd66d334e621e2c # v3.0.3
         with:
           errors: true
           webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
