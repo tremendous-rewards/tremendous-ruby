@@ -30,6 +30,8 @@ module Tremendous
     # Determines whether fees for premium products are added to the order total (`SENDER`) or deducted from the recipient's reward amount (`RECIPIENT`). Campaigns with `RECIPIENT` must include at least one fee-free product. 
     attr_accessor :fee_charged_to
 
+    attr_accessor :auto_add_product_rule
+
     attr_accessor :webpage_style
 
     attr_accessor :email_style
@@ -64,6 +66,7 @@ module Tremendous
         :'description' => :'description',
         :'products' => :'products',
         :'fee_charged_to' => :'fee_charged_to',
+        :'auto_add_product_rule' => :'auto_add_product_rule',
         :'webpage_style' => :'webpage_style',
         :'email_style' => :'email_style'
       }
@@ -87,6 +90,7 @@ module Tremendous
         :'description' => :'String',
         :'products' => :'Array<String>',
         :'fee_charged_to' => :'String',
+        :'auto_add_product_rule' => :'ListCampaigns200ResponseCampaignsInnerAutoAddProductRule',
         :'webpage_style' => :'ListCampaigns200ResponseCampaignsInnerWebpageStyle',
         :'email_style' => :'ListCampaigns200ResponseCampaignsInnerEmailStyle'
       }
@@ -97,6 +101,7 @@ module Tremendous
       Set.new([
         :'description',
         :'fee_charged_to',
+        :'auto_add_product_rule',
       ])
     end
 
@@ -136,6 +141,10 @@ module Tremendous
 
       if attributes.key?(:'fee_charged_to')
         self.fee_charged_to = attributes[:'fee_charged_to']
+      end
+
+      if attributes.key?(:'auto_add_product_rule')
+        self.auto_add_product_rule = attributes[:'auto_add_product_rule']
       end
 
       if attributes.key?(:'webpage_style')
@@ -205,6 +214,7 @@ module Tremendous
           description == o.description &&
           products == o.products &&
           fee_charged_to == o.fee_charged_to &&
+          auto_add_product_rule == o.auto_add_product_rule &&
           webpage_style == o.webpage_style &&
           email_style == o.email_style
     end
@@ -218,7 +228,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, description, products, fee_charged_to, webpage_style, email_style].hash
+      [id, name, description, products, fee_charged_to, auto_add_product_rule, webpage_style, email_style].hash
     end
 
     # Builds the object from hash

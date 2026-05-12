@@ -14,61 +14,23 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # With a campaign you can define the look & feel of how rewards are sent out. It also lets you set the available products (different gift cards, charity, etc.) recipients can choose from. 
-  class CampaignBase
-    attr_accessor :id
+  # When enabled, newly activated gift card products that match the optional country and currency filters are added to this campaign automatically. Applies to gift cards only — premium options, prepaid cards, and merchant cards with vendor fees are excluded. Affects future rewards only and does not retroactively add products to unredeemed rewards.  On read, `enabled` is `true` whenever a rule is configured; `countries` and `currencies` are only present when the rule actually filters on them — an absent filter matches all values.  On write:   * Omit the field on `PUT` to leave the existing rule unchanged.   * Send `null` or `{ \"enabled\": false }` to clear any existing rule.   * Send `{ \"enabled\": true, ... }` to upsert. `countries` and `currencies` are     optional; when present they must contain at least one entry. To match all     countries (or all currencies), simply omit the key.   * An empty object (`{}`) is rejected because `enabled` is required — use     `{ \"enabled\": false }` or `null` to clear the rule. 
+  class ListCampaigns200ResponseCampaignsInnerAutoAddProductRule
+    # Whether the auto-add rule is active.
+    attr_accessor :enabled
 
-    # Name of the campaign
-    attr_accessor :name
+    # ISO 3166-1 alpha-2 country codes (uppercase). When omitted, the rule matches all countries; when present, must contain at least one entry. Each code must be covered by at least one active Tremendous product — requests filtering on a country we don't currently sell into are rejected with a 422. 
+    attr_accessor :countries
 
-    # Description of the campaign
-    attr_accessor :description
-
-    # List of IDs of products (different gift cards, charity, etc.) that are available in this campaign. 
-    attr_accessor :products
-
-    # Determines whether fees for premium products are added to the order total (`SENDER`) or deducted from the recipient's reward amount (`RECIPIENT`). Campaigns with `RECIPIENT` must include at least one fee-free product. 
-    attr_accessor :fee_charged_to
-
-    attr_accessor :auto_add_product_rule
-
-    attr_accessor :webpage_style
-
-    attr_accessor :email_style
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
+    # ISO 4217 currency codes (uppercase). When omitted, the rule matches all currencies; when present, must contain at least one entry. Each code must be covered by at least one active Tremendous product — requests filtering on a currency we don't currently sell are rejected with a 422. 
+    attr_accessor :currencies
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'id' => :'id',
-        :'name' => :'name',
-        :'description' => :'description',
-        :'products' => :'products',
-        :'fee_charged_to' => :'fee_charged_to',
-        :'auto_add_product_rule' => :'auto_add_product_rule',
-        :'webpage_style' => :'webpage_style',
-        :'email_style' => :'email_style'
+        :'enabled' => :'enabled',
+        :'countries' => :'countries',
+        :'currencies' => :'currencies'
       }
     end
 
@@ -85,23 +47,15 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'id' => :'String',
-        :'name' => :'String',
-        :'description' => :'String',
-        :'products' => :'Array<String>',
-        :'fee_charged_to' => :'String',
-        :'auto_add_product_rule' => :'ListCampaigns200ResponseCampaignsInnerAutoAddProductRule',
-        :'webpage_style' => :'ListCampaigns200ResponseCampaignsInnerWebpageStyle',
-        :'email_style' => :'ListCampaigns200ResponseCampaignsInnerEmailStyle'
+        :'enabled' => :'Boolean',
+        :'countries' => :'Array<String>',
+        :'currencies' => :'Array<String>'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'description',
-        :'fee_charged_to',
-        :'auto_add_product_rule',
       ])
     end
 
@@ -109,50 +63,34 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CampaignBase` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListCampaigns200ResponseCampaignsInnerAutoAddProductRule` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CampaignBase`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListCampaigns200ResponseCampaignsInnerAutoAddProductRule`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
+      if attributes.key?(:'enabled')
+        self.enabled = attributes[:'enabled']
+      else
+        self.enabled = nil
       end
 
-      if attributes.key?(:'name')
-        self.name = attributes[:'name']
-      end
-
-      if attributes.key?(:'description')
-        self.description = attributes[:'description']
-      end
-
-      if attributes.key?(:'products')
-        if (value = attributes[:'products']).is_a?(Array)
-          self.products = value
+      if attributes.key?(:'countries')
+        if (value = attributes[:'countries']).is_a?(Array)
+          self.countries = value
         end
       end
 
-      if attributes.key?(:'fee_charged_to')
-        self.fee_charged_to = attributes[:'fee_charged_to']
-      end
-
-      if attributes.key?(:'auto_add_product_rule')
-        self.auto_add_product_rule = attributes[:'auto_add_product_rule']
-      end
-
-      if attributes.key?(:'webpage_style')
-        self.webpage_style = attributes[:'webpage_style']
-      end
-
-      if attributes.key?(:'email_style')
-        self.email_style = attributes[:'email_style']
+      if attributes.key?(:'currencies')
+        if (value = attributes[:'currencies']).is_a?(Array)
+          self.currencies = value
+        end
       end
     end
 
@@ -161,9 +99,16 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !@id.nil? && @id !~ pattern
-        invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
+      if @enabled.nil?
+        invalid_properties.push('invalid value for "enabled", enabled cannot be nil.')
+      end
+
+      if !@countries.nil? && @countries.length < 1
+        invalid_properties.push('invalid value for "countries", number of items must be greater than or equal to 1.')
+      end
+
+      if !@currencies.nil? && @currencies.length < 1
+        invalid_properties.push('invalid value for "currencies", number of items must be greater than or equal to 1.')
       end
 
       invalid_properties
@@ -173,35 +118,48 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      fee_charged_to_validator = EnumAttributeValidator.new('String', ["SENDER", "RECIPIENT"])
-      return false unless fee_charged_to_validator.valid?(@fee_charged_to)
+      return false if @enabled.nil?
+      return false if !@countries.nil? && @countries.length < 1
+      return false if !@currencies.nil? && @currencies.length < 1
       true
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] id Value to be assigned
-    def id=(id)
-      if id.nil?
-        fail ArgumentError, 'id cannot be nil'
+    # @param [Object] enabled Value to be assigned
+    def enabled=(enabled)
+      if enabled.nil?
+        fail ArgumentError, 'enabled cannot be nil'
       end
 
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if id !~ pattern
-        fail ArgumentError, "invalid value for \"id\", must conform to the pattern #{pattern}."
-      end
-
-      @id = id
+      @enabled = enabled
     end
 
-    # Custom attribute writer method checking allowed values (enum).
-    # @param [Object] fee_charged_to Object to be assigned
-    def fee_charged_to=(fee_charged_to)
-      validator = EnumAttributeValidator.new('String', ["SENDER", "RECIPIENT"])
-      unless validator.valid?(fee_charged_to)
-        fail ArgumentError, "invalid value for \"fee_charged_to\", must be one of #{validator.allowable_values}."
+    # Custom attribute writer method with validation
+    # @param [Object] countries Value to be assigned
+    def countries=(countries)
+      if countries.nil?
+        fail ArgumentError, 'countries cannot be nil'
       end
-      @fee_charged_to = fee_charged_to
+
+      if countries.length < 1
+        fail ArgumentError, 'invalid value for "countries", number of items must be greater than or equal to 1.'
+      end
+
+      @countries = countries
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] currencies Value to be assigned
+    def currencies=(currencies)
+      if currencies.nil?
+        fail ArgumentError, 'currencies cannot be nil'
+      end
+
+      if currencies.length < 1
+        fail ArgumentError, 'invalid value for "currencies", number of items must be greater than or equal to 1.'
+      end
+
+      @currencies = currencies
     end
 
     # Checks equality by comparing each attribute.
@@ -209,14 +167,9 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          id == o.id &&
-          name == o.name &&
-          description == o.description &&
-          products == o.products &&
-          fee_charged_to == o.fee_charged_to &&
-          auto_add_product_rule == o.auto_add_product_rule &&
-          webpage_style == o.webpage_style &&
-          email_style == o.email_style
+          enabled == o.enabled &&
+          countries == o.countries &&
+          currencies == o.currencies
     end
 
     # @see the `==` method
@@ -228,7 +181,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, description, products, fee_charged_to, auto_add_product_rule, webpage_style, email_style].hash
+      [enabled, countries, currencies].hash
     end
 
     # Builds the object from hash
