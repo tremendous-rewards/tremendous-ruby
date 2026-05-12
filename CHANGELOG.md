@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.25.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.24.0...tremendous_ruby/v5.25.0) (2026-05-12)
+
+
+### Features
+
+* add `auto_add_product_rule` to campaigns ([3ca07cc](https://github.com/tremendous-rewards/tremendous-ruby/commit/3ca07ccd4ddc0bb6cc25a63a9de21b6e2ab8e2de))
+
 ## [5.24.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.23.0...tremendous_ruby/v5.24.0) (2026-05-01)
 
 
