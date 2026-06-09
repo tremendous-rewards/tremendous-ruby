@@ -29,6 +29,7 @@ lib/tremendous/models/create_connected_organization_member_session200_response.r
 lib/tremendous/models/create_connected_organization_member_session200_response_connected_organization_member_session.rb
 lib/tremendous/models/create_connected_organization_member_session_request.rb
 lib/tremendous/models/create_connected_organization_request.rb
+lib/tremendous/models/create_connected_organization_request_kyb.rb
 lib/tremendous/models/create_field.rb
 lib/tremendous/models/create_field200_response.rb
 lib/tremendous/models/create_field_request.rb
@@ -78,6 +79,7 @@ lib/tremendous/models/fraud_config_ip.rb
 lib/tremendous/models/fraud_config_redeemed_rewards_amount.rb
 lib/tremendous/models/fraud_config_redeemed_rewards_count.rb
 lib/tremendous/models/fraud_config_review_email.rb
+lib/tremendous/models/fraud_config_review_vpn.rb
 lib/tremendous/models/fraud_generic_response.rb
 lib/tremendous/models/fraud_review.rb
 lib/tremendous/models/fraud_review_base.rb
@@ -129,6 +131,8 @@ lib/tremendous/models/list_connected_organization_members200_response_connected_
 lib/tremendous/models/list_connected_organizations200_response.rb
 lib/tremendous/models/list_connected_organizations200_response_connected_organizations_inner.rb
 lib/tremendous/models/list_connected_organizations200_response_connected_organizations_inner_organization.rb
+lib/tremendous/models/list_connected_organizations200_response_connected_organizations_inner_prefilled_kyb_details.rb
+lib/tremendous/models/list_connected_organizations200_response_connected_organizations_inner_prefilled_kyb_details_address.rb
 lib/tremendous/models/list_fields200_response.rb
 lib/tremendous/models/list_fields200_response_fields_inner.rb
 lib/tremendous/models/list_fields200_response_fields_inner_data.rb
@@ -205,6 +209,7 @@ lib/tremendous/models/review_ip.rb
 lib/tremendous/models/review_ip1.rb
 lib/tremendous/models/review_redeemed_rewards_amount.rb
 lib/tremendous/models/review_redeemed_rewards_count.rb
+lib/tremendous/models/review_vpn.rb
 lib/tremendous/models/reward.rb
 lib/tremendous/models/reward_base.rb
 lib/tremendous/models/reward_base_custom_fields_inner.rb

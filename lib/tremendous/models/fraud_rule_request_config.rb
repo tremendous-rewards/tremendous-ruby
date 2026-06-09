@@ -26,7 +26,8 @@ module Tremendous
           :'ReviewEmail',
           :'ReviewIp',
           :'ReviewRedeemedRewardsAmount',
-          :'ReviewRedeemedRewardsCount'
+          :'ReviewRedeemedRewardsCount',
+          :'ReviewVpn'
         ]
       end
 
