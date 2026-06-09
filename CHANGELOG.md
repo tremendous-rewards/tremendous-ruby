@@ -1,5 +1,17 @@
 # Changelog
 
+## [5.26.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.25.0...tremendous_ruby/v5.26.0) (2026-06-09)
+
+
+### Features
+
+* add `Apple Private Relay` fraud review reason ([cd0f2ae](https://github.com/tremendous-rewards/tremendous-ruby/commit/cd0f2ae6bf4d150afc4c00485465813f7112af87))
+* add `prefilled_kyb_details` to connected org ([cd0f2ae](https://github.com/tremendous-rewards/tremendous-ruby/commit/cd0f2ae6bf4d150afc4c00485465813f7112af87))
+* add `review_vpn` config to fraud rule request ([cd0f2ae](https://github.com/tremendous-rewards/tremendous-ruby/commit/cd0f2ae6bf4d150afc4c00485465813f7112af87))
+* add `skip_apple_private_relay` to VPN fraud rule ([cd0f2ae](https://github.com/tremendous-rewards/tremendous-ruby/commit/cd0f2ae6bf4d150afc4c00485465813f7112af87))
+* add `wallet` product category enum value ([cd0f2ae](https://github.com/tremendous-rewards/tremendous-ruby/commit/cd0f2ae6bf4d150afc4c00485465813f7112af87))
+* add optional `kyb` to create connected org ([cd0f2ae](https://github.com/tremendous-rewards/tremendous-ruby/commit/cd0f2ae6bf4d150afc4c00485465813f7112af87))
+
 ## [5.25.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.24.0...tremendous_ruby/v5.25.0) (2026-05-12)
 
 

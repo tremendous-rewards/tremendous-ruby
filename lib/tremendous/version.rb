@@ -1,3 +1,3 @@
 module Tremendous
-  VERSION = "5.25.0"
+  VERSION = "5.26.0"
 end
