@@ -14,17 +14,27 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class CreateConnectedOrganizationRequest
-    # The client ID of the OAuth application.
-    attr_accessor :client_id
+  # The company's address.
+  class ListConnectedOrganizations200ResponseConnectedOrganizationsInnerPrefilledKybDetailsAddress
+    # Street address.
+    attr_accessor :line1
 
-    attr_accessor :kyb
+    # City.
+    attr_accessor :city
+
+    # State, province, or region.
+    attr_accessor :state
+
+    # ZIP or postal code.
+    attr_accessor :zip
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'client_id' => :'client_id',
-        :'kyb' => :'kyb'
+        :'line1' => :'line1',
+        :'city' => :'city',
+        :'state' => :'state',
+        :'zip' => :'zip'
       }
     end
 
@@ -41,8 +51,10 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'client_id' => :'String',
-        :'kyb' => :'CreateConnectedOrganizationRequestKyb'
+        :'line1' => :'String',
+        :'city' => :'String',
+        :'state' => :'String',
+        :'zip' => :'String'
       }
     end
 
@@ -56,26 +68,32 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateConnectedOrganizationRequest` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListConnectedOrganizations200ResponseConnectedOrganizationsInnerPrefilledKybDetailsAddress` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateConnectedOrganizationRequest`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListConnectedOrganizations200ResponseConnectedOrganizationsInnerPrefilledKybDetailsAddress`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'client_id')
-        self.client_id = attributes[:'client_id']
-      else
-        self.client_id = nil
+      if attributes.key?(:'line1')
+        self.line1 = attributes[:'line1']
       end
 
-      if attributes.key?(:'kyb')
-        self.kyb = attributes[:'kyb']
+      if attributes.key?(:'city')
+        self.city = attributes[:'city']
+      end
+
+      if attributes.key?(:'state')
+        self.state = attributes[:'state']
+      end
+
+      if attributes.key?(:'zip')
+        self.zip = attributes[:'zip']
       end
     end
 
@@ -84,10 +102,6 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @client_id.nil?
-        invalid_properties.push('invalid value for "client_id", client_id cannot be nil.')
-      end
-
       invalid_properties
     end
 
@@ -95,18 +109,7 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @client_id.nil?
       true
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] client_id Value to be assigned
-    def client_id=(client_id)
-      if client_id.nil?
-        fail ArgumentError, 'client_id cannot be nil'
-      end
-
-      @client_id = client_id
     end
 
     # Checks equality by comparing each attribute.
@@ -114,8 +117,10 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          client_id == o.client_id &&
-          kyb == o.kyb
+          line1 == o.line1 &&
+          city == o.city &&
+          state == o.state &&
+          zip == o.zip
     end
 
     # @see the `==` method
@@ -127,7 +132,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [client_id, kyb].hash
+      [line1, city, state, zip].hash
     end
 
     # Builds the object from hash

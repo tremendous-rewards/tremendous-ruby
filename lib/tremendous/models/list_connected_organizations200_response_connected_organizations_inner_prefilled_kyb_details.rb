@@ -14,17 +14,38 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class CreateConnectedOrganizationRequest
-    # The client ID of the OAuth application.
-    attr_accessor :client_id
+  # The optional KYB details forwarded when the connected organization was created (see the `kyb` request object), stored to pre-fill the end client's onboarding form. Only returned on the create response — it is omitted from the list, retrieve, and delete responses and from webhook payloads. `null` when no KYB details were provided. 
+  class ListConnectedOrganizations200ResponseConnectedOrganizationsInnerPrefilledKybDetails
+    # The registered legal name of the company.
+    attr_accessor :company_name
 
-    attr_accessor :kyb
+    # The trade name (DBA) the company operates under, if different from its legal name.
+    attr_accessor :doing_business_as
+
+    # The company's legal entity type. Free-form text — any value is accepted to support entity types outside the common presets. Common values are `Sole proprietorship`, `Corporation (Inc)`, `Limited liability company (LLC)`, `Limited liability partnership (LLP)`, `Public limited company (PLC)`, and `Private limited company (LTD)`. 
+    attr_accessor :company_structure
+
+    # The company's tax ID or registration number.
+    attr_accessor :company_registration_number
+
+    # The ISO 3166-1 alpha-2 country code of the company.
+    attr_accessor :country_code
+
+    # The company's website URL.
+    attr_accessor :website_url
+
+    attr_accessor :address
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'client_id' => :'client_id',
-        :'kyb' => :'kyb'
+        :'company_name' => :'company_name',
+        :'doing_business_as' => :'doing_business_as',
+        :'company_structure' => :'company_structure',
+        :'company_registration_number' => :'company_registration_number',
+        :'country_code' => :'country_code',
+        :'website_url' => :'website_url',
+        :'address' => :'address'
       }
     end
 
@@ -41,8 +62,13 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'client_id' => :'String',
-        :'kyb' => :'CreateConnectedOrganizationRequestKyb'
+        :'company_name' => :'String',
+        :'doing_business_as' => :'String',
+        :'company_structure' => :'String',
+        :'company_registration_number' => :'String',
+        :'country_code' => :'String',
+        :'website_url' => :'String',
+        :'address' => :'ListConnectedOrganizations200ResponseConnectedOrganizationsInnerPrefilledKybDetailsAddress'
       }
     end
 
@@ -56,26 +82,44 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateConnectedOrganizationRequest` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ListConnectedOrganizations200ResponseConnectedOrganizationsInnerPrefilledKybDetails` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateConnectedOrganizationRequest`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ListConnectedOrganizations200ResponseConnectedOrganizationsInnerPrefilledKybDetails`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'client_id')
-        self.client_id = attributes[:'client_id']
-      else
-        self.client_id = nil
+      if attributes.key?(:'company_name')
+        self.company_name = attributes[:'company_name']
       end
 
-      if attributes.key?(:'kyb')
-        self.kyb = attributes[:'kyb']
+      if attributes.key?(:'doing_business_as')
+        self.doing_business_as = attributes[:'doing_business_as']
+      end
+
+      if attributes.key?(:'company_structure')
+        self.company_structure = attributes[:'company_structure']
+      end
+
+      if attributes.key?(:'company_registration_number')
+        self.company_registration_number = attributes[:'company_registration_number']
+      end
+
+      if attributes.key?(:'country_code')
+        self.country_code = attributes[:'country_code']
+      end
+
+      if attributes.key?(:'website_url')
+        self.website_url = attributes[:'website_url']
+      end
+
+      if attributes.key?(:'address')
+        self.address = attributes[:'address']
       end
     end
 
@@ -84,10 +128,6 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @client_id.nil?
-        invalid_properties.push('invalid value for "client_id", client_id cannot be nil.')
-      end
-
       invalid_properties
     end
 
@@ -95,18 +135,7 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @client_id.nil?
       true
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] client_id Value to be assigned
-    def client_id=(client_id)
-      if client_id.nil?
-        fail ArgumentError, 'client_id cannot be nil'
-      end
-
-      @client_id = client_id
     end
 
     # Checks equality by comparing each attribute.
@@ -114,8 +143,13 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          client_id == o.client_id &&
-          kyb == o.kyb
+          company_name == o.company_name &&
+          doing_business_as == o.doing_business_as &&
+          company_structure == o.company_structure &&
+          company_registration_number == o.company_registration_number &&
+          country_code == o.country_code &&
+          website_url == o.website_url &&
+          address == o.address
     end
 
     # @see the `==` method
@@ -127,7 +161,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [client_id, kyb].hash
+      [company_name, doing_business_as, company_structure, company_registration_number, country_code, website_url, address].hash
     end
 
     # Builds the object from hash

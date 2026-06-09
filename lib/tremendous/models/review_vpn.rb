@@ -14,17 +14,15 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class CreateConnectedOrganizationRequest
-    # The client ID of the OAuth application.
-    attr_accessor :client_id
-
-    attr_accessor :kyb
+  # Flag rewards redeemed through VPN or proxy traffic. By default, Apple Private Relay traffic is flagged; set `skip_apple_private_relay` to true to exclude it.
+  class ReviewVpn
+    # Whether Apple Private Relay traffic should be excluded from VPN fraud review. When omitted or false, Apple Private Relay traffic is flagged with other VPN and proxy traffic. 
+    attr_accessor :skip_apple_private_relay
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'client_id' => :'client_id',
-        :'kyb' => :'kyb'
+        :'skip_apple_private_relay' => :'skip_apple_private_relay'
       }
     end
 
@@ -41,8 +39,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'client_id' => :'String',
-        :'kyb' => :'CreateConnectedOrganizationRequestKyb'
+        :'skip_apple_private_relay' => :'Boolean'
       }
     end
 
@@ -56,26 +53,22 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateConnectedOrganizationRequest` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ReviewVpn` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateConnectedOrganizationRequest`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ReviewVpn`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'client_id')
-        self.client_id = attributes[:'client_id']
+      if attributes.key?(:'skip_apple_private_relay')
+        self.skip_apple_private_relay = attributes[:'skip_apple_private_relay']
       else
-        self.client_id = nil
-      end
-
-      if attributes.key?(:'kyb')
-        self.kyb = attributes[:'kyb']
+        self.skip_apple_private_relay = false
       end
     end
 
@@ -84,10 +77,6 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @client_id.nil?
-        invalid_properties.push('invalid value for "client_id", client_id cannot be nil.')
-      end
-
       invalid_properties
     end
 
@@ -95,18 +84,7 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @client_id.nil?
       true
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] client_id Value to be assigned
-    def client_id=(client_id)
-      if client_id.nil?
-        fail ArgumentError, 'client_id cannot be nil'
-      end
-
-      @client_id = client_id
     end
 
     # Checks equality by comparing each attribute.
@@ -114,8 +92,7 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          client_id == o.client_id &&
-          kyb == o.kyb
+          skip_apple_private_relay == o.skip_apple_private_relay
     end
 
     # @see the `==` method
@@ -127,7 +104,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [client_id, kyb].hash
+      [skip_apple_private_relay].hash
     end
 
     # Builds the object from hash
