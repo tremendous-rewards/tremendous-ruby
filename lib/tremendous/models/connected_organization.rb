@@ -26,16 +26,13 @@ module Tremendous
 
     attr_accessor :organization
 
-    attr_accessor :prefilled_kyb_details
-
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'id' => :'id',
         :'client_id' => :'client_id',
         :'created_at' => :'created_at',
-        :'organization' => :'organization',
-        :'prefilled_kyb_details' => :'prefilled_kyb_details'
+        :'organization' => :'organization'
       }
     end
 
@@ -55,16 +52,14 @@ module Tremendous
         :'id' => :'String',
         :'client_id' => :'String',
         :'created_at' => :'Time',
-        :'organization' => :'ConnectedOrganizationOrganization',
-        :'prefilled_kyb_details' => :'ListConnectedOrganizations200ResponseConnectedOrganizationsInnerPrefilledKybDetails'
+        :'organization' => :'ConnectedOrganizationOrganization'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'organization',
-        :'prefilled_kyb_details'
+        :'organization'
       ])
     end
 
@@ -104,10 +99,6 @@ module Tremendous
 
       if attributes.key?(:'organization')
         self.organization = attributes[:'organization']
-      end
-
-      if attributes.key?(:'prefilled_kyb_details')
-        self.prefilled_kyb_details = attributes[:'prefilled_kyb_details']
       end
     end
 
@@ -190,8 +181,7 @@ module Tremendous
           id == o.id &&
           client_id == o.client_id &&
           created_at == o.created_at &&
-          organization == o.organization &&
-          prefilled_kyb_details == o.prefilled_kyb_details
+          organization == o.organization
     end
 
     # @see the `==` method
@@ -203,7 +193,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, client_id, created_at, organization, prefilled_kyb_details].hash
+      [id, client_id, created_at, organization].hash
     end
 
     # Builds the object from hash
