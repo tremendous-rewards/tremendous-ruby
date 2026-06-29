@@ -342,7 +342,7 @@ module Tremendous
     end
 
     # Create connected organization
-    # Create a connected organization.  Optionally pass a `kyb` object to forward KYB details you have already collected for the end client. When provided, these values pre-fill the end client's onboarding form; the end client still reviews, edits where needed, and submits the form. Every `kyb` field is optional, but any value provided is validated — malformed KYB details (for example an unsupported `country_code` or a malformed `website_url`) return a `400`.  The stored KYB details are echoed back as `prefilled_kyb_details` on this create response only. 
+    # Create a connected organization.  Optionally pass a `kyb_prefill` object to forward KYB (Know Your Business) details you have already collected for the end client. When provided, these values prefill the end client's onboarding form; the end client still reviews, edits where needed, and submits the form. Every `kyb_prefill` field is optional, but any value provided is validated. Malformed KYB details (for example an unsupported `country_code` or a malformed `website_url`) return a `400`. 
     # @param create_connected_organization_request [CreateConnectedOrganizationRequest] Connected organization to create
     # @param [Hash] opts the optional parameters
     # @return [CreateConnectedOrganization200Response]
@@ -352,7 +352,7 @@ module Tremendous
     end
 
     # Create connected organization
-    # Create a connected organization.  Optionally pass a &#x60;kyb&#x60; object to forward KYB details you have already collected for the end client. When provided, these values pre-fill the end client&#39;s onboarding form; the end client still reviews, edits where needed, and submits the form. Every &#x60;kyb&#x60; field is optional, but any value provided is validated — malformed KYB details (for example an unsupported &#x60;country_code&#x60; or a malformed &#x60;website_url&#x60;) return a &#x60;400&#x60;.  The stored KYB details are echoed back as &#x60;prefilled_kyb_details&#x60; on this create response only. 
+    # Create a connected organization.  Optionally pass a &#x60;kyb_prefill&#x60; object to forward KYB (Know Your Business) details you have already collected for the end client. When provided, these values prefill the end client&#39;s onboarding form; the end client still reviews, edits where needed, and submits the form. Every &#x60;kyb_prefill&#x60; field is optional, but any value provided is validated. Malformed KYB details (for example an unsupported &#x60;country_code&#x60; or a malformed &#x60;website_url&#x60;) return a &#x60;400&#x60;. 
     # @param create_connected_organization_request [CreateConnectedOrganizationRequest] Connected organization to create
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreateConnectedOrganization200Response, Integer, Hash)>] CreateConnectedOrganization200Response data, response status code and response headers
