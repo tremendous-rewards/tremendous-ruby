@@ -18,13 +18,13 @@ module Tremendous
     # The client ID of the OAuth application.
     attr_accessor :client_id
 
-    attr_accessor :kyb
+    attr_accessor :kyb_prefill
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'client_id' => :'client_id',
-        :'kyb' => :'kyb'
+        :'kyb_prefill' => :'kyb_prefill'
       }
     end
 
@@ -42,7 +42,7 @@ module Tremendous
     def self.openapi_types
       {
         :'client_id' => :'String',
-        :'kyb' => :'CreateConnectedOrganizationRequestKyb'
+        :'kyb_prefill' => :'CreateConnectedOrganizationRequestKybPrefill'
       }
     end
 
@@ -74,8 +74,8 @@ module Tremendous
         self.client_id = nil
       end
 
-      if attributes.key?(:'kyb')
-        self.kyb = attributes[:'kyb']
+      if attributes.key?(:'kyb_prefill')
+        self.kyb_prefill = attributes[:'kyb_prefill']
       end
     end
 
@@ -115,7 +115,7 @@ module Tremendous
       return true if self.equal?(o)
       self.class == o.class &&
           client_id == o.client_id &&
-          kyb == o.kyb
+          kyb_prefill == o.kyb_prefill
     end
 
     # @see the `==` method
@@ -127,7 +127,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [client_id, kyb].hash
+      [client_id, kyb_prefill].hash
     end
 
     # Builds the object from hash
