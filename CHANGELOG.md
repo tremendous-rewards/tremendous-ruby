@@ -1,5 +1,12 @@
 # Changelog
 
+## [5.27.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.26.0...tremendous_ruby/v5.27.0) (2026-07-03)
+
+
+### Features
+
+* rename `kyb` to `kyb_prefill` in create ([5139d89](https://github.com/tremendous-rewards/tremendous-ruby/commit/5139d89159f11ef54cca01568328ef4752bcc457))
+
 ## [5.26.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.25.0...tremendous_ruby/v5.26.0) (2026-06-09)
 
 
