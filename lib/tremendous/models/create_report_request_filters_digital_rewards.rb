@@ -182,23 +182,19 @@ module Tremendous
       true
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] delivery_method Object to be assigned
     def delivery_method=(delivery_method)
-      validator = EnumAttributeValidator.new('String', ["phone", "email", "link", "mail", "direct"])
-      unless validator.valid?(delivery_method)
-        fail ArgumentError, "invalid value for \"delivery_method\", must be one of #{validator.allowable_values}."
-      end
       @delivery_method = delivery_method
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] order_status Object to be assigned
     def order_status=(order_status)
-      validator = EnumAttributeValidator.new('String', ["executed", "canceled", "failed", "pending_approval"])
-      unless validator.valid?(order_status)
-        fail ArgumentError, "invalid value for \"order_status\", must be one of #{validator.allowable_values}."
-      end
       @order_status = order_status
     end
 

@@ -18,6 +18,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency "faraday", ">= 1.0.1", "< 3.0"
   spec.add_runtime_dependency "faraday-multipart"
+  spec.add_runtime_dependency "marcel"
 
   spec.files         = Dir["lib/**/*.rb"]
   spec.executables   = []

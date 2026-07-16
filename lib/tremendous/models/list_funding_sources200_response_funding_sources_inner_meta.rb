@@ -418,13 +418,11 @@ module Tremendous
       true
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] account_type Object to be assigned
     def account_type=(account_type)
-      validator = EnumAttributeValidator.new('String', ["checking", "savings"])
-      unless validator.valid?(account_type)
-        fail ArgumentError, "invalid value for \"account_type\", must be one of #{validator.allowable_values}."
-      end
       @account_type = account_type
     end
 
@@ -458,13 +456,11 @@ module Tremendous
       @account_routing_mask = account_routing_mask
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] network Object to be assigned
     def network=(network)
-      validator = EnumAttributeValidator.new('String', ["MasterCard", "Amex", "JCB", "Diner's Club", "Visa", "Discover", "Laser", "Elo", "Maestro", "Solo"])
-      unless validator.valid?(network)
-        fail ArgumentError, "invalid value for \"network\", must be one of #{validator.allowable_values}."
-      end
       @network = network
     end
 

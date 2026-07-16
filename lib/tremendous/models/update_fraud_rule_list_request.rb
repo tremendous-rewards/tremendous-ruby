@@ -130,13 +130,15 @@ module Tremendous
       true
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] operation Object to be assigned
     def operation=(operation)
-      validator = EnumAttributeValidator.new('String', ["add", "remove"])
-      unless validator.valid?(operation)
-        fail ArgumentError, "invalid value for \"operation\", must be one of #{validator.allowable_values}."
+      if operation.nil?
+        fail ArgumentError, 'operation cannot be nil'
       end
+
       @operation = operation
     end
 

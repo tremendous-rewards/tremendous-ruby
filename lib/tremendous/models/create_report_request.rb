@@ -142,23 +142,27 @@ module Tremendous
       true
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] report_type Object to be assigned
     def report_type=(report_type)
-      validator = EnumAttributeValidator.new('String', ["digital_rewards"])
-      unless validator.valid?(report_type)
-        fail ArgumentError, "invalid value for \"report_type\", must be one of #{validator.allowable_values}."
+      if report_type.nil?
+        fail ArgumentError, 'report_type cannot be nil'
       end
+
       @report_type = report_type
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] format Object to be assigned
     def format=(format)
-      validator = EnumAttributeValidator.new('String', ["csv"])
-      unless validator.valid?(format)
-        fail ArgumentError, "invalid value for \"format\", must be one of #{validator.allowable_values}."
+      if format.nil?
+        fail ArgumentError, 'format cannot be nil'
       end
+
       @format = format
     end
 

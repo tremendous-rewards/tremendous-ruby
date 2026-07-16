@@ -117,13 +117,11 @@ module Tremendous
       true
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] method Object to be assigned
     def method=(method)
-      validator = EnumAttributeValidator.new('String', ["EMAIL", "LINK", "PHONE"])
-      unless validator.valid?(method)
-        fail ArgumentError, "invalid value for \"method\", must be one of #{validator.allowable_values}."
-      end
       @method = method
     end
 
