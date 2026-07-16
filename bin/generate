@@ -20,3 +20,13 @@ docker run --rm \
   -o /output \
   -p library=faraday,gemName=tremendous \
   -t /output/templates/ruby \
+
+# The generator never deletes files it stops producing, so models removed
+# from the spec accumulate in the repo. Drop tracked model files that are
+# absent from the manifest of the generation that just ran.
+comm -23 \
+  <(git ls-files 'lib/tremendous/models/*.rb' | sort) \
+  <(sort .openapi-generator/FILES) |
+  while IFS= read -r stale_file; do
+    rm -v "$stale_file"
+  done
