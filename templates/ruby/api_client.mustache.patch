@@ -1,0 +1,12 @@
+--- api_client.mustache (openapi-generator v7.12.0)
++++ api_client.mustache (tremendous)
+@@ -35,7 +35,8 @@
+     # @option config [Configuration] Configuration for initializing the object, default to Configuration.default
+     def initialize(config = Configuration.default)
+       @config = config
+-      @user_agent = "{{{httpUserAgent}}}{{^httpUserAgent}}OpenAPI-Generator/#{VERSION}/ruby{{/httpUserAgent}}"
++      {{! Edited by Tremendous !}}
++      @user_agent = "Tremendous Ruby v#{VERSION}"
+       @default_headers = {
+         'Content-Type' => 'application/json',
+         'User-Agent' => @user_agent
