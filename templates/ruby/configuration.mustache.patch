@@ -1,0 +1,13 @@
+--- configuration.mustache (openapi-generator v7.12.0)
++++ configuration.mustache (tremendous)
+@@ -4,6 +4,10 @@
+ 
+ module {{moduleName}}
+   class Configuration
++    {{! Edited by Tremendous !}}
++    # Tremendous Environment mapping
++    Environment = { "testflight" => 0, "production" => 1 }
++
+     # Defines url scheme
+     attr_accessor :scheme
+ 
