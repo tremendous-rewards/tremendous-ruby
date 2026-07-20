@@ -192,23 +192,19 @@ module Tremendous
       true
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] status Object to be assigned
     def status=(status)
-      validator = EnumAttributeValidator.new('String', ["flagged", "blocked", "released"])
-      unless validator.valid?(status)
-        fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
-      end
       @status = status
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] redemption_method Object to be assigned
     def redemption_method=(redemption_method)
-      validator = EnumAttributeValidator.new('String', ["bank transfer", "charity", "instant debit transfer", "international bank transfer", "merchant card", "paypal", "venmo", "visa card"])
-      unless validator.valid?(redemption_method)
-        fail ArgumentError, "invalid value for \"redemption_method\", must be one of #{validator.allowable_values}."
-      end
       @redemption_method = redemption_method
     end
 

@@ -329,23 +329,23 @@ module Tremendous
       @description = description
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] category Object to be assigned
     def category=(category)
-      validator = EnumAttributeValidator.new('String', ["ach", "charity", "instant_debit_transfer", "merchant_card", "paypal", "venmo", "visa_card", "cash_app", "international_bank", "wallet"])
-      unless validator.valid?(category)
-        fail ArgumentError, "invalid value for \"category\", must be one of #{validator.allowable_values}."
+      if category.nil?
+        fail ArgumentError, 'category cannot be nil'
       end
+
       @category = category
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] subcategory Object to be assigned
     def subcategory=(subcategory)
-      validator = EnumAttributeValidator.new('String', ["beauty_and_health", "digital_financial_services", "electronics", "entertainment", "fashion", "food_and_drink", "general_merchandise", "grocery_and_supermarkets", "home_and_living", "mobility_and_fuel", "sports_and_outdoor_gear", "travel_and_hospitality"])
-      unless validator.valid?(subcategory)
-        fail ArgumentError, "invalid value for \"subcategory\", must be one of #{validator.allowable_values}."
-      end
       @subcategory = subcategory
     end
 

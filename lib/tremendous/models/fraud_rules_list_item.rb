@@ -121,13 +121,11 @@ module Tremendous
       true
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] rule_type Object to be assigned
     def rule_type=(rule_type)
-      validator = EnumAttributeValidator.new('String', ["review_country", "review_ip", "review_email", "review_redeemed_rewards_count", "review_redeemed_rewards_amount", "review_multiple_emails", "review_vpn", "review_tremendous_flag_list", "review_previously_blocked_recipients", "allow_ip", "allow_email"])
-      unless validator.valid?(rule_type)
-        fail ArgumentError, "invalid value for \"rule_type\", must be one of #{validator.allowable_values}."
-      end
       @rule_type = rule_type
     end
 

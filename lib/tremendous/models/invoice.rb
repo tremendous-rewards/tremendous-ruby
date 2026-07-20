@@ -258,33 +258,31 @@ module Tremendous
       @amount = amount
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] currency_code Object to be assigned
     def currency_code=(currency_code)
-      validator = EnumAttributeValidator.new('String', ["USD", "EUR", "GBP"])
-      unless validator.valid?(currency_code)
-        fail ArgumentError, "invalid value for \"currency_code\", must be one of #{validator.allowable_values}."
-      end
       @currency_code = currency_code
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] currency Object to be assigned
     def currency=(currency)
-      validator = EnumAttributeValidator.new('String', ["USD", "EUR", "GBP"])
-      unless validator.valid?(currency)
-        fail ArgumentError, "invalid value for \"currency\", must be one of #{validator.allowable_values}."
-      end
       @currency = currency
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] status Object to be assigned
     def status=(status)
-      validator = EnumAttributeValidator.new('String', ["DELETED", "PAID", "OPEN", "MARKED_AS_PAID"])
-      unless validator.valid?(status)
-        fail ArgumentError, "invalid value for \"status\", must be one of #{validator.allowable_values}."
+      if status.nil?
+        fail ArgumentError, 'status cannot be nil'
       end
+
       @status = status
     end
 

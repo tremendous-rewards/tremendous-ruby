@@ -172,13 +172,11 @@ module Tremendous
       @id = id
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] data_type Object to be assigned
     def data_type=(data_type)
-      validator = EnumAttributeValidator.new('String', ["Checkbox", "Currency", "Date", "Dropdown", "Email", "List", "Number", "Phone", "Text", "TextArea"])
-      unless validator.valid?(data_type)
-        fail ArgumentError, "invalid value for \"data_type\", must be one of #{validator.allowable_values}."
-      end
       @data_type = data_type
     end
 

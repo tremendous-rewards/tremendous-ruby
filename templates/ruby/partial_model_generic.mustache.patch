@@ -1,0 +1,27 @@
+--- partial_model_generic.mustache (openapi-generator v7.12.0)
++++ partial_model_generic.mustache (tremendous)
+@@ -287,13 +287,20 @@
+     {{#vars}}
+     {{#isEnum}}
+     {{^isContainer}}
+-    # Custom attribute writer method checking allowed values (enum).
++    {{! Edited by Tremendous !}}
++    # Custom attribute writer method for enum attributes. Any value is accepted
++    # so that enum values added to the API don't break deserialization on
++    # older versions of this gem.
+     # @param [Object] {{{name}}} Object to be assigned
+     def {{{name}}}=({{{name}}})
+-      validator = EnumAttributeValidator.new('{{{dataType}}}', [{{#allowableValues}}{{#enumVars}}{{{value}}}{{^-last}}, {{/-last}}{{/enumVars}}{{/allowableValues}}])
+-      unless validator.valid?({{{name}}})
+-        fail ArgumentError, "invalid value for \"{{{name}}}\", must be one of #{validator.allowable_values}."
++      {{#required}}
++      {{^isNullable}}
++      if {{{name}}}.nil?
++        fail ArgumentError, '{{{name}}} cannot be nil'
+       end
++
++      {{/isNullable}}
++      {{/required}}
+       @{{{name}}} = {{{name}}}
+     end
+ 

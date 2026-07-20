@@ -4,6 +4,7 @@ PATH
     tremendous_ruby (5.27.0)
       faraday (>= 1.0.1, < 3.0)
       faraday-multipart
+      marcel
 
 GEM
   remote: https://rubygems.org/
@@ -19,6 +20,7 @@ GEM
       net-http (~> 0.5)
     json (2.19.9)
     logger (1.7.0)
+    marcel (1.2.1)
     multipart-post (2.4.1)
     net-http (0.9.1)
       uri (>= 0.11.1)
@@ -48,4 +50,4 @@ DEPENDENCIES
   tremendous_ruby!
 
 BUNDLED WITH
-   4.0.7
+  4.0.7

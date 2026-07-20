@@ -151,13 +151,15 @@ module Tremendous
       @amount = amount
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] period Object to be assigned
     def period=(period)
-      validator = EnumAttributeValidator.new('String', ["7", "30", "90", "120", "365", "all_time"])
-      unless validator.valid?(period)
-        fail ArgumentError, "invalid value for \"period\", must be one of #{validator.allowable_values}."
+      if period.nil?
+        fail ArgumentError, 'period cannot be nil'
       end
+
       @period = period
     end
 

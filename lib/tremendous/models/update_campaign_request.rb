@@ -165,13 +165,11 @@ module Tremendous
       true
     end
 
-    # Custom attribute writer method checking allowed values (enum).
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
     # @param [Object] fee_charged_to Object to be assigned
     def fee_charged_to=(fee_charged_to)
-      validator = EnumAttributeValidator.new('String', ["SENDER", "RECIPIENT"])
-      unless validator.valid?(fee_charged_to)
-        fail ArgumentError, "invalid value for \"fee_charged_to\", must be one of #{validator.allowable_values}."
-      end
       @fee_charged_to = fee_charged_to
     end
 
