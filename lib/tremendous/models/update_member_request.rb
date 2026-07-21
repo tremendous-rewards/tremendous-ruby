@@ -14,18 +14,14 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class CreateConnectedOrganizationMemberSessionRequest
-    # The URL used for links that redirect the user back to your site when they've completed their actions on Tremendous.
-    attr_accessor :return_url
-
-    # Opaque value forwarded unchanged as the OAuth2 `state` parameter on the initial OAuth grant redirect, letting you round-trip per-user context to your registered OAuth `redirect_uri`. Treat it as untrusted since it travels through the end user's browser: sign it or use it as a lookup key rather than trusting a raw value, and keep it short. Does not change `return_url` behavior. 
-    attr_accessor :state
+  class UpdateMemberRequest
+    # The role ID to assign to the member within the organization. 
+    attr_accessor :role
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'return_url' => :'return_url',
-        :'state' => :'state'
+        :'role' => :'role'
       }
     end
 
@@ -42,8 +38,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'return_url' => :'String',
-        :'state' => :'String'
+        :'role' => :'String'
       }
     end
 
@@ -57,26 +52,22 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateConnectedOrganizationMemberSessionRequest` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::UpdateMemberRequest` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateConnectedOrganizationMemberSessionRequest`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::UpdateMemberRequest`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'return_url')
-        self.return_url = attributes[:'return_url']
+      if attributes.key?(:'role')
+        self.role = attributes[:'role']
       else
-        self.return_url = nil
-      end
-
-      if attributes.key?(:'state')
-        self.state = attributes[:'state']
+        self.role = nil
       end
     end
 
@@ -85,12 +76,8 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @return_url.nil?
-        invalid_properties.push('invalid value for "return_url", return_url cannot be nil.')
-      end
-
-      if !@state.nil? && @state.to_s.length > 1024
-        invalid_properties.push('invalid value for "state", the character length must be smaller than or equal to 1024.')
+      if @role.nil?
+        invalid_properties.push('invalid value for "role", role cannot be nil.')
       end
 
       invalid_properties
@@ -100,33 +87,18 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @return_url.nil?
-      return false if !@state.nil? && @state.to_s.length > 1024
+      return false if @role.nil?
       true
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] return_url Value to be assigned
-    def return_url=(return_url)
-      if return_url.nil?
-        fail ArgumentError, 'return_url cannot be nil'
+    # @param [Object] role Value to be assigned
+    def role=(role)
+      if role.nil?
+        fail ArgumentError, 'role cannot be nil'
       end
 
-      @return_url = return_url
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] state Value to be assigned
-    def state=(state)
-      if state.nil?
-        fail ArgumentError, 'state cannot be nil'
-      end
-
-      if state.to_s.length > 1024
-        fail ArgumentError, 'invalid value for "state", the character length must be smaller than or equal to 1024.'
-      end
-
-      @state = state
+      @role = role
     end
 
     # Checks equality by comparing each attribute.
@@ -134,8 +106,7 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          return_url == o.return_url &&
-          state == o.state
+          role == o.role
     end
 
     # @see the `==` method
@@ -147,7 +118,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [return_url, state].hash
+      [role].hash
     end
 
     # Builds the object from hash

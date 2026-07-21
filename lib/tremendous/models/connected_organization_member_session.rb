@@ -24,6 +24,9 @@ module Tremendous
     # The URL used for links that redirect the user back to your site when they've completed their actions on Tremendous.
     attr_accessor :return_url
 
+    # The opaque `state` value provided when the session was created, forwarded on the initial OAuth grant redirect. `null` when no value was set.
+    attr_accessor :state
+
     # Timestamp of when the session will expire.
     attr_accessor :expires_at
 
@@ -36,6 +39,7 @@ module Tremendous
         :'connected_organization_member_id' => :'connected_organization_member_id',
         :'url' => :'url',
         :'return_url' => :'return_url',
+        :'state' => :'state',
         :'expires_at' => :'expires_at',
         :'created_at' => :'created_at'
       }
@@ -57,6 +61,7 @@ module Tremendous
         :'connected_organization_member_id' => :'String',
         :'url' => :'String',
         :'return_url' => :'String',
+        :'state' => :'String',
         :'expires_at' => :'Time',
         :'created_at' => :'Time'
       }
@@ -65,6 +70,7 @@ module Tremendous
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'state',
       ])
     end
 
@@ -102,6 +108,10 @@ module Tremendous
         self.return_url = nil
       end
 
+      if attributes.key?(:'state')
+        self.state = attributes[:'state']
+      end
+
       if attributes.key?(:'expires_at')
         self.expires_at = attributes[:'expires_at']
       else
@@ -137,6 +147,10 @@ module Tremendous
         invalid_properties.push('invalid value for "return_url", return_url cannot be nil.')
       end
 
+      if !@state.nil? && @state.to_s.length > 1024
+        invalid_properties.push('invalid value for "state", the character length must be smaller than or equal to 1024.')
+      end
+
       if @expires_at.nil?
         invalid_properties.push('invalid value for "expires_at", expires_at cannot be nil.')
       end
@@ -156,6 +170,7 @@ module Tremendous
       return false if @connected_organization_member_id !~ Regexp.new(/[A-Z0-9]{4,20}/)
       return false if @url.nil?
       return false if @return_url.nil?
+      return false if !@state.nil? && @state.to_s.length > 1024
       return false if @expires_at.nil?
       return false if @created_at.nil?
       true
@@ -197,6 +212,16 @@ module Tremendous
     end
 
     # Custom attribute writer method with validation
+    # @param [Object] state Value to be assigned
+    def state=(state)
+      if !state.nil? && state.to_s.length > 1024
+        fail ArgumentError, 'invalid value for "state", the character length must be smaller than or equal to 1024.'
+      end
+
+      @state = state
+    end
+
+    # Custom attribute writer method with validation
     # @param [Object] expires_at Value to be assigned
     def expires_at=(expires_at)
       if expires_at.nil?
@@ -224,6 +249,7 @@ module Tremendous
           connected_organization_member_id == o.connected_organization_member_id &&
           url == o.url &&
           return_url == o.return_url &&
+          state == o.state &&
           expires_at == o.expires_at &&
           created_at == o.created_at
     end
@@ -237,7 +263,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [connected_organization_member_id, url, return_url, expires_at, created_at].hash
+      [connected_organization_member_id, url, return_url, state, expires_at, created_at].hash
     end
 
     # Builds the object from hash

@@ -252,6 +252,8 @@ require 'tremendous/models/update_campaign_request'
 require 'tremendous/models/update_fraud_rule_list200_response'
 require 'tremendous/models/update_fraud_rule_list_request'
 require 'tremendous/models/update_fraud_rule_list_request_config'
+require 'tremendous/models/update_member'
+require 'tremendous/models/update_member_request'
 require 'tremendous/models/webhook'
 require 'tremendous/models/webhook_post'
 

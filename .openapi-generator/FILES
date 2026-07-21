@@ -238,5 +238,7 @@ lib/tremendous/models/update_campaign_request.rb
 lib/tremendous/models/update_fraud_rule_list200_response.rb
 lib/tremendous/models/update_fraud_rule_list_request.rb
 lib/tremendous/models/update_fraud_rule_list_request_config.rb
+lib/tremendous/models/update_member.rb
+lib/tremendous/models/update_member_request.rb
 lib/tremendous/models/webhook.rb
 lib/tremendous/models/webhook_post.rb
