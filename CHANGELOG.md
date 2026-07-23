@@ -1,5 +1,21 @@
 # Changelog
 
+## [5.28.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.27.0...tremendous_ruby/v5.28.0) (2026-07-23)
+
+
+### Features
+
+* add `permission` field to create API key request ([0cca243](https://github.com/tremendous-rewards/tremendous-ruby/commit/0cca24321a66957970616787c11e9763d40b1eda))
+* add `state` field to connected org member sessions ([8681d81](https://github.com/tremendous-rewards/tremendous-ruby/commit/8681d81b916293f76237328ba1a83534685f68ba))
+* add delete member endpoint (DELETE /members/{id}) ([8681d81](https://github.com/tremendous-rewards/tremendous-ruby/commit/8681d81b916293f76237328ba1a83534685f68ba))
+* add update member endpoint (PATCH /members/{id}) ([8681d81](https://github.com/tremendous-rewards/tremendous-ruby/commit/8681d81b916293f76237328ba1a83534685f68ba))
+* support `read_only` API keys via `permission` enum ([0cca243](https://github.com/tremendous-rewards/tremendous-ruby/commit/0cca24321a66957970616787c11e9763d40b1eda))
+
+
+### Bug Fixes
+
+* tolerate unknown enum values in API responses ([#151](https://github.com/tremendous-rewards/tremendous-ruby/issues/151)) ([cdcab85](https://github.com/tremendous-rewards/tremendous-ruby/commit/cdcab85635432af91da7c93c61c6e33ec5036696))
+
 ## [5.27.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.26.0...tremendous_ruby/v5.27.0) (2026-07-03)
 
 
