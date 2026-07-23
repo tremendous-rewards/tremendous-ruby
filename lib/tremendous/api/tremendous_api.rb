@@ -221,6 +221,7 @@ module Tremendous
     # Create API key
     # Creates a new API key. The API key used to make the request will remain active.  Created API keys are generated randomly and returned in the response. **You cannot retrieve them again.** 
     # @param [Hash] opts the optional parameters
+    # @option opts [CreateApiKeyRequest] :create_api_key_request Optional settings for the new API key
     # @return [CreateApiKey200Response]
     def create_api_key(opts = {})
       data, _status_code, _headers = create_api_key_with_http_info(opts)
@@ -230,6 +231,7 @@ module Tremendous
     # Create API key
     # Creates a new API key. The API key used to make the request will remain active.  Created API keys are generated randomly and returned in the response. **You cannot retrieve them again.** 
     # @param [Hash] opts the optional parameters
+    # @option opts [CreateApiKeyRequest] :create_api_key_request Optional settings for the new API key
     # @return [Array<(CreateApiKey200Response, Integer, Hash)>] CreateApiKey200Response data, response status code and response headers
     def create_api_key_with_http_info(opts = {})
       if @api_client.config.debugging
@@ -245,12 +247,17 @@ module Tremendous
       header_params = opts[:header_params] || {}
       # HTTP header 'Accept' (if needed)
       header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
+      # HTTP header 'Content-Type'
+      content_type = @api_client.select_header_content_type(['application/json'])
+      if !content_type.nil?
+          header_params['Content-Type'] = content_type
+      end
 
       # form parameters
       form_params = opts[:form_params] || {}
 
       # http body (model)
-      post_body = opts[:debug_body]
+      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'create_api_key_request'])
 
       # return_type
       return_type = opts[:debug_return_type] || 'CreateApiKey200Response'
