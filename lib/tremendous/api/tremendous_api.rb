@@ -349,7 +349,7 @@ module Tremendous
     end
 
     # Create connected organization
-    # Create a connected organization.  Optionally pass a `kyb_prefill` object to forward KYB (Know Your Business) details you have already collected for the end client. When provided, these values prefill the end client's onboarding form; the end client still reviews, edits where needed, and submits the form. Every `kyb_prefill` field is optional, but any value provided is validated. Malformed KYB details (for example an unsupported `country_code` or a malformed `website_url`) return a `400`. 
+    # Create a connected organization.  Optionally pass `currency_code` to set the connected organization's balance currency. Supported values are `USD`, `EUR`, and `GBP`. If omitted, the balance currency defaults to `USD`.  Optionally pass a `kyb_prefill` object to forward KYB (Know Your Business) details you have already collected for the end client. When provided, these values prefill the end client's onboarding form; the end client still reviews, edits where needed, and submits the form. Every `kyb_prefill` field is optional, but any value provided is validated. Malformed KYB details (for example an unsupported `country_code` or a malformed `website_url`) return a `400`. 
     # @param create_connected_organization_request [CreateConnectedOrganizationRequest] Connected organization to create
     # @param [Hash] opts the optional parameters
     # @return [CreateConnectedOrganization200Response]
@@ -359,7 +359,7 @@ module Tremendous
     end
 
     # Create connected organization
-    # Create a connected organization.  Optionally pass a &#x60;kyb_prefill&#x60; object to forward KYB (Know Your Business) details you have already collected for the end client. When provided, these values prefill the end client&#39;s onboarding form; the end client still reviews, edits where needed, and submits the form. Every &#x60;kyb_prefill&#x60; field is optional, but any value provided is validated. Malformed KYB details (for example an unsupported &#x60;country_code&#x60; or a malformed &#x60;website_url&#x60;) return a &#x60;400&#x60;. 
+    # Create a connected organization.  Optionally pass &#x60;currency_code&#x60; to set the connected organization&#39;s balance currency. Supported values are &#x60;USD&#x60;, &#x60;EUR&#x60;, and &#x60;GBP&#x60;. If omitted, the balance currency defaults to &#x60;USD&#x60;.  Optionally pass a &#x60;kyb_prefill&#x60; object to forward KYB (Know Your Business) details you have already collected for the end client. When provided, these values prefill the end client&#39;s onboarding form; the end client still reviews, edits where needed, and submits the form. Every &#x60;kyb_prefill&#x60; field is optional, but any value provided is validated. Malformed KYB details (for example an unsupported &#x60;country_code&#x60; or a malformed &#x60;website_url&#x60;) return a &#x60;400&#x60;. 
     # @param create_connected_organization_request [CreateConnectedOrganizationRequest] Connected organization to create
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreateConnectedOrganization200Response, Integer, Hash)>] CreateConnectedOrganization200Response data, response status code and response headers
