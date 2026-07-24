@@ -18,12 +18,16 @@ module Tremendous
     # The client ID of the OAuth application.
     attr_accessor :client_id
 
+    # The currency used for the connected organization's balance. Supported values are `USD`, `EUR`, and `GBP`. Defaults to `USD` if omitted, `null`, or blank. 
+    attr_accessor :currency_code
+
     attr_accessor :kyb_prefill
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'client_id' => :'client_id',
+        :'currency_code' => :'currency_code',
         :'kyb_prefill' => :'kyb_prefill'
       }
     end
@@ -42,6 +46,7 @@ module Tremendous
     def self.openapi_types
       {
         :'client_id' => :'String',
+        :'currency_code' => :'String',
         :'kyb_prefill' => :'CreateConnectedOrganizationRequestKybPrefill'
       }
     end
@@ -49,6 +54,7 @@ module Tremendous
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'currency_code',
       ])
     end
 
@@ -72,6 +78,12 @@ module Tremendous
         self.client_id = attributes[:'client_id']
       else
         self.client_id = nil
+      end
+
+      if attributes.key?(:'currency_code')
+        self.currency_code = attributes[:'currency_code']
+      else
+        self.currency_code = 'USD'
       end
 
       if attributes.key?(:'kyb_prefill')
@@ -115,6 +127,7 @@ module Tremendous
       return true if self.equal?(o)
       self.class == o.class &&
           client_id == o.client_id &&
+          currency_code == o.currency_code &&
           kyb_prefill == o.kyb_prefill
     end
 
@@ -127,7 +140,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [client_id, kyb_prefill].hash
+      [client_id, currency_code, kyb_prefill].hash
     end
 
     # Builds the object from hash
