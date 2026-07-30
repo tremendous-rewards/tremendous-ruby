@@ -14,7 +14,7 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # Optional KYB details to forward for the end client. When provided, these values prefill the end client's onboarding form. Every field is optional. 
+  # Optional KYB details to forward for the end client. When provided, these values prefill the end client's onboarding form. Every field is optional.
   class CreateConnectedOrganizationRequestKybPrefill
     # The registered legal name of the company.
     attr_accessor :company_name
@@ -22,7 +22,7 @@ module Tremendous
     # The trade name (DBA) the company operates under, if different from its legal name.
     attr_accessor :doing_business_as
 
-    # The company's legal entity type. Free-form text; any value is accepted. Common values include `Sole proprietorship`, `Corporation (Inc)`, `Limited liability company (LLC)`, `Limited liability partnership (LLP)`, `Public limited company (PLC)`, and `Private limited company (LTD)`. 
+    # The company's legal entity type. Free-form text; any value is accepted. Common values include `Sole proprietorship`, `Corporation (Inc)`, `Limited liability company (LLC)`, `Limited liability partnership (LLP)`, `Public limited company (PLC)`, and `Private limited company (LTD)`.
     attr_accessor :company_structure
 
     # The company's tax ID or registration number.

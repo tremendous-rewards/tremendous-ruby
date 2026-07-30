@@ -15,7 +15,7 @@ require 'time'
 
 module Tremendous
   class SingleRewardOrderPayment
-    # Tremendous ID of the funding source that will be used to pay for the order. Use `balance` to use your Tremendous's balance.
+    # Tremendous ID of the funding source that will be used to pay for the order.  You can also pass one of the following magic values (case-insensitive):  - `BALANCE` — pay from your Tremendous balance. - `INVOICE` — pay from your commercial invoice account. - `INVOICE_THEN_BALANCE` — pay from your commercial invoice account if doing so wouldn't exceed your credit limit, otherwise fall back to your Tremendous balance. The balance must have sufficient funds to pay for the order.  **Note:** `INVOICE` and `INVOICE_THEN_BALANCE` are only available to select Enterprise clients with an existing commercial invoicing setup. If your organization already uses commercial invoicing and you have questions, contact your Customer Success Manager.
     attr_accessor :funding_source_id
 
     # Attribute mapping from ruby-style variable name to JSON key.
