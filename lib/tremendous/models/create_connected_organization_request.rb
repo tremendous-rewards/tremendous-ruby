@@ -18,7 +18,7 @@ module Tremendous
     # The client ID of the OAuth application.
     attr_accessor :client_id
 
-    # The currency used for the connected organization's balance. Supported values are `USD`, `EUR`, and `GBP`. Defaults to `USD` if omitted, `null`, or blank. 
+    # The currency used for the connected organization's balance. Supported values are `USD`, `EUR`, and `GBP`. Defaults to `USD` if omitted, `null`, or blank.
     attr_accessor :currency_code
 
     attr_accessor :kyb_prefill
