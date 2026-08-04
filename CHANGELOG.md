@@ -1,5 +1,13 @@
 # Changelog
 
+## [5.29.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.28.0...tremendous_ruby/v5.29.0) (2026-08-04)
+
+
+### Features
+
+* add `INVOICE` and `INVOICE_THEN_BALANCE` as ([8da30fb](https://github.com/tremendous-rewards/tremendous-ruby/commit/8da30fb3a3540734a3998b8e351a0e3d026e4734))
+* add nullable `currency_code` to connected orgs ([b9764e6](https://github.com/tremendous-rewards/tremendous-ruby/commit/b9764e67979b43ba4b23c27a3b11ad5589803f95))
+
 ## [5.28.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.27.0...tremendous_ruby/v5.28.0) (2026-07-23)
 
 
