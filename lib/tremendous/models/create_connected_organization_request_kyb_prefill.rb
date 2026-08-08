@@ -37,6 +37,9 @@ module Tremendous
     # The company's street address.
     attr_accessor :address_1
 
+    # The second line of the company's street address (suite, unit, floor, etc.).
+    attr_accessor :address_2
+
     # The company's city.
     attr_accessor :city
 
@@ -56,6 +59,7 @@ module Tremendous
         :'country_code' => :'country_code',
         :'website_url' => :'website_url',
         :'address_1' => :'address_1',
+        :'address_2' => :'address_2',
         :'city' => :'city',
         :'state' => :'state',
         :'postal_code' => :'postal_code'
@@ -82,6 +86,7 @@ module Tremendous
         :'country_code' => :'String',
         :'website_url' => :'String',
         :'address_1' => :'String',
+        :'address_2' => :'String',
         :'city' => :'String',
         :'state' => :'String',
         :'postal_code' => :'String'
@@ -138,6 +143,10 @@ module Tremendous
         self.address_1 = attributes[:'address_1']
       end
 
+      if attributes.key?(:'address_2')
+        self.address_2 = attributes[:'address_2']
+      end
+
       if attributes.key?(:'city')
         self.city = attributes[:'city']
       end
@@ -178,6 +187,7 @@ module Tremendous
           country_code == o.country_code &&
           website_url == o.website_url &&
           address_1 == o.address_1 &&
+          address_2 == o.address_2 &&
           city == o.city &&
           state == o.state &&
           postal_code == o.postal_code
@@ -192,7 +202,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [company_name, doing_business_as, company_structure, company_registration_number, country_code, website_url, address_1, city, state, postal_code].hash
+      [company_name, doing_business_as, company_structure, company_registration_number, country_code, website_url, address_1, address_2, city, state, postal_code].hash
     end
 
     # Builds the object from hash
