@@ -1226,7 +1226,7 @@ module Tremendous
     # Deletes the rule of the type passed in the URL. 
     # @param rule_type [String] The rule type to create or update.
     # @param [Hash] opts the optional parameters
-    # @return [DeleteFraudRule200Response]
+    # @return [FraudRule200Response]
     def delete_fraud_rule(rule_type, opts = {})
       data, _status_code, _headers = delete_fraud_rule_with_http_info(rule_type, opts)
       data
@@ -1236,7 +1236,7 @@ module Tremendous
     # Deletes the rule of the type passed in the URL. 
     # @param rule_type [String] The rule type to create or update.
     # @param [Hash] opts the optional parameters
-    # @return [Array<(DeleteFraudRule200Response, Integer, Hash)>] DeleteFraudRule200Response data, response status code and response headers
+    # @return [Array<(FraudRule200Response, Integer, Hash)>] FraudRule200Response data, response status code and response headers
     def delete_fraud_rule_with_http_info(rule_type, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.delete_fraud_rule ...'
@@ -1268,7 +1268,7 @@ module Tremendous
       post_body = opts[:debug_body]
 
       # return_type
-      return_type = opts[:debug_return_type] || 'DeleteFraudRule200Response'
+      return_type = opts[:debug_return_type] || 'FraudRule200Response'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']
@@ -4250,7 +4250,7 @@ module Tremendous
     # @param rule_type [String] The rule type to create or update.
     # @param update_fraud_rule_list_request [UpdateFraudRuleListRequest] The lists to add or remove from the current configuration
     # @param [Hash] opts the optional parameters
-    # @return [UpdateFraudRuleList200Response]
+    # @return [FraudRule200Response]
     def update_fraud_rule_list(rule_type, update_fraud_rule_list_request, opts = {})
       data, _status_code, _headers = update_fraud_rule_list_with_http_info(rule_type, update_fraud_rule_list_request, opts)
       data
@@ -4261,7 +4261,7 @@ module Tremendous
     # @param rule_type [String] The rule type to create or update.
     # @param update_fraud_rule_list_request [UpdateFraudRuleListRequest] The lists to add or remove from the current configuration
     # @param [Hash] opts the optional parameters
-    # @return [Array<(UpdateFraudRuleList200Response, Integer, Hash)>] UpdateFraudRuleList200Response data, response status code and response headers
+    # @return [Array<(FraudRule200Response, Integer, Hash)>] FraudRule200Response data, response status code and response headers
     def update_fraud_rule_list_with_http_info(rule_type, update_fraud_rule_list_request, opts = {})
       if @api_client.config.debugging
         @api_client.config.logger.debug 'Calling API: TremendousApi.update_fraud_rule_list ...'
@@ -4302,7 +4302,7 @@ module Tremendous
       post_body = opts[:debug_body] || @api_client.object_to_http_body(update_fraud_rule_list_request)
 
       # return_type
-      return_type = opts[:debug_return_type] || 'UpdateFraudRuleList200Response'
+      return_type = opts[:debug_return_type] || 'FraudRule200Response'
 
       # auth_names
       auth_names = opts[:debug_auth_names] || ['BearerApiKey']
