@@ -78,8 +78,11 @@ module Tremendous
     # **Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Billing interval for commercial invoice generation (e.g., daily, weekly, monthly, twice_monthly). Returns `null` for pro forma invoices. 
     attr_accessor :interval
 
-    # **Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Day of the week when commercial invoices are generated (\"0\"=Sunday, \"1\"=Monday, etc.). Returns `null` for pro forma invoices. 
+    # **Deprecated: Use `days_of_week` instead.**  **Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Day of the week when commercial invoices are generated (\"0\"=Sunday, \"1\"=Monday, etc.). Accounts with weekly commercial invoicing can have invoices generated on one or two days of the week. Returns the scheduled day when there is one day, and an empty string when there are two days and for non-weekly / pro forma invoices. 
     attr_accessor :day_of_week
+
+    # **Only available when `method` is set to `invoice` and `invoice_type` is `commercial`.**  Days of the week when commercial invoices are generated (\"0\"=Sunday, \"1\"=Monday, etc.). Accounts with weekly commercial invoicing can have invoices generated on one or two days of the week. Returns an empty array for non-weekly and for pro forma invoices. 
+    attr_accessor :days_of_week
 
     # **Only available when `method` is set to `invoice`.**  Net payment terms in days (e.g., \"30\" for Net 30) 
     attr_accessor :net
@@ -157,6 +160,7 @@ module Tremendous
         :'invoice_type' => :'invoice_type',
         :'interval' => :'interval',
         :'day_of_week' => :'day_of_week',
+        :'days_of_week' => :'days_of_week',
         :'net' => :'net',
         :'company_name' => :'company_name',
         :'address_1' => :'address_1',
@@ -205,6 +209,7 @@ module Tremendous
         :'invoice_type' => :'String',
         :'interval' => :'String',
         :'day_of_week' => :'String',
+        :'days_of_week' => :'Array<String>',
         :'net' => :'String',
         :'company_name' => :'String',
         :'address_1' => :'String',
@@ -338,6 +343,12 @@ module Tremendous
 
       if attributes.key?(:'day_of_week')
         self.day_of_week = attributes[:'day_of_week']
+      end
+
+      if attributes.key?(:'days_of_week')
+        if (value = attributes[:'days_of_week']).is_a?(Array)
+          self.days_of_week = value
+        end
       end
 
       if attributes.key?(:'net')
@@ -506,6 +517,7 @@ module Tremendous
           invoice_type == o.invoice_type &&
           interval == o.interval &&
           day_of_week == o.day_of_week &&
+          days_of_week == o.days_of_week &&
           net == o.net &&
           company_name == o.company_name &&
           address_1 == o.address_1 &&
@@ -527,7 +539,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [available_amount, available_cents, currency_code, pending_amount, pending_cents, credit_limit_amount, credit_limit_cents, accountholder_name, account_type, bank_name, account_number_mask, account_routing_mask, refundable, network, last4, expired, year, month, last_payment_failed_at, invoice_type, interval, day_of_week, net, company_name, address_1, address_2, city, state, zip, phone, emails, failure_details].hash
+      [available_amount, available_cents, currency_code, pending_amount, pending_cents, credit_limit_amount, credit_limit_cents, accountholder_name, account_type, bank_name, account_number_mask, account_routing_mask, refundable, network, last4, expired, year, month, last_payment_failed_at, invoice_type, interval, day_of_week, days_of_week, net, company_name, address_1, address_2, city, state, zip, phone, emails, failure_details].hash
     end
 
     # Builds the object from hash

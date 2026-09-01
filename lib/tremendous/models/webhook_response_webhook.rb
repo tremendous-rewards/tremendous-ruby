@@ -14,55 +14,21 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # Optional KYB details to forward for the end client. When provided, these values prefill the end client's onboarding form. Every field is optional.
-  class CreateConnectedOrganizationRequestKybPrefill
-    # The registered legal name of the company.
-    attr_accessor :company_name
+  class WebhookResponseWebhook
+    attr_accessor :id
 
-    # The trade name (DBA) the company operates under, if different from its legal name.
-    attr_accessor :doing_business_as
+    # URL the webhook will make requests to
+    attr_accessor :url
 
-    # The company's legal entity type. Free-form text; any value is accepted. Common values include `Sole proprietorship`, `Corporation (Inc)`, `Limited liability company (LLC)`, `Limited liability partnership (LLP)`, `Public limited company (PLC)`, and `Private limited company (LTD)`.
-    attr_accessor :company_structure
-
-    # The company's tax ID or registration number.
-    attr_accessor :company_registration_number
-
-    # The ISO 3166-1 alpha-2 country code of the company. Must be a supported country.
-    attr_accessor :country_code
-
-    # The company's website URL. Must be a well-formed URL.
-    attr_accessor :website_url
-
-    # The company's street address.
-    attr_accessor :address_1
-
-    # The second line of the company's street address (suite, unit, floor, etc.).
-    attr_accessor :address_2
-
-    # The company's city.
-    attr_accessor :city
-
-    # The company's state or province.
-    attr_accessor :state
-
-    # The company's ZIP or postal code.
-    attr_accessor :postal_code
+    # Private key for the webhook
+    attr_accessor :private_key
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'company_name' => :'company_name',
-        :'doing_business_as' => :'doing_business_as',
-        :'company_structure' => :'company_structure',
-        :'company_registration_number' => :'company_registration_number',
-        :'country_code' => :'country_code',
-        :'website_url' => :'website_url',
-        :'address_1' => :'address_1',
-        :'address_2' => :'address_2',
-        :'city' => :'city',
-        :'state' => :'state',
-        :'postal_code' => :'postal_code'
+        :'id' => :'id',
+        :'url' => :'url',
+        :'private_key' => :'private_key'
       }
     end
 
@@ -79,23 +45,16 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'company_name' => :'String',
-        :'doing_business_as' => :'String',
-        :'company_structure' => :'String',
-        :'company_registration_number' => :'String',
-        :'country_code' => :'String',
-        :'website_url' => :'String',
-        :'address_1' => :'String',
-        :'address_2' => :'String',
-        :'city' => :'String',
-        :'state' => :'String',
-        :'postal_code' => :'String'
+        :'id' => :'String',
+        :'url' => :'String',
+        :'private_key' => :'String'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'url',
       ])
     end
 
@@ -103,60 +62,30 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::CreateConnectedOrganizationRequestKybPrefill` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::WebhookResponseWebhook` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::CreateConnectedOrganizationRequestKybPrefill`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::WebhookResponseWebhook`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'company_name')
-        self.company_name = attributes[:'company_name']
+      if attributes.key?(:'id')
+        self.id = attributes[:'id']
       end
 
-      if attributes.key?(:'doing_business_as')
-        self.doing_business_as = attributes[:'doing_business_as']
+      if attributes.key?(:'url')
+        self.url = attributes[:'url']
+      else
+        self.url = nil
       end
 
-      if attributes.key?(:'company_structure')
-        self.company_structure = attributes[:'company_structure']
-      end
-
-      if attributes.key?(:'company_registration_number')
-        self.company_registration_number = attributes[:'company_registration_number']
-      end
-
-      if attributes.key?(:'country_code')
-        self.country_code = attributes[:'country_code']
-      end
-
-      if attributes.key?(:'website_url')
-        self.website_url = attributes[:'website_url']
-      end
-
-      if attributes.key?(:'address_1')
-        self.address_1 = attributes[:'address_1']
-      end
-
-      if attributes.key?(:'address_2')
-        self.address_2 = attributes[:'address_2']
-      end
-
-      if attributes.key?(:'city')
-        self.city = attributes[:'city']
-      end
-
-      if attributes.key?(:'state')
-        self.state = attributes[:'state']
-      end
-
-      if attributes.key?(:'postal_code')
-        self.postal_code = attributes[:'postal_code']
+      if attributes.key?(:'private_key')
+        self.private_key = attributes[:'private_key']
       end
     end
 
@@ -165,6 +94,11 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
+      if !@id.nil? && @id !~ pattern
+        invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
+      end
+
       invalid_properties
     end
 
@@ -172,7 +106,23 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
+      return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
       true
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] id Value to be assigned
+    def id=(id)
+      if id.nil?
+        fail ArgumentError, 'id cannot be nil'
+      end
+
+      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
+      if id !~ pattern
+        fail ArgumentError, "invalid value for \"id\", must conform to the pattern #{pattern}."
+      end
+
+      @id = id
     end
 
     # Checks equality by comparing each attribute.
@@ -180,17 +130,9 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          company_name == o.company_name &&
-          doing_business_as == o.doing_business_as &&
-          company_structure == o.company_structure &&
-          company_registration_number == o.company_registration_number &&
-          country_code == o.country_code &&
-          website_url == o.website_url &&
-          address_1 == o.address_1 &&
-          address_2 == o.address_2 &&
-          city == o.city &&
-          state == o.state &&
-          postal_code == o.postal_code
+          id == o.id &&
+          url == o.url &&
+          private_key == o.private_key
     end
 
     # @see the `==` method
@@ -202,7 +144,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [company_name, doing_business_as, company_structure, company_registration_number, country_code, website_url, address_1, address_2, city, state, postal_code].hash
+      [id, url, private_key].hash
     end
 
     # Builds the object from hash

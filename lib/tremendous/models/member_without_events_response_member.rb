@@ -14,30 +14,30 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # An order wraps around the fulfilment of one or more rewards.
-  class OrderBase
-    # Tremendous ID of the order
+  # Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly.  These actions include adding funding sources to the organization, creating Campaigns, and more. 
+  class MemberWithoutEventsResponseMember
     attr_accessor :id
 
-    # Reference for this order, supplied by the customer.  When set, `external_id` makes order idempotent. All requests that use the same `external_id` after the initial order creation, will result in a response that returns the data of the initially created order. The response will have a `201` response code. These responses **fail** to create any further orders.  It also allows for retrieving by `external_id` instead of `id` only. 
-    attr_accessor :external_id
+    # Email address of the member
+    attr_accessor :email
 
-    # ID of the campaign in your account, that defines the available products (different gift cards, charity, etc.) that the recipient can choose from. 
-    attr_accessor :campaign_id
+    # Full name of the member
+    attr_accessor :name
 
-    # Date the order was created
-    attr_accessor :created_at
+    # Is this member currently active in the organization. If `false`, the member will not be able to access the organization. 
+    attr_accessor :active
 
-    # Execution status of a given order  <table>   <thead>     <tr>       <th>Status</th>       <th>Description</th>     </tr>   </thead>   <tbody>     <tr>       <td><code>CANCELED</code></td>       <td>The order and all of its rewards were canceled.</td>     </tr>     <tr>       <td><code>OPEN</code></td>       <td>The order has been created, but hasn't yet been processed.</td>     </tr>     <tr>       <td><code>EXECUTED</code></td>       <td>The order has been executed. Payment has been handled and rewards are being delivered (if applicable).</td>     </tr>     <tr>       <td><code>FAILED</code></td>       <td>The order could not be processed due to an error. E.g. due to insufficient funds in the account.</td>     </tr>     <tr>       <td><code>PENDING APPROVAL</code></td>       <td>The order has been created but needs approval to be executed.</td>     </tr>     <tr>       <td><code>PENDING INTERNAL PAYMENT APPROVAL</code></td>       <td>The order has been created but it is under review and requires approval from our team.</td>     </tr>     <tr>       <td><code>PENDING SETTLEMENT</code></td>       <td>The order has been created but the funds are being held until the settlement window clears.</td>     </tr>   </tbody> </table> 
+    # The role ID associated with the member within the organization. 
+    attr_accessor :role
+
+    # Current status of the member's account.  When creating a member it starts out in the status `INVITED`. As soon as that member open the invitation link and registers an account, the status switches to `REGISTERED`. 
     attr_accessor :status
 
-    # Name of the channel in which the order was created
-    attr_accessor :channel
+    # Timestamp when this member was created.  The `created_at` timestamp is **NOT** returned when retrieving a member (but is part of the response when listing or creating members). 
+    attr_accessor :created_at
 
-    attr_accessor :payment
-
-    # The ID for the invoice associated with this order
-    attr_accessor :invoice_id
+    # Timestamp when this member most recently logged into the dashboard of the organization associated with this API key. 
+    attr_accessor :last_login_at
 
     class EnumAttributeValidator
       attr_reader :datatype
@@ -65,13 +65,13 @@ module Tremendous
     def self.attribute_map
       {
         :'id' => :'id',
-        :'external_id' => :'external_id',
-        :'campaign_id' => :'campaign_id',
-        :'created_at' => :'created_at',
+        :'email' => :'email',
+        :'name' => :'name',
+        :'active' => :'active',
+        :'role' => :'role',
         :'status' => :'status',
-        :'channel' => :'channel',
-        :'payment' => :'payment',
-        :'invoice_id' => :'invoice_id'
+        :'created_at' => :'created_at',
+        :'last_login_at' => :'last_login_at'
       }
     end
 
@@ -89,21 +89,22 @@ module Tremendous
     def self.openapi_types
       {
         :'id' => :'String',
-        :'external_id' => :'String',
-        :'campaign_id' => :'String',
-        :'created_at' => :'Time',
+        :'email' => :'String',
+        :'name' => :'String',
+        :'active' => :'Boolean',
+        :'role' => :'String',
         :'status' => :'String',
-        :'channel' => :'String',
-        :'payment' => :'OrderBasePayment',
-        :'invoice_id' => :'String'
+        :'created_at' => :'Time',
+        :'last_login_at' => :'Time'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'external_id',
-        :'campaign_id',
+        :'name',
+        :'role',
+        :'last_login_at'
       ])
     end
 
@@ -111,14 +112,14 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::OrderBase` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::MemberWithoutEventsResponseMember` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::OrderBase`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::MemberWithoutEventsResponseMember`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
@@ -129,18 +130,24 @@ module Tremendous
         self.id = nil
       end
 
-      if attributes.key?(:'external_id')
-        self.external_id = attributes[:'external_id']
-      end
-
-      if attributes.key?(:'campaign_id')
-        self.campaign_id = attributes[:'campaign_id']
-      end
-
-      if attributes.key?(:'created_at')
-        self.created_at = attributes[:'created_at']
+      if attributes.key?(:'email')
+        self.email = attributes[:'email']
       else
-        self.created_at = nil
+        self.email = nil
+      end
+
+      if attributes.key?(:'name')
+        self.name = attributes[:'name']
+      else
+        self.name = nil
+      end
+
+      if attributes.key?(:'active')
+        self.active = attributes[:'active']
+      end
+
+      if attributes.key?(:'role')
+        self.role = attributes[:'role']
       end
 
       if attributes.key?(:'status')
@@ -149,16 +156,12 @@ module Tremendous
         self.status = nil
       end
 
-      if attributes.key?(:'channel')
-        self.channel = attributes[:'channel']
+      if attributes.key?(:'created_at')
+        self.created_at = attributes[:'created_at']
       end
 
-      if attributes.key?(:'payment')
-        self.payment = attributes[:'payment']
-      end
-
-      if attributes.key?(:'invoice_id')
-        self.invoice_id = attributes[:'invoice_id']
+      if attributes.key?(:'last_login_at')
+        self.last_login_at = attributes[:'last_login_at']
       end
     end
 
@@ -176,13 +179,8 @@ module Tremendous
         invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
       end
 
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !@campaign_id.nil? && @campaign_id !~ pattern
-        invalid_properties.push("invalid value for \"campaign_id\", must conform to the pattern #{pattern}.")
-      end
-
-      if @created_at.nil?
-        invalid_properties.push('invalid value for "created_at", created_at cannot be nil.')
+      if @email.nil?
+        invalid_properties.push('invalid value for "email", email cannot be nil.')
       end
 
       if @status.nil?
@@ -198,13 +196,10 @@ module Tremendous
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @id.nil?
       return false if @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      return false if !@campaign_id.nil? && @campaign_id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      return false if @created_at.nil?
+      return false if @email.nil?
       return false if @status.nil?
-      status_validator = EnumAttributeValidator.new('String', ["CANCELED", "OPEN", "EXECUTED", "FAILED", "PENDING APPROVAL", "PENDING INTERNAL PAYMENT APPROVAL", "PENDING SETTLEMENT"])
+      status_validator = EnumAttributeValidator.new('String', ["REGISTERED", "INVITED"])
       return false unless status_validator.valid?(@status)
-      channel_validator = EnumAttributeValidator.new('String', ["UI", "API", "EMBED", "DECIPHER", "QUALTRICS", "TYPEFORM", "SURVEY MONKEY", "YOTPO"])
-      return false unless channel_validator.valid?(@channel)
       true
     end
 
@@ -224,24 +219,13 @@ module Tremendous
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] campaign_id Value to be assigned
-    def campaign_id=(campaign_id)
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !campaign_id.nil? && campaign_id !~ pattern
-        fail ArgumentError, "invalid value for \"campaign_id\", must conform to the pattern #{pattern}."
+    # @param [Object] email Value to be assigned
+    def email=(email)
+      if email.nil?
+        fail ArgumentError, 'email cannot be nil'
       end
 
-      @campaign_id = campaign_id
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] created_at Value to be assigned
-    def created_at=(created_at)
-      if created_at.nil?
-        fail ArgumentError, 'created_at cannot be nil'
-      end
-
-      @created_at = created_at
+      @email = email
     end
 
     # Custom attribute writer method for enum attributes. Any value is accepted
@@ -256,27 +240,19 @@ module Tremendous
       @status = status
     end
 
-    # Custom attribute writer method for enum attributes. Any value is accepted
-    # so that enum values added to the API don't break deserialization on
-    # older versions of this gem.
-    # @param [Object] channel Object to be assigned
-    def channel=(channel)
-      @channel = channel
-    end
-
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
           id == o.id &&
-          external_id == o.external_id &&
-          campaign_id == o.campaign_id &&
-          created_at == o.created_at &&
+          email == o.email &&
+          name == o.name &&
+          active == o.active &&
+          role == o.role &&
           status == o.status &&
-          channel == o.channel &&
-          payment == o.payment &&
-          invoice_id == o.invoice_id
+          created_at == o.created_at &&
+          last_login_at == o.last_login_at
     end
 
     # @see the `==` method
@@ -288,7 +264,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, external_id, campaign_id, created_at, status, channel, payment, invoice_id].hash
+      [id, email, name, active, role, status, created_at, last_login_at].hash
     end
 
     # Builds the object from hash
