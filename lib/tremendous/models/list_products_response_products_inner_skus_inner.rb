@@ -15,17 +15,43 @@ require 'time'
 
 module Tremendous
   class ListProductsResponseProductsInnerSkusInner
-    # Minimal denomination that this product supports (in the product's currency)
+    # Minimum amount this product supports, in `currency_code`.
     attr_accessor :min
 
-    # Maximum denomination that this product supports (in the product's currency)
+    # Maximum amount this product supports, in `currency_code`.
     attr_accessor :max
+
+    # Currency of `min` and `max`.
+    attr_accessor :currency_code
+
+    class EnumAttributeValidator
+      attr_reader :datatype
+      attr_reader :allowable_values
+
+      def initialize(datatype, allowable_values)
+        @allowable_values = allowable_values.map do |value|
+          case datatype.to_s
+          when /Integer/i
+            value.to_i
+          when /Float/i
+            value.to_f
+          else
+            value
+          end
+        end
+      end
+
+      def valid?(value)
+        !value || allowable_values.include?(value)
+      end
+    end
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
         :'min' => :'min',
-        :'max' => :'max'
+        :'max' => :'max',
+        :'currency_code' => :'currency_code'
       }
     end
 
@@ -43,7 +69,8 @@ module Tremendous
     def self.openapi_types
       {
         :'min' => :'Float',
-        :'max' => :'Float'
+        :'max' => :'Float',
+        :'currency_code' => :'String'
       }
     end
 
@@ -80,6 +107,12 @@ module Tremendous
       else
         self.max = nil
       end
+
+      if attributes.key?(:'currency_code')
+        self.currency_code = attributes[:'currency_code']
+      else
+        self.currency_code = nil
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -103,6 +136,10 @@ module Tremendous
         invalid_properties.push('invalid value for "max", must be greater than or equal to 0.')
       end
 
+      if @currency_code.nil?
+        invalid_properties.push('invalid value for "currency_code", currency_code cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -114,6 +151,9 @@ module Tremendous
       return false if @min < 0
       return false if @max.nil?
       return false if @max < 0
+      return false if @currency_code.nil?
+      currency_code_validator = EnumAttributeValidator.new('String', ["USD", "CAD", "EUR", "AED", "AFN", "ALL", "AMD", "ARS", "AUD", "AZN", "BAM", "BDT", "BHD", "BIF", "BND", "BOB", "BRL", "BWP", "BYN", "BZD", "CDF", "CHF", "CLP", "CNY", "COP", "CRC", "CVE", "CZK", "DJF", "DKK", "DOP", "DZD", "EGP", "ERN", "ETB", "GBP", "GEL", "GHS", "GNF", "GTQ", "HKD", "HNL", "HRK", "HUF", "IDR", "ILS", "INR", "IQD", "IRR", "ISK", "JMD", "JOD", "JPY", "KES", "KHR", "KRW", "KWD", "KZT", "LBP", "LKR", "MAD", "MDL", "MGA", "MKD", "MMK", "MOP", "MUR", "MXN", "MYR", "MZN", "NAD", "NGN", "NIO", "NOK", "NPR", "NZD", "OMR", "PAB", "PEN", "PHP", "PKR", "PLN", "PYG", "QAR", "RON", "RSD", "RUB", "RWF", "SAR", "SDG", "SEK", "SGD", "SOS", "SYP", "THB", "TND", "TOP", "TRY", "TTD", "TWD", "TZS", "UAH", "UGX", "UYU", "UZS", "VEF", "VND", "XAF", "XOF", "YER", "ZAR"])
+      return false unless currency_code_validator.valid?(@currency_code)
       true
     end
 
@@ -145,13 +185,26 @@ module Tremendous
       @max = max
     end
 
+    # Custom attribute writer method for enum attributes. Any value is accepted
+    # so that enum values added to the API don't break deserialization on
+    # older versions of this gem.
+    # @param [Object] currency_code Object to be assigned
+    def currency_code=(currency_code)
+      if currency_code.nil?
+        fail ArgumentError, 'currency_code cannot be nil'
+      end
+
+      @currency_code = currency_code
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
           min == o.min &&
-          max == o.max
+          max == o.max &&
+          currency_code == o.currency_code
     end
 
     # @see the `==` method
@@ -163,7 +216,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [min, max].hash
+      [min, max, currency_code].hash
     end
 
     # Builds the object from hash

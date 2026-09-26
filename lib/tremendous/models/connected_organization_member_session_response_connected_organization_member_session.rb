@@ -14,61 +14,34 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # With a campaign you can define the look & feel of how rewards are sent out. It also lets you set the available products (different gift cards, charity, etc.) recipients can choose from. 
-  class UpdateCampaign
-    attr_accessor :id
+  class ConnectedOrganizationMemberSessionResponseConnectedOrganizationMemberSession
+    # Tremendous' identifier for the connected organization member.
+    attr_accessor :connected_organization_member_id
 
-    # Name of the campaign
-    attr_accessor :name
+    # The URL to start the \"Tremendous for Platforms\" flow.
+    attr_accessor :url
 
-    # Description of the campaign
-    attr_accessor :description
+    # The URL used for links that redirect the user back to your site when they've completed their actions on Tremendous.
+    attr_accessor :return_url
 
-    # List of IDs of products (different gift cards, charity, etc.) that are available in this campaign.  On write, the special value `ALL_FEE_FREE` stands for every product in your catalog that carries no fee at the time of the call. 
-    attr_accessor :products
+    # The opaque `state` value provided when the session was created, forwarded on the initial OAuth grant redirect. `null` when no value was set.
+    attr_accessor :state
 
-    # Determines whether fees for premium products are added to the order total (`SENDER`) or deducted from the recipient's reward amount (`RECIPIENT`). Campaigns with `RECIPIENT` must include at least one fee-free product. 
-    attr_accessor :fee_charged_to
+    # Timestamp of when the session will expire.
+    attr_accessor :expires_at
 
-    attr_accessor :auto_add_product_rule
-
-    attr_accessor :webpage_style
-
-    attr_accessor :email_style
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
+    # Timestamp of when the session was created.
+    attr_accessor :created_at
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'id' => :'id',
-        :'name' => :'name',
-        :'description' => :'description',
-        :'products' => :'products',
-        :'fee_charged_to' => :'fee_charged_to',
-        :'auto_add_product_rule' => :'auto_add_product_rule',
-        :'webpage_style' => :'webpage_style',
-        :'email_style' => :'email_style'
+        :'connected_organization_member_id' => :'connected_organization_member_id',
+        :'url' => :'url',
+        :'return_url' => :'return_url',
+        :'state' => :'state',
+        :'expires_at' => :'expires_at',
+        :'created_at' => :'created_at'
       }
     end
 
@@ -85,23 +58,19 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'id' => :'String',
-        :'name' => :'String',
-        :'description' => :'String',
-        :'products' => :'Array<CampaignBaseProductsInner>',
-        :'fee_charged_to' => :'String',
-        :'auto_add_product_rule' => :'ListCampaigns200ResponseCampaignsInnerAutoAddProductRule',
-        :'webpage_style' => :'ListCampaigns200ResponseCampaignsInnerWebpageStyle',
-        :'email_style' => :'ListCampaigns200ResponseCampaignsInnerEmailStyle'
+        :'connected_organization_member_id' => :'String',
+        :'url' => :'String',
+        :'return_url' => :'String',
+        :'state' => :'String',
+        :'expires_at' => :'Time',
+        :'created_at' => :'Time'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'description',
-        :'fee_charged_to',
-        :'auto_add_product_rule',
+        :'state',
       ])
     end
 
@@ -109,50 +78,50 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::UpdateCampaign` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::ConnectedOrganizationMemberSessionResponseConnectedOrganizationMemberSession` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::UpdateCampaign`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::ConnectedOrganizationMemberSessionResponseConnectedOrganizationMemberSession`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
+      if attributes.key?(:'connected_organization_member_id')
+        self.connected_organization_member_id = attributes[:'connected_organization_member_id']
+      else
+        self.connected_organization_member_id = nil
       end
 
-      if attributes.key?(:'name')
-        self.name = attributes[:'name']
+      if attributes.key?(:'url')
+        self.url = attributes[:'url']
+      else
+        self.url = nil
       end
 
-      if attributes.key?(:'description')
-        self.description = attributes[:'description']
+      if attributes.key?(:'return_url')
+        self.return_url = attributes[:'return_url']
+      else
+        self.return_url = nil
       end
 
-      if attributes.key?(:'products')
-        if (value = attributes[:'products']).is_a?(Array)
-          self.products = value
-        end
+      if attributes.key?(:'state')
+        self.state = attributes[:'state']
       end
 
-      if attributes.key?(:'fee_charged_to')
-        self.fee_charged_to = attributes[:'fee_charged_to']
+      if attributes.key?(:'expires_at')
+        self.expires_at = attributes[:'expires_at']
+      else
+        self.expires_at = nil
       end
 
-      if attributes.key?(:'auto_add_product_rule')
-        self.auto_add_product_rule = attributes[:'auto_add_product_rule']
-      end
-
-      if attributes.key?(:'webpage_style')
-        self.webpage_style = attributes[:'webpage_style']
-      end
-
-      if attributes.key?(:'email_style')
-        self.email_style = attributes[:'email_style']
+      if attributes.key?(:'created_at')
+        self.created_at = attributes[:'created_at']
+      else
+        self.created_at = nil
       end
     end
 
@@ -161,9 +130,33 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
+      if @connected_organization_member_id.nil?
+        invalid_properties.push('invalid value for "connected_organization_member_id", connected_organization_member_id cannot be nil.')
+      end
+
       pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !@id.nil? && @id !~ pattern
-        invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
+      if @connected_organization_member_id !~ pattern
+        invalid_properties.push("invalid value for \"connected_organization_member_id\", must conform to the pattern #{pattern}.")
+      end
+
+      if @url.nil?
+        invalid_properties.push('invalid value for "url", url cannot be nil.')
+      end
+
+      if @return_url.nil?
+        invalid_properties.push('invalid value for "return_url", return_url cannot be nil.')
+      end
+
+      if !@state.nil? && @state.to_s.length > 1024
+        invalid_properties.push('invalid value for "state", the character length must be smaller than or equal to 1024.')
+      end
+
+      if @expires_at.nil?
+        invalid_properties.push('invalid value for "expires_at", expires_at cannot be nil.')
+      end
+
+      if @created_at.nil?
+        invalid_properties.push('invalid value for "created_at", created_at cannot be nil.')
       end
 
       invalid_properties
@@ -173,33 +166,79 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      fee_charged_to_validator = EnumAttributeValidator.new('String', ["SENDER", "RECIPIENT"])
-      return false unless fee_charged_to_validator.valid?(@fee_charged_to)
+      return false if @connected_organization_member_id.nil?
+      return false if @connected_organization_member_id !~ Regexp.new(/[A-Z0-9]{4,20}/)
+      return false if @url.nil?
+      return false if @return_url.nil?
+      return false if !@state.nil? && @state.to_s.length > 1024
+      return false if @expires_at.nil?
+      return false if @created_at.nil?
       true
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] id Value to be assigned
-    def id=(id)
-      if id.nil?
-        fail ArgumentError, 'id cannot be nil'
+    # @param [Object] connected_organization_member_id Value to be assigned
+    def connected_organization_member_id=(connected_organization_member_id)
+      if connected_organization_member_id.nil?
+        fail ArgumentError, 'connected_organization_member_id cannot be nil'
       end
 
       pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if id !~ pattern
-        fail ArgumentError, "invalid value for \"id\", must conform to the pattern #{pattern}."
+      if connected_organization_member_id !~ pattern
+        fail ArgumentError, "invalid value for \"connected_organization_member_id\", must conform to the pattern #{pattern}."
       end
 
-      @id = id
+      @connected_organization_member_id = connected_organization_member_id
     end
 
-    # Custom attribute writer method for enum attributes. Any value is accepted
-    # so that enum values added to the API don't break deserialization on
-    # older versions of this gem.
-    # @param [Object] fee_charged_to Object to be assigned
-    def fee_charged_to=(fee_charged_to)
-      @fee_charged_to = fee_charged_to
+    # Custom attribute writer method with validation
+    # @param [Object] url Value to be assigned
+    def url=(url)
+      if url.nil?
+        fail ArgumentError, 'url cannot be nil'
+      end
+
+      @url = url
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] return_url Value to be assigned
+    def return_url=(return_url)
+      if return_url.nil?
+        fail ArgumentError, 'return_url cannot be nil'
+      end
+
+      @return_url = return_url
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] state Value to be assigned
+    def state=(state)
+      if !state.nil? && state.to_s.length > 1024
+        fail ArgumentError, 'invalid value for "state", the character length must be smaller than or equal to 1024.'
+      end
+
+      @state = state
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] expires_at Value to be assigned
+    def expires_at=(expires_at)
+      if expires_at.nil?
+        fail ArgumentError, 'expires_at cannot be nil'
+      end
+
+      @expires_at = expires_at
+    end
+
+    # Custom attribute writer method with validation
+    # @param [Object] created_at Value to be assigned
+    def created_at=(created_at)
+      if created_at.nil?
+        fail ArgumentError, 'created_at cannot be nil'
+      end
+
+      @created_at = created_at
     end
 
     # Checks equality by comparing each attribute.
@@ -207,14 +246,12 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          id == o.id &&
-          name == o.name &&
-          description == o.description &&
-          products == o.products &&
-          fee_charged_to == o.fee_charged_to &&
-          auto_add_product_rule == o.auto_add_product_rule &&
-          webpage_style == o.webpage_style &&
-          email_style == o.email_style
+          connected_organization_member_id == o.connected_organization_member_id &&
+          url == o.url &&
+          return_url == o.return_url &&
+          state == o.state &&
+          expires_at == o.expires_at &&
+          created_at == o.created_at
     end
 
     # @see the `==` method
@@ -226,7 +263,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, description, products, fee_charged_to, auto_add_product_rule, webpage_style, email_style].hash
+      [connected_organization_member_id, url, return_url, state, expires_at, created_at].hash
     end
 
     # Builds the object from hash

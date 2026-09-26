@@ -24,7 +24,7 @@ module Tremendous
     # Description of the campaign
     attr_accessor :description
 
-    # List of IDs of products (different gift cards, charity, etc.) that are available in this campaign. 
+    # List of IDs of products (different gift cards, charity, etc.) that are available in this campaign.  On write, the special value `ALL_FEE_FREE` stands for every product in your catalog that carries no fee at the time of the call. 
     attr_accessor :products
 
     # Determines whether fees for premium products are added to the order total (`SENDER`) or deducted from the recipient's reward amount (`RECIPIENT`). Campaigns with `RECIPIENT` must include at least one fee-free product. 
@@ -88,7 +88,7 @@ module Tremendous
         :'id' => :'String',
         :'name' => :'String',
         :'description' => :'String',
-        :'products' => :'Array<String>',
+        :'products' => :'Array<ListCampaigns200ResponseCampaignsInnerProductsInner>',
         :'fee_charged_to' => :'String',
         :'auto_add_product_rule' => :'ListCampaigns200ResponseCampaignsInnerAutoAddProductRule',
         :'webpage_style' => :'ListCampaigns200ResponseCampaignsInnerWebpageStyle',
