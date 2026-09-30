@@ -108,7 +108,7 @@ module Tremendous
         :'redemption_method' => :'String',
         :'redeemed_at' => :'Time',
         :'geo' => :'ListFraudReviews200ResponseFraudReviewsInnerGeo',
-        :'reward' => :'OrderWithoutLinkRewardsInner',
+        :'reward' => :'RewardResponseReward',
         :'reviewed_by' => :'String',
         :'reviewed_at' => :'Time',
         :'redemption_method_account_hash' => :'String',

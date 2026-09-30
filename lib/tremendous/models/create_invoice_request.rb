@@ -148,9 +148,9 @@ module Tremendous
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @amount.nil?
-      currency_code_validator = EnumAttributeValidator.new('String', ["USD", "EUR", "GBP"])
+      currency_code_validator = EnumAttributeValidator.new('String', ["USD", "EUR", "GBP", "CAD"])
       return false unless currency_code_validator.valid?(@currency_code)
-      currency_validator = EnumAttributeValidator.new('String', ["USD", "EUR", "GBP"])
+      currency_validator = EnumAttributeValidator.new('String', ["USD", "EUR", "GBP", "CAD"])
       return false unless currency_validator.valid?(@currency)
       true
     end

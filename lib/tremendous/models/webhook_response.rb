@@ -14,61 +14,13 @@ require 'date'
 require 'time'
 
 module Tremendous
-  # With a campaign you can define the look & feel of how rewards are sent out. It also lets you set the available products (different gift cards, charity, etc.) recipients can choose from. 
-  class UpdateCampaign
-    attr_accessor :id
-
-    # Name of the campaign
-    attr_accessor :name
-
-    # Description of the campaign
-    attr_accessor :description
-
-    # List of IDs of products (different gift cards, charity, etc.) that are available in this campaign.  On write, the special value `ALL_FEE_FREE` stands for every product in your catalog that carries no fee at the time of the call. 
-    attr_accessor :products
-
-    # Determines whether fees for premium products are added to the order total (`SENDER`) or deducted from the recipient's reward amount (`RECIPIENT`). Campaigns with `RECIPIENT` must include at least one fee-free product. 
-    attr_accessor :fee_charged_to
-
-    attr_accessor :auto_add_product_rule
-
-    attr_accessor :webpage_style
-
-    attr_accessor :email_style
-
-    class EnumAttributeValidator
-      attr_reader :datatype
-      attr_reader :allowable_values
-
-      def initialize(datatype, allowable_values)
-        @allowable_values = allowable_values.map do |value|
-          case datatype.to_s
-          when /Integer/i
-            value.to_i
-          when /Float/i
-            value.to_f
-          else
-            value
-          end
-        end
-      end
-
-      def valid?(value)
-        !value || allowable_values.include?(value)
-      end
-    end
+  class WebhookResponse
+    attr_accessor :webhook
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'id' => :'id',
-        :'name' => :'name',
-        :'description' => :'description',
-        :'products' => :'products',
-        :'fee_charged_to' => :'fee_charged_to',
-        :'auto_add_product_rule' => :'auto_add_product_rule',
-        :'webpage_style' => :'webpage_style',
-        :'email_style' => :'email_style'
+        :'webhook' => :'webhook'
       }
     end
 
@@ -85,23 +37,13 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'id' => :'String',
-        :'name' => :'String',
-        :'description' => :'String',
-        :'products' => :'Array<CampaignBaseProductsInner>',
-        :'fee_charged_to' => :'String',
-        :'auto_add_product_rule' => :'ListCampaigns200ResponseCampaignsInnerAutoAddProductRule',
-        :'webpage_style' => :'ListCampaigns200ResponseCampaignsInnerWebpageStyle',
-        :'email_style' => :'ListCampaigns200ResponseCampaignsInnerEmailStyle'
+        :'webhook' => :'WebhookResponseWebhook'
       }
     end
 
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
-        :'description',
-        :'fee_charged_to',
-        :'auto_add_product_rule',
       ])
     end
 
@@ -109,50 +51,20 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::UpdateCampaign` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::WebhookResponse` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::UpdateCampaign`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::WebhookResponse`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'id')
-        self.id = attributes[:'id']
-      end
-
-      if attributes.key?(:'name')
-        self.name = attributes[:'name']
-      end
-
-      if attributes.key?(:'description')
-        self.description = attributes[:'description']
-      end
-
-      if attributes.key?(:'products')
-        if (value = attributes[:'products']).is_a?(Array)
-          self.products = value
-        end
-      end
-
-      if attributes.key?(:'fee_charged_to')
-        self.fee_charged_to = attributes[:'fee_charged_to']
-      end
-
-      if attributes.key?(:'auto_add_product_rule')
-        self.auto_add_product_rule = attributes[:'auto_add_product_rule']
-      end
-
-      if attributes.key?(:'webpage_style')
-        self.webpage_style = attributes[:'webpage_style']
-      end
-
-      if attributes.key?(:'email_style')
-        self.email_style = attributes[:'email_style']
+      if attributes.key?(:'webhook')
+        self.webhook = attributes[:'webhook']
       end
     end
 
@@ -161,11 +73,6 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if !@id.nil? && @id !~ pattern
-        invalid_properties.push("invalid value for \"id\", must conform to the pattern #{pattern}.")
-      end
-
       invalid_properties
     end
 
@@ -173,33 +80,7 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if !@id.nil? && @id !~ Regexp.new(/[A-Z0-9]{4,20}/)
-      fee_charged_to_validator = EnumAttributeValidator.new('String', ["SENDER", "RECIPIENT"])
-      return false unless fee_charged_to_validator.valid?(@fee_charged_to)
       true
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] id Value to be assigned
-    def id=(id)
-      if id.nil?
-        fail ArgumentError, 'id cannot be nil'
-      end
-
-      pattern = Regexp.new(/[A-Z0-9]{4,20}/)
-      if id !~ pattern
-        fail ArgumentError, "invalid value for \"id\", must conform to the pattern #{pattern}."
-      end
-
-      @id = id
-    end
-
-    # Custom attribute writer method for enum attributes. Any value is accepted
-    # so that enum values added to the API don't break deserialization on
-    # older versions of this gem.
-    # @param [Object] fee_charged_to Object to be assigned
-    def fee_charged_to=(fee_charged_to)
-      @fee_charged_to = fee_charged_to
     end
 
     # Checks equality by comparing each attribute.
@@ -207,14 +88,7 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          id == o.id &&
-          name == o.name &&
-          description == o.description &&
-          products == o.products &&
-          fee_charged_to == o.fee_charged_to &&
-          auto_add_product_rule == o.auto_add_product_rule &&
-          webpage_style == o.webpage_style &&
-          email_style == o.email_style
+          webhook == o.webhook
     end
 
     # @see the `==` method
@@ -226,7 +100,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, description, products, fee_charged_to, auto_add_product_rule, webpage_style, email_style].hash
+      [webhook].hash
     end
 
     # Builds the object from hash

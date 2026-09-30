@@ -14,17 +14,13 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class FraudRule400Response
-    # HTTP status code of the response
-    attr_accessor :status
-
-    attr_accessor :errors
+  class TopupResponse
+    attr_accessor :topup
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'status' => :'status',
-        :'errors' => :'errors'
+        :'topup' => :'topup'
       }
     end
 
@@ -41,8 +37,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'status' => :'Integer',
-        :'errors' => :'ListRewards401ResponseErrors'
+        :'topup' => :'ListTopups200ResponseTopupsInner'
       }
     end
 
@@ -56,26 +51,20 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::FraudRule400Response` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::TopupResponse` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::FraudRule400Response`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::TopupResponse`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'status')
-        self.status = attributes[:'status']
-      end
-
-      if attributes.key?(:'errors')
-        self.errors = attributes[:'errors']
-      else
-        self.errors = nil
+      if attributes.key?(:'topup')
+        self.topup = attributes[:'topup']
       end
     end
 
@@ -84,10 +73,6 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @errors.nil?
-        invalid_properties.push('invalid value for "errors", errors cannot be nil.')
-      end
-
       invalid_properties
     end
 
@@ -95,18 +80,7 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @errors.nil?
       true
-    end
-
-    # Custom attribute writer method with validation
-    # @param [Object] errors Value to be assigned
-    def errors=(errors)
-      if errors.nil?
-        fail ArgumentError, 'errors cannot be nil'
-      end
-
-      @errors = errors
     end
 
     # Checks equality by comparing each attribute.
@@ -114,8 +88,7 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          status == o.status &&
-          errors == o.errors
+          topup == o.topup
     end
 
     # @see the `==` method
@@ -127,7 +100,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [status, errors].hash
+      [topup].hash
     end
 
     # Builds the object from hash

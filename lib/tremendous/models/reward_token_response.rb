@@ -14,14 +14,13 @@ require 'date'
 require 'time'
 
 module Tremendous
-  class DeleteFraudRule200Response
-    # A description of the result
-    attr_accessor :message
+  class RewardTokenResponse
+    attr_accessor :reward
 
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'message' => :'message'
+        :'reward' => :'reward'
       }
     end
 
@@ -38,7 +37,7 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'message' => :'String'
+        :'reward' => :'RewardTokenResponseReward'
       }
     end
 
@@ -52,22 +51,22 @@ module Tremendous
     # @param [Hash] attributes Model attributes in the form of hash
     def initialize(attributes = {})
       if (!attributes.is_a?(Hash))
-        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::DeleteFraudRule200Response` initialize method"
+        fail ArgumentError, "The input argument (attributes) must be a hash in `Tremendous::RewardTokenResponse` initialize method"
       end
 
       # check to see if the attribute exists and convert string to symbol for hash key
       acceptable_attribute_map = self.class.acceptable_attribute_map
       attributes = attributes.each_with_object({}) { |(k, v), h|
         if (!acceptable_attribute_map.key?(k.to_sym))
-          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::DeleteFraudRule200Response`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
+          fail ArgumentError, "`#{k}` is not a valid attribute in `Tremendous::RewardTokenResponse`. Please check the name to make sure it's valid. List of attributes: " + acceptable_attribute_map.keys.inspect
         end
         h[k.to_sym] = v
       }
 
-      if attributes.key?(:'message')
-        self.message = attributes[:'message']
+      if attributes.key?(:'reward')
+        self.reward = attributes[:'reward']
       else
-        self.message = nil
+        self.reward = nil
       end
     end
 
@@ -76,8 +75,8 @@ module Tremendous
     def list_invalid_properties
       warn '[DEPRECATED] the `list_invalid_properties` method is obsolete'
       invalid_properties = Array.new
-      if @message.nil?
-        invalid_properties.push('invalid value for "message", message cannot be nil.')
+      if @reward.nil?
+        invalid_properties.push('invalid value for "reward", reward cannot be nil.')
       end
 
       invalid_properties
@@ -87,18 +86,18 @@ module Tremendous
     # @return true if the model is valid
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
-      return false if @message.nil?
+      return false if @reward.nil?
       true
     end
 
     # Custom attribute writer method with validation
-    # @param [Object] message Value to be assigned
-    def message=(message)
-      if message.nil?
-        fail ArgumentError, 'message cannot be nil'
+    # @param [Object] reward Value to be assigned
+    def reward=(reward)
+      if reward.nil?
+        fail ArgumentError, 'reward cannot be nil'
       end
 
-      @message = message
+      @reward = reward
     end
 
     # Checks equality by comparing each attribute.
@@ -106,7 +105,7 @@ module Tremendous
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          message == o.message
+          reward == o.reward
     end
 
     # @see the `==` method
@@ -118,7 +117,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [message].hash
+      [reward].hash
     end
 
     # Builds the object from hash
