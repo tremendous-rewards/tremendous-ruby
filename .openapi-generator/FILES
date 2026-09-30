@@ -2,11 +2,10 @@ lib/tremendous.rb
 lib/tremendous/api/tremendous_api.rb
 lib/tremendous/api_client.rb
 lib/tremendous/api_error.rb
+lib/tremendous/api_model_base.rb
 lib/tremendous/configuration.rb
 lib/tremendous/models/allow_email.rb
-lib/tremendous/models/allow_email1.rb
 lib/tremendous/models/allow_ip.rb
-lib/tremendous/models/allow_ip1.rb
 lib/tremendous/models/balance_transaction.rb
 lib/tremendous/models/balance_transaction_order.rb
 lib/tremendous/models/balance_transaction_order_payment.rb
@@ -211,9 +210,7 @@ lib/tremendous/models/resend_reward_request.rb
 lib/tremendous/models/review_country.rb
 lib/tremendous/models/review_country1.rb
 lib/tremendous/models/review_email.rb
-lib/tremendous/models/review_email1.rb
 lib/tremendous/models/review_ip.rb
-lib/tremendous/models/review_ip1.rb
 lib/tremendous/models/review_redeemed_rewards_amount.rb
 lib/tremendous/models/review_redeemed_rewards_count.rb
 lib/tremendous/models/review_vpn.rb
