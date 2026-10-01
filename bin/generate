@@ -41,7 +41,8 @@ docker run --rm \
   -g ruby \
   -o /output \
   -p library=faraday,gemName=tremendous \
-  -t /output/tmp/templates/ruby
+  -t /output/tmp/templates/ruby \
+  --openapi-normalizer SIMPLIFY_ONEOF_ANYOF=false
 
 # The generator never deletes files it stops producing, so models removed
 # from the spec accumulate in the repo. Drop tracked model files that are
