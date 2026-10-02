@@ -1,19 +1,26 @@
-## Step 1 - Re-generate the SDK source code
+## Step 1 - The SDK source code is re-generated
 
-The source code from this repo is generated using [OpenAPI generator][1] and the Open API specification for the Tremendous API. The `.rb` files can be re-generated and compiled with the following commands:
+The source code from this repo is generated using [OpenAPI generator][1] and the Open API
+specification for the Tremendous API. Every 6 hours, the [update-sdk.yml](.github/workflows/update-sdk.yml)
+workflow re-generates the `.rb` files and opens a `chore: regenerate SDK` Pull Request if the
+specification changed.
+
+To re-generate the files locally, run the following command:
 
 ```console
 bin/generate
 ```
 
-After that, please review the changes to double check that the changes to the API spec were
-generated correctly.
+## Step 2 - Review and merge the Pull Request
 
-Please open a Pull Request with the file changes and wait for the test pipeline before merging it
-to main. Make sure to use [Conventional Commit messages]([2]) to help automating the process -
-specially `feat:` and `fix:`.
+Please review the Pull Request to double check that the changes to the API spec were generated
+correctly.
 
-## Step 2 - Merge the Release Please Pull Request
+The Pull Request description is a list of [Conventional Commit messages][2] that become the
+changelog entries - specially `feat:` and `fix:`. Check that they match the changes, wait for the
+test pipeline, and squash and merge the Pull Request to main.
+
+## Step 3 - Merge the Release Please Pull Request
 
 [Release Please](https://github.com/googleapis/release-please) will maintain a "Release PR" that
 consolidates updates to `CHANGELOG.md` (based on the git history) and updating the `lib/tremendous/version.rb`
