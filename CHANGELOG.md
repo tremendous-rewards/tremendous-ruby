@@ -1,5 +1,24 @@
 # Changelog
 
+## [5.30.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.29.0...tremendous_ruby/v5.30.0) (2026-10-05)
+
+
+### Features
+
+* add `address_2` to KYB prefill for connected orgs ([bdecc2b](https://github.com/tremendous-rewards/tremendous-ruby/commit/bdecc2ba2a6630bd346acac139b3f53d8cb70d1e))
+* add `ALL_FEE_FREE` special value for campaign `products` ([bdecc2b](https://github.com/tremendous-rewards/tremendous-ruby/commit/bdecc2ba2a6630bd346acac139b3f53d8cb70d1e))
+* add `CAD` currency support for connected orgs ([bdecc2b](https://github.com/tremendous-rewards/tremendous-ruby/commit/bdecc2ba2a6630bd346acac139b3f53d8cb70d1e))
+* add `id` filter param to list products endpoint ([bdecc2b](https://github.com/tremendous-rewards/tremendous-ruby/commit/bdecc2ba2a6630bd346acac139b3f53d8cb70d1e))
+* add `state` field to connected org member sessions ([bdecc2b](https://github.com/tremendous-rewards/tremendous-ruby/commit/bdecc2ba2a6630bd346acac139b3f53d8cb70d1e))
+* add dedicated response models for multiple resources ([bdecc2b](https://github.com/tremendous-rewards/tremendous-ruby/commit/bdecc2ba2a6630bd346acac139b3f53d8cb70d1e))
+* type campaign `products` as structured objects ([bdecc2b](https://github.com/tremendous-rewards/tremendous-ruby/commit/bdecc2ba2a6630bd346acac139b3f53d8cb70d1e))
+
+
+### Bug Fixes
+
+* remove redundant error response models (400, 403, 422, 429) ([bdecc2b](https://github.com/tremendous-rewards/tremendous-ruby/commit/bdecc2ba2a6630bd346acac139b3f53d8cb70d1e))
+* unify fraud rule responses to single `FraudRule200Response` ([bdecc2b](https://github.com/tremendous-rewards/tremendous-ruby/commit/bdecc2ba2a6630bd346acac139b3f53d8cb70d1e))
+
 ## [5.29.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.28.0...tremendous_ruby/v5.29.0) (2026-08-04)
 
 
