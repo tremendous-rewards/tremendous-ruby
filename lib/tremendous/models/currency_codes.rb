@@ -57,7 +57,6 @@ module Tremendous
     GTQ = "GTQ".freeze
     HKD = "HKD".freeze
     HNL = "HNL".freeze
-    HRK = "HRK".freeze
     HUF = "HUF".freeze
     IDR = "IDR".freeze
     ILS = "ILS".freeze
@@ -128,7 +127,7 @@ module Tremendous
     ZAR = "ZAR".freeze
 
     def self.all_vars
-      @all_vars ||= [USD, CAD, EUR, AED, AFN, ALL, AMD, ARS, AUD, AZN, BAM, BDT, BHD, BIF, BND, BOB, BRL, BWP, BYN, BZD, CDF, CHF, CLP, CNY, COP, CRC, CVE, CZK, DJF, DKK, DOP, DZD, EGP, ERN, ETB, GBP, GEL, GHS, GNF, GTQ, HKD, HNL, HRK, HUF, IDR, ILS, INR, IQD, IRR, ISK, JMD, JOD, JPY, KES, KHR, KRW, KWD, KZT, LBP, LKR, MAD, MDL, MGA, MKD, MMK, MOP, MUR, MXN, MYR, MZN, NAD, NGN, NIO, NOK, NPR, NZD, OMR, PAB, PEN, PHP, PKR, PLN, PYG, QAR, RON, RSD, RUB, RWF, SAR, SDG, SEK, SGD, SOS, SYP, THB, TND, TOP, TRY, TTD, TWD, TZS, UAH, UGX, UYU, UZS, VEF, VND, XAF, XOF, YER, ZAR].freeze
+      @all_vars ||= [USD, CAD, EUR, AED, AFN, ALL, AMD, ARS, AUD, AZN, BAM, BDT, BHD, BIF, BND, BOB, BRL, BWP, BYN, BZD, CDF, CHF, CLP, CNY, COP, CRC, CVE, CZK, DJF, DKK, DOP, DZD, EGP, ERN, ETB, GBP, GEL, GHS, GNF, GTQ, HKD, HNL, HUF, IDR, ILS, INR, IQD, IRR, ISK, JMD, JOD, JPY, KES, KHR, KRW, KWD, KZT, LBP, LKR, MAD, MDL, MGA, MKD, MMK, MOP, MUR, MXN, MYR, MZN, NAD, NGN, NIO, NOK, NPR, NZD, OMR, PAB, PEN, PHP, PKR, PLN, PYG, QAR, RON, RSD, RUB, RWF, SAR, SDG, SEK, SGD, SOS, SYP, THB, TND, TOP, TRY, TTD, TWD, TZS, UAH, UGX, UYU, UZS, VEF, VND, XAF, XOF, YER, ZAR].freeze
     end
 
     # Builds the enum from string
