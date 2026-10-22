@@ -38,7 +38,7 @@ module Tremendous
 
     attr_accessor :recipient
 
-    # Timestamp of reward delivery within the next year. Note that if date-time is provided, the time values will be ignored.
+    # Date of reward delivery, within the next year. The reward is delivered at 12pm in your organization's time zone on that date, or at 12pm Eastern Time when the organization has no time zone set. Note that if date-time is provided, the time values will be ignored.
     attr_accessor :deliver_at
 
     attr_accessor :custom_fields
