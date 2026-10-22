@@ -30,7 +30,7 @@ module Tremendous
     # Additional classification for the product. Only applicable to products with a `category` of `merchant_card`. Possible subcategories:  * `beauty_and_health` * `digital_financial_services` * `electronics` * `entertainment` * `fashion` * `food_and_drink` * `general_merchandise` * `grocery_and_supermarkets` * `home_and_living` * `mobility_and_fuel` * `sports_and_outdoor_gear` * `travel_and_hospitality` 
     attr_accessor :subcategory
 
-    # Legal disclosures for this product. Can be in HTML format.
+    # Legal disclosures for this product, as an HTML fragment that uses basic formatting tags such as paragraphs, lists, links, and emphasis. Some products return plain text. Sanitize the value before rendering it.
     attr_accessor :disclosure
 
     # Products are restricted in their usage based on the amount of the reward. The `skus` array defines bands of denominations in which this product may be used for payouts.  The skus apply to orders in any of the product's `currency_codes`. 

@@ -34,6 +34,9 @@ module Tremendous
     # A brief description of the transaction
     attr_accessor :description
 
+    # ID of the payment behind the transaction, shown as \"Payment ID\" in the dashboard's balance transactions export and as \"Prefund confirmation\" on deposit receipts. Use it to match deposits, including auto-reloads, against your bank or card statements.  Only present on transactions tied to a payment into your balance, such as deposits, the credit recorded when an order is paid by card or bank transfer, and transfers between organizations. Omitted otherwise, for example on the debit for an order paid from your balance. 
+    attr_accessor :payment_id
+
     attr_accessor :order
 
     # Attribute mapping from ruby-style variable name to JSON key.
@@ -45,6 +48,7 @@ module Tremendous
         :'balance' => :'balance',
         :'action' => :'action',
         :'description' => :'description',
+        :'payment_id' => :'payment_id',
         :'order' => :'order'
       }
     end
@@ -68,6 +72,7 @@ module Tremendous
         :'balance' => :'Float',
         :'action' => :'String',
         :'description' => :'String',
+        :'payment_id' => :'String',
         :'order' => :'ListBalanceTransactions200ResponseTransactionsInnerOrder'
       }
     end
@@ -128,6 +133,10 @@ module Tremendous
         self.description = attributes[:'description']
       else
         self.description = nil
+      end
+
+      if attributes.key?(:'payment_id')
+        self.payment_id = attributes[:'payment_id']
       end
 
       if attributes.key?(:'order')
@@ -251,6 +260,7 @@ module Tremendous
           balance == o.balance &&
           action == o.action &&
           description == o.description &&
+          payment_id == o.payment_id &&
           order == o.order
     end
 
@@ -263,7 +273,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [created_at, amount, currency_code, balance, action, description, order].hash
+      [created_at, amount, currency_code, balance, action, description, payment_id, order].hash
     end
 
     # Builds the object from hash
