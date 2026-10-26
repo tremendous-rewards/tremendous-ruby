@@ -16,16 +16,20 @@ require 'time'
 module Tremendous
   class FraudReviewRedemptionMethod
     BANK_TRANSFER = "bank transfer".freeze
+    CASH_APP = "cash app".freeze
     CHARITY = "charity".freeze
+    CRYPTO = "crypto".freeze
     INSTANT_DEBIT_TRANSFER = "instant debit transfer".freeze
     INTERNATIONAL_BANK_TRANSFER = "international bank transfer".freeze
     MERCHANT_CARD = "merchant card".freeze
     PAYPAL = "paypal".freeze
+    RECIPIENT_PROMOTION = "recipient_promotion".freeze
     VENMO = "venmo".freeze
     VISA_CARD = "visa card".freeze
+    ZELLE = "zelle".freeze
 
     def self.all_vars
-      @all_vars ||= [BANK_TRANSFER, CHARITY, INSTANT_DEBIT_TRANSFER, INTERNATIONAL_BANK_TRANSFER, MERCHANT_CARD, PAYPAL, VENMO, VISA_CARD].freeze
+      @all_vars ||= [BANK_TRANSFER, CASH_APP, CHARITY, CRYPTO, INSTANT_DEBIT_TRANSFER, INTERNATIONAL_BANK_TRANSFER, MERCHANT_CARD, PAYPAL, RECIPIENT_PROMOTION, VENMO, VISA_CARD, ZELLE].freeze
     end
 
     # Builds the enum from string
