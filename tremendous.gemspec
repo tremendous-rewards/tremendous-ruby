@@ -6,6 +6,7 @@ Gem::Specification.new do |spec|
   spec.version     = Tremendous::VERSION
   spec.platform    = Gem::Platform::RUBY
   spec.licenses      = ["MIT"]
+  spec.required_ruby_version = ">= 3.3"
   spec.homepage      = "https://github.com/tremendous-rewards/tremendous-ruby"
   spec.summary       = "Tremendous Ruby API SDK"
   spec.authors       = ["Tremendous Developers"]
