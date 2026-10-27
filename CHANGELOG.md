@@ -1,5 +1,17 @@
 # Changelog
 
+## [6.0.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.30.0...tremendous_ruby/v6.0.0) (2026-10-26)
+
+
+### ⚠ BREAKING CHANGES
+
+* drop support for Ruby 3.1 and 3.2 ([#185](https://github.com/tremendous-rewards/tremendous-ruby/issues/185))
+
+### Features
+
+* add fraud review allow list reasons ([b94b6cb](https://github.com/tremendous-rewards/tremendous-ruby/commit/b94b6cb8c046eb7322575baf0cd62d19e949d71c))
+* drop support for Ruby 3.1 and 3.2 ([#185](https://github.com/tremendous-rewards/tremendous-ruby/issues/185)) ([0561c49](https://github.com/tremendous-rewards/tremendous-ruby/commit/0561c4939aadcca85517dc3f947bafde9e021a70))
+
 ## [5.30.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.29.0...tremendous_ruby/v5.30.0) (2026-10-05)
 
 
