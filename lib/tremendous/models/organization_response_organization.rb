@@ -27,6 +27,9 @@ module Tremendous
     # Currency used for this organization's balances, orders, and transactions.
     attr_accessor :currency_code
 
+    # The organization's time zone as a canonical IANA identifier. Returns `null` if not configured.
+    attr_accessor :timezone
+
     # Status of the organization. Organizations need to be approved to be able to use them to send out rewards.
     attr_accessor :status
 
@@ -62,6 +65,7 @@ module Tremendous
         :'name' => :'name',
         :'website' => :'website',
         :'currency_code' => :'currency_code',
+        :'timezone' => :'timezone',
         :'status' => :'status',
         :'created_at' => :'created_at'
       }
@@ -84,6 +88,7 @@ module Tremendous
         :'name' => :'String',
         :'website' => :'String',
         :'currency_code' => :'String',
+        :'timezone' => :'String',
         :'status' => :'String',
         :'created_at' => :'Date'
       }
@@ -92,6 +97,7 @@ module Tremendous
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'timezone',
       ])
     end
 
@@ -129,6 +135,10 @@ module Tremendous
 
       if attributes.key?(:'currency_code')
         self.currency_code = attributes[:'currency_code']
+      end
+
+      if attributes.key?(:'timezone')
+        self.timezone = attributes[:'timezone']
       end
 
       if attributes.key?(:'status')
@@ -225,6 +235,7 @@ module Tremendous
           name == o.name &&
           website == o.website &&
           currency_code == o.currency_code &&
+          timezone == o.timezone &&
           status == o.status &&
           created_at == o.created_at
     end
@@ -238,7 +249,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, website, currency_code, status, created_at].hash
+      [id, name, website, currency_code, timezone, status, created_at].hash
     end
 
     # Builds the object from hash
