@@ -1,5 +1,14 @@
 # Changelog
 
+## [6.1.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v6.0.0...tremendous_ruby/v6.1.0) (2026-11-05)
+
+
+### Features
+
+* add `timezone` to create organization request ([8997df5](https://github.com/tremendous-rewards/tremendous-ruby/commit/8997df5f7b9ac8ac4adb86a6024b92693220e70e))
+* add nullable `timezone` field to Organization ([8997df5](https://github.com/tremendous-rewards/tremendous-ruby/commit/8997df5f7b9ac8ac4adb86a6024b92693220e70e))
+* add nullable `timezone` to report creation ([8997df5](https://github.com/tremendous-rewards/tremendous-ruby/commit/8997df5f7b9ac8ac4adb86a6024b92693220e70e))
+
 ## [6.0.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.30.0...tremendous_ruby/v6.0.0) (2026-10-26)
 
 
