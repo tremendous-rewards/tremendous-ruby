@@ -21,6 +21,9 @@ module Tremendous
     # Format the report will be generated in. <table> <thead> <tr> <th>Format</th> <th>Description</th> </tr> </thead> <tbody> <tr> <td><code>csv</code></td> <td>CSV format for report</td> </tr> </tbody> </table>
     attr_accessor :format
 
+    # Time zone used to interpret date filters and display timestamps in the generated report. Accepts IANA time zone identifiers such as America/New_York or Europe/London, and UTC. Aliases such as US/Eastern are accepted and normalized to their canonical identifier (America/New_York). Defaults to UTC when omitted, null, or blank. Reports created through the API do not inherit your organization's dashboard time zone.
+    attr_accessor :timezone
+
     attr_accessor :filters
 
     class EnumAttributeValidator
@@ -50,6 +53,7 @@ module Tremendous
       {
         :'report_type' => :'report_type',
         :'format' => :'format',
+        :'timezone' => :'timezone',
         :'filters' => :'filters'
       }
     end
@@ -69,6 +73,7 @@ module Tremendous
       {
         :'report_type' => :'String',
         :'format' => :'String',
+        :'timezone' => :'String',
         :'filters' => :'CreateReportRequestFilters'
       }
     end
@@ -76,6 +81,7 @@ module Tremendous
     # List of attributes with nullable: true
     def self.openapi_nullable
       Set.new([
+        :'timezone',
         :'filters'
       ])
     end
@@ -106,6 +112,10 @@ module Tremendous
         self.format = attributes[:'format']
       else
         self.format = nil
+      end
+
+      if attributes.key?(:'timezone')
+        self.timezone = attributes[:'timezone']
       end
 
       if attributes.key?(:'filters')
@@ -173,6 +183,7 @@ module Tremendous
       self.class == o.class &&
           report_type == o.report_type &&
           format == o.format &&
+          timezone == o.timezone &&
           filters == o.filters
     end
 
@@ -185,7 +196,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [report_type, format, filters].hash
+      [report_type, format, timezone, filters].hash
     end
 
     # Builds the object from hash

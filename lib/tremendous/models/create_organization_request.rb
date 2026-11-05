@@ -32,6 +32,9 @@ module Tremendous
     # Currency code for the new organization. Defaults to the current organization's currency if not provided.
     attr_accessor :currency_code
 
+    # IANA time zone identifier for the new organization, such as America/New_York or Europe/London. Aliases such as US/Eastern are accepted and converted to their canonical identifier (America/New_York). Defaults to the time zone of the organization associated with the API key used for the request if omitted or blank. If that organization has no time zone, the new organization remains unset.
+    attr_accessor :timezone
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
@@ -40,7 +43,8 @@ module Tremendous
         :'with_api_key' => :'with_api_key',
         :'copy_settings' => :'copy_settings',
         :'phone' => :'phone',
-        :'currency_code' => :'currency_code'
+        :'currency_code' => :'currency_code',
+        :'timezone' => :'timezone'
       }
     end
 
@@ -62,7 +66,8 @@ module Tremendous
         :'with_api_key' => :'Boolean',
         :'copy_settings' => :'CreateOrganizationRequestCopySettings',
         :'phone' => :'String',
-        :'currency_code' => :'String'
+        :'currency_code' => :'String',
+        :'timezone' => :'String'
       }
     end
 
@@ -116,6 +121,10 @@ module Tremendous
 
       if attributes.key?(:'currency_code')
         self.currency_code = attributes[:'currency_code']
+      end
+
+      if attributes.key?(:'timezone')
+        self.timezone = attributes[:'timezone']
       end
     end
 
@@ -189,7 +198,8 @@ module Tremendous
           with_api_key == o.with_api_key &&
           copy_settings == o.copy_settings &&
           phone == o.phone &&
-          currency_code == o.currency_code
+          currency_code == o.currency_code &&
+          timezone == o.timezone
     end
 
     # @see the `==` method
@@ -201,7 +211,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [name, website, with_api_key, copy_settings, phone, currency_code].hash
+      [name, website, with_api_key, copy_settings, phone, currency_code, timezone].hash
     end
 
     # Builds the object from hash

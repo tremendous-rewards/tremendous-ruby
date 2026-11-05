@@ -31,6 +31,9 @@ module Tremendous
     # Currency code for the new organization. Defaults to the current organization's currency if not provided.
     attr_accessor :currency_code
 
+    # The organization's time zone as a canonical IANA identifier. Returns `null` if not configured.
+    attr_accessor :timezone
+
     # Timestamp of when the organization has been created. 
     attr_accessor :created_at
 
@@ -46,6 +49,7 @@ module Tremendous
         :'copy_settings' => :'copy_settings',
         :'phone' => :'phone',
         :'currency_code' => :'currency_code',
+        :'timezone' => :'timezone',
         :'created_at' => :'created_at',
         :'api_key' => :'api_key'
       }
@@ -70,6 +74,7 @@ module Tremendous
         :'copy_settings' => :'CreateOrganizationRequestCopySettings',
         :'phone' => :'String',
         :'currency_code' => :'String',
+        :'timezone' => :'String',
         :'created_at' => :'Date',
         :'api_key' => :'String'
       }
@@ -79,6 +84,7 @@ module Tremendous
     def self.openapi_nullable
       Set.new([
         :'phone',
+        :'timezone',
       ])
     end
 
@@ -124,6 +130,10 @@ module Tremendous
 
       if attributes.key?(:'currency_code')
         self.currency_code = attributes[:'currency_code']
+      end
+
+      if attributes.key?(:'timezone')
+        self.timezone = attributes[:'timezone']
       end
 
       if attributes.key?(:'created_at')
@@ -212,6 +222,7 @@ module Tremendous
           copy_settings == o.copy_settings &&
           phone == o.phone &&
           currency_code == o.currency_code &&
+          timezone == o.timezone &&
           created_at == o.created_at &&
           api_key == o.api_key
     end
@@ -225,7 +236,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, website, copy_settings, phone, currency_code, created_at, api_key].hash
+      [id, name, website, copy_settings, phone, currency_code, timezone, created_at, api_key].hash
     end
 
     # Builds the object from hash

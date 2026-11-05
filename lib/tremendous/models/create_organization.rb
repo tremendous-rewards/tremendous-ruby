@@ -34,6 +34,9 @@ module Tremendous
     # Currency code for the new organization. Defaults to the current organization's currency if not provided.
     attr_accessor :currency_code
 
+    # IANA time zone identifier for the new organization, such as America/New_York or Europe/London. Aliases such as US/Eastern are accepted and converted to their canonical identifier (America/New_York). Defaults to the time zone of the organization associated with the API key used for the request if omitted or blank. If that organization has no time zone, the new organization remains unset.
+    attr_accessor :timezone
+
     # Timestamp of when the organization has been created. 
     attr_accessor :created_at
 
@@ -47,6 +50,7 @@ module Tremendous
         :'copy_settings' => :'copy_settings',
         :'phone' => :'phone',
         :'currency_code' => :'currency_code',
+        :'timezone' => :'timezone',
         :'created_at' => :'created_at'
       }
     end
@@ -71,6 +75,7 @@ module Tremendous
         :'copy_settings' => :'CreateOrganizationRequestCopySettings',
         :'phone' => :'String',
         :'currency_code' => :'String',
+        :'timezone' => :'String',
         :'created_at' => :'Date'
       }
     end
@@ -129,6 +134,10 @@ module Tremendous
 
       if attributes.key?(:'currency_code')
         self.currency_code = attributes[:'currency_code']
+      end
+
+      if attributes.key?(:'timezone')
+        self.timezone = attributes[:'timezone']
       end
 
       if attributes.key?(:'created_at')
@@ -229,6 +238,7 @@ module Tremendous
           copy_settings == o.copy_settings &&
           phone == o.phone &&
           currency_code == o.currency_code &&
+          timezone == o.timezone &&
           created_at == o.created_at
     end
 
@@ -241,7 +251,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [id, name, website, with_api_key, copy_settings, phone, currency_code, created_at].hash
+      [id, name, website, with_api_key, copy_settings, phone, currency_code, timezone, created_at].hash
     end
 
     # Builds the object from hash
