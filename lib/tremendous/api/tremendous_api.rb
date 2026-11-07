@@ -218,70 +218,6 @@ module Tremendous
       return data, status_code, headers
     end
 
-    # Create API key
-    # Creates a new API key. The API key used to make the request will remain active.  Created API keys are generated randomly and returned in the response. **You cannot retrieve them again.** 
-    # @param [Hash] opts the optional parameters
-    # @option opts [CreateApiKeyRequest] :create_api_key_request Optional settings for the new API key
-    # @return [CreateApiKey200Response]
-    def create_api_key(opts = {})
-      data, _status_code, _headers = create_api_key_with_http_info(opts)
-      data
-    end
-
-    # Create API key
-    # Creates a new API key. The API key used to make the request will remain active.  Created API keys are generated randomly and returned in the response. **You cannot retrieve them again.** 
-    # @param [Hash] opts the optional parameters
-    # @option opts [CreateApiKeyRequest] :create_api_key_request Optional settings for the new API key
-    # @return [Array<(CreateApiKey200Response, Integer, Hash)>] CreateApiKey200Response data, response status code and response headers
-    def create_api_key_with_http_info(opts = {})
-      if @api_client.config.debugging
-        @api_client.config.logger.debug 'Calling API: TremendousApi.create_api_key ...'
-      end
-      # resource path
-      local_var_path = '/organizations/create_api_key'
-
-      # query parameters
-      query_params = opts[:query_params] || {}
-
-      # header parameters
-      header_params = opts[:header_params] || {}
-      # HTTP header 'Accept' (if needed)
-      header_params['Accept'] = @api_client.select_header_accept(['application/json']) unless header_params['Accept']
-      # HTTP header 'Content-Type'
-      content_type = @api_client.select_header_content_type(['application/json'])
-      if !content_type.nil?
-          header_params['Content-Type'] = content_type
-      end
-
-      # form parameters
-      form_params = opts[:form_params] || {}
-
-      # http body (model)
-      post_body = opts[:debug_body] || @api_client.object_to_http_body(opts[:'create_api_key_request'])
-
-      # return_type
-      return_type = opts[:debug_return_type] || 'CreateApiKey200Response'
-
-      # auth_names
-      auth_names = opts[:debug_auth_names] || ['BearerApiKey']
-
-      new_options = opts.merge(
-        :operation => :"TremendousApi.create_api_key",
-        :header_params => header_params,
-        :query_params => query_params,
-        :form_params => form_params,
-        :body => post_body,
-        :auth_names => auth_names,
-        :return_type => return_type
-      )
-
-      data, status_code, headers = @api_client.call_api(:POST, local_var_path, new_options)
-      if @api_client.config.debugging
-        @api_client.config.logger.debug "API called: TremendousApi#create_api_key\nData: #{data.inspect}\nStatus code: #{status_code}\nHeaders: #{headers}"
-      end
-      return data, status_code, headers
-    end
-
     # Create campaign
     # @param create_campaign_request [CreateCampaignRequest] Campaign details
     # @param [Hash] opts the optional parameters
@@ -695,7 +631,7 @@ module Tremendous
     end
 
     # Create member
-    # Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly. These actions include adding funding sources to the organization, creating Campaigns, and more.  ### Permissions  Members can have a role that determine their permissions within the organization. Check the Roles API for the available roles.  To create members of a sub-organizations [create an API key for that organization](/reference/post_organizations-id-create-api-key) first, then use the new API key in the create member request.  ### Inviting new members  After creating a member, an automatic invite is sent to the email address. If the user is not registered yet, that person will then need to sign up for a Tremendous account.  > ❗️ Automatic invitations are not available in the sandbox > > You must manually use the returned `invite_url` field in the payload instead. 
+    # Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly. These actions include adding funding sources to the organization, creating Campaigns, and more.  ### Permissions  Members can have a role that determine their permissions within the organization. Check the Roles API for the available roles.  To create members of a sub-organization, use an API key for that organization. You can create one in the Tremendous dashboard.  ### Inviting new members  After creating a member, an automatic invite is sent to the email address. If the user is not registered yet, that person will then need to sign up for a Tremendous account.  > ❗️ Automatic invitations are not available in the sandbox > > You must manually use the returned `invite_url` field in the payload instead. 
     # @param create_member_request [CreateMemberRequest] Member details
     # @param [Hash] opts the optional parameters
     # @return [CreateMember200Response]
@@ -705,7 +641,7 @@ module Tremendous
     end
 
     # Create member
-    # Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly. These actions include adding funding sources to the organization, creating Campaigns, and more.  ### Permissions  Members can have a role that determine their permissions within the organization. Check the Roles API for the available roles.  To create members of a sub-organizations [create an API key for that organization](/reference/post_organizations-id-create-api-key) first, then use the new API key in the create member request.  ### Inviting new members  After creating a member, an automatic invite is sent to the email address. If the user is not registered yet, that person will then need to sign up for a Tremendous account.  &gt; ❗️ Automatic invitations are not available in the sandbox &gt; &gt; You must manually use the returned &#x60;invite_url&#x60; field in the payload instead. 
+    # Each organization has one or more users that can access and manage that organization. These users are called members.  Members can take actions via the Tremendous web dashboard directly. These actions include adding funding sources to the organization, creating Campaigns, and more.  ### Permissions  Members can have a role that determine their permissions within the organization. Check the Roles API for the available roles.  To create members of a sub-organization, use an API key for that organization. You can create one in the Tremendous dashboard.  ### Inviting new members  After creating a member, an automatic invite is sent to the email address. If the user is not registered yet, that person will then need to sign up for a Tremendous account.  &gt; ❗️ Automatic invitations are not available in the sandbox &gt; &gt; You must manually use the returned &#x60;invite_url&#x60; field in the payload instead. 
     # @param create_member_request [CreateMemberRequest] Member details
     # @param [Hash] opts the optional parameters
     # @return [Array<(CreateMember200Response, Integer, Hash)>] CreateMember200Response data, response status code and response headers
@@ -3324,7 +3260,7 @@ module Tremendous
     end
 
     # List members
-    # To list members of a sub-organization [create an API key for that organization](/reference/post_organizations-id-create-api-key) first, then use the new API key in the list members request. 
+    # To list members of a sub-organization, use an API key for that organization. You can create one in the Tremendous dashboard. 
     # @param [Hash] opts the optional parameters
     # @return [ListMembers200Response]
     def list_members(opts = {})
@@ -3333,7 +3269,7 @@ module Tremendous
     end
 
     # List members
-    # To list members of a sub-organization [create an API key for that organization](/reference/post_organizations-id-create-api-key) first, then use the new API key in the list members request. 
+    # To list members of a sub-organization, use an API key for that organization. You can create one in the Tremendous dashboard. 
     # @param [Hash] opts the optional parameters
     # @return [Array<(ListMembers200Response, Integer, Hash)>] ListMembers200Response data, response status code and response headers
     def list_members_with_http_info(opts = {})
