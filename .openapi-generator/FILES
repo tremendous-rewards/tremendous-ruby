@@ -25,8 +25,6 @@ lib/tremendous/models/connected_organization_member_session_response_connected_o
 lib/tremendous/models/connected_organization_organization.rb
 lib/tremendous/models/connected_organization_response.rb
 lib/tremendous/models/connected_organization_response_connected_organization.rb
-lib/tremendous/models/create_api_key200_response.rb
-lib/tremendous/models/create_api_key_request.rb
 lib/tremendous/models/create_campaign200_response.rb
 lib/tremendous/models/create_campaign_request.rb
 lib/tremendous/models/create_connected_organization200_response.rb
