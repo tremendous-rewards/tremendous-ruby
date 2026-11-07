@@ -1,5 +1,24 @@
 # Changelog
 
+## [7.0.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v6.0.0...tremendous_ruby/v7.0.0) (2026-11-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove create API key endpoint
+
+### Features
+
+* add `crypto_currency` to product `category` enum ([a4c4422](https://github.com/tremendous-rewards/tremendous-ruby/commit/a4c4422c3e82b531874dc63a3ec2e973cf6454dc))
+* add `timezone` to create organization request ([8997df5](https://github.com/tremendous-rewards/tremendous-ruby/commit/8997df5f7b9ac8ac4adb86a6024b92693220e70e))
+* add nullable `timezone` field to Organization ([8997df5](https://github.com/tremendous-rewards/tremendous-ruby/commit/8997df5f7b9ac8ac4adb86a6024b92693220e70e))
+* add nullable `timezone` to report creation ([8997df5](https://github.com/tremendous-rewards/tremendous-ruby/commit/8997df5f7b9ac8ac4adb86a6024b92693220e70e))
+
+
+### Bug Fixes
+
+* remove create API key endpoint ([a4c4422](https://github.com/tremendous-rewards/tremendous-ruby/commit/a4c4422c3e82b531874dc63a3ec2e973cf6454dc))
+
 ## [6.0.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v5.30.0...tremendous_ruby/v6.0.0) (2026-10-26)
 
 
