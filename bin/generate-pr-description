@@ -32,6 +32,12 @@ Rules:
 - Ignore auto-generated boilerplate (module declarations, require statements, etc.)
 - Group related small changes into a single line when appropriate
 
+Breaking changes:
+- Mark a breaking change by adding `!` after the type (`feat!:` or `fix!:`). Release Please turns this into a major version bump.
+- A change is breaking when code written against the previous SDK version could stop compiling or working: removing or renaming an endpoint, method, model, field, or enum value; making an optional request field required; or changing a field type.
+- Removals are always breaking, even for rarely used endpoints or fields. Never describe a removal as a plain `fix:`.
+- When unsure whether a change breaks callers, mark it as breaking.
+
 Examples of good output:
 
 feat: add create field endpoint (POST /fields)
@@ -44,7 +50,8 @@ fix: update redemption method enum values
 fix: make funding source meta fields nullable
 
 feat: add `expires_at` to Rewards
-fix: remove `BGN` currency code reference'
+feat!: remove create API key endpoint
+feat!: remove `BGN` currency code'
 
 jq -n \
   --arg prompt "$prompt" \
