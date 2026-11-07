@@ -39,8 +39,6 @@ require 'tremendous/models/connected_organization_member_session_response_connec
 require 'tremendous/models/connected_organization_organization'
 require 'tremendous/models/connected_organization_response'
 require 'tremendous/models/connected_organization_response_connected_organization'
-require 'tremendous/models/create_api_key200_response'
-require 'tremendous/models/create_api_key_request'
 require 'tremendous/models/create_campaign200_response'
 require 'tremendous/models/create_campaign_request'
 require 'tremendous/models/create_connected_organization200_response'
