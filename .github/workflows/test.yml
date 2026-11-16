@@ -49,6 +49,15 @@ jobs:
           persist-credentials: false
       - uses: rhysd/actionlint@914e7df21a07ef503a81201c76d2b11c789d3fca # v1.7.12
 
+  tests-passed:
+    needs: test
+    if: ${{ always() && github.repository == 'tremendous-rewards/tremendous-ruby' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: test "$RESULT" = "success"
+        env:
+          RESULT: ${{ needs.test.result }}
+
   notify:
     needs: test
     if: ${{ failure() && github.event_name == 'schedule' }}
