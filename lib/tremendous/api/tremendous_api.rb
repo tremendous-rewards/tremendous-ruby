@@ -1290,7 +1290,7 @@ module Tremendous
     end
 
     # Delete member
-    # Removes an existing member from the organization, identified by the given `id` in the URL.  The member loses access to the organization and a `MEMBERS.DELETED` webhook event is emitted. 
+    # Removes an existing member from the organization, identified by the given `id` in the URL.  The member loses access to the organization and a `MEMBERS.DELETED` webhook event is emitted.  Admins can't be removed through the API. Remove an Admin in the Tremendous dashboard instead. 
     # @param id [String] ID of the member to delete
     # @param [Hash] opts the optional parameters
     # @return [nil]
@@ -1300,7 +1300,7 @@ module Tremendous
     end
 
     # Delete member
-    # Removes an existing member from the organization, identified by the given &#x60;id&#x60; in the URL.  The member loses access to the organization and a &#x60;MEMBERS.DELETED&#x60; webhook event is emitted. 
+    # Removes an existing member from the organization, identified by the given &#x60;id&#x60; in the URL.  The member loses access to the organization and a &#x60;MEMBERS.DELETED&#x60; webhook event is emitted.  Admins can&#39;t be removed through the API. Remove an Admin in the Tremendous dashboard instead. 
     # @param id [String] ID of the member to delete
     # @param [Hash] opts the optional parameters
     # @return [Array<(nil, Integer, Hash)>] nil, response status code and response headers
