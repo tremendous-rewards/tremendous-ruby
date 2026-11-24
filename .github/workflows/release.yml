@@ -49,6 +49,9 @@ jobs:
   publish:
     needs: build
     runs-on: ubuntu-latest
+    # The RubyGems trusted publisher only accepts tokens from this environment,
+    # which is restricted to main and needs a second person's approval.
+    environment: release
     permissions:
       id-token: write
     steps:
