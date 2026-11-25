@@ -17,10 +17,14 @@ module Tremendous
   class ListCampaigns200Response < ApiModelBase
     attr_accessor :campaigns
 
+    # The total number of campaigns across all pages
+    attr_accessor :total_count
+
     # Attribute mapping from ruby-style variable name to JSON key.
     def self.attribute_map
       {
-        :'campaigns' => :'campaigns'
+        :'campaigns' => :'campaigns',
+        :'total_count' => :'total_count'
       }
     end
 
@@ -37,7 +41,8 @@ module Tremendous
     # Attribute type mapping.
     def self.openapi_types
       {
-        :'campaigns' => :'Array<ListCampaigns200ResponseCampaignsInner>'
+        :'campaigns' => :'Array<ListCampaigns200ResponseCampaignsInner>',
+        :'total_count' => :'Integer'
       }
     end
 
@@ -70,6 +75,12 @@ module Tremendous
       else
         self.campaigns = nil
       end
+
+      if attributes.key?(:'total_count')
+        self.total_count = attributes[:'total_count']
+      else
+        self.total_count = nil
+      end
     end
 
     # Show invalid properties with the reasons. Usually used together with valid?
@@ -81,6 +92,10 @@ module Tremendous
         invalid_properties.push('invalid value for "campaigns", campaigns cannot be nil.')
       end
 
+      if @total_count.nil?
+        invalid_properties.push('invalid value for "total_count", total_count cannot be nil.')
+      end
+
       invalid_properties
     end
 
@@ -89,6 +104,7 @@ module Tremendous
     def valid?
       warn '[DEPRECATED] the `valid?` method is obsolete'
       return false if @campaigns.nil?
+      return false if @total_count.nil?
       true
     end
 
@@ -102,12 +118,23 @@ module Tremendous
       @campaigns = campaigns
     end
 
+    # Custom attribute writer method with validation
+    # @param [Object] total_count Value to be assigned
+    def total_count=(total_count)
+      if total_count.nil?
+        fail ArgumentError, 'total_count cannot be nil'
+      end
+
+      @total_count = total_count
+    end
+
     # Checks equality by comparing each attribute.
     # @param [Object] Object to be compared
     def ==(o)
       return true if self.equal?(o)
       self.class == o.class &&
-          campaigns == o.campaigns
+          campaigns == o.campaigns &&
+          total_count == o.total_count
     end
 
     # @see the `==` method
@@ -119,7 +146,7 @@ module Tremendous
     # Calculates hash code according to all attributes.
     # @return [Integer] Hash code
     def hash
-      [campaigns].hash
+      [campaigns, total_count].hash
     end
 
     # Builds the object from hash

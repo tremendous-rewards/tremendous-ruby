@@ -2684,6 +2684,8 @@ module Tremendous
     # List campaigns
     # Retrieve a list of all campaigns created in your account 
     # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :limit Limits the number of campaigns listed. The maximum value is 500. Without a limit, every campaign is returned.
+    # @option opts [Integer] :offset Offsets the returned list by the given number of campaigns. Campaigns come back in the same order on every page.
     # @return [ListCampaigns200Response]
     def list_campaigns(opts = {})
       data, _status_code, _headers = list_campaigns_with_http_info(opts)
@@ -2693,6 +2695,8 @@ module Tremendous
     # List campaigns
     # Retrieve a list of all campaigns created in your account 
     # @param [Hash] opts the optional parameters
+    # @option opts [Integer] :limit Limits the number of campaigns listed. The maximum value is 500. Without a limit, every campaign is returned.
+    # @option opts [Integer] :offset Offsets the returned list by the given number of campaigns. Campaigns come back in the same order on every page.
     # @return [Array<(ListCampaigns200Response, Integer, Hash)>] ListCampaigns200Response data, response status code and response headers
     def list_campaigns_with_http_info(opts = {})
       if @api_client.config.debugging
@@ -2703,6 +2707,8 @@ module Tremendous
 
       # query parameters
       query_params = opts[:query_params] || {}
+      query_params[:'limit'] = opts[:'limit'] if !opts[:'limit'].nil?
+      query_params[:'offset'] = opts[:'offset'] if !opts[:'offset'].nil?
 
       # header parameters
       header_params = opts[:header_params] || {}
