@@ -15,6 +15,7 @@ jobs:
       pull-requests: write
     outputs:
       release_created: ${{ steps.release.outputs.release_created }}
+      tag_name: ${{ steps.release.outputs.tag_name }}
     steps:
       - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5
         id: release
@@ -46,9 +47,29 @@ jobs:
           path: pkg/
           retention-days: 1
 
+  request-approval:
+    needs: [release, build]
+    runs-on: ubuntu-latest
+    permissions: {}
+    steps:
+      - uses: slackapi/slack-github-action@dcb1066f776dd043e64d0e8ba94ca15cc7e1875d # v4.0.0
+        with:
+          errors: true
+          webhook: ${{ secrets.SLACK_WEBHOOK_URL }}
+          webhook-type: incoming-webhook
+          payload: |
+            blocks:
+            - type: "section"
+              text:
+                type: "mrkdwn"
+                text: "📦 <!subteam^S04FZ8N92GH> *<${{ github.server_url }}/${{ github.repository }}|${{ github.repository }}> ${{ needs.release.outputs.tag_name }}* is waiting for approval to publish: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|review the deployment>."
+
   publish:
     needs: build
     runs-on: ubuntu-latest
+    # The RubyGems trusted publisher only accepts tokens from this environment,
+    # which is restricted to main and needs a second person's approval.
+    environment: release
     permissions:
       id-token: write
     steps:

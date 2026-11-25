@@ -10,6 +10,9 @@ jobs:
   update-sdk:
     if: github.repository == 'tremendous-rewards/tremendous-ruby'
     runs-on: ubuntu-latest
+    # Restricted to main so workflows pushed to other branches can't read
+    # ANTHROPIC_API_KEY. Keep it here, never in repository-wide secrets.
+    environment: update-sdk
     permissions:
       contents: write
       pull-requests: write
