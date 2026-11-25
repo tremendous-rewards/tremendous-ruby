@@ -1,5 +1,13 @@
 # Changelog
 
+## [7.1.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v7.0.0...tremendous_ruby/v7.1.0) (2026-11-25)
+
+
+### Features
+
+* add `limit` and `offset` params to list campaigns ([f7ed003](https://github.com/tremendous-rewards/tremendous-ruby/commit/f7ed003c3577cced755bf555a2123f59f5ab7f4d))
+* add `total_count` to list campaigns response ([f7ed003](https://github.com/tremendous-rewards/tremendous-ruby/commit/f7ed003c3577cced755bf555a2123f59f5ab7f4d))
+
 ## [7.0.0](https://github.com/tremendous-rewards/tremendous-ruby/compare/tremendous_ruby/v6.0.0...tremendous_ruby/v7.0.0) (2026-11-07)
 
 
