@@ -62,7 +62,7 @@ jobs:
             - type: "section"
               text:
                 type: "mrkdwn"
-                text: "📦 <!subteam^S04FZ8N92GH> *<${{ github.server_url }}/${{ github.repository }}|${{ github.repository }}> ${{ needs.release.outputs.tag_name }}* is waiting for approval to publish. Anyone on the team except ${{ github.actor }} can <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|review the deployment>."
+                text: "📦 <!subteam^S04FZ8N92GH> *<${{ github.server_url }}/${{ github.repository }}|${{ github.repository }}> ${{ needs.release.outputs.tag_name }}* is waiting for approval to publish: <${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}|review the deployment>."
 
   publish:
     needs: build
